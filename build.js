@@ -89,7 +89,7 @@ function rt(richText) {
   }).join('');
 }
 
-function toHtml(blocks) {
+async function toHtml(blocks) {
   let html = '', uList = false, oList = false;
   for (const b of blocks) {
     if (b.type !== 'bulleted_list_item' && uList) { html += '</ul>\n'; uList = false; }
@@ -117,7 +117,21 @@ function toHtml(blocks) {
         break;
       }
       case 'divider': html += '<hr>\n'; break;
-      // skip images and unsupported blocks
+      case 'image': {
+        let url = b.image.type === 'external' ? b.image.external.url : b.image.file.url;
+        const cap = b.image.caption?.length ? rt(b.image.caption) : '';
+        if (url.includes('amazonaws.com') || url.includes('prod-files-secure')) {
+          imgIdx++;
+          const fname = `img-${imgIdx}.jpg`;
+          try {
+            await dlFile(url, path.join(IMAGES, fname));
+            url = `images/${fname}`;
+            stats.images++;
+          } catch (e) { stats.errors.push(`img-${imgIdx}: ${e.message}`); }
+        }
+        html += `<figure>\n  <img src="${url}" alt="${cap}" loading="lazy">\n${cap ? `  <figcaption>${cap}</figcaption>\n` : ''}</figure>\n`;
+        break;
+      }
     }
   }
   if (uList) html += '</ul>\n';
@@ -698,7 +712,7 @@ async function build() {
     const meta = await notion.pages.retrieve({ page_id: p.id });
     const icon = meta.icon?.type === 'emoji' ? meta.icon.emoji : '';
     const year = new Date(meta.created_time).getFullYear().toString();
-    const contentHtml = toHtml(p.blocks);
+    const contentHtml = await toHtml(p.blocks);
     const title = stripEmoji(p.title);
     projects.push({ ...p, title, icon, year, slug: slugify(title), contentHtml, excerpt: excerpt(p.blocks) });
   }

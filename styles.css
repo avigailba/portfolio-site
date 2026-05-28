@@ -398,9 +398,9 @@ button { font-family: inherit; }
 .proj-content ul,
 .proj-content ol { margin: 0 0 14px; padding-left: 18px; }
 .proj-content li { font-size: 14px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 3px; }
-.proj-content figure { margin: 20px 0; }
-.proj-content img { width: 100%; border-radius: var(--radius); border: 0.5px solid var(--border-tertiary); }
-.proj-content figcaption { font-size: 12px; color: var(--text-secondary); margin-top: 6px; text-align: center; }
+.proj-content figure { margin: 24px 0; }
+.proj-content img { display: block; max-width: 100%; border-radius: var(--radius); border: 0.5px solid var(--border-tertiary); }
+.proj-content figcaption { font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
 .proj-content hr { border: none; border-top: 0.5px solid var(--border-tertiary); margin: 24px 0; }
 .proj-content a { color: var(--text-primary); text-decoration: underline; text-underline-offset: 2px; }
 .proj-content code { font-family: 'SF Mono','Fira Code',monospace; font-size: 0.875em; background: var(--bg-secondary); padding: 0.1em 0.3em; border-radius: var(--radius); }
