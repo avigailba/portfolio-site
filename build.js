@@ -124,14 +124,26 @@ async function toHtml(blocks) {
       }
       case 'heading_2': html += `<h2>${rt(b.heading_2.rich_text)}</h2>\n`; break;
       case 'heading_3': html += `<h3>${rt(b.heading_3.rich_text)}</h3>\n`; break;
-      case 'bulleted_list_item':
+      case 'bulleted_list_item': {
         if (!uList) { html += '<ul>\n'; uList = true; }
-        html += `  <li>${rt(b.bulleted_list_item.rich_text)}</li>\n`;
+        let bliHtml = rt(b.bulleted_list_item.rich_text);
+        if (b.has_children) {
+          const ch = await fetchBlocks(b.id);
+          bliHtml += await toHtml(ch);
+        }
+        html += `  <li>${bliHtml}</li>\n`;
         break;
-      case 'numbered_list_item':
+      }
+      case 'numbered_list_item': {
         if (!oList) { html += '<ol>\n'; oList = true; }
-        html += `  <li>${rt(b.numbered_list_item.rich_text)}</li>\n`;
+        let nliHtml = rt(b.numbered_list_item.rich_text);
+        if (b.has_children) {
+          const ch = await fetchBlocks(b.id);
+          nliHtml += await toHtml(ch);
+        }
+        html += `  <li>${nliHtml}</li>\n`;
         break;
+      }
       case 'callout': {
         const icon = b.callout.icon?.emoji ? `${b.callout.icon.emoji} ` : '';
         const t = rt(b.callout.rich_text);
