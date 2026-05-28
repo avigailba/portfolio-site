@@ -140,14 +140,26 @@ function renderExpRow(block) {
   const chunks = block.paragraph.rich_text;
   const years  = chunks.filter(t => t.annotations.bold).map(t => t.plain_text).join('');
   const rest   = chunks.filter(t => !t.annotations.bold).map(t => t.plain_text).join('').trim();
-  // Split "Senior Product Designer, Wix" on last comma
   const ci = rest.lastIndexOf(',');
-  const title   = ci > 0 ? rest.slice(0, ci).trim() : rest;
+  const role    = ci > 0 ? rest.slice(0, ci).trim() : rest;
   const company = ci > 0 ? rest.slice(ci + 1).trim() : '';
   return `<div class="exp-row">
-    <span class="exp-yrs">${years}</span>
-    <div><div class="exp-title">${title}</div>${company ? `<div class="exp-co">${company}</div>` : ''}</div>
+    <span class="exp-role">${role}</span>${company ? `<span class="exp-company">${company}</span>` : ''}<span class="exp-years">${years}</span>
   </div>`;
+}
+
+function renderExpTable(rows) {
+  return rows.map(row => {
+    const cells = row.table_row?.cells || [];
+    if (!cells.length) return '';
+    const role    = cells[0] ? plainText(cells[0]) : '';
+    const company = cells[1] ? plainText(cells[1]) : '';
+    const years   = cells[2] ? plainText(cells[2]) : '';
+    if (!role) return '';
+    return `<div class="exp-row">
+    <span class="exp-role">${role}</span><span class="exp-company">${company}</span><span class="exp-years">${years}</span>
+  </div>`;
+  }).filter(Boolean).join('\n');
 }
 
 // Hydrate table blocks by fetching their row children
@@ -330,30 +342,11 @@ async function aboutPage(blocks, projects) {
     }
   }
 
-  // Identify bio (first para-only section) and facts (first table section) for two-col layout
-  let bioItems = [], factRows = [], otherSections = [];
-  for (const sec of sections) {
-    const tbl = sec.items.find(b => b.type === 'table');
-    const hasPara = sec.items.some(b => b.type === 'paragraph' && !isExpRow(b) && b.paragraph.rich_text.length);
-    if (!tbl && hasPara && !bioItems.length) {
-      bioItems = sec.items.filter(b => b.type === 'paragraph' && !isExpRow(b));
-    } else if (tbl && !factRows.length) {
-      factRows = tbl._rows || [];
-    } else {
-      otherSections.push(sec);
-    }
-  }
+  if (!heroSub) heroSub = 'Curious about systems, obsessed with clarity, 12 years designing at Wix.';
 
-  const bioHtml   = bioItems.map(b => `<p>${rt(b.paragraph.rich_text)}</p>`).join('\n');
-  const factsHtml = factRows.map(row => {
-    const cells = row.table_row.cells;
-    const lbl = cells[0]?.map(t => t.plain_text).join('') || '';
-    const val = cells[1] ? rt(cells[1]) : '';
-    return `<div class="fact-row"><span class="fact-lbl">${lbl}</span><span>${val}</span></div>`;
-  }).join('\n');
-
-  const otherHtml = otherSections.map(sec => {
+  const sectionsHtml = sections.map(sec => {
     const hasList  = sec.items.some(b => b.type === 'bulleted_list_item');
+    const hasTable = sec.items.some(b => b.type === 'table');
     const hasExp   = sec.items.some(b => isExpRow(b));
     let inner = '';
     if (hasList) {
@@ -361,15 +354,26 @@ async function aboutPage(blocks, projects) {
         .filter(b => b.type === 'bulleted_list_item')
         .map(b => `<span class="pill">${plainText(b.bulleted_list_item.rich_text)}</span>`)
         .join('')}</div>`;
+    } else if (hasTable) {
+      inner = sec.items.map(b => {
+        if (b.type === 'table' && b._rows) {
+          const skip = b.has_column_header ? 1 : 0;
+          return renderExpTable(b._rows.slice(skip));
+        }
+        if (b.type === 'paragraph' && b.paragraph.rich_text.length) {
+          return `<div class="exp-sub">${rt(b.paragraph.rich_text)}</div>`;
+        }
+        return '';
+      }).filter(Boolean).join('\n');
     } else if (hasExp) {
       inner = sec.items
         .filter(b => b.type === 'paragraph' && b.paragraph.rich_text.length)
-        .map(b => isExpRow(b) ? renderExpRow(b) : `<p>${rt(b.paragraph.rich_text)}</p>`)
+        .map(b => isExpRow(b) ? renderExpRow(b) : `<div class="exp-sub">${rt(b.paragraph.rich_text)}</div>`)
         .join('\n');
     } else {
       inner = sec.items
         .filter(b => b.type === 'paragraph' && b.paragraph.rich_text.length)
-        .map(b => `<p>${rt(b.paragraph.rich_text)}</p>`)
+        .map(b => `<p class="edu-line">${rt(b.paragraph.rich_text)}</p>`)
         .join('\n');
     }
     return inner ? `<section class="about-sec">
@@ -384,15 +388,11 @@ async function aboutPage(blocks, projects) {
       <section class="about-hero">
         <div class="about-text">
           <h1>${heroH1}</h1>
-          ${heroSub ? `<p class="body-large">${heroSub}</p>` : ''}
+          <p class="body-large">${heroSub}</p>
         </div>
         <div class="about-photo"><div class="photo-circle"></div></div>
       </section>
-      ${(bioHtml || factsHtml) ? `<div class="about-cols">
-        <div class="about-bio">${bioHtml}</div>
-        <div class="about-facts">${factsHtml}</div>
-      </div>` : ''}
-      ${otherHtml}
+      ${sectionsHtml}
     </div>
   </main>`, projects);
 }
