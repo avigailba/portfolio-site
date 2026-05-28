@@ -478,73 +478,52 @@ async function contactPage(blocks, projects) {
 
 function designSystemPage(projects) {
   const swatches = [
-    ['#0a0a0a','text-primary','Headings, titles'],
-    ['#4a4a4a','text-secondary','Body text, descriptions'],
-    ['#767676','text-meta','Years, labels, meta'],
-    ['#1D9E75','accent','Numbers, availability, hover, callout border'],
-    ['#ffffff','bg-primary','Page background'],
-    ['#f5f5f3','bg-secondary','Cards, callouts, hover'],
-    ['#e8e8e8','border-tertiary','Dividers, image borders'],
-    ['#d0d0d0','border-secondary','Card borders'],
-    ['#b0b0b0','border-primary','Pill border'],
+    { hex: '#0a0a0a', name: 'Primary text',   usage: 'Headings, titles, body' },
+    { hex: '#767676', name: 'Secondary text',  usage: 'Descriptions, meta, labels' },
+    { hex: '#1D9E75', name: 'Accent',          usage: 'Numbers, hover, badge, callout border' },
+    { hex: '#e8e8e8', name: 'Border',          usage: 'Dividers, row borders' },
+    { hex: '#f5f5f3', name: 'Background alt',  usage: 'Cards, callouts, hover state' },
   ];
 
-  const typeScale = [
-    ['Hero h1','font-size:52px;font-weight:500;letter-spacing:-0.02em;line-height:1.1','52px / 500 / -0.02em'],
-    ['Project h1','font-size:40px;font-weight:500;letter-spacing:-0.02em','40px / 500 / -0.02em'],
-    ['Row title','font-size:19px;font-weight:400;color:#0a0a0a','19px / 400 / primary'],
-    ['Body','font-size:14px;font-weight:400;color:#4a4a4a;line-height:1.65','14px / 400 / lh 1.65'],
-    ['Small / meta','font-size:13px;font-weight:400;color:#767676','13px / 400 / meta'],
-    ['Row number','font-size:12px;font-weight:500;color:#1D9E75','12px / 500 / accent'],
-    ['Section label','font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:#767676','12px / 500 / uppercase / 0.08em'],
+  const typeRows = [
+    { name: 'Hero h1',       style: 'font-size:52px;font-weight:500;letter-spacing:-0.02em;line-height:1.1;color:#0a0a0a',  spec: '52px · 500 · −0.02em' },
+    { name: 'Project h1',    style: 'font-size:40px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a',                   spec: '40px · 500 · −0.01em' },
+    { name: 'List title',    style: 'font-size:19px;font-weight:400;color:#0a0a0a',                                           spec: '19px · 400' },
+    { name: 'Body',          style: 'font-size:16px;font-weight:400;color:#767676;line-height:1.65',                          spec: '16px · 400 · lh 1.65' },
+    { name: 'Description',   style: 'font-size:15px;font-weight:400;color:#767676;line-height:1.65',                          spec: '15px · 400' },
+    { name: 'Meta / year',   style: 'font-size:13px;font-weight:400;color:#767676',                                           spec: '13px · 400 · min size' },
+    { name: 'Label',         style: 'font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:#767676', spec: '12px · 500 · uppercase · 0.08em' },
   ];
 
   const spacings = [
-    ['16px','--pad-mob / Mobile padding'],
-    ['40px','--pad-desk / Desktop padding'],
-    ['80px','--hero-top / Hero top padding'],
-    ['24px','Nav gap / component spacing'],
-    ['48px','Section vertical gap'],
-    ['80px','Footer margin-top'],
+    { val: '40px', label: 'Horizontal padding — desktop' },
+    { val: '16px', label: 'Horizontal padding — mobile' },
+    { val: '80px', label: 'Hero top padding' },
+    { val: '64px', label: 'Section gap' },
   ];
 
-  const radii = [
-    ['6px','--radius / All elements'],
-  ];
+  const swatchHtml = swatches.map(({ hex, name, usage }) =>
+    `<div class="ds-swatch">
+      <div style="height:48px;background:${hex};border-radius:6px;border:0.5px solid #e8e8e8;margin-bottom:10px"></div>
+      <span style="font-size:13px;font-weight:500;color:#0a0a0a;display:block;margin-bottom:2px">${hex}</span>
+      <span style="font-size:12px;color:#767676;display:block">${name}</span>
+      <span style="font-size:12px;color:#b0b0b0;display:block">${usage}</span>
+    </div>`
+  ).join('\n    ');
 
-  const swatchHtml = swatches.map(([hex, name, usage]) => {
-    const textCol = ['#ffffff','#f5f5f3'].includes(hex) ? '#0a0a0a' : '#ffffff';
-    return `<div class="swatch-item">
-        <div class="swatch-color" style="background:${hex};"></div>
-        <div class="swatch-info">
-          <span class="swatch-hex">${hex}</span>
-          <span class="swatch-name">${name}<br><span style="color:#bbb">${usage}</span></span>
-        </div>
-      </div>`;
-  }).join('\n      ');
-
-  const typeHtml = typeScale.map(([name, style, meta]) =>
-    `<div class="type-row">
+  const typeHtml = typeRows.map(({ name, style, spec }) =>
+    `<div class="ds-type-row">
       <span style="${style}">${name}</span>
-      <span class="type-meta">${meta}</span>
+      <span style="font-size:12px;color:#767676;flex-shrink:0">${spec}</span>
     </div>`
   ).join('\n    ');
 
-  const spacingHtml = spacings.map(([val, label]) =>
-    `<div class="spacing-row">
-      <div class="spacing-bar" style="width:${val}"></div>
-      <span class="spacing-lbl">${val} — ${label}</span>
+  const spacingHtml = spacings.map(({ val, label }) =>
+    `<div style="display:flex;align-items:center;gap:16px;padding:8px 0;border-bottom:0.5px solid #e8e8e8">
+      <div style="width:${val};height:16px;background:#f5f5f3;border:0.5px solid #e8e8e8;border-radius:3px;flex-shrink:0"></div>
+      <span style="font-size:13px;color:#767676">${val} — ${label}</span>
     </div>`
   ).join('\n    ');
-
-  const radiusHtml = radii.map(([val, label]) =>
-    `<div class="radius-item">
-      <div class="radius-box" style="border-radius:${val}"></div>
-      <span class="radius-lbl">${val}<br><span style="color:#bbb;font-size:10px">${label}</span></span>
-    </div>`
-  ).join('\n    ');
-
-  const featProj = projects.find(p => isFeatured(p.title)) || projects[0] || { title: 'Project Title', slug: '#', icon: '', year: '2024', excerpt: 'A short description of the project and what it involved.' };
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -553,132 +532,94 @@ function designSystemPage(projects) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Design System — Avigail Bahat</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .ds-swatch { flex: 1; min-width: 140px; }
+    .ds-swatch-row { display: flex; flex-wrap: wrap; gap: 16px; }
+    .ds-type-row { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 14px 0; border-bottom: 0.5px solid #e8e8e8; }
+  </style>
 </head>
 <body id="top">
   ${hdr('')}
   <main class="ds-main">
     <div class="ds-shell">
-      <h1>Design System</h1>
-      <p class="body-large">Living style guide — tokens, typography, and component reference.</p>
+      <h1 style="font-size:22px;font-weight:500;letter-spacing:-0.02em;margin-bottom:6px">Design System</h1>
+      <p style="font-size:14px;color:#767676;margin-bottom:56px">Tokens, typography, spacing, and components.</p>
 
       <div class="ds-section">
-        <h2>Typography Scale</h2>
+        <h2>Colors</h2>
+        <div class="ds-swatch-row">${swatchHtml}</div>
+      </div>
+
+      <div class="ds-section">
+        <h2>Typography</h2>
         ${typeHtml}
       </div>
 
       <div class="ds-section">
-        <h2>Colors</h2>
-        <div class="swatch-grid">${swatchHtml}</div>
-      </div>
-
-      <div class="ds-section">
         <h2>Spacing</h2>
-        <div class="spacing-rows">${spacingHtml}</div>
+        ${spacingHtml}
       </div>
 
       <div class="ds-section">
         <h2>Border Radius</h2>
-        <div class="radius-grid">${radiusHtml}</div>
+        <div style="display:flex;align-items:center;gap:16px;padding:12px 0">
+          <div style="width:48px;height:32px;border:0.5px solid #e8e8e8;border-radius:6px;background:#f5f5f3"></div>
+          <span style="font-size:13px;color:#767676">6px — all elements, no exceptions</span>
+        </div>
       </div>
 
       <div class="ds-section">
         <h2>Components</h2>
 
         <div class="component-wrap">
-          <span class="component-label">Navigation — default</span>
+          <span class="component-label">Navigation</span>
           <div class="ds-hdr-preview">
-            <span style="font-size:13px;font-weight:500">Avigail Bahat</span>
+            <span style="font-size:13px;font-weight:500;color:#0a0a0a">Avigail Bahat</span>
             <div style="display:flex;gap:24px;align-items:center">
-              <span style="font-size:12px;color:var(--text-secondary)">Work</span>
-              <span style="font-size:12px;color:var(--text-secondary)">About</span>
-              <span style="font-size:12px;color:var(--text-secondary);border:0.5px solid var(--border-primary);border-radius:var(--radius);padding:5px 14px">Contact</span>
+              <span style="font-size:12px;color:#0a0a0a;position:relative">Work<span style="position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:#1D9E75;display:block"></span></span>
+              <span style="font-size:12px;color:#767676">About</span>
+              <span style="font-size:12px;color:#767676;border:0.5px solid #b0b0b0;border-radius:6px;padding:5px 14px">Contact</span>
             </div>
           </div>
         </div>
 
         <div class="component-wrap">
-          <span class="component-label">Navigation — active state (Work)</span>
-          <div class="ds-hdr-preview">
-            <span style="font-size:13px;font-weight:500">Avigail Bahat</span>
-            <div style="display:flex;gap:24px;align-items:center">
-              <span style="font-size:12px;color:var(--text-primary);position:relative">Work<span style="position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:#1D9E75;display:block"></span></span>
-              <span style="font-size:12px;color:var(--text-secondary)">About</span>
-              <span style="font-size:12px;color:var(--text-secondary);border:0.5px solid var(--border-primary);border-radius:var(--radius);padding:5px 14px">Contact</span>
-            </div>
+          <span class="component-label">Hero</span>
+          <div style="padding:32px 0 24px">
+            <h1 style="font-size:52px;font-weight:500;letter-spacing:-0.02em;line-height:1.1;color:#0a0a0a;margin-bottom:16px">Making complex developer<br>workflows feel simple</h1>
+            <p style="font-size:13px;color:#767676">12 years at Wix · <span style="color:#1D9E75">Available for new roles</span></p>
           </div>
         </div>
 
         <div class="component-wrap">
-          <span class="component-label">Availability badge</span>
-          <div class="avail-badge" style="margin:0"><span class="avail-dot"></span>Available for new roles</div>
+          <span class="component-label">Project row</span>
+          <div class="project-list">
+            <a class="project-row" style="cursor:default">
+              <span class="row-num">01</span>
+              <span class="row-title">AI Credits</span>
+              <span class="row-year">2026</span>
+            </a>
+            <a class="project-row" style="cursor:default">
+              <span class="row-num">02</span>
+              <span class="row-title" style="color:#1D9E75">App Coupons — hover state</span>
+              <span class="row-year">2025</span>
+            </a>
+            <a class="project-row" style="cursor:default">
+              <span class="row-num">03</span>
+              <span class="row-title">Submit &amp; Publish Widget</span>
+              <span class="row-year">2024</span>
+            </a>
+          </div>
         </div>
 
         <div class="component-wrap">
           <span class="component-label">Callout block</span>
-          <div class="callout"><p><strong>The problem:</strong> Developers couldn't understand why their app was rejected without navigating to a separate admin page.</p></div>
+          <div class="callout"><p>Developers couldn't understand why their app was rejected without navigating to a separate admin page — causing repeated support tickets.</p></div>
         </div>
 
         <div class="component-wrap">
-          <span class="component-label">Project row — default &amp; hover</span>
-          <div class="project-list" style="background:white">
-            <div class="project-row" style="cursor:default">
-              <span class="row-num">01</span>
-              <span class="row-title">AI Credits</span>
-              <span class="row-year">2026</span>
-            </div>
-            <div class="project-row" style="cursor:default">
-              <span class="row-num">02</span>
-              <span class="row-title" style="color:#1D9E75">App Coupons</span>
-              <span class="row-year">2025</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="component-wrap">
-          <span class="component-label">Skill pills</span>
-          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-            <span class="pill">Figma</span>
-            <span class="pill">Cursor</span>
-            <div style="display:none">
-              <span class="strip-num">01</span>
-              <span class="strip-title">${featProj.title}</span>
-            </div>
-          </div>
-        </div>
-
-        <div style="display:none">
-          <div class="ds-strip-preview">
-            <div style="display:flex;flex-direction:column;gap:10px">
-              <div style="display:flex;align-items:center;gap:12px">
-                <span class="strip-num">01</span>
-                <span class="strip-title">${featProj.title}</span>
-              </div>
-              <p class="strip-exc">${featProj.excerpt || 'A short description of the project.'}</p>
-              <div class="strip-foot">
-                <span class="strip-yr">${featProj.year}</span>
-                <span class="strip-cta">View case study →</span>
-              </div>
-            </div>
-            <div class="thumb-bg"></div>
-          </div>
-        </div>
-
-        <div class="component-wrap">
-          <span class="component-label">Stat strip</span>
-          <div class="stat-strip" style="background:white">
-            <div class="stat-col"><span class="stat-val">2024</span><span class="stat-lbl">Year</span></div>
-            <div class="stat-col"><span class="stat-val">Product Design</span><span class="stat-lbl">Type</span></div>
-            <div class="stat-col"><span class="stat-val">Lead Designer</span><span class="stat-lbl">Role</span></div>
-          </div>
-        </div>
-
-        <div class="component-wrap">
-          <span class="component-label">Metadata rows (sidebar)</span>
-          <div style="max-width:148px;background:white;padding:0 12px;border-radius:8px">
-            <div class="meta-row"><span class="meta-lbl">Year</span><span>2024</span></div>
-            <div class="meta-row"><span class="meta-lbl">Type</span><span>Product Design</span></div>
-            <div class="meta-row"><span class="meta-lbl">Role</span><span>Lead Designer</span></div>
-          </div>
+          <span class="component-label">Available badge</span>
+          <div class="avail-badge" style="margin:0"><span class="avail-dot"></span>Available for new roles</div>
         </div>
 
       </div>
