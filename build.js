@@ -87,26 +87,39 @@ function dlFile(url, dest) {
 }
 
 function rt(richText) {
-  return richText.map(t => {
-    let s = t.plain_text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    if (t.annotations.bold) s = `<strong>${s}</strong>`;
-    if (t.annotations.italic) s = `<em>${s}</em>`;
-    if (t.annotations.code) s = `<code>${s}</code>`;
-    if (t.href) s = `<a href="${t.href}" target="_blank" rel="noopener">${s}</a>`;
-    return s;
-  }).join('');
+  return richText
+    .filter(t => !(t.type === 'mention' && t.mention?.type === 'date'))
+    .map(t => {
+      let s = t.plain_text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      if (t.annotations.bold) s = `<strong>${s}</strong>`;
+      if (t.annotations.italic) s = `<em>${s}</em>`;
+      if (t.annotations.code) s = `<code>${s}</code>`;
+      if (t.href) s = `<a href="${t.href}" target="_blank" rel="noopener">${s}</a>`;
+      return s;
+    }).join('');
 }
 
 async function toHtml(blocks) {
-  let html = '', uList = false, oList = false;
+  let html = '', uList = false, oList = false, firstParaSeen = false;
   for (const b of blocks) {
     if (b.type !== 'bulleted_list_item' && uList) { html += '</ul>\n'; uList = false; }
     if (b.type !== 'numbered_list_item' && oList) { html += '</ol>\n'; oList = false; }
     switch (b.type) {
       case 'paragraph': {
-        const t = rt(b.paragraph.rich_text);
-        const plain = b.paragraph.rich_text.map(x => x.plain_text).join('').trim();
-        if (t && !isDateString(plain)) html += `<p>${t}</p>\n`;
+        // Strip mention-date items before processing
+        const rich = b.paragraph.rich_text.filter(
+          t => !(t.type === 'mention' && t.mention?.type === 'date')
+        );
+        const plain = rich.map(x => x.plain_text).join('').trim();
+        if (!plain || isDateString(plain)) break;
+        // Skip the first all-italic paragraph — it's the summary used for homepage cards
+        if (!firstParaSeen && rich.length > 0 && rich.every(t => t.annotations?.italic)) {
+          firstParaSeen = true;
+          break;
+        }
+        firstParaSeen = true;
+        const t = rt(rich);
+        if (t) html += `<p>${t}</p>\n`;
         break;
       }
       case 'heading_2': html += `<h2>${rt(b.heading_2.rich_text)}</h2>\n`; break;
