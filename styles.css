@@ -485,6 +485,12 @@ button { font-family: inherit; }
 
 .about-sec { margin-bottom: 48px; }
 
+.about-sec > .section-label {
+  color: var(--text-primary);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
 .pill-group { display: flex; flex-wrap: wrap; gap: 8px; }
 
 .pill {
@@ -497,14 +503,18 @@ button { font-family: inherit; }
 
 .exp-row {
   display: flex;
-  gap: 32px;
-  padding: 16px 0;
+  gap: 16px;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  padding: 12px 0;
   border-bottom: 0.5px solid var(--border-tertiary);
 }
 
-.exp-yrs  { font-size: 11px; color: var(--text-tertiary); min-width: 80px; padding-top: 2px; flex-shrink: 0; }
-.exp-title { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
-.exp-co   { font-size: 12px; color: var(--text-tertiary); }
+.exp-role    { font-size: 13px; font-weight: 500; color: #0a0a0a; flex: 1; }
+.exp-company { font-size: 13px; color: #0a0a0a; flex: 1.5; }
+.exp-years   { font-size: 13px; color: #666666; white-space: nowrap; flex-shrink: 0; }
+.exp-sub     { font-size: 13px; color: #666666; margin-top: 4px; margin-bottom: 20px; line-height: 1.6; }
+.edu-line    { font-size: 13px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* ============================================================
    CONTACT PAGE
