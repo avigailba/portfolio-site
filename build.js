@@ -294,44 +294,21 @@ function wrap(cur, title, body, projects) {
 // ── Pages ────────────────────────────────────────────────────
 
 function indexPage(projects) {
-  const feat = projects.filter(p => isFeatured(p.title));
-  const more = projects.filter(p => !isFeatured(p.title));
-
-  const strips = feat.map((p, i) => `<a href="${p.slug}.html" class="feat-strip">
-      <div class="strip-hdr">
-        <span class="strip-num">${String(i+1).padStart(2,'0')}</span>
-        <h2 class="strip-title">${p.title}</h2>
-      </div>
-      ${p.excerpt?`<p class="strip-exc">${p.excerpt}</p>`:''}
-      <div class="strip-foot">
-        <span class="strip-yr">${p.year}</span>
-        <span class="type-pill">Product Design</span>
-      </div>
-    </a>`).join('\n    ');
-
-  const rows = more.map((p, i) => `<a href="${p.slug}.html" class="work-row">
-      <span class="row-num">${String(feat.length+i+1).padStart(2,'0')}</span>
+  const rows = projects.map((p, i) => `<a href="${p.slug}.html" class="project-row">
+      <span class="row-num">${String(i+1).padStart(2,'0')}</span>
       <span class="row-title">${p.title}</span>
-      <span class="row-yr">${p.year}</span>
+      <span class="row-year">${p.year}</span>
     </a>`).join('\n    ');
 
   return wrap('work', 'Avigail Bahat — Product Designer', `
   <main class="home-main">
     <section class="hero">
       <h1>Making complex developer<br>workflows feel simple</h1>
-      <div class="hero-meta">
-        <span>Product Designer · ex-Wix</span>
-        <span>${projects.length} projects</span>
-      </div>
+      <p class="hero-sub">12 years at Wix · <span style="color:#1D9E75">Available for new roles</span></p>
     </section>
     <section class="work-sec">
-      <span class="section-label">Featured work</span>
-      <div class="strips-wrap">${strips}</div>
+      <div class="project-list">${rows}</div>
     </section>
-    ${more.length ? `<section class="work-sec">
-      <span class="section-label">More work</span>
-      <div class="rows-wrap">${rows}</div>
-    </section>` : ''}
   </main>`, projects);
 }
 
@@ -501,24 +478,25 @@ async function contactPage(blocks, projects) {
 
 function designSystemPage(projects) {
   const swatches = [
-    ['#0a0a0a','text-primary','Headings, body'],
-    ['#767676','text-secondary','Body text, meta, labels'],
+    ['#0a0a0a','text-primary','Headings, titles'],
+    ['#4a4a4a','text-secondary','Body text, descriptions'],
+    ['#767676','text-meta','Years, labels, meta'],
+    ['#1D9E75','accent','Numbers, availability, hover, callout border'],
     ['#ffffff','bg-primary','Page background'],
     ['#f5f5f3','bg-secondary','Cards, callouts, hover'],
     ['#e8e8e8','border-tertiary','Dividers, image borders'],
     ['#d0d0d0','border-secondary','Card borders'],
-    ['#b0b0b0','border-primary','Callout accent, pill border'],
-    ['#1D9E75','available-green','Availability dot only'],
+    ['#b0b0b0','border-primary','Pill border'],
   ];
 
   const typeScale = [
-    ['Hero h1','font-size:42px;font-weight:500;letter-spacing:-0.02em;line-height:1.1','42px / 500 / -0.02em'],
-    ['Strip title','font-size:22px;font-weight:500;letter-spacing:-0.02em','22px / 500 / -0.02em'],
-    ['Row title','font-size:17px;font-weight:400;color:var(--text-secondary)','17px / 400 / secondary'],
-    ['Body','font-size:14px;font-weight:400;color:var(--text-secondary);line-height:1.65','14px / 400 / lh 1.65'],
-    ['Small','font-size:13px;font-weight:400;color:var(--text-secondary);line-height:1.65','13px / 400 / lh 1.65'],
-    ['Caption / meta','font-size:12px;font-weight:400;color:var(--text-secondary)','12px / 400 / secondary'],
-    ['Section label','font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary)','12px / 500 / uppercase / 0.08em'],
+    ['Hero h1','font-size:52px;font-weight:500;letter-spacing:-0.02em;line-height:1.1','52px / 500 / -0.02em'],
+    ['Project h1','font-size:40px;font-weight:500;letter-spacing:-0.02em','40px / 500 / -0.02em'],
+    ['Row title','font-size:19px;font-weight:400;color:#0a0a0a','19px / 400 / primary'],
+    ['Body','font-size:14px;font-weight:400;color:#4a4a4a;line-height:1.65','14px / 400 / lh 1.65'],
+    ['Small / meta','font-size:13px;font-weight:400;color:#767676','13px / 400 / meta'],
+    ['Row number','font-size:12px;font-weight:500;color:#1D9E75','12px / 500 / accent'],
+    ['Section label','font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:#767676','12px / 500 / uppercase / 0.08em'],
   ];
 
   const spacings = [
@@ -623,7 +601,7 @@ function designSystemPage(projects) {
           <div class="ds-hdr-preview">
             <span style="font-size:13px;font-weight:500">Avigail Bahat</span>
             <div style="display:flex;gap:24px;align-items:center">
-              <span style="font-size:12px;color:var(--text-primary);position:relative">Work<span style="position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:var(--text-primary);display:block"></span></span>
+              <span style="font-size:12px;color:var(--text-primary);position:relative">Work<span style="position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:#1D9E75;display:block"></span></span>
               <span style="font-size:12px;color:var(--text-secondary)">About</span>
               <span style="font-size:12px;color:var(--text-secondary);border:0.5px solid var(--border-primary);border-radius:var(--radius);padding:5px 14px">Contact</span>
             </div>
@@ -631,14 +609,8 @@ function designSystemPage(projects) {
         </div>
 
         <div class="component-wrap">
-          <span class="component-label">Type pills &amp; badges</span>
-          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-            <span class="type-pill">Product Design</span>
-            <span class="type-pill">Research</span>
-            <div class="avail-badge" style="margin:0"><span class="avail-dot"></span>Available for new roles</div>
-            <span class="pill">Figma</span>
-            <span class="pill">Cursor</span>
-          </div>
+          <span class="component-label">Availability badge</span>
+          <div class="avail-badge" style="margin:0"><span class="avail-dot"></span>Available for new roles</div>
         </div>
 
         <div class="component-wrap">
@@ -647,31 +619,39 @@ function designSystemPage(projects) {
         </div>
 
         <div class="component-wrap">
-          <span class="component-label">Work row — default &amp; hover</span>
-          <div class="rows-wrap" style="background:white;border-radius:8px;overflow:hidden">
-            <div class="work-row" style="cursor:default">
-              <span class="row-num">04</span>
-              <span class="row-title">Developer Sale</span>
-              <span class="row-yr">2023</span>
-              <span class="type-pill">Product Design</span>
+          <span class="component-label">Project row — default &amp; hover</span>
+          <div class="project-list" style="background:white">
+            <div class="project-row" style="cursor:default">
+              <span class="row-num">01</span>
+              <span class="row-title">AI Credits</span>
+              <span class="row-year">2026</span>
             </div>
-            <div class="work-row" style="background:var(--bg-secondary);cursor:default">
-              <span class="row-num">05</span>
-              <span class="row-title" style="color:var(--text-primary)">Payouts Page</span>
-              <span class="row-yr">2022</span>
-              <span class="type-pill">Product Design</span>
+            <div class="project-row" style="cursor:default">
+              <span class="row-num">02</span>
+              <span class="row-title" style="color:#1D9E75">App Coupons</span>
+              <span class="row-year">2025</span>
             </div>
           </div>
         </div>
 
         <div class="component-wrap">
-          <span class="component-label">Featured strip</span>
+          <span class="component-label">Skill pills</span>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <span class="pill">Figma</span>
+            <span class="pill">Cursor</span>
+            <div style="display:none">
+              <span class="strip-num">01</span>
+              <span class="strip-title">${featProj.title}</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:none">
           <div class="ds-strip-preview">
             <div style="display:flex;flex-direction:column;gap:10px">
               <div style="display:flex;align-items:center;gap:12px">
                 <span class="strip-num">01</span>
                 <span class="strip-title">${featProj.title}</span>
-                <span class="type-pill">Product Design</span>
               </div>
               <p class="strip-exc">${featProj.excerpt || 'A short description of the project.'}</p>
               <div class="strip-foot">
