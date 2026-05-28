@@ -246,7 +246,7 @@ button { font-family: inherit; }
 
 .feat-strip {
   display: grid;
-  grid-template-columns: 1fr 260px;
+  grid-template-columns: 1fr;
   gap: 40px;
   padding: 28px 12px;
   min-height: 72px;
@@ -521,7 +521,7 @@ button { font-family: inherit; }
   padding: 0 var(--pad-desk);
 }
 
-.contact-shell { padding-top: var(--hero-top); max-width: 520px; }
+.contact-shell { padding-top: var(--hero-top); max-width: 640px; margin: 0 auto; }
 
 .contact-shell h1 {
   font-size: 42px;

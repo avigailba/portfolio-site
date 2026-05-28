@@ -272,7 +272,6 @@ function indexPage(projects) {
           <span class="strip-cta">View case study →</span>
         </div>
       </div>
-      <div class="strip-r"><div class="thumb-bg"></div></div>
     </a>`).join('\n    ');
 
   const rows = more.map((p, i) => `<a href="${p.slug}.html" class="work-row">
@@ -337,11 +336,22 @@ async function aboutPage(blocks, projects) {
   for (const b of blocks) {
     if (b.type === 'heading_1') {
       heroH1 = plainText(b.heading_1.rich_text);
+      cur = null;
     } else if (b.type === 'heading_2') {
-      cur = { label: plainText(b.heading_2.rich_text), items: [] };
-      sections.push(cur);
-    } else if (b.type === 'paragraph' && !cur && b.paragraph.rich_text.length && !heroSub) {
-      heroSub = rt(b.paragraph.rich_text);
+      const label = plainText(b.heading_2.rich_text);
+      if (label.toLowerCase() === heroH1.toLowerCase()) {
+        // h2 mirrors the h1 — absorb its following paragraphs as heroSub, not a section
+        cur = null;
+      } else {
+        cur = { label, items: [] };
+        sections.push(cur);
+      }
+    } else if (b.type === 'paragraph' && b.paragraph.rich_text.length) {
+      if (!heroSub && !cur) {
+        heroSub = rt(b.paragraph.rich_text);
+      } else if (cur) {
+        cur.items.push(b);
+      }
     } else if (cur) {
       cur.items.push(b);
     }
@@ -395,7 +405,6 @@ async function aboutPage(blocks, projects) {
           <h1>${heroH1}</h1>
           <p class="body-large">${heroSub}</p>
         </div>
-        <div class="about-photo"><div class="photo-circle"></div></div>
       </section>
       ${sectionsHtml}
     </div>
