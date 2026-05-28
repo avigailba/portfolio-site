@@ -1,4 +1,4 @@
-require('dotenv').config();
+try { require('dotenv').config(); } catch (e) {}
 const { Client } = require('@notionhq/client');
 const fs = require('fs');
 const path = require('path');
