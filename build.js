@@ -1,4 +1,5 @@
 try { require('dotenv').config(); } catch (e) {}
+process.env.NOTION_API_KEY = process.env.NOTION_API_KEY || process.env.NOTION_TOKEN;
 const { Client } = require('@notionhq/client');
 const fs = require('fs');
 const path = require('path');
@@ -9,6 +10,10 @@ const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const ROOT_PAGE_ID    = '9e31791fdedf4048bb784d0cbae06e51';
 const ABOUT_PAGE_ID   = '36e35a9ccf7a81f6953dcab2aebb27fc';
 const CONTACT_PAGE_ID = '36e35a9ccf7a8188a447fd3e36ee88cd';
+
+// Pages to exclude from the project grid
+const SKIP_IDS   = new Set([ABOUT_PAGE_ID, CONTACT_PAGE_ID]);
+const SKIP_SLUGS = new Set(['about', 'contact', 'cv', 'resume']);
 const DIST = 'dist';
 const IMAGES = path.join(DIST, 'images');
 
@@ -675,7 +680,8 @@ async function build() {
   fs.copyFileSync('styles.css', path.join(DIST, 'styles.css'));
 
   console.log('Fetching project pages from Notion...');
-  const raw = await collectPages(ROOT_PAGE_ID);
+  const raw = (await collectPages(ROOT_PAGE_ID))
+    .filter(p => !SKIP_IDS.has(p.id) && !SKIP_SLUGS.has(slugify(p.title)));
   console.log(`Found ${raw.length} projects`);
 
   const projects = [];
