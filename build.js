@@ -6,7 +6,9 @@ const https = require('https');
 const http = require('http');
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
-const ROOT_PAGE_ID = '9e31791fdedf4048bb784d0cbae06e51';
+const ROOT_PAGE_ID    = '9e31791fdedf4048bb784d0cbae06e51';
+const ABOUT_PAGE_ID   = '36e35a9ccf7a81f6953dcab2aebb27fc';
+const CONTACT_PAGE_ID = '36e35a9ccf7a8188a447fd3e36ee88cd';
 const DIST = 'dist';
 const IMAGES = path.join(DIST, 'images');
 
@@ -116,6 +118,38 @@ async function toHtml(blocks) {
 function excerpt(blocks) {
   const p = blocks.find(b => b.type === 'paragraph' && b.paragraph.rich_text.length);
   return p ? p.paragraph.rich_text.map(t => t.plain_text).join('').slice(0, 180) : '';
+}
+
+function plainText(richText) {
+  return richText.map(t => t.plain_text).join('');
+}
+
+// A paragraph whose first chunk is bold = experience row (bold=years, rest=role+company)
+function isExpRow(block) {
+  if (block.type !== 'paragraph') return false;
+  const chunks = block.paragraph.rich_text;
+  return chunks.length >= 2 && chunks[0].annotations.bold;
+}
+
+function renderExpRow(block) {
+  const chunks = block.paragraph.rich_text;
+  const years  = chunks.filter(t => t.annotations.bold).map(t => t.plain_text).join('');
+  const rest   = chunks.filter(t => !t.annotations.bold).map(t => t.plain_text).join('').trim();
+  // Split "Senior Product Designer, Wix" on last comma
+  const ci = rest.lastIndexOf(',');
+  const title   = ci > 0 ? rest.slice(0, ci).trim() : rest;
+  const company = ci > 0 ? rest.slice(ci + 1).trim() : '';
+  return `<div class="exp-row">
+    <span class="exp-yrs">${years}</span>
+    <div><div class="exp-title">${title}</div>${company ? `<div class="exp-co">${company}</div>` : ''}</div>
+  </div>`;
+}
+
+// Hydrate table blocks by fetching their row children
+async function hydrateTables(blocks) {
+  for (const b of blocks) {
+    if (b.type === 'table') b._rows = await fetchBlocks(b.id);
+  }
 }
 
 // ── Layout ──────────────────────────────────────────────────
@@ -270,74 +304,149 @@ function projectPage(proj, projects) {
   </main>`, projects);
 }
 
-function aboutPage(projects) {
-  const facts = [['Based in','Tel Aviv'],['Specialty','Developer tools, Platform'],['Experience','5+ years'],['Languages','English, Hebrew']];
+async function aboutPage(blocks, projects) {
+  await hydrateTables(blocks);
+
+  let heroH1 = 'Product designer focused on developer experience';
+  let heroSub = '';
+  const sections = [];
+  let cur = null;
+
+  for (const b of blocks) {
+    if (b.type === 'heading_1') {
+      heroH1 = plainText(b.heading_1.rich_text);
+    } else if (b.type === 'heading_2') {
+      cur = { label: plainText(b.heading_2.rich_text), items: [] };
+      sections.push(cur);
+    } else if (b.type === 'paragraph' && !cur && b.paragraph.rich_text.length && !heroSub) {
+      heroSub = rt(b.paragraph.rich_text);
+    } else if (cur) {
+      cur.items.push(b);
+    }
+  }
+
+  // Identify bio (first para-only section) and facts (first table section) for two-col layout
+  let bioItems = [], factRows = [], otherSections = [];
+  for (const sec of sections) {
+    const tbl = sec.items.find(b => b.type === 'table');
+    const hasPara = sec.items.some(b => b.type === 'paragraph' && !isExpRow(b) && b.paragraph.rich_text.length);
+    if (!tbl && hasPara && !bioItems.length) {
+      bioItems = sec.items.filter(b => b.type === 'paragraph' && !isExpRow(b));
+    } else if (tbl && !factRows.length) {
+      factRows = tbl._rows || [];
+    } else {
+      otherSections.push(sec);
+    }
+  }
+
+  const bioHtml   = bioItems.map(b => `<p>${rt(b.paragraph.rich_text)}</p>`).join('\n');
+  const factsHtml = factRows.map(row => {
+    const cells = row.table_row.cells;
+    const lbl = cells[0]?.map(t => t.plain_text).join('') || '';
+    const val = cells[1] ? rt(cells[1]) : '';
+    return `<div class="fact-row"><span class="fact-lbl">${lbl}</span><span>${val}</span></div>`;
+  }).join('\n');
+
+  const otherHtml = otherSections.map(sec => {
+    const hasList  = sec.items.some(b => b.type === 'bulleted_list_item');
+    const hasExp   = sec.items.some(b => isExpRow(b));
+    let inner = '';
+    if (hasList) {
+      inner = `<div class="pill-group">${sec.items
+        .filter(b => b.type === 'bulleted_list_item')
+        .map(b => `<span class="pill">${plainText(b.bulleted_list_item.rich_text)}</span>`)
+        .join('')}</div>`;
+    } else if (hasExp) {
+      inner = sec.items
+        .filter(b => b.type === 'paragraph' && b.paragraph.rich_text.length)
+        .map(b => isExpRow(b) ? renderExpRow(b) : `<p>${rt(b.paragraph.rich_text)}</p>`)
+        .join('\n');
+    } else {
+      inner = sec.items
+        .filter(b => b.type === 'paragraph' && b.paragraph.rich_text.length)
+        .map(b => `<p>${rt(b.paragraph.rich_text)}</p>`)
+        .join('\n');
+    }
+    return inner ? `<section class="about-sec">
+      <span class="section-label">${sec.label}</span>
+      ${inner}
+    </section>` : '';
+  }).join('\n');
+
   return wrap('about', 'About — Avigail Bahat', `
   <main class="about-main">
     <div class="about-shell">
       <section class="about-hero">
         <div class="about-text">
-          <h1>Product designer focused on developer experience</h1>
-          <p class="body-large">Curious about systems, obsessed with clarity, 5 years designing developer tools at Wix.</p>
+          <h1>${heroH1}</h1>
+          ${heroSub ? `<p class="body-large">${heroSub}</p>` : ''}
         </div>
         <div class="about-photo"><div class="photo-circle"></div></div>
       </section>
-      <div class="about-cols">
-        <div class="about-bio">
-          <p>I've spent the last several years designing platform and developer-facing products at Wix. My work spans SDKs and CLI tools to marketplace storefronts and monetization systems.</p>
-          <p>I care a lot about clarity. Complex systems should feel navigable. Technical constraints shouldn't come at the expense of good UX.</p>
-        </div>
-        <div class="about-facts">
-          ${facts.map(([l,v])=>`<div class="fact-row"><span class="fact-lbl">${l}</span><span>${v}</span></div>`).join('\n          ')}
-        </div>
-      </div>
-      <section class="about-sec">
-        <span class="section-label">Tools</span>
-        <div class="pill-group">${['Figma','FigJam','Cursor','Notion','Maze','FullStory'].map(t=>`<span class="pill">${t}</span>`).join('')}</div>
-      </section>
-      <section class="about-sec">
-        <span class="section-label">Experience</span>
-        <div class="exp-row">
-          <span class="exp-yrs">2019–2025</span>
-          <div><div class="exp-title">Senior Product Designer</div><div class="exp-co">Wix</div></div>
-        </div>
-      </section>
+      ${(bioHtml || factsHtml) ? `<div class="about-cols">
+        <div class="about-bio">${bioHtml}</div>
+        <div class="about-facts">${factsHtml}</div>
+      </div>` : ''}
+      ${otherHtml}
     </div>
   </main>`, projects);
 }
 
-function contactPage(projects) {
+async function contactPage(blocks, projects) {
+  await hydrateTables(blocks);
+
+  let heading = "Let's talk";
+  let tagline = '';
+  let contactRowsHtml = '';
+  let recruiterNote = '';
+  let inRecruiter = false;
+
+  for (const b of blocks) {
+    if (b.type === 'heading_2') {
+      const txt = plainText(b.heading_2.rich_text);
+      if (/let.?s talk/i.test(txt)) heading = txt;
+      else if (/recruit|note/i.test(txt)) inRecruiter = true;
+    } else if (b.type === 'paragraph' && b.paragraph.rich_text.length) {
+      const text = rt(b.paragraph.rich_text);
+      if (inRecruiter && !recruiterNote) recruiterNote = text;
+      else if (!tagline && !inRecruiter) tagline = text;
+    } else if (b.type === 'table' && b._rows) {
+      contactRowsHtml = b._rows.map(row => {
+        const cells = row.table_row.cells;
+        const lbl = cells[0]?.map(t => t.plain_text).join('').trim() || '';
+        const valRt = cells[1] || [];
+        const valPlain = valRt.map(t => t.plain_text).join('').trim();
+        const ll = lbl.toLowerCase();
+        let valHtml;
+        if (ll.includes('email') || valPlain.includes('@')) {
+          valHtml = `<div class="contact-val">
+            <a href="mailto:${valPlain}">${valPlain}</a>
+            <button class="copy-btn" onclick="navigator.clipboard.writeText('${valPlain}')" title="Copy">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button></div>`;
+        } else if (ll.includes('linkedin') || valPlain.includes('linkedin')) {
+          const url = valPlain.startsWith('http') ? valPlain : `https://${valPlain}`;
+          const display = valPlain.replace(/^https?:\/\//, '');
+          valHtml = `<div class="contact-val">
+            <a href="${url}" target="_blank" rel="noopener">${display}</a>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </div>`;
+        } else {
+          valHtml = `<span>${rt(valRt) || valPlain}</span>`;
+        }
+        return `<div class="contact-row"><span class="contact-lbl">${lbl}</span>${valHtml}</div>`;
+      }).join('\n');
+    }
+  }
+
   return wrap('contact', 'Contact — Avigail Bahat', `
   <main class="contact-main">
     <div class="contact-shell">
-      <h1>Let's talk</h1>
-      <p class="body-large">Whether you're building something new or improving something complex — I'd love to hear about it.</p>
+      <h1>${heading}</h1>
+      ${tagline ? `<p class="body-large">${tagline}</p>` : ''}
       <div class="avail-badge"><span class="avail-dot"></span>Available for new roles</div>
-      <div class="contact-rows">
-        <div class="contact-row">
-          <span class="contact-lbl">Email</span>
-          <div class="contact-val">
-            <a href="mailto:avigailbahat@gmail.com">avigailbahat@gmail.com</a>
-            <button class="copy-btn" onclick="navigator.clipboard.writeText('avigailbahat@gmail.com')" title="Copy">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button>
-          </div>
-        </div>
-        <div class="contact-row">
-          <span class="contact-lbl">LinkedIn</span>
-          <div class="contact-val">
-            <a href="https://linkedin.com/in/avigailbahat" target="_blank" rel="noopener">linkedin.com/in/avigailbahat</a>
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </div>
-        </div>
-        <div class="contact-row">
-          <span class="contact-lbl">Location</span>
-          <span>Tel Aviv, Israel</span>
-        </div>
-      </div>
-      <div class="contact-note">
-        <p>If you're a recruiter, I'm happy to chat about senior IC or lead roles in product design — particularly for developer tools, platforms, or B2B SaaS.</p>
-      </div>
+      ${contactRowsHtml ? `<div class="contact-rows">${contactRowsHtml}</div>` : ''}
+      ${recruiterNote ? `<div class="contact-note"><p>${recruiterNote}</p></div>` : ''}
     </div>
   </main>`, projects);
 }
@@ -584,10 +693,14 @@ async function build() {
     console.log(`  ✓ ${proj.slug}.html`);
   }
 
+  console.log('Fetching about + contact pages from Notion...');
+  const aboutBlocks   = await fetchBlocks(ABOUT_PAGE_ID);
+  const contactBlocks = await fetchBlocks(CONTACT_PAGE_ID);
+
   for (const [file, html] of [
     ['index.html',         indexPage(projects)],
-    ['about.html',         aboutPage(projects)],
-    ['contact.html',       contactPage(projects)],
+    ['about.html',         await aboutPage(aboutBlocks, projects)],
+    ['contact.html',       await contactPage(contactBlocks, projects)],
     ['design-system.html', designSystemPage(projects)],
   ]) {
     fs.writeFileSync(path.join(DIST, file), html);
