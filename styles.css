@@ -33,7 +33,7 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font);
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.65;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
@@ -222,7 +222,7 @@ button { font-family: inherit; }
 }
 
 .hero h1 {
-  font-size: 42px;
+  font-size: 52px;
   font-weight: 500;
   letter-spacing: -0.02em;
   line-height: 1.1;
@@ -245,10 +245,10 @@ button { font-family: inherit; }
 .strips-wrap { border-top: 0.5px solid var(--border-tertiary); }
 
 .feat-strip {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 40px;
-  padding: 28px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 12px;
   min-height: 72px;
   border-bottom: 0.5px solid var(--border-tertiary);
   margin: 0 -12px;
@@ -259,12 +259,12 @@ button { font-family: inherit; }
 
 .feat-strip:hover { background: var(--bg-secondary); }
 
-.strip-l { display: flex; flex-direction: column; gap: 10px; }
 .strip-hdr { display: flex; align-items: center; gap: 12px; }
-.strip-num { font-size: 12px; color: var(--text-secondary); min-width: 24px; flex-shrink: 0; }
+
+.strip-num { font-size: 13px; color: var(--text-secondary); min-width: 24px; flex-shrink: 0; }
 
 .strip-title {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 500;
   letter-spacing: -0.02em;
   color: var(--text-primary);
@@ -272,7 +272,7 @@ button { font-family: inherit; }
 }
 
 .strip-exc {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text-secondary);
   line-height: 1.65;
   padding-left: 36px;
@@ -285,8 +285,8 @@ button { font-family: inherit; }
   padding-left: 36px;
 }
 
-.strip-yr  { font-size: 12px; color: var(--text-secondary); }
-.strip-cta { font-size: 12px; color: var(--text-secondary); transition: color 0.15s; }
+.strip-yr  { font-size: 13px; color: var(--text-secondary); }
+.strip-cta { font-size: 13px; color: var(--text-secondary); transition: color 0.15s; }
 .feat-strip:hover .strip-cta { color: var(--text-primary); }
 
 .strip-r { display: flex; align-items: center; }
@@ -313,7 +313,7 @@ button { font-family: inherit; }
 
 .work-row {
   display: grid;
-  grid-template-columns: 36px 1fr 56px auto;
+  grid-template-columns: 36px 1fr 56px;
   align-items: center;
   gap: 16px;
   height: 52px;
@@ -325,10 +325,10 @@ button { font-family: inherit; }
 }
 
 .work-row:hover { background: var(--bg-secondary); }
-.row-num   { font-size: 12px; color: var(--text-secondary); }
-.row-title { font-size: 17px; font-weight: 400; color: var(--text-secondary); transition: color 0.15s; }
+.row-num   { font-size: 13px; color: var(--text-secondary); }
+.row-title { font-size: 19px; font-weight: 400; color: var(--text-secondary); transition: color 0.15s; }
 .work-row:hover .row-title { color: var(--text-primary); }
-.row-yr    { font-size: 12px; color: var(--text-secondary); }
+.row-yr    { font-size: 13px; color: var(--text-secondary); }
 
 /* ============================================================
    PROJECT PAGE
@@ -342,12 +342,12 @@ button { font-family: inherit; }
 
 .proj-shell { padding-top: 40px; }
 
-.breadcrumb { font-size: 12px; color: var(--text-secondary); margin-bottom: 20px; }
+.breadcrumb { font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; }
 .breadcrumb a { color: var(--text-secondary); transition: color 0.15s; }
 .breadcrumb a:hover { color: var(--text-primary); }
 
 .proj-h1 {
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 500;
   letter-spacing: -0.02em;
   color: var(--text-primary);
@@ -376,7 +376,7 @@ button { font-family: inherit; }
 .stat-col { padding: 14px 18px; border-right: 0.5px solid var(--border-tertiary); }
 .stat-col:last-child { border-right: none; }
 .stat-val { font-size: 13px; font-weight: 500; color: var(--text-primary); display: block; margin-bottom: 2px; }
-.stat-lbl { font-size: 12px; color: var(--text-secondary); }
+.stat-lbl { font-size: 13px; color: var(--text-secondary); }
 
 .proj-body {
   display: grid;
@@ -400,7 +400,7 @@ button { font-family: inherit; }
 .proj-content li { font-size: 14px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 3px; }
 .proj-content figure { margin: 24px 0; }
 .proj-content img { display: block; max-width: 100%; border-radius: var(--radius); border: 0.5px solid var(--border-tertiary); }
-.proj-content figcaption { font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
+.proj-content figcaption { font-size: 13px; color: var(--text-secondary); margin-top: 6px; text-align: center; }
 .proj-content hr { border: none; border-top: 0.5px solid var(--border-tertiary); margin: 24px 0; }
 .proj-content a { color: var(--text-primary); text-decoration: underline; text-underline-offset: 2px; }
 .proj-content code { font-family: 'SF Mono','Fira Code',monospace; font-size: 0.875em; background: var(--bg-secondary); padding: 0.1em 0.3em; border-radius: var(--radius); }
@@ -416,7 +416,7 @@ button { font-family: inherit; }
 }
 
 .meta-lbl { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); }
-.meta-row span:last-child { font-size: 12px; color: var(--text-secondary); }
+.meta-row span:last-child { font-size: 13px; color: var(--text-secondary); }
 
 /* ============================================================
    ABOUT PAGE
@@ -539,7 +539,7 @@ button { font-family: inherit; }
   border: 0.5px solid var(--border-tertiary);
   border-radius: var(--radius);
   padding: 6px 14px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-secondary);
   margin-bottom: 48px;
 }
@@ -717,7 +717,7 @@ button { font-family: inherit; }
   .ds-main { padding: 0 var(--pad-mob); }
 
   .hero { flex-direction: column; gap: 16px; padding-top: 32px; padding-bottom: 40px; }
-  .hero h1 { font-size: 28px; }
+  .hero h1 { font-size: 30px; }
   .hero-meta { align-items: flex-start; }
 
   .feat-strip { grid-template-columns: 1fr; }
@@ -729,7 +729,7 @@ button { font-family: inherit; }
   .meta-row:last-child { border-right: none; }
 
   .about-hero { flex-direction: column-reverse; gap: 20px; }
-  .about-text h1 { font-size: 28px; }
+  .about-text h1 { font-size: 32px; }
   .about-cols { grid-template-columns: 1fr; gap: 28px; }
 
   .ftr-inner { grid-template-columns: 1fr; gap: 28px; padding: 36px var(--pad-mob) 28px; }
