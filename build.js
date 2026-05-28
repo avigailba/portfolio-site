@@ -221,7 +221,7 @@ function ftr(projects) {
   <div class="ftr-bottom">
     <span>© 2025 Avigail Bahat</span>
     <div style="display:flex;gap:20px;align-items:center;">
-      <a href="design-system.html" style="font-size:11px;color:var(--text-tertiary);">Design system</a>
+      <a href="design-system.html">Design system</a>
       <a href="#top">Back to top ↑</a>
     </div>
   </div>
@@ -464,41 +464,36 @@ async function contactPage(blocks, projects) {
 function designSystemPage(projects) {
   const swatches = [
     ['#0a0a0a','text-primary','Headings, body'],
-    ['#4a4a4a','text-secondary','Body text, descriptions'],
-    ['#999999','text-tertiary','Meta, labels, placeholders'],
+    ['#767676','text-secondary','Body text, meta, labels'],
     ['#ffffff','bg-primary','Page background'],
     ['#f5f5f3','bg-secondary','Cards, callouts, hover'],
     ['#e8e8e8','border-tertiary','Dividers, image borders'],
-    ['#d0d0d0','border-secondary','Card borders, scroll trigger'],
+    ['#d0d0d0','border-secondary','Card borders'],
     ['#b0b0b0','border-primary','Callout accent, pill border'],
     ['#1D9E75','available-green','Availability dot only'],
   ];
 
   const typeScale = [
-    ['Hero h1','font-size:32px;font-weight:500;letter-spacing:-0.03em;line-height:1.1','32px / 500 / -0.03em'],
-    ['Project title','font-size:22px;font-weight:500;letter-spacing:-0.025em','22px / 500 / -0.025em'],
-    ['Strip title','font-size:17px;font-weight:500;letter-spacing:-0.015em','17px / 500 / -0.015em'],
-    ['Body large','font-size:14px;font-weight:400;color:#4a4a4a;line-height:1.75','14px / 400 / lh 1.75'],
-    ['Body small','font-size:13px;font-weight:400;color:#4a4a4a;line-height:1.65','13px / 400 / lh 1.65'],
-    ['Caption','font-size:12px;font-weight:400;color:#999','12px / 400 / tertiary'],
-    ['Section label','font-size:10px;font-weight:400;text-transform:uppercase;letter-spacing:0.08em;color:#999','10px / 400 / uppercase / 0.08em'],
-    ['Meta / nav','font-size:11px;font-weight:400;color:#999','11px / 400 / tertiary'],
+    ['Hero h1','font-size:42px;font-weight:500;letter-spacing:-0.02em;line-height:1.1','42px / 500 / -0.02em'],
+    ['Strip title','font-size:22px;font-weight:500;letter-spacing:-0.02em','22px / 500 / -0.02em'],
+    ['Row title','font-size:17px;font-weight:400;color:var(--text-secondary)','17px / 400 / secondary'],
+    ['Body','font-size:14px;font-weight:400;color:var(--text-secondary);line-height:1.65','14px / 400 / lh 1.65'],
+    ['Small','font-size:13px;font-weight:400;color:var(--text-secondary);line-height:1.65','13px / 400 / lh 1.65'],
+    ['Caption / meta','font-size:12px;font-weight:400;color:var(--text-secondary)','12px / 400 / secondary'],
+    ['Section label','font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary)','12px / 500 / uppercase / 0.08em'],
   ];
 
   const spacings = [
     ['16px','--pad-mob / Mobile padding'],
-    ['28px','--pad-desk / Desktop padding'],
-    ['52px','--hero-top / Hero top padding'],
-    ['24px','Nav gap / Component spacing'],
-    ['40px','Section gap / Strip padding'],
+    ['40px','--pad-desk / Desktop padding'],
+    ['80px','--hero-top / Hero top padding'],
+    ['24px','Nav gap / component spacing'],
+    ['48px','Section vertical gap'],
     ['80px','Footer margin-top'],
   ];
 
   const radii = [
-    ['6px','--r-img / Images'],
-    ['8px','--r-card / Cards, strips'],
-    ['12px','--r-shell / Page shell'],
-    ['20px','--r-pill / Pills, buttons'],
+    ['6px','--radius / All elements'],
   ];
 
   const swatchHtml = swatches.map(([hex, name, usage]) => {
@@ -578,9 +573,9 @@ function designSystemPage(projects) {
           <div class="ds-hdr-preview">
             <span style="font-size:13px;font-weight:500">Avigail Bahat</span>
             <div style="display:flex;gap:24px;align-items:center">
-              <span style="font-size:11px;color:#999">Work</span>
-              <span style="font-size:11px;color:#999">About</span>
-              <span style="font-size:11px;color:#4a4a4a;border:0.5px solid #b0b0b0;border-radius:20px;padding:5px 14px">Contact</span>
+              <span style="font-size:12px;color:var(--text-secondary)">Work</span>
+              <span style="font-size:12px;color:var(--text-secondary)">About</span>
+              <span style="font-size:12px;color:var(--text-secondary);border:0.5px solid var(--border-primary);border-radius:var(--radius);padding:5px 14px">Contact</span>
             </div>
           </div>
         </div>
@@ -590,9 +585,9 @@ function designSystemPage(projects) {
           <div class="ds-hdr-preview">
             <span style="font-size:13px;font-weight:500">Avigail Bahat</span>
             <div style="display:flex;gap:24px;align-items:center">
-              <span style="font-size:11px;color:#0a0a0a;position:relative">Work<span style="position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:#0a0a0a;display:block"></span></span>
-              <span style="font-size:11px;color:#999">About</span>
-              <span style="font-size:11px;color:#4a4a4a;border:0.5px solid #b0b0b0;border-radius:20px;padding:5px 14px">Contact</span>
+              <span style="font-size:12px;color:var(--text-primary);position:relative">Work<span style="position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:var(--text-primary);display:block"></span></span>
+              <span style="font-size:12px;color:var(--text-secondary)">About</span>
+              <span style="font-size:12px;color:var(--text-secondary);border:0.5px solid var(--border-primary);border-radius:var(--radius);padding:5px 14px">Contact</span>
             </div>
           </div>
         </div>
