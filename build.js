@@ -1,4 +1,12 @@
 try { require('dotenv').config(); } catch (e) {}
+if (!process.env.NOTION_API_KEY) {
+  try {
+    const { execSync } = require('child_process');
+    const lines = execSync('git worktree list --porcelain', { encoding: 'utf8' }).split('\n');
+    const mainPath = lines.find(l => l.startsWith('worktree'))?.split('worktree ')[1];
+    if (mainPath) require('dotenv').config({ path: require('path').join(mainPath, '.env') });
+  } catch (e) {}
+}
 process.env.NOTION_API_KEY = process.env.NOTION_API_KEY || process.env.NOTION_TOKEN;
 const { Client } = require('@notionhq/client');
 const fs = require('fs');
