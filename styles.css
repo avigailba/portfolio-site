@@ -37,7 +37,7 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.65;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
@@ -228,7 +228,7 @@ button { font-family: inherit; }
 .hero h1 {
   font-size: 42px;
   font-weight: 500;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   line-height: 1.1;
   color: var(--text-primary);
 }
@@ -270,9 +270,9 @@ button { font-family: inherit; }
 .strip-num { font-size: 11px; color: var(--text-tertiary); min-width: 24px; flex-shrink: 0; }
 
 .strip-title {
-  font-size: 17px;
+  font-size: 22px;
   font-weight: 500;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
   flex: 1;
 }
@@ -332,7 +332,7 @@ button { font-family: inherit; }
 
 .work-row:hover { background: var(--bg-secondary); }
 .row-num   { font-size: 11px; color: var(--text-tertiary); }
-.row-title { font-size: 13px; color: var(--text-secondary); transition: color 0.15s; }
+.row-title { font-size: 17px; font-weight: 400; color: var(--text-secondary); transition: color 0.15s; }
 .work-row:hover .row-title { color: var(--text-primary); }
 .row-yr    { font-size: 11px; color: var(--text-tertiary); }
 
@@ -446,9 +446,9 @@ button { font-family: inherit; }
 .about-text { flex: 1; }
 
 .about-text h1 {
-  font-size: 32px;
+  font-size: 42px;
   font-weight: 500;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   line-height: 1.1;
 }
 
@@ -519,9 +519,9 @@ button { font-family: inherit; }
 .contact-shell { padding-top: var(--hero-top); max-width: 520px; }
 
 .contact-shell h1 {
-  font-size: 32px;
+  font-size: 42px;
   font-weight: 500;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   line-height: 1.1;
 }
 
@@ -722,7 +722,7 @@ button { font-family: inherit; }
   .meta-row:last-child { border-right: none; }
 
   .about-hero { flex-direction: column-reverse; gap: 20px; }
-  .about-text h1 { font-size: 24px; }
+  .about-text h1 { font-size: 28px; }
   .about-cols { grid-template-columns: 1fr; gap: 28px; }
 
   .ftr-inner { grid-template-columns: 1fr; gap: 28px; padding: 36px var(--pad-mob) 28px; }

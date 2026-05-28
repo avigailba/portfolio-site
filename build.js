@@ -246,7 +246,7 @@ function indexPage(projects) {
       <div class="strip-l">
         <div class="strip-hdr">
           <span class="strip-num">${String(i+1).padStart(2,'0')}</span>
-          <h2 class="strip-title">${p.icon?p.icon+' ':''}${p.title}</h2>
+          <h2 class="strip-title">${p.title}</h2>
           <span class="type-pill">Product Design</span>
         </div>
         ${p.excerpt?`<p class="strip-exc">${p.excerpt}</p>`:''}
@@ -290,7 +290,7 @@ function projectPage(proj, projects) {
   <main class="proj-main">
     <div class="proj-shell">
       <div class="breadcrumb"><a href="index.html">← Work</a> / ${proj.title}</div>
-      <h1 class="proj-h1">${proj.icon?proj.icon+' ':''}${proj.title}</h1>
+      <h1 class="proj-h1">${proj.title}</h1>
       ${proj.excerpt?`<div class="callout"><p><strong>The problem:</strong> ${proj.excerpt}</p></div>`:''}
       <div class="stat-strip">
         <div class="stat-col"><span class="stat-val">${proj.year}</span><span class="stat-lbl">Year</span></div>
@@ -632,7 +632,7 @@ function designSystemPage(projects) {
             <div style="display:flex;flex-direction:column;gap:10px">
               <div style="display:flex;align-items:center;gap:12px">
                 <span class="strip-num">01</span>
-                <span class="strip-title">${featProj.icon ? featProj.icon + ' ' : ''}${featProj.title}</span>
+                <span class="strip-title">${featProj.title}</span>
                 <span class="type-pill">Product Design</span>
               </div>
               <p class="strip-exc">${featProj.excerpt || 'A short description of the project.'}</p>
