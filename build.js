@@ -26,6 +26,10 @@ function slugify(s) {
   return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
+function stripEmoji(s) {
+  return s.replace(/(\p{Emoji_Presentation}|\p{Extended_Pictographic})\s*/gu, '').trim();
+}
+
 function isFeatured(title) {
   const t = title.toLowerCase();
   return FEATURED.some(f => t.includes(f));
@@ -85,38 +89,39 @@ function rt(richText) {
   }).join('');
 }
 
-async function toHtml(blocks) {
-  let html = '', list = false;
+function toHtml(blocks) {
+  let html = '', uList = false, oList = false;
   for (const b of blocks) {
-    if (b.type !== 'bulleted_list_item' && list) { html += '</ul>\n'; list = false; }
+    if (b.type !== 'bulleted_list_item' && uList) { html += '</ul>\n'; uList = false; }
+    if (b.type !== 'numbered_list_item' && oList) { html += '</ol>\n'; oList = false; }
     switch (b.type) {
-      case 'paragraph': { const t = rt(b.paragraph.rich_text); if (t) html += `<p>${t}</p>\n`; break; }
+      case 'paragraph': {
+        const t = rt(b.paragraph.rich_text);
+        if (t) html += `<p>${t}</p>\n`;
+        break;
+      }
       case 'heading_2': html += `<h2>${rt(b.heading_2.rich_text)}</h2>\n`; break;
       case 'heading_3': html += `<h3>${rt(b.heading_3.rich_text)}</h3>\n`; break;
       case 'bulleted_list_item':
-        if (!list) { html += '<ul>\n'; list = true; }
+        if (!uList) { html += '<ul>\n'; uList = true; }
         html += `  <li>${rt(b.bulleted_list_item.rich_text)}</li>\n`;
         break;
-      case 'image': {
-        let url = b.image.type === 'external' ? b.image.external.url : b.image.file.url;
-        const cap = b.image.caption?.length ? rt(b.image.caption) : '';
-        if (url.includes('amazonaws.com') || url.includes('prod-files-secure')) {
-          imgIdx++;
-          const fname = `img-${imgIdx}.jpg`;
-          try {
-            await dlFile(url, path.join(IMAGES, fname));
-            url = `images/${fname}`;
-            stats.images++;
-          } catch (e) { stats.errors.push(`img-${imgIdx}: ${e.message}`); }
-        }
-        html += `<figure>\n  <img src="${url}" alt="${cap}" loading="lazy">\n${cap ? `  <figcaption>${cap}</figcaption>\n` : ''}</figure>\n`;
+      case 'numbered_list_item':
+        if (!oList) { html += '<ol>\n'; oList = true; }
+        html += `  <li>${rt(b.numbered_list_item.rich_text)}</li>\n`;
+        break;
+      case 'callout': {
+        const icon = b.callout.icon?.emoji ? `${b.callout.icon.emoji} ` : '';
+        const t = rt(b.callout.rich_text);
+        if (t) html += `<div class="callout"><p>${icon}${t}</p></div>\n`;
         break;
       }
       case 'divider': html += '<hr>\n'; break;
-      case 'child_page': break;
+      // skip images and unsupported blocks
     }
   }
-  if (list) html += '</ul>\n';
+  if (uList) html += '</ul>\n';
+  if (oList) html += '</ol>\n';
   return html;
 }
 
@@ -689,8 +694,9 @@ async function build() {
     const meta = await notion.pages.retrieve({ page_id: p.id });
     const icon = meta.icon?.type === 'emoji' ? meta.icon.emoji : '';
     const year = new Date(meta.created_time).getFullYear().toString();
-    const contentHtml = await toHtml(p.blocks);
-    projects.push({ ...p, icon, year, slug: slugify(p.title), contentHtml, excerpt: excerpt(p.blocks) });
+    const contentHtml = toHtml(p.blocks);
+    const title = stripEmoji(p.title);
+    projects.push({ ...p, title, icon, year, slug: slugify(title), contentHtml, excerpt: excerpt(p.blocks) });
   }
 
   for (const proj of projects) {
