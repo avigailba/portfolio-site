@@ -97,7 +97,8 @@ async function toHtml(blocks) {
     switch (b.type) {
       case 'paragraph': {
         const t = rt(b.paragraph.rich_text);
-        if (t) html += `<p>${t}</p>\n`;
+        const plain = b.paragraph.rich_text.map(x => x.plain_text).join('').trim();
+        if (t && !isDateString(plain)) html += `<p>${t}</p>\n`;
         break;
       }
       case 'heading_2': html += `<h2>${rt(b.heading_2.rich_text)}</h2>\n`; break;
@@ -139,9 +140,24 @@ async function toHtml(blocks) {
   return html;
 }
 
+function isDateString(s) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(s.trim());
+}
+
 function excerpt(blocks) {
-  const p = blocks.find(b => b.type === 'paragraph' && b.paragraph.rich_text.length);
+  const p = blocks.find(b => {
+    if (b.type !== 'paragraph' || !b.paragraph.rich_text.length) return false;
+    const plain = b.paragraph.rich_text.map(t => t.plain_text).join('').trim();
+    return plain.length > 0 && !isDateString(plain);
+  });
   return p ? p.paragraph.rich_text.map(t => t.plain_text).join('').slice(0, 180) : '';
+}
+
+function firstCallout(blocks) {
+  const c = blocks.find(b => b.type === 'callout' && b.callout.rich_text.length);
+  if (!c) return '';
+  const icon = c.callout.icon?.emoji ? `${c.callout.icon.emoji} ` : '';
+  return icon + c.callout.rich_text.map(t => t.plain_text).join('');
 }
 
 function plainText(richText) {
@@ -274,17 +290,14 @@ function indexPage(projects) {
   const more = projects.filter(p => !isFeatured(p.title));
 
   const strips = feat.map((p, i) => `<a href="${p.slug}.html" class="feat-strip">
-      <div class="strip-l">
-        <div class="strip-hdr">
-          <span class="strip-num">${String(i+1).padStart(2,'0')}</span>
-          <h2 class="strip-title">${p.title}</h2>
-          <span class="type-pill">Product Design</span>
-        </div>
-        ${p.excerpt?`<p class="strip-exc">${p.excerpt}</p>`:''}
-        <div class="strip-foot">
-          <span class="strip-yr">${p.year}</span>
-          <span class="strip-cta">View case study →</span>
-        </div>
+      <div class="strip-hdr">
+        <span class="strip-num">${String(i+1).padStart(2,'0')}</span>
+        <h2 class="strip-title">${p.title}</h2>
+      </div>
+      ${p.excerpt?`<p class="strip-exc">${p.excerpt}</p>`:''}
+      <div class="strip-foot">
+        <span class="strip-yr">${p.year}</span>
+        <span class="type-pill">Product Design</span>
       </div>
     </a>`).join('\n    ');
 
@@ -292,7 +305,6 @@ function indexPage(projects) {
       <span class="row-num">${String(feat.length+i+1).padStart(2,'0')}</span>
       <span class="row-title">${p.title}</span>
       <span class="row-yr">${p.year}</span>
-      <span class="type-pill">Product Design</span>
     </a>`).join('\n    ');
 
   return wrap('work', 'Avigail Bahat — Product Designer', `
@@ -321,12 +333,7 @@ function projectPage(proj, projects) {
     <div class="proj-shell">
       <div class="breadcrumb"><a href="index.html">← Work</a> / ${proj.title}</div>
       <h1 class="proj-h1">${proj.title}</h1>
-      ${proj.excerpt?`<div class="callout"><p><strong>The problem:</strong> ${proj.excerpt}</p></div>`:''}
-      <div class="stat-strip">
-        <div class="stat-col"><span class="stat-val">${proj.year}</span><span class="stat-lbl">Year</span></div>
-        <div class="stat-col"><span class="stat-val">Product Design</span><span class="stat-lbl">Type</span></div>
-        <div class="stat-col"><span class="stat-val">Lead Designer</span><span class="stat-lbl">Role</span></div>
-      </div>
+      ${proj.callout?`<div class="callout"><p>${proj.callout}</p></div>`:proj.excerpt?`<div class="callout"><p><strong>The problem:</strong> ${proj.excerpt}</p></div>`:''}
       <div class="proj-body">
         <div class="proj-content">${proj.contentHtml}</div>
         <aside class="proj-aside">
@@ -714,7 +721,7 @@ async function build() {
     const year = new Date(meta.created_time).getFullYear().toString();
     const contentHtml = await toHtml(p.blocks);
     const title = stripEmoji(p.title);
-    projects.push({ ...p, title, icon, year, slug: slugify(title), contentHtml, excerpt: excerpt(p.blocks) });
+    projects.push({ ...p, title, icon, year, slug: slugify(title), contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
   }
 
   for (const proj of projects) {
