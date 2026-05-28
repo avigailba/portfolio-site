@@ -294,11 +294,40 @@ function wrap(cur, title, body, projects) {
 // ── Pages ────────────────────────────────────────────────────
 
 function indexPage(projects) {
-  const rows = projects.map((p, i) => `<a href="${p.slug}.html" class="project-row">
-      <span class="row-num">${String(i+1).padStart(2,'0')}</span>
-      <span class="row-title">${p.title}</span>
-      <span class="row-year">${p.year}</span>
-    </a>`).join('\n    ');
+  const feat = projects.filter(p => isFeatured(p.title));
+  const more = projects.filter(p => !isFeatured(p.title));
+  const hero = feat[0];
+  const duo  = feat.slice(1, 3);
+
+  const heroHtml = hero ? `<a href="${hero.slug}.html" class="feat-hero">
+    <div class="feat-hero-l">
+      <span class="fh-num">01</span>
+      <h2 class="fh-title">${hero.title}</h2>
+      ${hero.excerpt ? `<p class="fh-desc">${hero.excerpt}</p>` : ''}
+    </div>
+    <span class="fh-year">${hero.year}</span>
+  </a>` : '';
+
+  const duoHtml = duo.length ? `<div class="feat-duo">
+    ${duo.map((p, i) => `<a href="${p.slug}.html" class="feat-card ${i===0?'feat-card-l':'feat-card-r'}">
+      <span class="fc-num">${String(i+2).padStart(2,'0')}</span>
+      <h2 class="fc-title">${p.title}</h2>
+      ${p.excerpt ? `<p class="fc-desc">${p.excerpt}</p>` : ''}
+      <span class="fc-year">${p.year}</span>
+    </a>`).join('\n    ')}
+  </div>` : '';
+
+  const moreHtml = more.length ? `<div class="more-list">
+    <span class="more-label">More work</span>
+    ${more.map((p, i) => `<a href="${p.slug}.html" class="more-row">
+      <span class="mr-num">${String(feat.length+i+1).padStart(2,'0')}</span>
+      <div class="mr-body">
+        <span class="mr-title">${p.title}</span>
+        ${p.excerpt ? `<p class="mr-desc">${p.excerpt}</p>` : ''}
+      </div>
+      <span class="mr-year">${p.year}</span>
+    </a>`).join('\n    ')}
+  </div>` : '';
 
   return wrap('work', 'Avigail Bahat — Product Designer', `
   <main class="home-main">
@@ -307,7 +336,9 @@ function indexPage(projects) {
       <p class="hero-sub">12 years at Wix · <span style="color:#1D9E75">Available for new roles</span></p>
     </section>
     <section class="work-sec">
-      <div class="project-list">${rows}</div>
+      ${heroHtml}
+      ${duoHtml}
+      ${moreHtml}
     </section>
   </main>`, projects);
 }

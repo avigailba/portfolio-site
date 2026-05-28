@@ -216,10 +216,6 @@ button { font-family: inherit; }
 
 .hero {
   padding: var(--hero-top) 0 64px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 40px;
 }
 
 .hero h1 {
@@ -232,39 +228,72 @@ button { font-family: inherit; }
 
 .hero-sub { font-size: 13px; color: var(--text-secondary); margin-top: 16px; }
 
-.work-sec { margin-bottom: 56px; }
+.work-sec { margin-bottom: 80px; }
 
-.project-list { border-top: 0.5px solid var(--border-tertiary); }
-
-.project-row {
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-  padding: 12px 0;
-  border-bottom: 0.5px solid var(--border-tertiary);
+/* Featured hero — project 01 */
+.feat-hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 40px;
+  padding: 36px 0;
+  border-top: 0.5px solid #e8e8e8;
+  border-bottom: 0.5px solid #e8e8e8;
 }
+.feat-hero:hover .fh-title { color: #1D9E75; }
+.fh-num   { font-size: 12px; font-weight: 500; color: #1D9E75; display: block; margin-bottom: 14px; }
+.fh-title { font-size: 48px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; color: #0a0a0a; margin-bottom: 16px; transition: color 0.15s; }
+.fh-desc  { font-size: 16px; color: #2a2a2a; line-height: 1.55; max-width: 520px; }
+.fh-year  { font-size: 13px; color: #767676; }
 
-.project-row:hover .row-title { color: var(--accent); }
+/* Featured duo — projects 02 + 03 */
+.feat-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 0.5px solid #e8e8e8;
+}
+.feat-card   { border-top: 0.5px solid #e8e8e8; padding: 28px 0; }
+.feat-card-l { padding-right: 40px; border-right: 0.5px solid #e8e8e8; }
+.feat-card-r { padding-left: 40px; }
+.feat-card:hover .fc-title { color: #1D9E75; }
+.fc-num   { font-size: 12px; font-weight: 500; color: #1D9E75; display: block; margin-bottom: 10px; }
+.fc-title { font-size: 28px; font-weight: 500; letter-spacing: -0.01em; color: #0a0a0a; margin-bottom: 10px; transition: color 0.15s; }
+.fc-desc  { font-size: 14px; color: #2a2a2a; line-height: 1.55; margin-bottom: 12px; }
+.fc-year  { font-size: 12px; color: #767676; display: block; }
 
-.row-num {
+/* More work list with hover accordion */
+.more-list  { margin-top: 48px; }
+.more-label {
+  display: block;
   font-size: 12px;
   font-weight: 500;
-  color: var(--accent);
-  width: 24px;
-  flex-shrink: 0;
-}
-
-.row-title {
-  font-size: 19px;
-  color: var(--text-primary);
-  flex: 1;
-  transition: color 0.15s;
-}
-
-.row-year {
-  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: #767676;
+  padding-bottom: 0;
 }
+.more-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  border-top: 0.5px solid #e8e8e8;
+  padding: 13px 0;
+}
+.more-row:hover .mr-title { color: #1D9E75; }
+.mr-num   { font-size: 12px; font-weight: 500; color: #1D9E75; width: 28px; flex-shrink: 0; padding-top: 2px; }
+.mr-body  { flex: 1; }
+.mr-title { font-size: 17px; color: #0a0a0a; display: block; transition: color 0.15s; }
+.mr-desc  {
+  font-size: 14px;
+  color: #2a2a2a;
+  line-height: 1.55;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease, opacity 0.25s ease;
+}
+.more-row:hover .mr-desc { max-height: 60px; opacity: 1; }
+.mr-year  { font-size: 12px; color: #767676; flex-shrink: 0; padding-top: 2px; }
 
 .strips-wrap { border-top: 0.5px solid var(--border-tertiary); }
 
@@ -741,12 +770,17 @@ button { font-family: inherit; }
   .contact-main,
   .ds-main { padding: 0 var(--pad-mob); }
 
-  .hero { flex-direction: column; gap: 16px; padding-top: 32px; padding-bottom: 40px; }
+  .hero { padding-top: 32px; padding-bottom: 40px; }
   .hero h1 { font-size: 30px; }
-  .hero-meta { align-items: flex-start; }
 
-  .feat-strip { grid-template-columns: 1fr; }
-  .strip-r    { display: none; }
+  .feat-hero { grid-template-columns: 1fr; }
+  .fh-title  { font-size: 32px; }
+  .fh-year   { display: none; }
+
+  .feat-duo       { grid-template-columns: 1fr; }
+  .feat-card-l    { padding-right: 0; border-right: none; }
+  .feat-card-r    { padding-left: 0; }
+  .fc-title       { font-size: 22px; }
 
   .proj-body { grid-template-columns: 1fr; }
   .proj-aside { order: -1; display: grid; grid-template-columns: repeat(3, 1fr); }
