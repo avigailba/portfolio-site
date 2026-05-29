@@ -378,11 +378,14 @@ button { font-family: inherit; }
 }
 
 .work-row { cursor: pointer; }
-.work-row:hover { background: var(--bg-secondary); }
 .row-num   { font-size: 13px; font-weight: 500; color: var(--available-green); }
 .row-title { font-size: 19px; font-weight: 400; color: var(--text-primary); transition: color 0.15s; }
-.work-row:hover .row-title { color: var(--available-green); }
 .row-yr    { font-size: 13px; color: var(--text-secondary); }
+
+@media (hover: hover) {
+  .work-row:hover { background: var(--bg-secondary); }
+  .work-row:hover .row-title { color: var(--available-green); }
+}
 
 /* ============================================================
    PROJECT PAGE
