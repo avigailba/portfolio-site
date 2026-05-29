@@ -19,7 +19,6 @@ const ROOT_PAGE_ID    = '9e31791fdedf4048bb784d0cbae06e51';
 const ABOUT_PAGE_ID   = '36e35a9ccf7a81f6953dcab2aebb27fc';
 const CONTACT_PAGE_ID = '36e35a9ccf7a8188a447fd3e36ee88cd';
 
-// Pages to exclude from the project grid
 const SKIP_IDS   = new Set([ABOUT_PAGE_ID, CONTACT_PAGE_ID]);
 const SKIP_SLUGS = new Set(['about', 'contact', 'cv', 'resume']);
 const DIST = 'dist';
@@ -28,7 +27,31 @@ const IMAGES = path.join(DIST, 'images');
 let imgIdx = 0;
 const stats = { pages: 0, images: 0, errors: [] };
 
-const FEATURED = ['ai credits', 'app coupons', 'submit'];
+// Project metadata: categories, display title overrides, years, featured status
+const PROJECT_META = {
+  'ai-credits':                          { title: 'AI Credits',                  cats: 'ai cms featured',           display: 'AI',              year: 2026, featured: true },
+  'app-installation-page-for-developers': { title: 'App Installation View',       cats: 'developer cms featured',    display: 'Developer tools', year: 2026, featured: true },
+  'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'cms',                       display: 'CMS',             year: 2025, featured: false },
+  'developer-sale':                      { title: 'Developer Sale',               cats: 'monetisation cms featured', display: 'Monetisation',    year: 2024, featured: true },
+  'app-collections-internal-manager':    { title: 'App Collections',              cats: 'internal cms',              display: 'Internal tools',  year: 2023, featured: false },
+  'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',          display: 'Monetisation',    year: 2023, featured: false },
+  'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',              display: 'Monetisation',    year: 2023, featured: false },
+  'app-pricing-page-projects':           { title: 'App Pricing Page',             cats: 'monetisation',              display: 'Monetisation',    year: 2023, featured: false },
+  'internal-app-review-system':          { title: 'Internal App Review System',   cats: 'internal featured',         display: 'Internal tools',  year: 2022, featured: true },
+  'submit-publish-widget':               { title: 'Submit & Publish Widget',      cats: 'developer',                 display: 'Developer tools', year: 2022, featured: false },
+  'custom-element-component-settings':   { title: 'Custom Element Settings',      cats: 'developer',                 display: 'Developer tools', year: 2022, featured: false },
+  'api-keys-page':                       { title: 'API Keys Page',                cats: 'developer cms',             display: 'Developer tools', year: 2022, featured: false },
+  'development-site-creation':           { title: 'Development Site Creation',    cats: 'developer',                 display: 'Developer tools', year: 2022, featured: false },
+  'app-coupons':                         { title: 'App Coupons',                  cats: 'monetisation cms',          display: 'Monetisation',    year: 2021, featured: false },
+};
+
+// Featured rows shown on homepage (in order)
+const FEAT_ORDER = [
+  'ai-credits',
+  'app-installation-page-for-developers',
+  'developer-sale',
+  'internal-app-review-system',
+];
 
 function slugify(s) {
   return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -36,11 +59,6 @@ function slugify(s) {
 
 function stripEmoji(s) {
   return s.replace(/(\p{Emoji_Presentation}|\p{Extended_Pictographic})\s*/gu, '').trim();
-}
-
-function isFeatured(title) {
-  const t = title.toLowerCase();
-  return FEATURED.some(f => t.includes(f));
 }
 
 async function fetchBlocks(pageId) {
@@ -106,13 +124,11 @@ async function toHtml(blocks) {
     if (b.type !== 'numbered_list_item' && oList) { html += '</ol>\n'; oList = false; }
     switch (b.type) {
       case 'paragraph': {
-        // Strip mention-date items before processing
         const rich = b.paragraph.rich_text.filter(
           t => !(t.type === 'mention' && t.mention?.type === 'date')
         );
         const plain = rich.map(x => x.plain_text).join('').trim();
         if (!plain || isDateString(plain)) break;
-        // Skip the first all-italic paragraph — it's the summary used for homepage cards
         if (!firstParaSeen && rich.length > 0 && rich.every(t => t.annotations?.italic)) {
           firstParaSeen = true;
           break;
@@ -197,23 +213,10 @@ function plainText(richText) {
   return richText.map(t => t.plain_text).join('');
 }
 
-// A paragraph whose first chunk is bold = experience row (bold=years, rest=role+company)
-function isExpRow(block) {
-  if (block.type !== 'paragraph') return false;
-  const chunks = block.paragraph.rich_text;
-  return chunks.length >= 2 && chunks[0].annotations.bold;
-}
-
-function renderExpRow(block) {
-  const chunks = block.paragraph.rich_text;
-  const years  = chunks.filter(t => t.annotations.bold).map(t => t.plain_text).join('');
-  const rest   = chunks.filter(t => !t.annotations.bold).map(t => t.plain_text).join('').trim();
-  const ci = rest.lastIndexOf(',');
-  const role    = ci > 0 ? rest.slice(0, ci).trim() : rest;
-  const company = ci > 0 ? rest.slice(ci + 1).trim() : '';
-  return `<div class="exp-row">
-    <span class="exp-role">${role}</span>${company ? `<span class="exp-company">${company}</span>` : ''}<span class="exp-years">${years}</span>
-  </div>`;
+async function hydrateTables(blocks) {
+  for (const b of blocks) {
+    if (b.type === 'table') b._rows = await fetchBlocks(b.id);
+  }
 }
 
 function renderExpTable(rows) {
@@ -230,75 +233,87 @@ function renderExpTable(rows) {
   }).filter(Boolean).join('\n');
 }
 
-// Hydrate table blocks by fetching their row children
-async function hydrateTables(blocks) {
-  for (const b of blocks) {
-    if (b.type === 'table') b._rows = await fetchBlocks(b.id);
-  }
-}
-
 // ── Layout ──────────────────────────────────────────────────
 
 function hdr(cur) {
   const nav = [
-    { id:'work',    href:'index.html',   label:'Work' },
-    { id:'about',   href:'about.html',   label:'About' },
-    { id:'contact', href:'contact.html', label:'Contact', pill:true },
+    { id: 'about',   href: 'about.html',   label: 'About' },
+    { id: 'cv',      href: 'cv.html',      label: 'CV' },
+    { id: 'contact', href: 'contact.html', label: 'Contact' },
   ];
-  return `<header class="site-header" id="site-header">
-  <div class="hdr-inner">
-    <a href="index.html" class="hdr-logo">Avigail Bahat</a>
-    <nav class="hdr-nav">
-      ${nav.map(l => `<a href="${l.href}" class="nav-link${l.pill?' nav-pill':''}${l.id===cur?' nav-active':''}">${l.label}</a>`).join('\n      ')}
-    </nav>
-    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span></button>
-  </div>
-  <div class="mob-menu" id="mob-menu">
-    <a href="index.html">Work</a>
-    <a href="about.html">About</a>
-    <a href="mailto:avigailbahat@gmail.com">Email</a>
-    <a href="https://linkedin.com/in/avigailbahat" target="_blank" rel="noopener">LinkedIn</a>
+  return `<header>
+  <a href="index.html" class="logo">Avigail B.</a>
+  <nav>
+    ${nav.map(l => `<a href="${l.href}"${l.id === cur ? ' class="active"' : ''}>${l.label}</a>`).join('\n    ')}
+  </nav>
+  <div class="hue-wrap">
+    <div id="htrack">
+      <input type="range" id="hslider" min="0" max="360" value="156">
+      <div id="hthumb"></div>
+    </div>
   </div>
 </header>`;
 }
 
-function ftr(projects) {
-  const top = projects.filter(p => isFeatured(p.title)).slice(0, 3);
-  return `<footer class="site-footer">
-  <div class="ftr-inner">
-    <div class="ftr-col">
-      <p class="ftr-tagline">Product designer focused on<br>developer tools and platform experiences.</p>
-    </div>
-    <div class="ftr-col">
-      <span class="section-label">Projects</span>
-      ${top.map(p=>`<a href="${p.slug}.html">${p.title}</a>`).join('\n      ')}
-      <a href="index.html">All projects →</a>
-    </div>
-    <div class="ftr-col">
-      <span class="section-label">Connect</span>
-      <a href="mailto:avigailbahat@gmail.com">Email</a>
-      <a href="https://linkedin.com/in/avigailbahat" target="_blank" rel="noopener">LinkedIn</a>
-      <span class="ftr-loc">Tel Aviv</span>
-    </div>
-  </div>
-  <div class="ftr-bottom">
-    <span>© 2025 Avigail Bahat</span>
-    <div style="display:flex;gap:20px;align-items:center;">
-      <a href="design-system.html">Design system</a>
-      <a href="#top">Back to top ↑</a>
-    </div>
+function ftr() {
+  return `<footer>
+  <span>Avigail Bahat · Senior UX Designer</span>
+  <div>
+    <a href="https://www.linkedin.com/in/avigailbahat/">LinkedIn</a>
+    <a href="mailto:avigailba@gmail.com">Email</a>
   </div>
 </footer>`;
 }
 
 const JS = `<script>
-const h=document.getElementById('site-header');
-window.addEventListener('scroll',()=>h.classList.toggle('scrolled',scrollY>10));
-const btn=document.getElementById('hamburger'),menu=document.getElementById('mob-menu');
-btn.addEventListener('click',()=>{const o=menu.classList.toggle('open');btn.classList.toggle('open',o);});
+(function() {
+  const sl = document.getElementById('hslider');
+  const th = document.getElementById('hthumb');
+  if (!sl) return;
+  function applyHue(h) {
+    const c = \`hsl(\${h},65%,40%)\`;
+    document.documentElement.style.setProperty('--ac', c);
+    th.style.left = \`calc(\${h / 360 * 100}% - 6px)\`;
+    th.style.background = c;
+  }
+  sl.addEventListener('input', () => {
+    applyHue(sl.value);
+    localStorage.setItem('portfolio-hue', sl.value);
+  });
+  const saved = localStorage.getItem('portfolio-hue');
+  if (saved) { sl.value = saved; applyHue(saved); }
+})();
+
+document.querySelectorAll('.feat-row[data-href], #list .row[data-href]').forEach(row => {
+  row.addEventListener('click', () => { location.href = row.dataset.href; });
+});
+
+(function() {
+  const filters = document.getElementById('filters');
+  if (!filters) return;
+  filters.querySelectorAll('.filt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.f;
+      filters.querySelectorAll('.filt').forEach(b => {
+        b.classList.remove('active');
+        b.style.textDecoration = 'none';
+      });
+      btn.classList.add('active');
+      btn.style.textDecoration = 'underline';
+      document.querySelectorAll('#list .row').forEach(row => {
+        const cats = (row.dataset.cat || '').split(' ');
+        row.classList.toggle('hidden', f !== 'all' && !cats.includes(f));
+      });
+      let i = 1;
+      document.querySelectorAll('#list .row:not(.hidden)').forEach(row => {
+        row.querySelector('.num').textContent = String(i++).padStart(2, '0');
+      });
+    });
+  });
+})();
 </script>`;
 
-function wrap(cur, title, body, projects) {
+function wrap(cur, title, body) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -307,10 +322,12 @@ function wrap(cur, title, body, projects) {
   <title>${title}</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body id="top">
-  ${hdr(cur)}
-  ${body}
-  ${ftr(projects)}
+<body>
+  <div class="wrap">
+    ${hdr(cur)}
+    ${body}
+    ${ftr()}
+  </div>
   ${JS}
 </body>
 </html>`;
@@ -319,161 +336,169 @@ function wrap(cur, title, body, projects) {
 // ── Pages ────────────────────────────────────────────────────
 
 function indexPage(projects) {
-  const feat = projects.filter(p => isFeatured(p.title));
-  const more = projects.filter(p => !isFeatured(p.title));
-  const hero = feat[0];
-  const duo  = feat.slice(1, 3);
+  const bySlug = {};
+  for (const p of projects) bySlug[p.slug] = p;
 
-  const heroHtml = hero ? `<a href="${hero.slug}.html" class="feat-hero">
-    <div class="feat-hero-l">
-      <span class="fh-num">01</span>
-      <h2 class="fh-title">${hero.title}</h2>
-      ${hero.excerpt ? `<p class="fh-desc">${hero.excerpt}</p>` : ''}
+  // Featured section: 4 projects in defined order
+  const featHtml = FEAT_ORDER.map((slug, i) => {
+    const meta = PROJECT_META[slug];
+    const proj = bySlug[slug];
+    const sub = proj?.excerpt || '';
+    return `<div class="feat-row" data-href="${slug}.html">
+  <span class="feat-num">${String(i + 1).padStart(2, '0')}</span>
+  <div class="feat-body">
+    <div class="feat-title">${meta.title}</div>
+    ${sub ? `<div class="feat-sub">${sub}</div>` : ''}
+    <div class="feat-meta">
+      <span class="feat-cat">${meta.display}</span>
+      <span class="feat-dot"> · </span>
+      <span class="feat-year">${meta.year}</span>
     </div>
-    <span class="fh-year">${hero.year}</span>
-  </a>` : '';
+  </div>
+  <span class="feat-arrow">→</span>
+</div>`;
+  }).join('\n  ');
 
-  const duoHtml = duo.length ? `<div class="feat-duo">
-    ${duo.map((p, i) => `<a href="${p.slug}.html" class="feat-card ${i===0?'feat-card-l':'feat-card-r'}">
-      <span class="fc-num">${String(i+2).padStart(2,'0')}</span>
-      <h2 class="fc-title">${p.title}</h2>
-      ${p.excerpt ? `<p class="fc-desc">${p.excerpt}</p>` : ''}
-      <span class="fc-year">${p.year}</span>
-    </a>`).join('\n    ')}
-  </div>` : '';
-
-  const moreHtml = more.length ? `<div class="more-list">
-    <span class="more-label">More work</span>
-    ${more.map((p, i) => `<a href="${p.slug}.html" class="more-row">
-      <span class="mr-num">${String(feat.length+i+1).padStart(2,'0')}</span>
-      <div class="mr-body">
-        <span class="mr-title">${p.title}</span>
-        ${p.excerpt ? `<p class="mr-desc">${p.excerpt}</p>` : ''}
-      </div>
-      <span class="mr-year">${p.year}</span>
-    </a>`).join('\n    ')}
-  </div>` : '';
-
-  return wrap('work', 'Avigail Bahat — Product Designer', `
-  <main class="home-main">
-    <section class="hero">
-      <h1>Making complex developer<br>workflows feel simple</h1>
-      <p class="hero-sub">12 years at Wix · <span style="color:#1D9E75">Available for new roles</span></p>
-    </section>
-    <section class="work-sec">
-      ${heroHtml}
-      ${duoHtml}
-      ${moreHtml}
-    </section>
-  </main>`, projects);
-}
-
-function projectPage(proj, projects) {
-  return wrap('work', `${proj.title} — Avigail Bahat`, `
-  <main class="proj-main">
-    <div class="proj-shell">
-      <div class="breadcrumb"><a href="index.html">← Work</a> / ${proj.title}</div>
-      <h1 class="proj-h1">${proj.title}</h1>
-      ${proj.callout?`<div class="callout"><p>${proj.callout}</p></div>`:proj.excerpt?`<div class="callout"><p><strong>The problem:</strong> ${proj.excerpt}</p></div>`:''}
-      <div class="proj-body">
-        <div class="proj-content">${proj.contentHtml}</div>
-        <aside class="proj-aside">
-          <div class="meta-row"><span class="meta-lbl">Year</span><span>${proj.year}</span></div>
-          <div class="meta-row"><span class="meta-lbl">Type</span><span>Product Design</span></div>
-          <div class="meta-row"><span class="meta-lbl">Role</span><span>Lead Designer</span></div>
-        </aside>
-      </div>
-    </div>
-  </main>`, projects);
-}
-
-async function aboutPage(blocks, projects) {
-  await hydrateTables(blocks);
-
-  let heroH1 = 'Product designer focused on developer experience';
-  let heroSub = '';
-  const sections = [];
-  let cur = null;
-
-  for (const b of blocks) {
-    if (b.type === 'heading_1') {
-      heroH1 = plainText(b.heading_1.rich_text);
-      cur = null;
-    } else if (b.type === 'heading_2') {
-      const label = plainText(b.heading_2.rich_text);
-      if (label.toLowerCase() === heroH1.toLowerCase()) {
-        // h2 mirrors the h1 — absorb its following paragraphs as heroSub, not a section
-        cur = null;
-      } else {
-        cur = { label, items: [] };
-        sections.push(cur);
-      }
-    } else if (b.type === 'paragraph' && b.paragraph.rich_text.length) {
-      if (!heroSub && !cur) {
-        heroSub = rt(b.paragraph.rich_text);
-      } else if (cur) {
-        cur.items.push(b);
-      }
-    } else if (cur) {
-      cur.items.push(b);
-    }
+  // Full list: sort by year desc, then by PROJECT_META insertion order
+  const metaSlugs = Object.keys(PROJECT_META);
+  const allSlugs = metaSlugs.filter(s => bySlug[s]);
+  // Append any Notion projects not in meta
+  for (const p of projects) {
+    if (!PROJECT_META[p.slug] && !allSlugs.includes(p.slug)) allSlugs.push(p.slug);
   }
+  allSlugs.sort((a, b) => {
+    const ya = PROJECT_META[a]?.year || parseInt(bySlug[a]?.year || '0');
+    const yb = PROJECT_META[b]?.year || parseInt(bySlug[b]?.year || '0');
+    if (yb !== ya) return yb - ya;
+    return metaSlugs.indexOf(a) - metaSlugs.indexOf(b);
+  });
 
-  if (!heroSub) heroSub = 'Curious about systems, obsessed with clarity, 12 years designing at Wix.';
+  const listHtml = allSlugs.map((slug, i) => {
+    const meta = PROJECT_META[slug];
+    const proj = bySlug[slug];
+    const title  = meta?.title   || proj?.title   || slug;
+    const cats   = meta?.cats    || '';
+    const display = meta?.display || '';
+    const year   = meta?.year    || proj?.year    || '';
+    const featured = meta?.featured || false;
+    return `<div class="row" data-cat="${cats}" data-href="${slug}.html">
+  <span class="num">${String(i + 1).padStart(2, '0')}</span>
+  <span class="row-title">${title}</span>
+  <span class="badge-f" style="${featured ? 'color:var(--ac)' : 'visibility:hidden'}">${featured ? 'Featured' : 'Featured'}</span>
+  <span class="row-cat">${display}</span>
+  <span class="row-year">${year}</span>
+  <span class="row-arr">→</span>
+</div>`;
+  }).join('\n  ');
 
-  const sectionsHtml = sections.map(sec => {
-    const hasList  = sec.items.some(b => b.type === 'bulleted_list_item');
-    const hasTable = sec.items.some(b => b.type === 'table');
-    const hasExp   = sec.items.some(b => isExpRow(b));
-    let inner = '';
-    if (hasList) {
-      inner = `<div class="pill-group">${sec.items
-        .filter(b => b.type === 'bulleted_list_item')
-        .map(b => `<span class="pill">${plainText(b.bulleted_list_item.rich_text)}</span>`)
-        .join('')}</div>`;
-    } else if (hasTable) {
-      inner = sec.items.map(b => {
-        if (b.type === 'table' && b._rows) {
-          const skip = b.has_column_header ? 1 : 0;
-          return renderExpTable(b._rows.slice(skip));
-        }
-        if (b.type === 'paragraph' && b.paragraph.rich_text.length) {
-          return `<div class="exp-sub">${rt(b.paragraph.rich_text)}</div>`;
-        }
-        return '';
-      }).filter(Boolean).join('\n');
-    } else if (hasExp) {
-      inner = sec.items
-        .filter(b => b.type === 'paragraph' && b.paragraph.rich_text.length)
-        .map(b => isExpRow(b) ? renderExpRow(b) : `<div class="exp-sub">${rt(b.paragraph.rich_text)}</div>`)
-        .join('\n');
-    } else {
-      inner = sec.items
-        .filter(b => b.type === 'paragraph' && b.paragraph.rich_text.length)
-        .map(b => `<p class="edu-line">${rt(b.paragraph.rich_text)}</p>`)
-        .join('\n');
-    }
-    return inner ? `<section class="about-sec">
-      <span class="section-label">${sec.label}</span>
-      ${inner}
-    </section>` : '';
-  }).join('\n');
-
-  return wrap('about', 'About — Avigail Bahat', `
-  <main class="about-main">
-    <div class="about-shell">
-      <section class="about-hero">
-        <div class="about-text">
-          <h1>${heroH1}</h1>
-          <p class="body-large">${heroSub}</p>
-        </div>
-      </section>
-      ${sectionsHtml}
+  return wrap('', 'Avigail Bahat — Product Designer', `
+  <main>
+    <section class="feat-section">
+      ${featHtml}
+    </section>
+    <div id="filters">
+      <button data-f="all"          class="filt active" style="color:var(--ac)">All</button>
+      <button data-f="developer"    class="filt"        style="color:var(--ac)">Developer tools</button>
+      <button data-f="monetisation" class="filt"        style="color:var(--ac)">Monetisation</button>
+      <button data-f="internal"     class="filt"        style="color:var(--ac)">Internal tools</button>
+      <button data-f="cms"          class="filt"        style="color:var(--ac)">CMS</button>
     </div>
-  </main>`, projects);
+    <div id="list">
+      ${listHtml}
+    </div>
+  </main>`);
 }
 
-async function contactPage(blocks, projects) {
+function projectPage(proj) {
+  const meta  = PROJECT_META[proj.slug] || {};
+  const title = meta.title || proj.title;
+  const year  = meta.year  || proj.year;
+  return wrap('', `${title} — Avigail Bahat`, `
+  <main class="proj-wrap">
+    <div class="breadcrumb"><a href="index.html">← Work</a> / ${title}</div>
+    <h1 class="proj-h1">${title}</h1>
+    ${proj.callout
+      ? `<div class="callout"><p>${proj.callout}</p></div>`
+      : proj.excerpt
+        ? `<div class="callout"><p>${proj.excerpt}</p></div>`
+        : ''}
+    <div class="proj-body">
+      <div class="proj-content">${proj.contentHtml}</div>
+      <aside class="proj-aside">
+        <div class="meta-row"><span class="meta-lbl">Year</span><span class="meta-val">${year}</span></div>
+        <div class="meta-row"><span class="meta-lbl">Type</span><span class="meta-val">Product Design</span></div>
+        <div class="meta-row"><span class="meta-lbl">Role</span><span class="meta-val">Lead Designer</span></div>
+      </aside>
+    </div>
+  </main>`);
+}
+
+function aboutPage() {
+  return wrap('about', 'About — Avigail Bahat', `
+  <main class="about-wrap">
+    <p class="about-lede">Senior UX designer. 12 years building products at Wix — developer tools, marketplace, media, and AI.</p>
+    <p class="about-body">I spent over a decade at Wix moving through its core product teams — ADI, media, the App Market and developer ecosystem, and OS-level work in my final stretch. My focus for most of that time was the App Market: how developers publish, monetise, and grow their apps, and how users find and install them.</p>
+    <p class="about-body">Now looking for what's next — ideally somewhere where design is close to engineering and the problems are genuinely complex.</p>
+
+    <p class="section-label">Experience</p>
+    <div class="exp-list">
+      <div class="exp-row"><span class="exp-yr">2014–2026</span><div><div class="exp-role">UX Designer → Senior UX Designer</div><div class="exp-co">Wix.com</div><div class="exp-detail">OS · App Market · Labs · Media · ADI</div></div></div>
+      <div class="exp-row"><span class="exp-yr">2012–2013</span><div><div class="exp-role">Marketing Designer &amp; Lead</div><div class="exp-co">Wix.com</div></div></div>
+      <div class="exp-row"><span class="exp-yr">2010–2012</span><div><div class="exp-role">Graphic Designer</div><div class="exp-co">McCann Erickson Israel</div></div></div>
+      <div class="exp-row"><span class="exp-yr">2008–2010</span><div><div class="exp-role">Graphics Department</div><div class="exp-co">Walla.co.il</div></div></div>
+    </div>
+
+    <div class="about-grid">
+      <div>
+        <p class="section-label">Education</p>
+        <p>Shenkar College — B.Des Graphic Design <span class="muted">2006–2010</span><br>Netcraft Academy — UX <span class="muted">2012</span></p>
+      </div>
+      <div>
+        <p class="section-label">Tools</p>
+        <p>Figma · Google Suite<br>Cursor · Claude Code<br>Hebrew · English</p>
+      </div>
+      <div>
+        <p class="section-label">Get in touch</p>
+        <p><a href="mailto:avigailba@gmail.com">avigailba@gmail.com</a><br><a href="https://www.linkedin.com/in/avigailbahat/">LinkedIn →</a></p>
+      </div>
+      <div>
+        <p class="section-label">Based in</p>
+        <p>Tel Aviv, Israel</p>
+      </div>
+    </div>
+  </main>`);
+}
+
+function cvPage() {
+  return wrap('cv', 'CV — Avigail Bahat', `
+  <main class="cv-wrap">
+    <h1>Avigail Bahat</h1>
+    <p class="cv-sub">Senior UX Designer · Tel Aviv, Israel · <a href="mailto:avigailba@gmail.com">avigailba@gmail.com</a> · <a href="https://www.linkedin.com/in/avigailbahat/">LinkedIn</a></p>
+
+    <p class="section-label">Experience</p>
+    <div class="exp-list">
+      <div class="exp-row"><span class="exp-yr">2014–2026</span><div><div class="exp-role">UX Designer → Senior UX Designer</div><div class="exp-co">Wix.com</div><div class="exp-detail">OS · App Market · Labs · Media · ADI</div></div></div>
+      <div class="exp-row"><span class="exp-yr">2012–2013</span><div><div class="exp-role">Marketing Designer &amp; Lead</div><div class="exp-co">Wix.com</div></div></div>
+      <div class="exp-row"><span class="exp-yr">2010–2012</span><div><div class="exp-role">Graphic Designer</div><div class="exp-co">McCann Erickson Israel</div></div></div>
+      <div class="exp-row"><span class="exp-yr">2008–2010</span><div><div class="exp-role">Graphics Department</div><div class="exp-co">Walla.co.il</div></div></div>
+    </div>
+
+    <p class="section-label">Education</p>
+    <div class="exp-list">
+      <div class="exp-row"><span class="exp-yr">2006–2010</span><div><div class="exp-role">B.Des Graphic Design</div><div class="exp-co">Shenkar College</div></div></div>
+      <div class="exp-row"><span class="exp-yr">2012</span><div><div class="exp-role">UX Certificate</div><div class="exp-co">Netcraft Academy</div></div></div>
+    </div>
+
+    <p class="section-label">Skills</p>
+    <div class="exp-list">
+      <div class="exp-row"><span class="exp-yr">Design</span><div><div class="exp-co">Figma, UX research, interaction design, design systems, prototyping</div></div></div>
+      <div class="exp-row"><span class="exp-yr">Tools</span><div><div class="exp-co">Figma · Google Suite · Cursor · Claude Code</div></div></div>
+      <div class="exp-row"><span class="exp-yr">Languages</span><div><div class="exp-co">Hebrew (native) · English (fluent)</div></div></div>
+    </div>
+  </main>`);
+}
+
+async function contactPage(blocks) {
   await hydrateTables(blocks);
 
   let heading = "Let's talk";
@@ -521,49 +546,40 @@ async function contactPage(blocks, projects) {
   }
 
   return wrap('contact', 'Contact — Avigail Bahat', `
-  <main class="contact-main">
-    <div class="contact-shell">
-      <h1>${heading}</h1>
-      ${tagline ? `<p class="body-large">${tagline}</p>` : ''}
-      <div class="avail-badge"><span class="avail-dot"></span>Available for new roles</div>
-      ${contactRowsHtml ? `<div class="contact-rows">${contactRowsHtml}</div>` : ''}
-      ${recruiterNote ? `<div class="contact-note"><p>${recruiterNote}</p></div>` : ''}
-    </div>
-  </main>`, projects);
+  <main class="contact-wrap">
+    <h1>${heading}</h1>
+    ${tagline ? `<p class="body-large">${tagline}</p>` : ''}
+    <div class="avail-badge"><span class="avail-dot"></span>Available for new roles</div>
+    ${contactRowsHtml ? `<div class="contact-rows">${contactRowsHtml}</div>` : ''}
+    ${recruiterNote ? `<div class="contact-note"><p>${recruiterNote}</p></div>` : ''}
+  </main>`);
 }
 
-function designSystemPage(projects) {
+function designSystemPage() {
   const swatches = [
     { hex: '#0a0a0a', name: 'Primary text',   usage: 'Headings, titles, body' },
     { hex: '#767676', name: 'Secondary text',  usage: 'Descriptions, meta, labels' },
-    { hex: '#1D9E75', name: 'Accent',          usage: 'Numbers, hover, badge, callout border' },
-    { hex: '#e8e8e8', name: 'Border',          usage: 'Dividers, row borders' },
-    { hex: '#f5f5f3', name: 'Background alt',  usage: 'Cards, callouts, hover state' },
+    { hex: 'var(--ac)', name: 'Accent',        usage: 'Numbers, hover, callout border' },
+    { hex: '#ebebeb', name: 'Border',          usage: 'Dividers, row borders' },
+    { hex: '#f8f8f8', name: 'Background alt',  usage: 'Callouts, hover state' },
   ];
 
   const typeRows = [
-    { name: 'Hero h1',       style: 'font-size:52px;font-weight:500;letter-spacing:-0.02em;line-height:1.1;color:#0a0a0a',  spec: '52px · 500 · −0.02em' },
-    { name: 'Project h1',    style: 'font-size:40px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a',                   spec: '40px · 500 · −0.01em' },
-    { name: 'List title',    style: 'font-size:19px;font-weight:400;color:#0a0a0a',                                           spec: '19px · 400' },
-    { name: 'Body',          style: 'font-size:16px;font-weight:400;color:#767676;line-height:1.65',                          spec: '16px · 400 · lh 1.65' },
-    { name: 'Description',   style: 'font-size:15px;font-weight:400;color:#767676;line-height:1.65',                          spec: '15px · 400' },
-    { name: 'Meta / year',   style: 'font-size:13px;font-weight:400;color:#767676',                                           spec: '13px · 400 · min size' },
-    { name: 'Label',         style: 'font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:#767676', spec: '12px · 500 · uppercase · 0.08em' },
-  ];
-
-  const spacings = [
-    { val: '40px', label: 'Horizontal padding — desktop' },
-    { val: '16px', label: 'Horizontal padding — mobile' },
-    { val: '80px', label: 'Hero top padding' },
-    { val: '64px', label: 'Section gap' },
+    { name: 'Featured title', style: 'font-size:46px;font-weight:500;letter-spacing:-0.02em;line-height:1.0;color:#0a0a0a', spec: '46px · 500 · −0.02em' },
+    { name: 'Project h1',     style: 'font-size:40px;font-weight:500;letter-spacing:-0.02em;color:#0a0a0a',                  spec: '40px · 500 · −0.02em' },
+    { name: 'About lede',     style: 'font-size:22px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a',                  spec: '22px · 500 · −0.01em' },
+    { name: 'Row title',      style: 'font-size:14px;font-weight:500;color:#0a0a0a',                                          spec: '14px · 500' },
+    { name: 'Body',           style: 'font-size:15px;font-weight:400;color:#555;line-height:1.7',                             spec: '15px · 400 · lh 1.7' },
+    { name: 'Nav / meta',     style: 'font-size:13px;font-weight:400;color:#767676',                                          spec: '13px · 400' },
+    { name: 'Label',          style: 'font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:#bbb', spec: '12px · 500 · uppercase · min size' },
   ];
 
   const swatchHtml = swatches.map(({ hex, name, usage }) =>
     `<div class="ds-swatch">
-      <div style="height:48px;background:${hex};border-radius:6px;border:0.5px solid #e8e8e8;margin-bottom:10px"></div>
+      <div style="height:48px;background:${hex};border-radius:6px;border:0.5px solid #ebebeb;margin-bottom:10px"></div>
       <span style="font-size:13px;font-weight:500;color:#0a0a0a;display:block;margin-bottom:2px">${hex}</span>
       <span style="font-size:12px;color:#767676;display:block">${name}</span>
-      <span style="font-size:12px;color:#b0b0b0;display:block">${usage}</span>
+      <span style="font-size:12px;color:#bbb;display:block">${usage}</span>
     </div>`
   ).join('\n    ');
 
@@ -574,117 +590,26 @@ function designSystemPage(projects) {
     </div>`
   ).join('\n    ');
 
-  const spacingHtml = spacings.map(({ val, label }) =>
-    `<div style="display:flex;align-items:center;gap:16px;padding:8px 0;border-bottom:0.5px solid #e8e8e8">
-      <div style="width:${val};height:16px;background:#f5f5f3;border:0.5px solid #e8e8e8;border-radius:3px;flex-shrink:0"></div>
-      <span style="font-size:13px;color:#767676">${val} — ${label}</span>
-    </div>`
-  ).join('\n    ');
-
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Design System — Avigail Bahat</title>
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    .ds-swatch { flex: 1; min-width: 140px; }
-    .ds-swatch-row { display: flex; flex-wrap: wrap; gap: 16px; }
-    .ds-type-row { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 14px 0; border-bottom: 0.5px solid #e8e8e8; }
-  </style>
-</head>
-<body id="top">
-  ${hdr('')}
+  return wrap('', 'Design System — Avigail Bahat', `
   <main class="ds-main">
-    <div class="ds-shell">
-      <h1 style="font-size:22px;font-weight:500;letter-spacing:-0.02em;margin-bottom:6px">Design System</h1>
-      <p style="font-size:14px;color:#767676;margin-bottom:56px">Tokens, typography, spacing, and components.</p>
+    <h1 style="font-size:22px;font-weight:500;letter-spacing:-0.02em;margin-bottom:6px">Design System</h1>
+    <p style="font-size:13px;color:#767676;margin-bottom:56px">Tokens, typography, spacing, and components.</p>
 
-      <div class="ds-section">
-        <h2>Colors</h2>
-        <div class="ds-swatch-row">${swatchHtml}</div>
-      </div>
-
-      <div class="ds-section">
-        <h2>Typography</h2>
-        ${typeHtml}
-      </div>
-
-      <div class="ds-section">
-        <h2>Spacing</h2>
-        ${spacingHtml}
-      </div>
-
-      <div class="ds-section">
-        <h2>Border Radius</h2>
-        <div style="display:flex;align-items:center;gap:16px;padding:12px 0">
-          <div style="width:48px;height:32px;border:0.5px solid #e8e8e8;border-radius:6px;background:#f5f5f3"></div>
-          <span style="font-size:13px;color:#767676">6px — all elements, no exceptions</span>
-        </div>
-      </div>
-
-      <div class="ds-section">
-        <h2>Components</h2>
-
-        <div class="component-wrap">
-          <span class="component-label">Navigation</span>
-          <div class="ds-hdr-preview">
-            <span style="font-size:13px;font-weight:500;color:#0a0a0a">Avigail Bahat</span>
-            <div style="display:flex;gap:24px;align-items:center">
-              <span style="font-size:12px;color:#0a0a0a;position:relative">Work<span style="position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:#1D9E75;display:block"></span></span>
-              <span style="font-size:12px;color:#767676">About</span>
-              <span style="font-size:12px;color:#767676;border:0.5px solid #b0b0b0;border-radius:6px;padding:5px 14px">Contact</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="component-wrap">
-          <span class="component-label">Hero</span>
-          <div style="padding:32px 0 24px">
-            <h1 style="font-size:52px;font-weight:500;letter-spacing:-0.02em;line-height:1.1;color:#0a0a0a;margin-bottom:16px">Making complex developer<br>workflows feel simple</h1>
-            <p style="font-size:13px;color:#767676">12 years at Wix · <span style="color:#1D9E75">Available for new roles</span></p>
-          </div>
-        </div>
-
-        <div class="component-wrap">
-          <span class="component-label">Project row</span>
-          <div class="project-list">
-            <a class="project-row" style="cursor:default">
-              <span class="row-num">01</span>
-              <span class="row-title">AI Credits</span>
-              <span class="row-year">2026</span>
-            </a>
-            <a class="project-row" style="cursor:default">
-              <span class="row-num">02</span>
-              <span class="row-title" style="color:#1D9E75">App Coupons — hover state</span>
-              <span class="row-year">2025</span>
-            </a>
-            <a class="project-row" style="cursor:default">
-              <span class="row-num">03</span>
-              <span class="row-title">Submit &amp; Publish Widget</span>
-              <span class="row-year">2024</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="component-wrap">
-          <span class="component-label">Callout block</span>
-          <div class="callout"><p>Developers couldn't understand why their app was rejected without navigating to a separate admin page — causing repeated support tickets.</p></div>
-        </div>
-
-        <div class="component-wrap">
-          <span class="component-label">Available badge</span>
-          <div class="avail-badge" style="margin:0"><span class="avail-dot"></span>Available for new roles</div>
-        </div>
-
-      </div>
+    <div class="ds-section">
+      <h2>Colors</h2>
+      <div class="ds-swatch-row">${swatchHtml}</div>
     </div>
-  </main>
-  ${ftr(projects)}
-  ${JS}
-</body>
-</html>`;
+
+    <div class="ds-section">
+      <h2>Typography</h2>
+      ${typeHtml}
+    </div>
+
+    <div class="ds-section">
+      <h2>Accent slider</h2>
+      <p style="font-size:13px;color:#767676;line-height:1.6">The accent color is controlled by the hue slider in the header. It defaults to <code>hsl(156,65%,40%)</code> (teal) and is stored in <code>localStorage</code> between visits. Use <code>var(--ac)</code> everywhere.</p>
+    </div>
+  </main>`);
 }
 
 // ── Build ────────────────────────────────────────────────────
@@ -706,24 +631,25 @@ async function build() {
     const year = new Date(meta.created_time).getFullYear().toString();
     const contentHtml = await toHtml(p.blocks);
     const title = stripEmoji(p.title);
-    projects.push({ ...p, title, icon, year, slug: slugify(title), contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
+    const slug = slugify(title);
+    projects.push({ ...p, title, icon, year, slug, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
   }
 
   for (const proj of projects) {
-    fs.writeFileSync(path.join(DIST, `${proj.slug}.html`), projectPage(proj, projects));
+    fs.writeFileSync(path.join(DIST, `${proj.slug}.html`), projectPage(proj));
     stats.pages++;
     console.log(`  ✓ ${proj.slug}.html`);
   }
 
-  console.log('Fetching about + contact pages from Notion...');
-  const aboutBlocks   = await fetchBlocks(ABOUT_PAGE_ID);
+  console.log('Fetching contact page from Notion...');
   const contactBlocks = await fetchBlocks(CONTACT_PAGE_ID);
 
   for (const [file, html] of [
     ['index.html',         indexPage(projects)],
-    ['about.html',         await aboutPage(aboutBlocks, projects)],
-    ['contact.html',       await contactPage(contactBlocks, projects)],
-    ['design-system.html', designSystemPage(projects)],
+    ['about.html',         aboutPage()],
+    ['cv.html',            cvPage()],
+    ['contact.html',       await contactPage(contactBlocks)],
+    ['design-system.html', designSystemPage()],
   ]) {
     fs.writeFileSync(path.join(DIST, file), html);
     stats.pages++;
