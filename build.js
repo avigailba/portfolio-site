@@ -237,20 +237,20 @@ function renderExpTable(rows) {
 
 function hdr(cur) {
   const nav = [
+    { id: '',        href: 'index.html',   label: 'Home' },
     { id: 'about',   href: 'about.html',   label: 'About' },
     { id: 'cv',      href: 'cv.html',      label: 'CV' },
     { id: 'contact', href: 'contact.html', label: 'Contact' },
   ];
   return `<header>
-  <a href="index.html" class="logo">Avigail B.</a>
-  <nav>
-    ${nav.map(l => `<a href="${l.href}"${l.id === cur ? ' class="active"' : ''}>${l.label}</a>`).join('\n    ')}
-  </nav>
-  <div class="hue-wrap">
-    <div id="htrack">
-      <input type="range" id="hslider" min="0" max="360" value="156">
-      <div id="hthumb"></div>
+  <div class="inner">
+    <div class="logo-wrap">
+      <a href="index.html" class="logo-name">Avigail Bahat</a>
+      <span class="logo-role">Senior UX Designer</span>
     </div>
+    <nav>
+      ${nav.map(l => `<a href="${l.href}"${l.id === cur ? ' class="active"' : ''}>${l.label}</a>`).join('\n      ')}
+    </nav>
   </div>
 </header>`;
 }
@@ -267,21 +267,10 @@ function ftr() {
 
 const JS = `<script>
 (function() {
-  const sl = document.getElementById('hslider');
-  const th = document.getElementById('hthumb');
-  if (!sl) return;
-  function applyHue(h) {
-    const c = \`hsl(\${h},65%,40%)\`;
-    document.documentElement.style.setProperty('--ac', c);
-    th.style.left = \`calc(\${h / 360 * 100}% - 6px)\`;
-    th.style.background = c;
-  }
-  sl.addEventListener('input', () => {
-    applyHue(sl.value);
-    localStorage.setItem('portfolio-hue', sl.value);
+  const hdr = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    hdr.classList.toggle('scrolled', window.scrollY > 40);
   });
-  const saved = localStorage.getItem('portfolio-hue');
-  if (saved) { sl.value = saved; applyHue(saved); }
 })();
 
 document.querySelectorAll('.feat-row[data-href], #list .row[data-href]').forEach(row => {
