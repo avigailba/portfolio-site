@@ -15,9 +15,8 @@ button { font-family: inherit; }
 
 /* ── Wrapper ─────────────────────────────────────────────── */
 .wrap {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 0 24px;
+  max-width: 100%;
+  padding: 0 48px;
 }
 
 /* ── Header ──────────────────────────────────────────────── */
@@ -320,6 +319,7 @@ footer a:hover { color: var(--ac); }
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 600px) {
+  .wrap { padding: 0 20px; }
   header { padding: 24px 0 40px; flex-wrap: wrap; gap: 16px; }
   .hue-wrap { display: none; }
   .feat-title { font-size: 32px; }
