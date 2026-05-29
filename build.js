@@ -53,6 +53,24 @@ const FEAT_ORDER = [
   'internal-app-review-system',
 ];
 
+// One-line summaries shown on hover in the project list
+const PROJECT_SUMMARIES = {
+  'ai-credits':                          'Transparent AI usage billing across Wix\'s developer platform',
+  'app-installation-page-for-developers': 'Redesigned the app installation experience end-to-end',
+  'app-reviews-revamp':                  'Improved app review flows for the Wix App Market',
+  'developer-sale':                      'A monetisation campaign tool for app developers',
+  'app-collections-internal-manager':    'Curated app groupings for discovery and editorial placement',
+  'payouts-page':                        'Dashboard for developers to track earnings and payout history',
+  'refund-flow':                         'End-to-end refund process for app purchases',
+  'app-pricing-page-projects':           'Redesigned pricing presentation for marketplace apps',
+  'internal-app-review-system':          'Replaced a spreadsheet-based review process with a structured tool',
+  'submit-publish-widget':               'Streamlined app submission and publishing for developers',
+  'custom-element-component-settings':   'Settings UI for Wix\'s custom HTML element widget',
+  'api-keys-page':                       'Key management interface for Wix\'s developer platform',
+  'development-site-creation':           'Onboarding flow for creating Wix development sites',
+  'app-coupons':                         'Coupon and discount tools for app monetisation',
+};
+
 function slugify(s) {
   return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
@@ -242,8 +260,8 @@ function hdr(cur) {
     { id: 'cv',      href: 'cv.html',      label: 'CV' },
     { id: 'contact', href: 'contact.html', label: 'Contact' },
   ];
-  return `<header>
-  <div class="inner">
+  return `<header id="site-header">
+  <div class="header-inner">
     <div class="logo-wrap">
       <a href="index.html" class="logo-name">Avigail Bahat</a>
       <span class="logo-role">Senior UX Designer</span>
@@ -256,26 +274,57 @@ function hdr(cur) {
 }
 
 function ftr() {
-  return `<footer>
-  <span>Avigail Bahat · Senior UX Designer</span>
-  <div>
-    <a href="https://www.linkedin.com/in/avigailbahat/">LinkedIn</a>
-    <a href="mailto:avigailba@gmail.com">Email</a>
+  return `<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <p class="footer-statement">Open to new work.</p>
+      <div class="footer-tags">
+        <span class="ftag">Developer tools</span>
+        <span class="ftag">AI products</span>
+        <span class="ftag">Complex systems</span>
+        <span class="ftag">B2B SaaS</span>
+        <span class="ftag">Platform design</span>
+        <span class="ftag">Marketplace</span>
+        <span class="ftag">Design systems</span>
+        <span class="ftag">Developer experience</span>
+        <span class="ftag">Monetisation</span>
+        <span class="ftag">Internal tools</span>
+      </div>
+      <p class="footer-tagline">Based in Tel Aviv · Open to opportunities</p>
+    </div>
+    <div class="footer-right">
+      <a href="mailto:avigailba@gmail.com" class="footer-link">
+        <span>avigailba@gmail.com</span><span class="footer-arr">↗</span>
+      </a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" class="footer-link">
+        <span>LinkedIn</span><span class="footer-arr">↗</span>
+      </a>
+    </div>
   </div>
+  <div class="footer-bottom">© 2026 Avigail Bahat</div>
 </footer>`;
 }
 
 const JS = `<script>
 (function() {
-  const hdr = document.querySelector('header');
+  const hdr = document.getElementById('site-header');
   window.addEventListener('scroll', () => {
     hdr.classList.toggle('scrolled', window.scrollY > 40);
   });
 })();
 
-document.querySelectorAll('.feat-row[data-href], #list .row[data-href]').forEach(row => {
-  row.addEventListener('click', () => { location.href = row.dataset.href; });
+document.querySelectorAll('.feat-row[data-href], #list .row-wrap[data-href]').forEach(el => {
+  el.addEventListener('click', () => { location.href = el.dataset.href; });
 });
+
+(function() {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('open'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('#list .row-wrap').forEach(r => io.observe(r));
+})();
 
 (function() {
   const filters = document.getElementById('filters');
@@ -289,15 +338,23 @@ document.querySelectorAll('.feat-row[data-href], #list .row[data-href]').forEach
       });
       btn.classList.add('active');
       btn.style.textDecoration = 'underline';
-      document.querySelectorAll('#list .row').forEach(row => {
+      document.querySelectorAll('#list .row-wrap').forEach(row => {
         const cats = (row.dataset.cat || '').split(' ');
         row.classList.toggle('hidden', f !== 'all' && !cats.includes(f));
       });
       let i = 1;
-      document.querySelectorAll('#list .row:not(.hidden)').forEach(row => {
+      document.querySelectorAll('#list .row-wrap:not(.hidden)').forEach(row => {
         row.querySelector('.num').textContent = String(i++).padStart(2, '0');
       });
     });
+  });
+})();
+
+(function() {
+  document.querySelectorAll('.ftag').forEach(function(tag) {
+    var duration = 2.5 + Math.random() * 2;
+    tag.style.animationDuration = duration + 's';
+    tag.style.animationDelay = -(Math.random() * duration) + 's';
   });
 })();
 </script>`;
@@ -312,11 +369,11 @@ function wrap(cur, title, body) {
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  ${hdr(cur)}
   <div class="wrap">
-    ${hdr(cur)}
     ${body}
-    ${ftr()}
   </div>
+  ${ftr()}
   ${JS}
 </body>
 </html>`;
@@ -365,24 +422,30 @@ function indexPage(projects) {
   const listHtml = allSlugs.map((slug, i) => {
     const meta = PROJECT_META[slug];
     const proj = bySlug[slug];
-    const title  = meta?.title   || proj?.title   || slug;
-    const cats   = meta?.cats    || '';
-    const display = meta?.display || '';
-    const year   = meta?.year    || proj?.year    || '';
+    const title    = meta?.title   || proj?.title   || slug;
+    const cats     = meta?.cats    || '';
+    const display  = meta?.display || '';
+    const year     = meta?.year    || proj?.year    || '';
     const featured = meta?.featured || false;
-    return `<div class="row" data-cat="${cats}" data-href="${slug}.html">
-  <span class="num">${String(i + 1).padStart(2, '0')}</span>
-  <span class="row-title">${title}</span>
-  <span class="badge-f" style="${featured ? 'color:var(--ac)' : 'visibility:hidden'}">${featured ? 'Featured' : 'Featured'}</span>
-  <span class="row-cat">${display}</span>
-  <span class="row-year">${year}</span>
-  <span class="row-arr">→</span>
+    const summary  = proj?.summary || PROJECT_SUMMARIES[slug] || '';
+    return `<div class="row-wrap" data-cat="${cats}" data-href="${slug}.html">
+  <div class="row">
+    <span class="num">${String(i + 1).padStart(2, '0')}</span>
+    <div class="rmain">
+      <span class="row-title">${title}</span>
+      <div class="rsub">${summary}</div>
+    </div>
+    <span class="badge-f" style="${featured ? 'color:var(--ac)' : 'visibility:hidden'}">${featured ? 'Featured' : 'Featured'}</span>
+    <span class="row-cat">${display}</span>
+    <span class="row-year">${year}</span>
+    <span class="row-arr">→</span>
+  </div>
 </div>`;
   }).join('\n  ');
 
   return wrap('', 'Avigail Bahat — Product Designer', `
   <main>
-    <p class="lede">Senior UX designer. 12 years at Wix building <span class="lede-ac">developer tools</span>, marketplace, and AI.</p>
+    <p class="lede">Senior UX designer. 12 years at Wix building various developer tools, site tools, marketplace, and AI.</p>
     <section class="feat-section">
       ${featHtml}
     </section>
@@ -419,11 +482,11 @@ const CURRENT_SLUG = '${proj.slug}';
   const list = document.getElementById('more-list');
   if (!list) return;
   pick.forEach((p, i) => {
-    const row = document.createElement('div');
-    row.className = 'row';
-    row.innerHTML = '<span class="num">' + String(i + 1).padStart(2, '0') + '</span><span class="row-title">' + p.title + '</span><span class="row-cat">' + p.cat + '</span><span class="row-year">' + p.year + '</span><span class="row-arr">→</span>';
-    row.addEventListener('click', () => { window.location.href = p.url; });
-    list.appendChild(row);
+    const wrap = document.createElement('div');
+    wrap.className = 'row-wrap open';
+    wrap.innerHTML = '<div class="row"><span class="num">' + String(i + 1).padStart(2, '0') + '</span><div class="rmain"><span class="row-title">' + p.title + '</span></div><span class="row-cat">' + p.cat + '</span><span class="row-year">' + p.year + '</span><span class="row-arr">→</span></div>';
+    wrap.addEventListener('click', () => { window.location.href = p.url; });
+    list.appendChild(wrap);
   });
 })();
 </script>`;
@@ -652,10 +715,11 @@ async function build() {
     const meta = await notion.pages.retrieve({ page_id: p.id });
     const icon = meta.icon?.type === 'emoji' ? meta.icon.emoji : '';
     const year = new Date(meta.created_time).getFullYear().toString();
+    const summary = meta.properties?.Summary?.rich_text?.[0]?.plain_text || '';
     const contentHtml = await toHtml(p.blocks);
     const title = stripEmoji(p.title);
     const slug = slugify(title);
-    projects.push({ ...p, title, icon, year, slug, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
+    projects.push({ ...p, title, icon, year, slug, summary, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
   }
 
   for (const proj of projects) {
