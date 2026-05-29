@@ -381,8 +381,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   margin-bottom: 2px;
 }
 .cv-title { font-size: 14px; font-weight: 600; color: #0a0a0a; }
-.cv-years { font-size: 12px; color: #bbb; }
-.cv-company { font-size: 13px; color: #767676; margin-bottom: 8px; }
+.cv-years { font-size: 12px; color: #888; }
+.cv-company { font-size: 13px; color: #888; margin-bottom: 8px; }
 .cv-desc { font-size: 13px; color: #555; line-height: 1.65; }
 .cv-projects { margin-bottom: 4px; }
 .cv-proj-row {
@@ -395,7 +395,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 }
 .cv-proj-row:first-child { border-top: 0.5px solid var(--border); }
 .cv-proj-name { color: #0a0a0a; }
-.cv-proj-year { color: #bbb; }
+.cv-proj-year { color: #888; }
 .cv-skills { font-size: 13px; color: #555; line-height: 1.8; }
 
 /* ── Contact page ────────────────────────────────────────── */
@@ -420,10 +420,10 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .contact-link:hover { background: #0a0a0a; padding-left: 10px; padding-right: 10px; border-color: #0a0a0a; }
 .contact-link:hover .contact-link-label,
 .contact-link:hover .contact-link-val { color: #fff; }
-.contact-link-label { font-size: 12px; color: #bbb; min-width: 80px; transition: color 0.13s; }
+.contact-link-label { font-size: 12px; color: #888; min-width: 80px; transition: color 0.13s; }
 .contact-link-val { font-size: 14px; font-weight: 500; color: #0a0a0a; transition: color 0.13s; }
 .contact-arr { opacity: 0.5; }
-.contact-location { font-size: 12px; color: #bbb; }
+.contact-location { font-size: 12px; color: #888; }
 
 /* ── Project page ────────────────────────────────────────── */
 .proj-wrap { padding-bottom: 80px; }
