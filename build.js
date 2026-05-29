@@ -304,7 +304,7 @@ function ftr() {
       </a>
     </div>
   </div>
-  <div class="footer-bottom">© 2026 Avigail Bahat</div>
+  <div class="footer-bottom">© 2026 Avigail Bahat · <a href="design-system.html" style="color:inherit;text-decoration:none;opacity:0.6;">Design system</a></div>
 </footer>`;
 }
 
