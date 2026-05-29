@@ -278,7 +278,6 @@ function hdr() {
     <nav>
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
-      <a href="cv.html">CV</a>
       <a href="contact.html">Contact</a>
     </nav>
   </div>
@@ -564,23 +563,8 @@ function aboutPage() {
         I recently left Wix after 12 years and I'm looking for my next challenge. I'm particularly drawn to AI products, complex B2B systems, and places where design can make a meaningful difference to how developers and power users work.
       </p>
 
-      <p class="section-label">Contact</p>
-      <div class="about-links">
-        <a href="mailto:avigailba@gmail.com" class="about-link">avigailba@gmail.com ↗</a>
-        <a href="https://www.linkedin.com/in/avigailbahat/" class="about-link">LinkedIn ↗</a>
-      </div>
-    </div>
-  </main>`);
-}
-
-function cvPage() {
-  return wrap('cv', 'CV — Avigail Bahat', `
-  <main class="inner-main">
-    <div class="inner-content">
-      <h1>CV</h1>
-      <p class="page-sub">Avigail Bahat · avigailba@gmail.com</p>
-
       <p class="section-label">Experience</p>
+
       <div class="cv-role">
         <div class="cv-role-header">
           <span class="cv-title">Senior UX Designer</span>
@@ -615,17 +599,15 @@ function cvPage() {
         Product design · Systems design · Design systems · UX research · Interaction design · Prototyping · Figma · Developer experience · B2B SaaS · Marketplace · AI products · Cross-functional collaboration
       </p>
 
-      <p class="section-label">Education</p>
-      <div class="cv-role">
-        <div class="cv-role-header">
-          <span class="cv-title">BDes Interaction Design</span>
-          <span class="cv-years">2009 – 2013</span>
-        </div>
-        <div class="cv-company">Bezalel Academy of Arts and Design, Jerusalem</div>
+      <p class="section-label">Contact</p>
+      <div class="about-links">
+        <a href="mailto:avigailba@gmail.com" class="about-link">avigailba@gmail.com ↗</a>
+        <a href="https://www.linkedin.com/in/avigailbahat/" class="about-link">LinkedIn ↗</a>
       </div>
     </div>
   </main>`);
 }
+
 
 function contactPage() {
   return wrap('contact', 'Contact — Avigail Bahat', `
@@ -839,7 +821,6 @@ async function build() {
   for (const [file, html] of [
     ['index.html',         indexPage(projects)],
     ['about.html',         aboutPage()],
-    ['cv.html',            cvPage()],
     ['contact.html',       contactPage()],
     ['design-system.html', designSystemPage()],
   ]) {
