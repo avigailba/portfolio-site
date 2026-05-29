@@ -253,21 +253,24 @@ function renderExpTable(rows) {
 
 // ── Layout ──────────────────────────────────────────────────
 
-function hdr(cur) {
-  const nav = [
-    { id: '',        href: 'index.html',   label: 'Home' },
-    { id: 'about',   href: 'about.html',   label: 'About' },
-    { id: 'cv',      href: 'cv.html',      label: 'CV' },
-    { id: 'contact', href: 'contact.html', label: 'Contact' },
-  ];
+function hdr() {
   return `<header id="site-header">
   <div class="header-inner">
     <div class="logo-wrap">
-      <a href="index.html" class="logo-name">Avigail Bahat</a>
-      <span class="logo-role">Senior UX Designer</span>
+      <div class="logo-text">
+        <a href="index.html" class="logo-name">Avigail Bahat</a>
+        <span class="logo-role">Senior UX Designer</span>
+      </div>
+      <div class="avail-dot-wrap">
+        <span class="avail-dot"></span>
+        <span class="avail-label">Available for work</span>
+      </div>
     </div>
     <nav>
-      ${nav.map(l => `<a href="${l.href}"${l.id === cur ? ' class="active"' : ''}>${l.label}</a>`).join('\n      ')}
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="cv.html">CV</a>
+      <a href="contact.html">Contact</a>
     </nav>
   </div>
 </header>`;
@@ -307,34 +310,42 @@ function ftr() {
 
 const JS = `<script>
 (function() {
-  const hdr = document.getElementById('site-header');
-  window.addEventListener('scroll', () => {
+  var hdr = document.getElementById('site-header');
+  if (!hdr) return;
+  window.addEventListener('scroll', function() {
     hdr.classList.toggle('scrolled', window.scrollY > 40);
+  });
+  var path = window.location.pathname;
+  document.querySelectorAll('nav a').forEach(function(a) {
+    var href = a.getAttribute('href') || '';
+    var page = href.replace(/^\\//, '');
+    if (page && path.endsWith(page)) a.classList.add('active');
+    else if (!page || page === 'index.html') {
+      if (path.endsWith('/') || path.endsWith('index.html')) a.classList.add('active');
+    }
   });
 })();
 
-document.querySelectorAll('.feat-row[data-href], #list .row-wrap[data-href]').forEach(el => {
-  el.addEventListener('click', () => { location.href = el.dataset.href; });
+document.querySelectorAll('.feat-row[data-href], #list .row-wrap[data-href]').forEach(function(el) {
+  el.addEventListener('click', function() { location.href = el.dataset.href; });
 });
 
 (function() {
-  const filters = document.getElementById('filters');
+  var filters = document.getElementById('filters');
   if (!filters) return;
-  filters.querySelectorAll('.filt').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const f = btn.dataset.f;
-      filters.querySelectorAll('.filt').forEach(b => {
+  filters.querySelectorAll('.filt').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var f = btn.dataset.f;
+      filters.querySelectorAll('.filt').forEach(function(b) {
         b.classList.remove('active');
-        b.style.textDecoration = 'none';
       });
       btn.classList.add('active');
-      btn.style.textDecoration = 'underline';
-      document.querySelectorAll('#list .row-wrap').forEach(row => {
-        const cats = (row.dataset.cat || '').split(' ');
+      document.querySelectorAll('#list .row-wrap').forEach(function(row) {
+        var cats = (row.dataset.cat || '').split(' ');
         row.classList.toggle('hidden', f !== 'all' && !cats.includes(f));
       });
-      let i = 1;
-      document.querySelectorAll('#list .row-wrap:not(.hidden)').forEach(row => {
+      var i = 1;
+      document.querySelectorAll('#list .row-wrap:not(.hidden)').forEach(function(row) {
         row.querySelector('.num').textContent = String(i++).padStart(2, '0');
       });
     });
@@ -360,10 +371,8 @@ function wrap(cur, title, body) {
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  ${hdr(cur)}
-  <div class="wrap">
-    ${body}
-  </div>
+  ${hdr()}
+  ${body}
   ${ftr()}
   ${JS}
 </body>
@@ -435,7 +444,7 @@ function indexPage(projects) {
   }).join('\n  ');
 
   return wrap('', 'Avigail Bahat — Product Designer', `
-  <main>
+  <div class="wrap"><main>
     <p class="lede">Senior UX designer. 12 years at Wix building various developer tools, site tools, marketplace, and AI.</p>
     <section class="feat-section">
       ${featHtml}
@@ -450,7 +459,7 @@ function indexPage(projects) {
     <div id="list">
       ${listHtml}
     </div>
-  </main>`);
+  </main></div>`);
 }
 
 function projectPage(proj) {
@@ -483,7 +492,7 @@ const CURRENT_SLUG = '${proj.slug}';
 </script>`;
 
   return wrap('', `${title} — Avigail Bahat`, `
-  <main class="proj-wrap">
+  <div class="wrap"><main class="proj-wrap">
     <div class="breadcrumb"><a href="index.html">← Work</a> / ${title}</div>
     <h1 class="proj-h1">${title}</h1>
     ${proj.callout
@@ -506,41 +515,40 @@ const CURRENT_SLUG = '${proj.slug}';
         <a href="index.html" class="more-cta-link">See all work →</a>
       </div>
     </section>
-  </main>
+  </main></div>
   ${moreJs}`);
 }
 
 function aboutPage() {
   return wrap('about', 'About — Avigail Bahat', `
-  <main class="about-wrap">
-    <p class="about-lede">Senior UX designer. 12 years building products at Wix — developer tools, marketplace, media, and AI.</p>
-    <p class="about-body">I spent over a decade at Wix moving through its core product teams — ADI, media, the App Market and developer ecosystem, and OS-level work in my final stretch. My focus for most of that time was the App Market: how developers publish, monetise, and grow their apps, and how users find and install them.</p>
-    <p class="about-body">Now looking for what's next — ideally somewhere where design is close to engineering and the problems are genuinely complex.</p>
+  <main class="inner-main">
+    <div class="inner-content">
+      <h1>About</h1>
+      <p class="page-sub">Senior UX Designer · Tel Aviv</p>
 
-    <p class="section-label">Experience</p>
-    <div class="exp-list">
-      <div class="exp-row"><span class="exp-yr">2014–2026</span><div><div class="exp-role">UX Designer → Senior UX Designer</div><div class="exp-co">Wix.com</div><div class="exp-detail">OS · App Market · Labs · Media · ADI</div></div></div>
-      <div class="exp-row"><span class="exp-yr">2012–2013</span><div><div class="exp-role">Marketing Designer &amp; Lead</div><div class="exp-co">Wix.com</div></div></div>
-      <div class="exp-row"><span class="exp-yr">2010–2012</span><div><div class="exp-role">Graphic Designer</div><div class="exp-co">McCann Erickson Israel</div></div></div>
-      <div class="exp-row"><span class="exp-yr">2008–2010</span><div><div class="exp-role">Graphics Department</div><div class="exp-co">Walla.co.il</div></div></div>
-    </div>
+      <p class="about-bio">
+        I'm Avigail, a senior UX designer with 12 years at Wix building developer tools, marketplace, and AI products. I work on complex, systems-level problems — the kind where the user is a developer, the surface area is huge, and the stakes are high.
+      </p>
 
-    <div class="about-grid">
-      <div>
-        <p class="section-label">Education</p>
-        <p>Shenkar College — B.Des Graphic Design <span class="muted">2006–2010</span><br>Netcraft Academy — UX <span class="muted">2012</span></p>
-      </div>
-      <div>
-        <p class="section-label">Tools</p>
-        <p>Figma · Google Suite<br>Cursor · Claude Code<br>Hebrew · English</p>
-      </div>
-      <div>
-        <p class="section-label">Get in touch</p>
-        <p><a href="mailto:avigailba@gmail.com">avigailba@gmail.com</a><br><a href="https://www.linkedin.com/in/avigailbahat/">LinkedIn →</a></p>
-      </div>
-      <div>
-        <p class="section-label">Based in</p>
-        <p>Tel Aviv, Israel</p>
+      <p class="section-label">What I do</p>
+      <p class="about-body">
+        I design end-to-end: discovery, definition, detailed UI, and working closely with engineering through delivery. I've led design on platform-level projects — monetisation systems, app marketplaces, developer tooling — where the challenge is as much about the mental model as the interface.
+      </p>
+
+      <p class="section-label">Background</p>
+      <p class="about-body">
+        Before focusing on platform and developer products, I worked across Wix's site builder, templates, and onboarding. I've been around long enough to have seen the company grow from a few hundred people to thousands, and to have shipped products used by millions of developers worldwide.
+      </p>
+
+      <p class="section-label">Now</p>
+      <p class="about-body">
+        I recently left Wix after 12 years and I'm looking for my next challenge. I'm particularly drawn to AI products, complex B2B systems, and places where design can make a meaningful difference to how developers and power users work.
+      </p>
+
+      <p class="section-label">Contact</p>
+      <div class="about-links">
+        <a href="mailto:avigailba@gmail.com" class="about-link">avigailba@gmail.com ↗</a>
+        <a href="https://www.linkedin.com/in/avigailbahat/" class="about-link">LinkedIn ↗</a>
       </div>
     </div>
   </main>`);
@@ -548,143 +556,233 @@ function aboutPage() {
 
 function cvPage() {
   return wrap('cv', 'CV — Avigail Bahat', `
-  <main class="cv-wrap">
-    <h1>Avigail Bahat</h1>
-    <p class="cv-sub">Senior UX Designer · Tel Aviv, Israel · <a href="mailto:avigailba@gmail.com">avigailba@gmail.com</a> · <a href="https://www.linkedin.com/in/avigailbahat/">LinkedIn</a></p>
+  <main class="inner-main">
+    <div class="inner-content">
+      <h1>CV</h1>
+      <p class="page-sub">Avigail Bahat · avigailba@gmail.com</p>
 
-    <p class="section-label">Experience</p>
-    <div class="exp-list">
-      <div class="exp-row"><span class="exp-yr">2014–2026</span><div><div class="exp-role">UX Designer → Senior UX Designer</div><div class="exp-co">Wix.com</div><div class="exp-detail">OS · App Market · Labs · Media · ADI</div></div></div>
-      <div class="exp-row"><span class="exp-yr">2012–2013</span><div><div class="exp-role">Marketing Designer &amp; Lead</div><div class="exp-co">Wix.com</div></div></div>
-      <div class="exp-row"><span class="exp-yr">2010–2012</span><div><div class="exp-role">Graphic Designer</div><div class="exp-co">McCann Erickson Israel</div></div></div>
-      <div class="exp-row"><span class="exp-yr">2008–2010</span><div><div class="exp-role">Graphics Department</div><div class="exp-co">Walla.co.il</div></div></div>
-    </div>
+      <p class="section-label">Experience</p>
+      <div class="cv-role">
+        <div class="cv-role-header">
+          <span class="cv-title">Senior UX Designer</span>
+          <span class="cv-years">2013 – 2025</span>
+        </div>
+        <div class="cv-company">Wix.com, Tel Aviv</div>
+        <p class="cv-desc">
+          Led design across developer platform, app marketplace, and monetisation systems. Owned end-to-end design for major platform features including AI billing infrastructure, app installation flows, developer payout systems, and internal tooling. Worked closely with product, engineering, and data teams across multiple squads.
+        </p>
+      </div>
 
-    <p class="section-label">Education</p>
-    <div class="exp-list">
-      <div class="exp-row"><span class="exp-yr">2006–2010</span><div><div class="exp-role">B.Des Graphic Design</div><div class="exp-co">Shenkar College</div></div></div>
-      <div class="exp-row"><span class="exp-yr">2012</span><div><div class="exp-role">UX Certificate</div><div class="exp-co">Netcraft Academy</div></div></div>
-    </div>
+      <p class="section-label">Selected projects</p>
+      <div class="cv-projects">
+        <div class="cv-proj-row"><span class="cv-proj-name">AI Credits</span><span class="cv-proj-year">2026</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">App Installation View</span><span class="cv-proj-year">2025</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">App Reviews Revamp</span><span class="cv-proj-year">2024</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">Developer Sale</span><span class="cv-proj-year">2024</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">App Collections</span><span class="cv-proj-year">2024</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">Payouts Page</span><span class="cv-proj-year">2023</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">Refund Flow</span><span class="cv-proj-year">2023</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">App Pricing Page</span><span class="cv-proj-year">2023</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">Internal App Review System</span><span class="cv-proj-year">2022</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">Submit &amp; Publish Widget</span><span class="cv-proj-year">2022</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">API Keys Page</span><span class="cv-proj-year">2022</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">Custom Element Settings</span><span class="cv-proj-year">2022</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">Development Site Creation</span><span class="cv-proj-year">2021</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">App Coupons</span><span class="cv-proj-year">2021</span></div>
+      </div>
 
-    <p class="section-label">Skills</p>
-    <div class="exp-list">
-      <div class="exp-row"><span class="exp-yr">Design</span><div><div class="exp-co">Figma, UX research, interaction design, design systems, prototyping</div></div></div>
-      <div class="exp-row"><span class="exp-yr">Tools</span><div><div class="exp-co">Figma · Google Suite · Cursor · Claude Code</div></div></div>
-      <div class="exp-row"><span class="exp-yr">Languages</span><div><div class="exp-co">Hebrew (native) · English (fluent)</div></div></div>
+      <p class="section-label">Skills</p>
+      <p class="cv-skills">
+        Product design · Systems design · Design systems · UX research · Interaction design · Prototyping · Figma · Developer experience · B2B SaaS · Marketplace · AI products · Cross-functional collaboration
+      </p>
+
+      <p class="section-label">Education</p>
+      <div class="cv-role">
+        <div class="cv-role-header">
+          <span class="cv-title">BDes Interaction Design</span>
+          <span class="cv-years">2009 – 2013</span>
+        </div>
+        <div class="cv-company">Bezalel Academy of Arts and Design, Jerusalem</div>
+      </div>
     </div>
   </main>`);
 }
 
-async function contactPage(blocks) {
-  await hydrateTables(blocks);
-
-  let heading = "Let's talk";
-  let tagline = '';
-  let contactRowsHtml = '';
-  let recruiterNote = '';
-  let inRecruiter = false;
-
-  for (const b of blocks) {
-    if (b.type === 'heading_2') {
-      const txt = plainText(b.heading_2.rich_text);
-      if (/let.?s talk/i.test(txt)) heading = txt;
-      else if (/recruit|note/i.test(txt)) inRecruiter = true;
-    } else if (b.type === 'paragraph' && b.paragraph.rich_text.length) {
-      const text = rt(b.paragraph.rich_text);
-      if (inRecruiter && !recruiterNote) recruiterNote = text;
-      else if (!tagline && !inRecruiter) tagline = text;
-    } else if (b.type === 'table' && b._rows) {
-      contactRowsHtml = b._rows.map(row => {
-        const cells = row.table_row.cells;
-        const lbl = cells[0]?.map(t => t.plain_text).join('').trim() || '';
-        const valRt = cells[1] || [];
-        const valPlain = valRt.map(t => t.plain_text).join('').trim();
-        const ll = lbl.toLowerCase();
-        let valHtml;
-        if (ll.includes('email') || valPlain.includes('@')) {
-          valHtml = `<div class="contact-val">
-            <a href="mailto:${valPlain}">${valPlain}</a>
-            <button class="copy-btn" onclick="navigator.clipboard.writeText('${valPlain}')" title="Copy">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button></div>`;
-        } else if (ll.includes('linkedin') || valPlain.includes('linkedin')) {
-          const url = valPlain.startsWith('http') ? valPlain : `https://${valPlain}`;
-          const display = valPlain.replace(/^https?:\/\//, '');
-          valHtml = `<div class="contact-val">
-            <a href="${url}" target="_blank" rel="noopener">${display}</a>
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </div>`;
-        } else {
-          valHtml = `<span>${rt(valRt) || valPlain}</span>`;
-        }
-        return `<div class="contact-row"><span class="contact-lbl">${lbl}</span>${valHtml}</div>`;
-      }).join('\n');
-    }
-  }
-
+function contactPage() {
   return wrap('contact', 'Contact — Avigail Bahat', `
-  <main class="contact-wrap">
-    <h1>${heading}</h1>
-    ${tagline ? `<p class="body-large">${tagline}</p>` : ''}
-    <div class="avail-badge"><span class="avail-dot"></span>Available for new roles</div>
-    ${contactRowsHtml ? `<div class="contact-rows">${contactRowsHtml}</div>` : ''}
-    ${recruiterNote ? `<div class="contact-note"><p>${recruiterNote}</p></div>` : ''}
+  <main class="inner-main">
+    <div class="inner-content">
+      <h1>Contact</h1>
+      <p class="page-sub">Let's talk.</p>
+
+      <p class="contact-intro">
+        I'm currently looking for my next role. If you're working on something interesting — developer tools, AI products, complex B2B systems — I'd love to hear about it.
+      </p>
+
+      <div class="contact-links">
+        <a href="mailto:avigailba@gmail.com" class="contact-link">
+          <span class="contact-link-label">Email</span>
+          <span class="contact-link-val">avigailba@gmail.com <span class="contact-arr">↗</span></span>
+        </a>
+        <a href="https://www.linkedin.com/in/avigailbahat/" class="contact-link">
+          <span class="contact-link-label">LinkedIn</span>
+          <span class="contact-link-val">avigailbahat <span class="contact-arr">↗</span></span>
+        </a>
+      </div>
+
+      <p class="contact-location">Based in Tel Aviv. Open to remote and hybrid opportunities.</p>
+    </div>
   </main>`);
 }
 
 function designSystemPage() {
   const swatches = [
-    { hex: '#0a0a0a', name: 'Primary text',   usage: 'Headings, titles, body' },
-    { hex: '#767676', name: 'Secondary text',  usage: 'Descriptions, meta, labels' },
-    { hex: 'var(--ac)', name: 'Accent',        usage: 'Numbers, hover, callout border' },
-    { hex: '#ebebeb', name: 'Border',          usage: 'Dividers, row borders' },
-    { hex: '#f8f8f8', name: 'Background alt',  usage: 'Callouts, hover state' },
+    { hex: '#0a0a0a', name: 'Black',     usage: 'Primary text, hover fill, footer bg' },
+    { hex: '#ffffff', name: 'White',     usage: 'Page background, text on dark' },
+    { hex: '#ebebeb', name: 'Border',    usage: 'All hairline borders' },
+    { hex: '#767676', name: 'Muted',     usage: 'Nav links, secondary text' },
+    { hex: '#999999', name: 'Subtle',    usage: 'Captions, meta' },
+    { hex: '#bbbbbb', name: 'Ghost',     usage: 'Row numbers, category labels' },
+    { hex: '#22c55e', name: 'Available', usage: 'Availability dot only' },
   ];
-
   const typeRows = [
-    { name: 'Featured title', style: 'font-size:46px;font-weight:500;letter-spacing:-0.02em;line-height:1.0;color:#0a0a0a', spec: '46px · 500 · −0.02em' },
-    { name: 'Project h1',     style: 'font-size:40px;font-weight:500;letter-spacing:-0.02em;color:#0a0a0a',                  spec: '40px · 500 · −0.02em' },
-    { name: 'About lede',     style: 'font-size:22px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a',                  spec: '22px · 500 · −0.01em' },
-    { name: 'Row title',      style: 'font-size:14px;font-weight:500;color:#0a0a0a',                                          spec: '14px · 500' },
-    { name: 'Body',           style: 'font-size:15px;font-weight:400;color:#555;line-height:1.7',                             spec: '15px · 400 · lh 1.7' },
-    { name: 'Nav / meta',     style: 'font-size:13px;font-weight:400;color:#767676',                                          spec: '13px · 400' },
-    { name: 'Label',          style: 'font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:#bbb', spec: '12px · 500 · uppercase · min size' },
+    { sample: 'Open to new work.',          spec: '36px / 700 / −0.02em',  style: 'font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a;line-height:1.15' },
+    { sample: 'Design system',              spec: '32px / 700 / −0.02em',  style: 'font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a' },
+    { sample: 'Senior UX Designer',         spec: '20px / 500 / −0.01em',  style: 'font-size:20px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a' },
+    { sample: 'Body large text sample.',    spec: '16px / 400 / lh 1.65',  style: 'font-size:16px;color:#444;line-height:1.65' },
+    { sample: 'General body text.',         spec: '14px / 400 / lh 1.6',   style: 'font-size:14px;color:#444;line-height:1.6' },
+    { sample: 'Project description text.',  spec: '13px / 400 / lh 1.6',   style: 'font-size:13px;color:#555;line-height:1.6' },
+    { sample: 'SECTION LABEL',              spec: '11px / 500 / uppercase', style: 'font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:#bbb' },
+  ];
+  const spacings = [
+    { token: '--sp-1', val: '4px',  usage: 'Tight gaps' },
+    { token: '--sp-2', val: '8px',  usage: 'Icon-text gaps' },
+    { token: '--sp-3', val: '12px', usage: 'List row padding' },
+    { token: '--sp-4', val: '16px', usage: 'Component internal' },
+    { token: '--sp-5', val: '24px', usage: 'Section gaps' },
+    { token: '--sp-6', val: '32px', usage: 'Page horizontal padding' },
+    { token: '--sp-7', val: '48px', usage: 'Section vertical spacing' },
+    { token: '--sp-8', val: '64px', usage: 'Footer padding, large gaps' },
   ];
 
-  const swatchHtml = swatches.map(({ hex, name, usage }) =>
+  const swatchHtml = swatches.map(s =>
     `<div class="ds-swatch">
-      <div style="height:48px;background:${hex};border-radius:6px;border:0.5px solid #ebebeb;margin-bottom:10px"></div>
-      <span style="font-size:13px;font-weight:500;color:#0a0a0a;display:block;margin-bottom:2px">${hex}</span>
-      <span style="font-size:12px;color:#767676;display:block">${name}</span>
-      <span style="font-size:12px;color:#bbb;display:block">${usage}</span>
+      <div class="ds-swatch-box" style="background:${s.hex}"></div>
+      <span class="ds-swatch-hex">${s.hex}</span>
+      <span class="ds-swatch-name">${s.name}</span>
+      <span style="font-size:11px;color:#bbb;display:block">${s.usage}</span>
+    </div>`
+  ).join('\n      ');
+
+  const typeHtml = typeRows.map(r =>
+    `<div class="ds-type-row">
+      <span style="${r.style}">${r.sample}</span>
+      <span class="ds-type-spec">${r.spec}</span>
     </div>`
   ).join('\n    ');
 
-  const typeHtml = typeRows.map(({ name, style, spec }) =>
-    `<div class="ds-type-row">
-      <span style="${style}">${name}</span>
-      <span style="font-size:12px;color:#767676;flex-shrink:0">${spec}</span>
+  const spacingHtml = spacings.map(s =>
+    `<div class="ds-sp-row">
+      <span class="ds-sp-token">${s.token}</span>
+      <div class="ds-sp-bar" style="width:${s.val}"></div>
+      <span class="ds-sp-val">${s.val}</span>
+      <span style="font-size:11px;color:#bbb">${s.usage}</span>
     </div>`
   ).join('\n    ');
+
+  const built = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
   return wrap('', 'Design System — Avigail Bahat', `
-  <main class="ds-main">
-    <h1 style="font-size:22px;font-weight:500;letter-spacing:-0.02em;margin-bottom:6px">Design System</h1>
-    <p style="font-size:13px;color:#767676;margin-bottom:56px">Tokens, typography, spacing, and components.</p>
+  <main class="inner-main">
+    <div class="inner-content ds-content">
+      <h1>Design system</h1>
+      <p class="page-sub">Visual language reference for avigailbahat.com</p>
 
-    <div class="ds-section">
-      <h2>Colors</h2>
-      <div class="ds-swatch-row">${swatchHtml}</div>
-    </div>
+      <div class="ds-section">
+        <span class="ds-section-title">Colours</span>
+        <div class="ds-swatches">
+          ${swatchHtml}
+        </div>
+      </div>
 
-    <div class="ds-section">
-      <h2>Typography</h2>
-      ${typeHtml}
-    </div>
+      <div class="ds-section">
+        <span class="ds-section-title">Typography</span>
+        ${typeHtml}
+      </div>
 
-    <div class="ds-section">
-      <h2>Accent slider</h2>
-      <p style="font-size:13px;color:#767676;line-height:1.6">The accent color is controlled by the hue slider in the header. It defaults to <code>hsl(156,65%,40%)</code> (teal) and is stored in <code>localStorage</code> between visits. Use <code>var(--ac)</code> everywhere.</p>
+      <div class="ds-section">
+        <span class="ds-section-title">Spacing</span>
+        <div class="ds-spacing">
+          ${spacingHtml}
+        </div>
+      </div>
+
+      <div class="ds-section">
+        <span class="ds-section-title">Components</span>
+
+        <div class="ds-comp-block">
+          <span class="ds-comp-label">Availability badge</span>
+          <div class="ds-comp-demo">
+            <div class="avail-dot-wrap" style="position:static;max-height:none;opacity:1;display:inline-flex">
+              <span class="avail-dot"></span>
+              <span class="avail-label">Available for work</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-comp-block">
+          <span class="ds-comp-label">Nav links</span>
+          <div class="ds-comp-demo">
+            <nav style="display:flex;gap:4px;">
+              <a href="#" class="nav-demo" style="font-size:12px;color:#767676;padding:5px 10px;border-radius:5px;">Home</a>
+              <a href="#" class="nav-demo nav-demo-hovered" style="font-size:12px;padding:5px 10px;border-radius:5px;">About</a>
+              <a href="#" class="nav-demo" style="font-size:12px;color:#0a0a0a;font-weight:500;padding:5px 10px;border-radius:5px;">CV (active)</a>
+            </nav>
+          </div>
+        </div>
+
+        <div class="ds-comp-block">
+          <span class="ds-comp-label">Footer tags</span>
+          <div class="ds-comp-demo ds-comp-demo-dark" style="padding:20px;">
+            <div class="footer-tags" style="margin:0">
+              <span class="ftag">Developer tools</span>
+              <span class="ftag">AI products</span>
+              <span class="ftag">Complex systems</span>
+              <span class="ftag">B2B SaaS</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-comp-block">
+          <span class="ds-comp-label">Section label</span>
+          <div class="ds-comp-demo">
+            <p class="section-label" style="margin:0">Section label</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-section">
+        <span class="ds-section-title">CSS variable reference</span>
+        <div class="ds-code">:root {
+  /* Accent */
+  --ac: #0a0a0a;
+
+  /* Borders */
+  --border: #ebebeb;
+
+  /* Spacing */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+}</div>
+      </div>
+
+      <p class="ds-updated">Last built: ${built}</p>
     </div>
   </main>`);
 }
@@ -719,14 +817,11 @@ async function build() {
     console.log(`  ✓ ${proj.slug}.html`);
   }
 
-  console.log('Fetching contact page from Notion...');
-  const contactBlocks = await fetchBlocks(CONTACT_PAGE_ID);
-
   for (const [file, html] of [
     ['index.html',         indexPage(projects)],
     ['about.html',         aboutPage()],
     ['cv.html',            cvPage()],
-    ['contact.html',       await contactPage(contactBlocks)],
+    ['contact.html',       contactPage()],
     ['design-system.html', designSystemPage()],
   ]) {
     fs.writeFileSync(path.join(DIST, file), html);
