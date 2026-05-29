@@ -484,56 +484,69 @@ function projectPage(proj) {
   const meta  = PROJECT_META[proj.slug] || {};
   const title = meta.title || proj.title;
   const year  = meta.year  || proj.year;
+  const cat   = meta.display || 'Product Design';
 
   const allProjectsJs = Object.entries(PROJECT_META)
-    .map(([slug, m]) => `  { slug: '${slug}', title: '${m.title.replace(/'/g, "\\'")}', cat: '${m.display}', year: ${m.year}, url: '${slug}.html' }`)
+    .map(([slug, m]) => {
+      const sub = (PROJECT_SUMMARIES[slug] || '').replace(/'/g, "\\'");
+      return `  { slug: '${slug}', title: '${m.title.replace(/'/g, "\\'")}', sub: '${sub}', cat: '${m.display}', year: ${m.year}, featured: ${m.featured} }`;
+    })
     .join(',\n');
 
   const moreJs = `<script>
-const ALL_PROJECTS = [
+var ALL_PROJECTS = [
 ${allProjectsJs}
 ];
-const CURRENT_SLUG = '${proj.slug}';
+var CURRENT_SLUG = '${proj.slug}';
 (function() {
-  const others = ALL_PROJECTS.filter(p => p.slug !== CURRENT_SLUG);
-  const pick = others.sort(() => Math.random() - 0.5).slice(0, 4);
-  const list = document.getElementById('more-list');
+  var others = ALL_PROJECTS.filter(function(p) { return p.slug !== CURRENT_SLUG; });
+  var pick = others.slice().sort(function() { return Math.random() - 0.5; }).slice(0, 4);
+  var list = document.getElementById('more-list');
   if (!list) return;
-  pick.forEach((p, i) => {
-    const wrap = document.createElement('div');
-    wrap.className = 'row-wrap open';
-    wrap.innerHTML = '<div class="row"><span class="num">' + String(i + 1).padStart(2, '0') + '</span><div class="rmain"><span class="row-title">' + p.title + '</span></div><span class="row-cat">' + p.cat + '</span><span class="row-year">' + p.year + '</span><span class="row-arr">→</span></div>';
-    wrap.addEventListener('click', () => { window.location.href = p.url; });
+  pick.forEach(function(p, i) {
+    var wrap = document.createElement('div');
+    wrap.className = 'row-wrap';
+    wrap.innerHTML =
+      '<div class="row" onclick="window.location.href=\\'' + p.slug + '.html\\'">' +
+        '<span class="num">' + String(i + 1).padStart(2, '0') + '</span>' +
+        '<div class="rmain">' +
+          '<div class="row-title">' + p.title + '</div>' +
+          '<div class="rsub">' + p.sub + '</div>' +
+        '</div>' +
+        (p.featured ? '<span class="feat-tag">Featured</span>' : '') +
+        '<span class="cat-tag">' + p.cat + '</span>' +
+        '<span class="row-year">' + p.year + '</span>' +
+        '<span class="row-arr">↗</span>' +
+      '</div>';
     list.appendChild(wrap);
   });
 })();
 </script>`;
 
   return wrap('', `${title} — Avigail Bahat`, `
-  <div class="wrap"><main class="proj-wrap">
-    <div class="breadcrumb"><a href="index.html">← Work</a> / ${title}</div>
-    <h1 class="proj-h1">${title}</h1>
-    ${proj.callout
-      ? `<div class="callout"><p>${proj.callout}</p></div>`
-      : proj.excerpt
-        ? `<div class="callout"><p>${proj.excerpt}</p></div>`
-        : ''}
-    <div class="proj-body">
-      <div class="proj-content">${proj.contentHtml}</div>
-      <aside class="proj-aside">
-        <div class="meta-row"><span class="meta-lbl">Year</span><span class="meta-val">${year}</span></div>
-        <div class="meta-row"><span class="meta-lbl">Type</span><span class="meta-val">Product Design</span></div>
-        <div class="meta-row"><span class="meta-lbl">Role</span><span class="meta-val">Lead Designer</span></div>
-      </aside>
+  <main class="proj-main">
+    <div class="proj-content">
+      <h1 class="proj-title">${title}</h1>
+      <div class="proj-meta">
+        <span class="proj-meta-item">${year}</span>
+        <span class="proj-meta-sep">·</span>
+        <span class="proj-meta-item">${cat}</span>
+        <span class="proj-meta-sep">·</span>
+        <span class="proj-meta-item">Wix</span>
+      </div>
+      ${(proj.callout || proj.excerpt) ? `<p class="proj-intro">${proj.callout || proj.excerpt}</p>` : ''}
+      ${proj.contentHtml}
     </div>
-    <section class="more-section">
+  </main>
+  <section class="more-section">
+    <div class="more-inner">
       <p class="more-label">More work</p>
       <div id="more-list"></div>
       <div class="more-cta">
         <a href="index.html" class="more-cta-link">See all work →</a>
       </div>
-    </section>
-  </main></div>
+    </div>
+  </section>
   ${moreJs}`);
 }
 
