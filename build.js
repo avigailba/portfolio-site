@@ -393,6 +393,7 @@ function indexPage(projects) {
 
   return wrap('', 'Avigail Bahat — Product Designer', `
   <main>
+    <p class="lede">Senior UX designer. 12 years at Wix building <span class="lede-ac">developer tools</span>, marketplace, and AI.</p>
     <section class="feat-section">
       ${featHtml}
     </section>
@@ -413,6 +414,31 @@ function projectPage(proj) {
   const meta  = PROJECT_META[proj.slug] || {};
   const title = meta.title || proj.title;
   const year  = meta.year  || proj.year;
+
+  const allProjectsJs = Object.entries(PROJECT_META)
+    .map(([slug, m]) => `  { slug: '${slug}', title: '${m.title.replace(/'/g, "\\'")}', cat: '${m.display}', year: ${m.year}, url: '${slug}.html' }`)
+    .join(',\n');
+
+  const moreJs = `<script>
+const ALL_PROJECTS = [
+${allProjectsJs}
+];
+const CURRENT_SLUG = '${proj.slug}';
+(function() {
+  const others = ALL_PROJECTS.filter(p => p.slug !== CURRENT_SLUG);
+  const pick = others.sort(() => Math.random() - 0.5).slice(0, 4);
+  const list = document.getElementById('more-list');
+  if (!list) return;
+  pick.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.innerHTML = '<span class="num">' + String(i + 1).padStart(2, '0') + '</span><span class="row-title">' + p.title + '</span><span class="row-cat">' + p.cat + '</span><span class="row-year">' + p.year + '</span><span class="row-arr">→</span>';
+    row.addEventListener('click', () => { window.location.href = p.url; });
+    list.appendChild(row);
+  });
+})();
+</script>`;
+
   return wrap('', `${title} — Avigail Bahat`, `
   <main class="proj-wrap">
     <div class="breadcrumb"><a href="index.html">← Work</a> / ${title}</div>
@@ -430,7 +456,15 @@ function projectPage(proj) {
         <div class="meta-row"><span class="meta-lbl">Role</span><span class="meta-val">Lead Designer</span></div>
       </aside>
     </div>
-  </main>`);
+    <section class="more-section">
+      <p class="more-label">More work</p>
+      <div id="more-list"></div>
+      <div class="more-cta">
+        <a href="index.html" class="more-cta-link">See all work →</a>
+      </div>
+    </section>
+  </main>
+  ${moreJs}`);
 }
 
 function aboutPage() {
