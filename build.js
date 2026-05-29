@@ -184,6 +184,15 @@ async function toHtml(blocks) {
         if (t) html += `<div class="callout"><p>${icon}${t}</p></div>\n`;
         break;
       }
+      case 'column_list': {
+        const cols = await fetchBlocks(b.id);
+        const colHtmls = await Promise.all(cols.map(async col => {
+          const colBlocks = await fetchBlocks(col.id);
+          return `<div class="col">${await toHtml(colBlocks)}</div>`;
+        }));
+        html += `<div class="col-layout col-${cols.length}">${colHtmls.join('')}</div>\n`;
+        break;
+      }
       case 'divider': html += '<hr>\n'; break;
       case 'image': {
         let url = b.image.type === 'external' ? b.image.external.url : b.image.file.url;
