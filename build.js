@@ -29,28 +29,28 @@ const stats = { pages: 0, images: 0, errors: [] };
 
 // Project metadata: categories, display title overrides, years, featured status
 const PROJECT_META = {
-  'ai-credits':                          { title: 'AI Credits',                  cats: 'ai cms featured',           display: 'AI',              year: 2026, featured: true },
-  'app-installation-page-for-developers': { title: 'App Installation View',       cats: 'developer cms featured',    display: 'Developer tools', year: 2026, featured: true },
-  'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'cms',                       display: 'CMS',             year: 2025, featured: false },
-  'developer-sale':                      { title: 'Developer Sale',               cats: 'monetisation cms featured', display: 'Monetisation',    year: 2024, featured: true },
-  'app-collections-internal-manager':    { title: 'App Collections',              cats: 'internal cms',              display: 'Internal tools',  year: 2023, featured: false },
-  'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',          display: 'Monetisation',    year: 2023, featured: false },
-  'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',              display: 'Monetisation',    year: 2023, featured: false },
-  'app-pricing-page-projects':           { title: 'App Pricing Page',             cats: 'monetisation',              display: 'Monetisation',    year: 2023, featured: false },
-  'internal-app-review-system':          { title: 'Internal App Review System',   cats: 'internal featured',         display: 'Internal tools',  year: 2022, featured: true },
-  'submit-publish-widget':               { title: 'Submit & Publish Widget',      cats: 'developer',                 display: 'Developer tools', year: 2022, featured: false },
-  'custom-element-component-settings':   { title: 'Custom Element Settings',      cats: 'developer',                 display: 'Developer tools', year: 2022, featured: false },
-  'api-keys-page':                       { title: 'API Keys Page',                cats: 'developer cms',             display: 'Developer tools', year: 2022, featured: false },
-  'development-site-creation':           { title: 'Development Site Creation',    cats: 'developer',                 display: 'Developer tools', year: 2022, featured: false },
-  'app-coupons':                         { title: 'App Coupons',                  cats: 'monetisation cms',          display: 'Monetisation',    year: 2021, featured: false },
+  'ai-credits':                          { title: 'AI Credits',                  cats: 'developer',              display: 'Developer tools', year: 2026, featured: true },
+  'app-installation-page-for-developers': { title: 'App Installation View',       cats: 'developer',              display: 'Developer tools', year: 2025, featured: true },
+  'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer',              display: 'Developer tools', year: 2024, featured: false },
+  'developer-sale':                      { title: 'Developer Sale',               cats: 'developer monetisation', display: 'Monetisation',    year: 2024, featured: true },
+  'app-collections-internal-manager':    { title: 'App Collections',              cats: 'developer internal',     display: 'Internal tools',  year: 2024, featured: false },
+  'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
+  'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
+  'app-pricing-page-projects':           { title: 'App Pricing Page',             cats: 'developer monetisation', display: 'Monetisation',    year: 2023, featured: false },
+  'internal-app-review-system':          { title: 'Internal App Review System',   cats: 'internal',               display: 'Internal tools',  year: 2022, featured: true },
+  'submit-publish-widget':               { title: 'Submit & Publish Widget',      cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
+  'custom-element-component-settings':   { title: 'Custom Element Settings',      cats: 'cms',                    display: 'CMS',             year: 2022, featured: false },
+  'api-keys-page':                       { title: 'API Keys Page',                cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
+  'development-site-creation':           { title: 'Development Site Creation',    cats: 'developer',              display: 'Developer tools', year: 2021, featured: false },
+  'app-coupons':                         { title: 'App Coupons',                  cats: 'monetisation',           display: 'Monetisation',    year: 2021, featured: false },
 };
 
 // Featured rows shown on homepage (in order)
 const FEAT_ORDER = [
   'ai-credits',
   'app-installation-page-for-developers',
-  'developer-sale',
   'internal-app-review-system',
+  'developer-sale',
 ];
 
 // One-line summaries shown on hover in the project list
@@ -335,22 +335,33 @@ const JS = `<script>
   });
 })();
 
-document.querySelectorAll('.feat-row[data-href], #list .row-wrap[data-href]').forEach(function(el) {
-  el.addEventListener('click', function() { location.href = el.dataset.href; });
-});
+(function() {
+  var wraps = Array.from(document.querySelectorAll('#list .row-wrap'));
+  if (!wraps.length) return;
+  var opened = new Set();
+  function revealVisible() {
+    var queue = [];
+    wraps.forEach(function(w) {
+      if (opened.has(w)) return;
+      var rect = w.getBoundingClientRect();
+      if (rect.top < window.innerHeight + 60) { queue.push(w); opened.add(w); }
+    });
+    queue.forEach(function(w, i) {
+      setTimeout(function() { w.classList.add('open'); }, i * 55);
+    });
+  }
+  revealVisible();
+  window.addEventListener('scroll', revealVisible, { passive: true });
+})();
 
 (function() {
-  var filters = document.getElementById('filters');
-  if (!filters) return;
-  filters.querySelectorAll('.filt').forEach(function(btn) {
+  document.querySelectorAll('.filter-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      var f = btn.dataset.f;
-      filters.querySelectorAll('.filt').forEach(function(b) {
-        b.classList.remove('active');
-      });
+      document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
+      var f = btn.dataset.f;
       document.querySelectorAll('#list .row-wrap').forEach(function(row) {
-        var cats = (row.dataset.cat || '').split(' ');
+        var cats = (row.dataset.cats || '').split(' ');
         row.classList.toggle('hidden', f !== 'all' && !cats.includes(f));
       });
       var i = 1;
@@ -377,6 +388,7 @@ function wrap(cur, title, body) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5/index.min.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -394,30 +406,20 @@ function indexPage(projects) {
   const bySlug = {};
   for (const p of projects) bySlug[p.slug] = p;
 
-  // Featured section: 4 projects in defined order
-  const featHtml = FEAT_ORDER.map((slug, i) => {
+  // Featured grid: 4 cards
+  const featHtml = FEAT_ORDER.map((slug) => {
     const meta = PROJECT_META[slug];
-    const proj = bySlug[slug];
-    const sub = proj?.excerpt || '';
-    return `<div class="feat-row" data-href="${slug}.html">
-  <span class="feat-num">${String(i + 1).padStart(2, '0')}</span>
-  <div class="feat-body">
-    <div class="feat-title">${meta.title}</div>
-    ${sub ? `<div class="feat-sub">${sub}</div>` : ''}
-    <div class="feat-meta">
-      <span class="feat-cat">${meta.display}</span>
-      <span class="feat-dot"> · </span>
-      <span class="feat-year">${meta.year}</span>
-    </div>
-  </div>
-  <span class="feat-arrow">→</span>
+    const summary = PROJECT_SUMMARIES[slug] || '';
+    return `<div class="feat-card" onclick="location.href='${slug}.html'">
+  <span class="feat-tag">${meta.display} · ${meta.year}</span>
+  <div class="feat-title">${meta.title}</div>
+  ${summary ? `<div class="feat-sub">${summary}</div>` : ''}
 </div>`;
   }).join('\n  ');
 
   // Full list: sort by year desc, then by PROJECT_META insertion order
   const metaSlugs = Object.keys(PROJECT_META);
   const allSlugs = metaSlugs.filter(s => bySlug[s]);
-  // Append any Notion projects not in meta
   for (const p of projects) {
     if (!PROJECT_META[p.slug] && !allSlugs.includes(p.slug)) allSlugs.push(p.slug);
   }
@@ -431,21 +433,19 @@ function indexPage(projects) {
   const listHtml = allSlugs.map((slug, i) => {
     const meta = PROJECT_META[slug];
     const proj = bySlug[slug];
-    const title    = meta?.title   || proj?.title   || slug;
-    const cats     = meta?.cats    || '';
-    const display  = meta?.display || '';
-    const year     = meta?.year    || proj?.year    || '';
-    const featured = meta?.featured || false;
-    const summary  = proj?.summary || PROJECT_SUMMARIES[slug] || '';
-    return `<div class="row-wrap" data-cat="${cats}" data-href="${slug}.html">
-  <div class="row">
+    const title   = meta?.title   || proj?.title   || slug;
+    const cats    = meta?.cats    || '';
+    const display = meta?.display || '';
+    const year    = meta?.year    || proj?.year    || '';
+    const summary = proj?.summary || PROJECT_SUMMARIES[slug] || '';
+    return `<div class="row-wrap" data-cats="${cats}">
+  <div class="row" onclick="location.href='${slug}.html'">
     <span class="num">${String(i + 1).padStart(2, '0')}</span>
     <div class="rmain">
       <span class="row-title">${title}</span>
-      <div class="rsub">${summary}</div>
+      ${summary ? `<div class="rsub">${summary}</div>` : ''}
     </div>
-    <span class="badge-f" style="${featured ? 'color:var(--ac)' : 'visibility:hidden'}">${featured ? 'Featured' : 'Featured'}</span>
-    <span class="row-cat">${display}</span>
+    <span class="cat-tag">${display}</span>
     <span class="row-year">${year}</span>
     <span class="row-arr">→</span>
   </div>
@@ -453,17 +453,20 @@ function indexPage(projects) {
   }).join('\n  ');
 
   return wrap('', 'Avigail Bahat — Product Designer', `
-  <div class="wrap"><main>
+  <div class="page-wrap"><main>
     <p class="lede">Senior UX designer. 12 years at Wix building various developer tools, site tools, marketplace, and AI.</p>
-    <section class="feat-section">
+    <div class="feat-grid">
       ${featHtml}
-    </section>
-    <div id="filters">
-      <button data-f="all"          class="filt active" style="color:var(--ac)">All</button>
-      <button data-f="developer"    class="filt"        style="color:var(--ac)">Developer tools</button>
-      <button data-f="monetisation" class="filt"        style="color:var(--ac)">Monetisation</button>
-      <button data-f="internal"     class="filt"        style="color:var(--ac)">Internal tools</button>
-      <button data-f="cms"          class="filt"        style="color:var(--ac)">CMS</button>
+    </div>
+    <div class="work-header">
+      <span class="section-label">All work</span>
+      <div class="filters">
+        <button class="filter-btn active" data-f="all">All</button>
+        <button class="filter-btn" data-f="developer">Developer tools</button>
+        <button class="filter-btn" data-f="monetisation">Monetisation</button>
+        <button class="filter-btn" data-f="internal">Internal tools</button>
+        <button class="filter-btn" data-f="cms">CMS</button>
+      </div>
     </div>
     <div id="list">
       ${listHtml}
