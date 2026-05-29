@@ -336,41 +336,43 @@ const JS = `<script>
 })();
 
 (function() {
-  var wraps = Array.from(document.querySelectorAll('#list .row-wrap'));
-  if (!wraps.length) return;
-  var opened = new Set();
-  function revealVisible() {
-    var queue = [];
-    wraps.forEach(function(w) {
-      if (opened.has(w)) return;
-      var rect = w.getBoundingClientRect();
-      if (rect.top < window.innerHeight + 60) { queue.push(w); opened.add(w); }
-    });
-    queue.forEach(function(w, i) {
+  var list = document.getElementById('list');
+  if (!list) return;
+  var wraps = Array.from(list.querySelectorAll('.row-wrap'));
+  var fired = false;
+  function openAll() {
+    fired = true;
+    wraps.forEach(function(w, i) {
       setTimeout(function() { w.classList.add('open'); }, i * 55);
     });
   }
-  revealVisible();
-  window.addEventListener('scroll', revealVisible, { passive: true });
+  window.addEventListener('scroll', function() {
+    if (fired) return;
+    if (list.getBoundingClientRect().top < window.innerHeight - 20) openAll();
+  });
+  if (list.getBoundingClientRect().top < window.innerHeight - 20) openAll();
 })();
 
-(function() {
-  document.querySelectorAll('.filter-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      var f = btn.dataset.f;
-      document.querySelectorAll('#list .row-wrap').forEach(function(row) {
-        var cats = (row.dataset.cats || '').split(' ');
-        row.classList.toggle('hidden', f !== 'all' && !cats.includes(f));
-      });
-      var i = 1;
-      document.querySelectorAll('#list .row-wrap:not(.hidden)').forEach(function(row) {
-        row.querySelector('.num').textContent = String(i++).padStart(2, '0');
-      });
+document.querySelectorAll('.filter-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    var f = btn.dataset.f;
+    document.querySelectorAll('#list .row-wrap').forEach(function(wrap) {
+      var row = wrap.querySelector('.row');
+      var cats = (row ? (row.dataset.cat || '') : '').split(' ');
+      if (f === 'all' || cats.indexOf(f) !== -1) {
+        wrap.classList.remove('hidden');
+      } else {
+        wrap.classList.add('hidden');
+      }
+    });
+    var i = 1;
+    document.querySelectorAll('#list .row-wrap:not(.hidden) .num').forEach(function(n) {
+      n.textContent = String(i++).padStart(2, '0');
     });
   });
-})();
+});
 
 (function() {
   document.querySelectorAll('.ftag').forEach(function(tag) {
@@ -388,7 +390,9 @@ function wrap(cur, title, body) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5/index.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter/400.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter/500.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter/700.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -411,9 +415,9 @@ function indexPage(projects) {
     const meta = PROJECT_META[slug];
     const summary = PROJECT_SUMMARIES[slug] || '';
     return `<div class="feat-card" onclick="location.href='${slug}.html'">
-  <span class="feat-tag">${meta.display} · ${meta.year}</span>
   <div class="feat-title">${meta.title}</div>
   ${summary ? `<div class="feat-sub">${summary}</div>` : ''}
+  <div class="feat-arr">↗</div>
 </div>`;
   }).join('\n  ');
 
@@ -438,23 +442,26 @@ function indexPage(projects) {
     const display = meta?.display || '';
     const year    = meta?.year    || proj?.year    || '';
     const summary = proj?.summary || PROJECT_SUMMARIES[slug] || '';
-    return `<div class="row-wrap" data-cats="${cats}">
-  <div class="row" onclick="location.href='${slug}.html'">
+    const featured = meta?.featured || false;
+    return `<div class="row-wrap">
+  <div class="row" data-cat="${cats}" onclick="location.href='${slug}.html'">
     <span class="num">${String(i + 1).padStart(2, '0')}</span>
     <div class="rmain">
-      <span class="row-title">${title}</span>
+      <div class="row-title">${title}</div>
       ${summary ? `<div class="rsub">${summary}</div>` : ''}
     </div>
+    ${featured ? `<span class="feat-tag">Featured</span>` : ''}
     <span class="cat-tag">${display}</span>
     <span class="row-year">${year}</span>
-    <span class="row-arr">→</span>
+    <span class="row-arr">↗</span>
   </div>
 </div>`;
   }).join('\n  ');
 
   return wrap('', 'Avigail Bahat — Product Designer', `
   <div class="page-wrap"><main>
-    <p class="lede">Senior UX designer. 12 years at Wix building various developer tools, site tools, marketplace, and AI.</p>
+    <p class="lede">Senior UX designer. 12 years at Wix building developer tools, site tools, marketplace, and AI — work I genuinely love.</p>
+    <p class="section-label">Featured work</p>
     <div class="feat-grid">
       ${featHtml}
     </div>
