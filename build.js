@@ -318,15 +318,6 @@ document.querySelectorAll('.feat-row[data-href], #list .row-wrap[data-href]').fo
 });
 
 (function() {
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('open'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('#list .row-wrap').forEach(r => io.observe(r));
-})();
-
-(function() {
   const filters = document.getElementById('filters');
   if (!filters) return;
   filters.querySelectorAll('.filt').forEach(btn => {
