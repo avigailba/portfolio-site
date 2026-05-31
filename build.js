@@ -622,6 +622,60 @@ function aboutPage() {
 }
 
 
+function cvPage() {
+  return wrap('cv', 'CV — Avigail Bahat', `
+  <main class="inner-main">
+    <div class="inner-content">
+      <h1>CV</h1>
+      <p class="page-sub">Avigail Bahat · avigailba@gmail.com</p>
+
+      <p class="section-label">Experience</p>
+      <div class="cv-role">
+        <div class="cv-role-header">
+          <span class="cv-title">Senior UX Designer</span>
+          <span class="cv-years">2013 – 2025</span>
+        </div>
+        <div class="cv-company">Wix.com, Tel Aviv</div>
+        <p class="cv-desc">
+          Led design across developer platform, app marketplace, and monetisation systems. Owned end-to-end design for major platform features including AI billing infrastructure, app installation flows, developer payout systems, and internal tooling. Worked closely with product, engineering, and data teams across multiple squads.
+        </p>
+      </div>
+
+      <p class="section-label">Selected projects</p>
+      <div class="cv-projects">
+        <div class="cv-proj-row"><span class="cv-proj-name">AI Credits</span><span class="cv-proj-year">2026</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">App Installation View</span><span class="cv-proj-year">2025</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">App Reviews Revamp</span><span class="cv-proj-year">2024</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">Developer Sale</span><span class="cv-proj-year">2024</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">App Collections</span><span class="cv-proj-year">2024</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">Payouts Page</span><span class="cv-proj-year">2023</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">Refund Flow</span><span class="cv-proj-year">2023</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">App Pricing Page</span><span class="cv-proj-year">2023</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">Internal App Review System</span><span class="cv-proj-year">2022</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">Submit &amp; Publish Widget</span><span class="cv-proj-year">2022</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">API Keys Page</span><span class="cv-proj-year">2022</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">Custom Element Settings</span><span class="cv-proj-year">2022</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">Development Site Creation</span><span class="cv-proj-year">2021</span></div>
+        <div class="cv-proj-row"><span class="cv-proj-name">App Coupons</span><span class="cv-proj-year">2021</span></div>
+      </div>
+
+      <p class="section-label">Skills</p>
+      <p class="cv-skills">
+        Product design · Systems design · Design systems · UX research · Interaction design · Prototyping · Figma · Developer experience · B2B SaaS · Marketplace · AI products · Cross-functional collaboration
+      </p>
+
+      <p class="section-label">Education</p>
+      <div class="cv-role">
+        <div class="cv-role-header">
+          <span class="cv-title">BDes Interaction Design</span>
+          <span class="cv-years">2009 – 2013</span>
+        </div>
+        <div class="cv-company">Bezalel Academy of Arts and Design, Jerusalem</div>
+      </div>
+    </div>
+  </main>`);
+}
+
 function contactPage() {
   return wrap('contact', 'Contact — Avigail Bahat', `
   <main class="inner-main">
@@ -834,6 +888,7 @@ async function build() {
   for (const [file, html] of [
     ['index.html',         indexPage(projects)],
     ['about.html',         aboutPage()],
+    ['cv.html',            cvPage()],
     ['contact.html',       contactPage()],
     ['design-system.html', designSystemPage()],
   ]) {
