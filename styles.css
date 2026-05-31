@@ -382,8 +382,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .wrap { max-width: 100%; padding: 0 20%; }
 .inner-main { padding: 0 20%; }
 .inner-content {
-  max-width: 640px;
-  margin: 0 auto;
   padding: 56px 0 80px;
 }
 .inner-content h1 {
@@ -456,8 +454,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 /* ── Project page ────────────────────────────────────────── */
 .proj-main { padding: 0 20%; }
 .proj-content {
-  max-width: 640px;
-  margin: 0 auto;
   padding: 56px 0 80px;
 }
 .proj-title {
@@ -519,8 +515,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 /* ── More work (project pages) ───────────────────────────── */
 .more-section { padding: 0 20%; }
 .more-inner {
-  max-width: 640px;
-  margin: 0 auto;
   padding-top: 64px;
   border-top: 0.5px solid #ebebeb;
 }
@@ -562,7 +556,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .proj-content img { cursor: zoom-in; }
 
 /* ── Design system page ──────────────────────────────────── */
-.inner-content.ds-content { max-width: 800px; }
+.inner-content.ds-content { }
 .ds-section { margin-bottom: 56px; }
 .ds-section-title {
   font-size: 11px; font-weight: 500; text-transform: uppercase;
