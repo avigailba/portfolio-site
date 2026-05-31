@@ -386,6 +386,46 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
     tag.style.animationDelay = -(Math.random() * duration) + 's';
   });
 })();
+
+(function() {
+  var lb = document.getElementById('lightbox');
+  if (!lb) return;
+  var lbImg     = lb.querySelector('.lb-img');
+  var lbCaption = lb.querySelector('.lb-caption');
+  var lbClose   = lb.querySelector('.lb-close');
+  var lbPrev    = lb.querySelector('.lb-prev');
+  var lbNext    = lb.querySelector('.lb-next');
+  var images = [], current = 0;
+  var imgs = Array.from(document.querySelectorAll('.proj-content img'));
+  imgs.forEach(function(img, i) {
+    img.addEventListener('click', function() { open(i); });
+  });
+  images = imgs;
+  function open(i) {
+    current = i;
+    lbImg.src = images[i].src;
+    lbImg.alt = images[i].alt;
+    lbCaption.textContent = images[i].alt || '';
+    lbPrev.hidden = (i === 0);
+    lbNext.hidden = (i === images.length - 1);
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  lbClose.addEventListener('click', close);
+  lb.addEventListener('click', function(e) { if (e.target === lb) close(); });
+  lbPrev.addEventListener('click', function(e) { e.stopPropagation(); if (current > 0) open(current - 1); });
+  lbNext.addEventListener('click', function(e) { e.stopPropagation(); if (current < images.length - 1) open(current + 1); });
+  document.addEventListener('keydown', function(e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft'  && current > 0) open(current - 1);
+    if (e.key === 'ArrowRight' && current < images.length - 1) open(current + 1);
+  });
+})();
 </script>`;
 
 function wrap(cur, title, body) {
@@ -553,6 +593,17 @@ var CURRENT_SLUG = '${proj.slug}';
       </div>
     </div>
   </section>
+  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true">
+    <button class="lb-close" aria-label="Close">✕</button>
+    <div class="lb-stage">
+      <button class="lb-handle lb-prev" aria-label="Previous">‹</button>
+      <div class="lb-content">
+        <img class="lb-img" src="" alt="">
+        <p class="lb-caption"></p>
+      </div>
+      <button class="lb-handle lb-next" aria-label="Next">›</button>
+    </div>
+  </div>
   ${moreJs}`);
 }
 
