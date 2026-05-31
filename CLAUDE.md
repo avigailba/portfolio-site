@@ -14,22 +14,23 @@ This fetches all Notion pages and rebuilds `dist/`. To regenerate a single page,
 ## Design system
 
 ### Layout
-- **Horizontal padding: `clamp(24px, 5%, 60px)`** on header, footer, inner pages, project pages, more-work section.
+- **Horizontal padding: `clamp(40px, 20%, 240px)`** on header, footer, inner pages, project pages, more-work section.
 - Homepage uses `.home-band`: `width: 80vw; max-width: 80vw; margin: 0 auto` — contains lede, feat-grid, work-header, and list. At ≤960px resets to `width: 100%` with clamp padding.
 - `.feat-grid` also has `width: 80vw; max-width: 80vw; margin: 0 auto; overflow: hidden` — both the band and grid are 80vw so they share the same left edge.
-- Inner pages (about, contact) and project pages use `.inner-content` / `.proj-content` (max-width: 640px, margin: 0 auto).
+- Inner pages (about, contact): `.inner-content` has `max-width: 720px`. Project pages: `.proj-content` has no max-width (wide layout is intentional).
 
 ### Colors
 - `--ac: #0a0a0a` — primary/accent (text, hover backgrounds)
 - `--border: #ebebeb` — all borders
-- `#888` — **single gray token** for all muted/secondary text: labels, numbers, subtitles, nav links, badges, years, arrows, captions. Do not use #bbb, #999, #767676, or #555 for text.
+- `#555` — **single gray token** for all muted/secondary text: labels, numbers, subtitles, nav links, badges, years, arrows, captions. Do not use #bbb, #999, #767676, or #888 for text.
 - Body text (prose paragraphs): `#444`
+- Dark body copy (CV, project content): `#222`
 - White: `#fff`
 
 ### Typography
 - **Titles** (`.feat-title`, `.proj-title`, `.lede`, `.footer-statement`): `Plus Jakarta Sans` — weights 300–800
-- **Body/UI** (everything else): `IBM Plex Sans` — weights 300–600 + italic
-- Loaded from Google Fonts: `https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap`
+- **Body/UI** (everything else): `Inter` — weights 300–700
+- Loaded from Google Fonts: `https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap`
 - `-webkit-font-smoothing: antialiased` always on body
 
 ### Writing rules
@@ -64,14 +65,14 @@ Row tokens are shared between the homepage list and all project page "More work"
 - Lede (homepage): `28px`, `font-weight: 500`
 - Logo name: `16px`
 - Nav links: `14px`
-- Section labels: `13px`
-- Featured card title (`.feat-title`): `28px`, `font-weight: 700`
+- Section labels: `15px`, uppercase, `color: #555`
+- Featured card title (`.feat-title`): `clamp(18px, 2.2vw, 28px)`, `font-weight: 700`
 - Featured card subtitle (`.feat-sub`): `15px`
 - Row title (`.row-title`): `20px`, `font-weight: 500`
 - Row number (`.num`): `14px`
 - Row year (`.row-year`): `14px`
-- Tags (`.cat-tag`, `.feat-tag`): `13px`, padding `4px 10px`
-- Minimum font size anywhere: `12px`
+- Tags (`.cat-tag`, `.feat-tag`): `15px`, padding `4px 10px`
+- Minimum font size anywhere: `14px`
 
 ### Featured cards grid
 - `.feat-grid`: `width: 80vw; height: 30vh; margin: 0 auto;` — viewport-relative sizing on desktop
@@ -95,15 +96,15 @@ Row tokens are shared between the homepage list and all project page "More work"
 .row:hover { background: #f7f7f7; padding-left: 8px; padding-right: 8px; }
 .row:hover .rsub { max-height: 40px; opacity: 1; }
 .row:hover .row-arr { opacity: 1; }
-.num { font-size: 14px; font-weight: 500; color: #888; min-width: 22px; flex-shrink: 0; }
+.num { font-size: 14px; font-weight: 500; color: #555; min-width: 22px; flex-shrink: 0; }
 .rmain { flex: 1; min-width: 0; }
 .row-title { font-size: 20px; font-weight: 500; color: #0a0a0a; }
-.rsub { font-size: 12px; color: #888; max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.2s ease, opacity 0.2s ease; margin-top: 1px; white-space: nowrap; text-overflow: ellipsis; }
-.row-year { font-size: 14px; color: #888; flex-shrink: 0; min-width: 36px; text-align: right; }
-.row-arr { font-size: 12px; color: #888; opacity: 0; transition: opacity 0.2s ease; flex-shrink: 0; }
-.cat-tag { font-size: 13px; color: #888; border: 0.5px solid #e0e0e0; border-radius: 3px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0; }
-.feat-tag { font-size: 13px; color: #888; border: 0.5px solid #e0e0e0; border-radius: 3px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0; }
-.section-label { font-size: 13px; color: #888; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 16px; }
+.rsub { font-size: 14px; color: #555; max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.2s ease, opacity 0.2s ease; margin-top: 1px; white-space: nowrap; text-overflow: ellipsis; }
+.row-year { font-size: 14px; color: #555; flex-shrink: 0; min-width: 36px; text-align: right; }
+.row-arr { font-size: 14px; color: #555; opacity: 0; transition: opacity 0.2s ease; flex-shrink: 0; }
+.cat-tag { font-size: 15px; color: #555; border: 0.5px solid #e0e0e0; border-radius: 3px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0; }
+.feat-tag { font-size: 15px; color: #555; border: 0.5px solid #e0e0e0; border-radius: 3px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0; }
+.section-label { font-size: 15px; color: #555; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 16px; }
 ```
 
 Note: on project pages `.row-wrap` starts at `max-height: 120px` (open by default). On the homepage it starts at `0` and opens via the accordion JS.
@@ -137,12 +138,12 @@ Each project page in Notion has these sections, which the generator maps to HTML
 
 ### Project page CSS
 ```css
-.proj-main { padding: 0 clamp(24px, 5%, 60px); }
+.proj-main { padding: 0 clamp(40px, 20%, 240px); }
 .proj-content { padding: 56px 0 80px; }
 .proj-title { font-size: 42px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
 .proj-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
-.proj-meta-item { font-size: 12px; color: #888; }
-.proj-meta-sep { font-size: 12px; color: #ccc; }
+.proj-meta-item { font-size: 14px; color: #555; }
+.proj-meta-sep { font-size: 14px; color: #ccc; }
 .proj-intro { font-size: 17px; font-weight: 500; color: #0a0a0a; line-height: 1.6; letter-spacing: -0.01em; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 0.5px solid #ebebeb; }
 .proj-body { font-size: 15px; color: #444; line-height: 1.75; }
 .proj-body + .proj-body { margin-top: 16px; }
@@ -172,23 +173,43 @@ The about page (`aboutPage()` in generate.js) is a **static template** — it do
 Structure: bio intro → What I do → Now → Experience → Skills → Contact
 
 ### Experience entry HTML pattern
+Top-level roles use `.cv-title`. Roles with sub-periods (e.g. Wix) nest `.cv-sub-roles` inside.
+
 ```html
+<!-- Top-level role with sub-periods -->
 <div class="cv-role">
-  <div class="cv-role-meta">2013 – 2025 · Wix.com, Tel Aviv</div>
-  <div class="cv-role-title">Senior UX Designer</div>
-  <p class="cv-desc">Description in color #444.</p>
-  <p class="cv-proj-list">Project A, Project B, Project C</p>
+  <span class="cv-title">UX Designer · Wix.com · 2014–2026</span>
+  <div class="cv-sub-roles">
+    <div class="cv-sub-role">
+      <span class="cv-years">2025–2026 · OS company</span>
+      <p class="cv-desc">Description.</p>
+      <p class="cv-proj-list">Project A, Project B</p>
+    </div>
+  </div>
+</div>
+
+<!-- Standalone role (no sub-periods) -->
+<div class="cv-role"><span class="cv-title">Graphic Designer · Studio · 2010–2012</span></div>
+
+<!-- Education entry -->
+<div class="cv-role">
+  <div class="cv-role-header"><span class="cv-years">2006–2010 · School Name</span></div>
+  <p class="cv-desc">Degree description.</p>
 </div>
 ```
 
 ### CV CSS
 ```css
-.cv-role { margin-bottom: 32px; }
-.cv-role-meta { font-size: 13px; font-weight: 500; color: #0a0a0a; margin-bottom: 4px; }
-.cv-role-title { font-size: 14px; font-weight: 600; color: #0a0a0a; margin-bottom: 8px; }
-.cv-desc { font-size: 13px; color: #444; line-height: 1.65; }
-.cv-proj-list { font-size: 13px; color: #888; font-style: italic; line-height: 1.6; margin-top: 8px; }
-.cv-skills { font-size: 13px; color: #444; line-height: 1.8; }
+.cv-role { margin-bottom: 40px; }
+.cv-sub-roles { border-left: 1.5px solid #ebebeb; padding-left: 20px; margin-top: 12px; }
+.cv-sub-role { margin-bottom: 24px; }
+.cv-sub-role:last-child { margin-bottom: 0; }
+.cv-role-header { margin-bottom: 6px; }
+.cv-title { font-size: 18px; font-weight: 600; color: #0a0a0a; display: block; margin-bottom: 16px; margin-top: 8px; }
+.cv-years { font-size: 15px; font-weight: 600; color: #0a0a0a; display: block; }
+.cv-desc { font-size: 15px; color: #444; line-height: 1.7; margin-top: 4px; }
+.cv-proj-list { font-size: 14px; color: #555; font-style: italic; line-height: 1.6; margin-top: 6px; }
+.cv-skills { font-size: 15px; color: #444; line-height: 1.8; }
 ```
 
 ---

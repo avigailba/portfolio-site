@@ -393,7 +393,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .footer-bottom { margin: 48px 0 0; font-size: 14px; color: rgba(255,255,255,0.3); }
 
 /* ── Inner pages ─────────────────────────────────────────── */
-.wrap { padding: 0 clamp(40px, 20%, 240px); }
 .inner-main { padding: 0 clamp(40px, 20%, 240px); }
 .inner-content { padding: 56px 0 80px; max-width: 720px; }
 .inner-content h1 {
@@ -406,21 +405,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 }
 .inner-content .page-sub { font-size: 14px; color: #555; margin-bottom: 48px; }
 
-/* ── About ───────────────────────────────────────────────── */
-.about-bio {
-  font-size: 18px;
-  font-weight: 500;
-  color: #0a0a0a;
-  line-height: 1.5;
-  letter-spacing: -0.01em;
-  margin-bottom: 40px;
-  max-width: 560px;
-}
-.about-body { font-size: 16px; color: #222; line-height: 1.7; margin-bottom: 0; }
-.about-links { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
-.about-link { font-size: 14px; color: #0a0a0a; text-decoration: none; font-weight: 500; }
-.about-link:hover { text-decoration: underline; }
-
 /* ── CV ──────────────────────────────────────────────────── */
 .cv-role { margin-bottom: 40px; }
 .cv-sub-roles { border-left: 1.5px solid #ebebeb; padding-left: 20px; margin-top: 12px; }
@@ -431,23 +415,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .cv-title { font-size: 18px; font-weight: 600; color: #0a0a0a; display: block; margin-bottom: 16px; margin-top: 8px; }
 /* Sub-period: 2025–2026 · OS company */
 .cv-years { font-size: 15px; font-weight: 600; color: #0a0a0a; display: block; }
-.cv-role-meta { font-size: 15px; font-weight: 500; color: #0a0a0a; margin-bottom: 4px; }
-.cv-role-title { font-size: 16px; font-weight: 600; color: #0a0a0a; margin-bottom: 8px; }
-.cv-company { font-size: 14px; color: #555; margin-bottom: 6px; }
 .cv-desc { font-size: 15px; color: #444; line-height: 1.7; margin-top: 4px; }
-.cv-proj-list { font-size: 14px; color: #777; font-style: italic; line-height: 1.6; margin-top: 6px; }
-.cv-projects { margin-bottom: 4px; }
-.cv-proj-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 7px 0;
-  border-bottom: 0.5px solid var(--border);
-  font-size: 15px;
-}
-.cv-proj-row:first-child { border-top: 0.5px solid var(--border); }
-.cv-proj-name { color: #0a0a0a; }
-.cv-proj-year { color: #555; }
+.cv-proj-list { font-size: 14px; color: #555; font-style: italic; line-height: 1.6; margin-top: 6px; }
 .cv-skills { font-size: 15px; color: #444; line-height: 1.8; }
 
 /* ── Contact ─────────────────────────────────────────────── */
@@ -569,7 +538,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .proj-content img { cursor: zoom-in; }
 
 /* ── Design system page ──────────────────────────────────── */
-.inner-content.ds-content { }
 .ds-section { margin-bottom: 56px; }
 .ds-section-title {
   font-size: 14px; font-weight: 500; text-transform: uppercase;
@@ -578,6 +546,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   margin-bottom: 24px; display: block; margin-top: 0;
 }
 .ds-swatches { display: flex; flex-wrap: wrap; gap: 20px; }
+.ds-swatch { display: flex; flex-direction: column; }
 .ds-swatch-box { width: 48px; height: 48px; border-radius: 6px; border: 0.5px solid var(--border); margin-bottom: 8px; }
 .ds-swatch-hex { font-size: 14px; font-weight: 500; color: #0a0a0a; display: block; margin-bottom: 2px; font-family: 'SF Mono', monospace; }
 .ds-swatch-name { font-size: 14px; color: #555; display: block; }
