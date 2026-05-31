@@ -128,8 +128,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 
 /* ── Lede ────────────────────────────────────────────────── */
 .lede {
-  font-size: 48px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 500;
   color: #0a0a0a;
   line-height: 1.4;
   letter-spacing: -0.01em;
@@ -159,6 +159,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   border-top: 0.5px solid #ebebeb;
   border-bottom: 0.5px solid #ebebeb;
   margin-bottom: 56px;
+  overflow: hidden;
 }
 .feat-card {
   padding: 36px 32px;
@@ -166,6 +167,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   cursor: pointer;
   height: 100%;
   min-height: 300px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;

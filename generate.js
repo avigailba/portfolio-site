@@ -389,7 +389,7 @@ function indexPage(projects) {
 
   return wrap('', 'Avigail Bahat — Product Designer', `
   <div class="page-wrap"><main>
-    <p class="lede">Senior UX designer. 12 years at Wix building developer tools, site tools, marketplace, and AI — work I genuinely love.</p>
+    <p class="lede">Senior UX designer. 12 years at Wix building developer tools, site tools, marketplace, and AI. Work I genuinely love.</p>
     <p class="section-label">Featured work</p>
     <div class="feat-grid">
       ${featHtml}

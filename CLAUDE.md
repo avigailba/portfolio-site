@@ -58,7 +58,7 @@ prompts/                  — design prompts (reference, not generated)
 Row tokens are shared between the homepage list and all project page "More work" sections. Define them **once** in style.css — never redefine per page.
 
 ### Type scale
-- Lede (homepage): `48px`, `font-weight: 600`
+- Lede (homepage): `28px`, `font-weight: 500`
 - Logo name: `16px`
 - Nav links: `14px`
 - Section labels: `13px`
