@@ -21,10 +21,9 @@ const CONTACT_PAGE_ID = '36e35a9ccf7a8188a447fd3e36ee88cd';
 
 const SKIP_IDS   = new Set([ABOUT_PAGE_ID, CONTACT_PAGE_ID]);
 const SKIP_SLUGS = new Set(['about', 'contact', 'cv', 'resume']);
-const DIST = 'dist';
-// NOTE: Project pages currently output to dist/[slug].html.
-// CLAUDE.md specifies dist/projects/[slug].html — move as a future step.
-const IMAGES = path.join(DIST, 'images');
+const DIST        = 'dist';
+const PROJECTS_DIR = path.join(DIST, 'projects');
+const IMAGES      = path.join(DIST, 'images');
 
 let imgIdx = 0;
 const stats = { pages: 0, images: 0, errors: [] };
@@ -137,7 +136,7 @@ function rt(richText) {
     }).join('');
 }
 
-async function toHtml(blocks) {
+async function toHtml(blocks, imgPrefix = '') {
   let html = '', uList = false, oList = false, firstParaSeen = false;
   for (const b of blocks) {
     if (b.type !== 'bulleted_list_item' && uList) { html += '</ul>\n'; uList = false; }
@@ -165,7 +164,7 @@ async function toHtml(blocks) {
         let bliHtml = rt(b.bulleted_list_item.rich_text);
         if (b.has_children) {
           const ch = await fetchBlocks(b.id);
-          bliHtml += await toHtml(ch);
+          bliHtml += await toHtml(ch, imgPrefix);
         }
         html += `  <li>${bliHtml}</li>\n`;
         break;
@@ -175,7 +174,7 @@ async function toHtml(blocks) {
         let nliHtml = rt(b.numbered_list_item.rich_text);
         if (b.has_children) {
           const ch = await fetchBlocks(b.id);
-          nliHtml += await toHtml(ch);
+          nliHtml += await toHtml(ch, imgPrefix);
         }
         html += `  <li>${nliHtml}</li>\n`;
         break;
@@ -190,7 +189,7 @@ async function toHtml(blocks) {
         const cols = await fetchBlocks(b.id);
         const colHtmls = await Promise.all(cols.map(async col => {
           const colBlocks = await fetchBlocks(col.id);
-          return `<div class="col">${await toHtml(colBlocks)}</div>`;
+          return `<div class="col">${await toHtml(colBlocks, imgPrefix)}</div>`;
         }));
         html += `<div class="col-layout col-${cols.length}">${colHtmls.join('')}</div>\n`;
         break;
@@ -204,12 +203,12 @@ async function toHtml(blocks) {
           const fname = `img-${imgIdx}.jpg`;
           const dest = path.join(IMAGES, fname);
           if (fs.existsSync(dest)) {
-            url = `images/${fname}`;
+            url = `${imgPrefix}images/${fname}`;
             stats.cached = (stats.cached || 0) + 1;
           } else {
             try {
               await dlFile(url, dest);
-              url = `images/${fname}`;
+              url = `${imgPrefix}images/${fname}`;
               stats.images++;
             } catch (e) { stats.errors.push(`img-${imgIdx}: ${e.message}`); }
           }
@@ -254,28 +253,15 @@ async function hydrateTables(blocks) {
   }
 }
 
-function renderExpTable(rows) {
-  return rows.map(row => {
-    const cells = row.table_row?.cells || [];
-    if (!cells.length) return '';
-    const role    = cells[0] ? plainText(cells[0]) : '';
-    const company = cells[1] ? plainText(cells[1]) : '';
-    const years   = cells[2] ? plainText(cells[2]) : '';
-    if (!role) return '';
-    return `<div class="exp-row">
-    <span class="exp-role">${role}</span><span class="exp-company">${company}</span><span class="exp-years">${years}</span>
-  </div>`;
-  }).filter(Boolean).join('\n');
-}
-
 // ── Layout ──────────────────────────────────────────────────
 
-function hdr() {
+// prefix: '' for root pages, '../' for project pages in dist/projects/
+function hdr(prefix) {
   return `<header id="site-header">
   <div class="header-inner">
     <div class="logo-wrap">
       <div class="logo-text">
-        <a href="index.html" class="logo-name">Avigail Bahat</a>
+        <a href="${prefix}index.html" class="logo-name">Avigail Bahat</a>
         <span class="logo-role">Senior UX Designer</span>
       </div>
       <div class="avail-dot-wrap">
@@ -284,9 +270,9 @@ function hdr() {
       </div>
     </div>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+      <a href="${prefix}index.html">Home</a>
+      <a href="${prefix}about.html">About</a>
+      <a href="${prefix}contact.html">Contact</a>
     </nav>
   </div>
 </header>`;
@@ -320,117 +306,12 @@ function ftr() {
       </a>
     </div>
   </div>
-  <div class="footer-bottom">© 2026 Avigail Bahat · <a href="design-system.html" style="color:inherit;text-decoration:none;opacity:0.6;">Design system</a></div>
+  <div class="footer-bottom">© 2026 Avigail Bahat</div>
 </footer>`;
 }
 
-const JS = `<script>
-(function() {
-  var hdr = document.getElementById('site-header');
-  if (!hdr) return;
-  window.addEventListener('scroll', function() {
-    hdr.classList.toggle('scrolled', window.scrollY > 40);
-  });
-  var path = window.location.pathname;
-  document.querySelectorAll('nav a').forEach(function(a) {
-    var href = a.getAttribute('href') || '';
-    var page = href.replace(/^\\//, '');
-    if (page && path.endsWith(page)) a.classList.add('active');
-    else if (!page || page === 'index.html') {
-      if (path.endsWith('/') || path.endsWith('index.html')) a.classList.add('active');
-    }
-  });
-})();
-
-(function() {
-  var list = document.getElementById('list');
-  if (!list) return;
-  var wraps = Array.from(list.querySelectorAll('.row-wrap'));
-  var fired = false;
-  function openAll() {
-    fired = true;
-    wraps.forEach(function(w, i) {
-      setTimeout(function() { w.classList.add('open'); }, i * 55);
-    });
-  }
-  window.addEventListener('scroll', function() {
-    if (fired) return;
-    if (list.getBoundingClientRect().top < window.innerHeight - 20) openAll();
-  });
-  if (list.getBoundingClientRect().top < window.innerHeight - 20) openAll();
-})();
-
-document.querySelectorAll('.filter-btn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-    btn.classList.add('active');
-    var f = btn.dataset.f;
-    document.querySelectorAll('#list .row-wrap').forEach(function(wrap) {
-      var row = wrap.querySelector('.row');
-      var cats = (row ? (row.dataset.cat || '') : '').split(' ');
-      if (f === 'all' || cats.indexOf(f) !== -1) {
-        wrap.classList.remove('hidden');
-      } else {
-        wrap.classList.add('hidden');
-      }
-    });
-    var i = 1;
-    document.querySelectorAll('#list .row-wrap:not(.hidden) .num').forEach(function(n) {
-      n.textContent = String(i++).padStart(2, '0');
-    });
-  });
-});
-
-(function() {
-  document.querySelectorAll('.ftag').forEach(function(tag) {
-    var duration = 2.5 + Math.random() * 2;
-    tag.style.animationDuration = duration + 's';
-    tag.style.animationDelay = -(Math.random() * duration) + 's';
-  });
-})();
-
-(function() {
-  var lb = document.getElementById('lightbox');
-  if (!lb) return;
-  var lbImg     = lb.querySelector('.lb-img');
-  var lbCaption = lb.querySelector('.lb-caption');
-  var lbClose   = lb.querySelector('.lb-close');
-  var lbPrev    = lb.querySelector('.lb-prev');
-  var lbNext    = lb.querySelector('.lb-next');
-  var images = [], current = 0;
-  var imgs = Array.from(document.querySelectorAll('.proj-content img'));
-  imgs.forEach(function(img, i) {
-    img.addEventListener('click', function() { open(i); });
-  });
-  images = imgs;
-  function open(i) {
-    current = i;
-    lbImg.src = images[i].src;
-    lbImg.alt = images[i].alt;
-    lbCaption.textContent = images[i].alt || '';
-    lbPrev.hidden = (i === 0);
-    lbNext.hidden = (i === images.length - 1);
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function close() {
-    lb.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  lbClose.addEventListener('click', close);
-  lb.addEventListener('click', function(e) { if (e.target === lb) close(); });
-  lbPrev.addEventListener('click', function(e) { e.stopPropagation(); if (current > 0) open(current - 1); });
-  lbNext.addEventListener('click', function(e) { e.stopPropagation(); if (current < images.length - 1) open(current + 1); });
-  document.addEventListener('keydown', function(e) {
-    if (!lb.classList.contains('open')) return;
-    if (e.key === 'Escape') close();
-    if (e.key === 'ArrowLeft'  && current > 0) open(current - 1);
-    if (e.key === 'ArrowRight' && current < images.length - 1) open(current + 1);
-  });
-})();
-</script>`;
-
-function wrap(cur, title, body) {
+// prefix: '' for root pages, '../' for project pages
+function wrap(prefix, title, body, extraScript = '') {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -440,13 +321,14 @@ function wrap(cur, title, body) {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter/400.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter/500.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter/700.css">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="${prefix}style.css">
 </head>
 <body>
-  ${hdr()}
+  ${hdr(prefix)}
   ${body}
   ${ftr()}
-  ${JS}
+  <script src="${prefix}script.js"></script>
+  ${extraScript}
 </body>
 </html>`;
 }
@@ -461,7 +343,7 @@ function indexPage(projects) {
   const featHtml = FEAT_ORDER.map((slug) => {
     const meta = PROJECT_META[slug];
     const summary = PROJECT_SUMMARIES[slug] || '';
-    return `<div class="feat-card" onclick="location.href='${slug}.html'">
+    return `<div class="feat-card" onclick="location.href='projects/${slug}.html'">
   <div class="feat-title">${meta.title}</div>
   ${summary ? `<div class="feat-sub">${summary}</div>` : ''}
   <div class="feat-arr">↗</div>
@@ -491,7 +373,7 @@ function indexPage(projects) {
     const summary = proj?.summary || PROJECT_SUMMARIES[slug] || '';
     const featured = meta?.featured || false;
     return `<div class="row-wrap">
-  <div class="row" data-cat="${cats}" onclick="location.href='${slug}.html'">
+  <div class="row" data-cat="${cats}" onclick="location.href='projects/${slug}.html'">
     <span class="num">${String(i + 1).padStart(2, '0')}</span>
     <div class="rmain">
       <div class="row-title">${title}</div>
@@ -529,6 +411,7 @@ function indexPage(projects) {
 }
 
 function projectPage(proj) {
+  const prefix = '../';
   const meta  = PROJECT_META[proj.slug] || {};
   const title = meta.title || proj.title;
   const year  = meta.year  || proj.year;
@@ -541,6 +424,7 @@ function projectPage(proj) {
     })
     .join(',\n');
 
+  // Links between project pages are relative within dist/projects/ (same directory)
   const moreJs = `<script>
 var ALL_PROJECTS = [
 ${allProjectsJs}
@@ -571,7 +455,7 @@ var CURRENT_SLUG = '${proj.slug}';
 })();
 </script>`;
 
-  return wrap('', `${title} — Avigail Bahat`, `
+  return wrap(prefix, `${title} — Avigail Bahat`, `
   <main class="proj-main">
     <div class="proj-content">
       <h1 class="proj-title">${title}</h1>
@@ -591,7 +475,7 @@ var CURRENT_SLUG = '${proj.slug}';
       <p class="more-label">More work</p>
       <div id="more-list"></div>
       <div class="more-cta">
-        <a href="index.html" class="more-cta-link">See all work →</a>
+        <a href="../index.html" class="more-cta-link">See all work →</a>
       </div>
     </div>
   </section>
@@ -605,12 +489,11 @@ var CURRENT_SLUG = '${proj.slug}';
       </div>
       <button class="lb-handle lb-next" aria-label="Next">›</button>
     </div>
-  </div>
-  ${moreJs}`);
+  </div>`, moreJs);
 }
 
 function aboutPage() {
-  return wrap('about', 'About — Avigail Bahat', `
+  return wrap('', 'About — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content">
       <h1>About</h1>
@@ -625,11 +508,6 @@ function aboutPage() {
         I design end-to-end: discovery, definition, detailed UI, and working closely with engineering through delivery. I've led design on platform-level projects — monetisation systems, app marketplaces, developer tooling — where the challenge is as much about the mental model as the interface.
       </p>
 
-      <p class="section-label">Background</p>
-      <p class="about-body">
-        Before focusing on platform and developer products, I worked across Wix's site builder, templates, and onboarding. I've been around long enough to have seen the company grow from a few hundred people to thousands, and to have shipped products used by millions of developers worldwide.
-      </p>
-
       <p class="section-label">Now</p>
       <p class="about-body">
         I recently left Wix after 12 years and I'm looking for my next challenge. I'm particularly drawn to AI products, complex B2B systems, and places where design can make a meaningful difference to how developers and power users work.
@@ -638,32 +516,10 @@ function aboutPage() {
       <p class="section-label">Experience</p>
 
       <div class="cv-role">
-        <div class="cv-role-header">
-          <span class="cv-title">Senior UX Designer</span>
-          <span class="cv-years">2013 – 2025</span>
-        </div>
-        <div class="cv-company">Wix.com, Tel Aviv</div>
-        <p class="cv-desc">
-          Led design across developer platform, app marketplace, and monetisation systems. Owned end-to-end design for major platform features including AI billing infrastructure, app installation flows, developer payout systems, and internal tooling. Worked closely with product, engineering, and data teams across multiple squads.
-        </p>
-      </div>
-
-      <p class="section-label">Selected projects</p>
-      <div class="cv-projects">
-        <div class="cv-proj-row"><span class="cv-proj-name">AI Credits</span><span class="cv-proj-year">2026</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">App Installation View</span><span class="cv-proj-year">2025</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">App Reviews Revamp</span><span class="cv-proj-year">2024</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">Developer Sale</span><span class="cv-proj-year">2024</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">App Collections</span><span class="cv-proj-year">2024</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">Payouts Page</span><span class="cv-proj-year">2023</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">Refund Flow</span><span class="cv-proj-year">2023</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">App Pricing Page</span><span class="cv-proj-year">2023</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">Internal App Review System</span><span class="cv-proj-year">2022</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">Submit &amp; Publish Widget</span><span class="cv-proj-year">2022</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">API Keys Page</span><span class="cv-proj-year">2022</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">Custom Element Settings</span><span class="cv-proj-year">2022</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">Development Site Creation</span><span class="cv-proj-year">2021</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">App Coupons</span><span class="cv-proj-year">2021</span></div>
+        <div class="cv-role-meta">2013 – 2025 · Wix.com, Tel Aviv</div>
+        <div class="cv-role-title">Senior UX Designer</div>
+        <p class="cv-desc">Led design across developer platform, app marketplace, and monetisation systems. Owned end-to-end design for major platform features including AI billing infrastructure, app installation flows, developer payout systems, and internal tooling. Worked closely with product, engineering, and data teams across multiple squads.</p>
+        <p class="cv-proj-list">AI Credits, App Installation View, App Reviews Revamp, Developer Sale, App Collections, Payouts Page, Refund Flow, App Pricing Page, Internal App Review System, Submit &amp; Publish Widget, API Keys Page, Custom Element Settings, Development Site Creation, App Coupons</p>
       </div>
 
       <p class="section-label">Skills</p>
@@ -680,63 +536,8 @@ function aboutPage() {
   </main>`);
 }
 
-
-function cvPage() {
-  return wrap('cv', 'CV — Avigail Bahat', `
-  <main class="inner-main">
-    <div class="inner-content">
-      <h1>CV</h1>
-      <p class="page-sub">Avigail Bahat · avigailba@gmail.com</p>
-
-      <p class="section-label">Experience</p>
-      <div class="cv-role">
-        <div class="cv-role-header">
-          <span class="cv-title">Senior UX Designer</span>
-          <span class="cv-years">2013 – 2025</span>
-        </div>
-        <div class="cv-company">Wix.com, Tel Aviv</div>
-        <p class="cv-desc">
-          Led design across developer platform, app marketplace, and monetisation systems. Owned end-to-end design for major platform features including AI billing infrastructure, app installation flows, developer payout systems, and internal tooling. Worked closely with product, engineering, and data teams across multiple squads.
-        </p>
-      </div>
-
-      <p class="section-label">Selected projects</p>
-      <div class="cv-projects">
-        <div class="cv-proj-row"><span class="cv-proj-name">AI Credits</span><span class="cv-proj-year">2026</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">App Installation View</span><span class="cv-proj-year">2025</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">App Reviews Revamp</span><span class="cv-proj-year">2024</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">Developer Sale</span><span class="cv-proj-year">2024</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">App Collections</span><span class="cv-proj-year">2024</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">Payouts Page</span><span class="cv-proj-year">2023</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">Refund Flow</span><span class="cv-proj-year">2023</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">App Pricing Page</span><span class="cv-proj-year">2023</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">Internal App Review System</span><span class="cv-proj-year">2022</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">Submit &amp; Publish Widget</span><span class="cv-proj-year">2022</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">API Keys Page</span><span class="cv-proj-year">2022</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">Custom Element Settings</span><span class="cv-proj-year">2022</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">Development Site Creation</span><span class="cv-proj-year">2021</span></div>
-        <div class="cv-proj-row"><span class="cv-proj-name">App Coupons</span><span class="cv-proj-year">2021</span></div>
-      </div>
-
-      <p class="section-label">Skills</p>
-      <p class="cv-skills">
-        Product design · Systems design · Design systems · UX research · Interaction design · Prototyping · Figma · Developer experience · B2B SaaS · Marketplace · AI products · Cross-functional collaboration
-      </p>
-
-      <p class="section-label">Education</p>
-      <div class="cv-role">
-        <div class="cv-role-header">
-          <span class="cv-title">BDes Interaction Design</span>
-          <span class="cv-years">2009 – 2013</span>
-        </div>
-        <div class="cv-company">Bezalel Academy of Arts and Design, Jerusalem</div>
-      </div>
-    </div>
-  </main>`);
-}
-
 function contactPage() {
-  return wrap('contact', 'Contact — Avigail Bahat', `
+  return wrap('', 'Contact — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content">
       <h1>Contact</h1>
@@ -762,164 +563,14 @@ function contactPage() {
   </main>`);
 }
 
-function designSystemPage() {
-  const swatches = [
-    { hex: '#0a0a0a', name: 'Black',     usage: 'Primary text, hover fill, footer bg' },
-    { hex: '#ffffff', name: 'White',     usage: 'Page background, text on dark' },
-    { hex: '#ebebeb', name: 'Border',    usage: 'All hairline borders' },
-    { hex: '#767676', name: 'Muted',     usage: 'Nav links, secondary text' },
-    { hex: '#999999', name: 'Subtle',    usage: 'Captions, meta' },
-    { hex: '#bbbbbb', name: 'Ghost',     usage: 'Row numbers, category labels' },
-    { hex: '#22c55e', name: 'Available', usage: 'Availability dot only' },
-  ];
-  const typeRows = [
-    { sample: 'Open to new work.',          spec: '36px / 700 / −0.02em',  style: 'font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a;line-height:1.15' },
-    { sample: 'Design system',              spec: '32px / 700 / −0.02em',  style: 'font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a' },
-    { sample: 'Senior UX Designer',         spec: '20px / 500 / −0.01em',  style: 'font-size:20px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a' },
-    { sample: 'Body large text sample.',    spec: '16px / 400 / lh 1.65',  style: 'font-size:16px;color:#444;line-height:1.65' },
-    { sample: 'General body text.',         spec: '14px / 400 / lh 1.6',   style: 'font-size:14px;color:#444;line-height:1.6' },
-    { sample: 'Project description text.',  spec: '13px / 400 / lh 1.6',   style: 'font-size:13px;color:#444;line-height:1.6' },
-    { sample: 'SECTION LABEL',              spec: '11px / 500 / uppercase', style: 'font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:#888' },
-  ];
-  const spacings = [
-    { token: '--sp-1', val: '4px',  usage: 'Tight gaps' },
-    { token: '--sp-2', val: '8px',  usage: 'Icon-text gaps' },
-    { token: '--sp-3', val: '12px', usage: 'List row padding' },
-    { token: '--sp-4', val: '16px', usage: 'Component internal' },
-    { token: '--sp-5', val: '24px', usage: 'Section gaps' },
-    { token: '--sp-6', val: '32px', usage: 'Page horizontal padding' },
-    { token: '--sp-7', val: '48px', usage: 'Section vertical spacing' },
-    { token: '--sp-8', val: '64px', usage: 'Footer padding, large gaps' },
-  ];
-
-  const swatchHtml = swatches.map(s =>
-    `<div class="ds-swatch">
-      <div class="ds-swatch-box" style="background:${s.hex}"></div>
-      <span class="ds-swatch-hex">${s.hex}</span>
-      <span class="ds-swatch-name">${s.name}</span>
-      <span style="font-size:11px;color:#888;display:block">${s.usage}</span>
-    </div>`
-  ).join('\n      ');
-
-  const typeHtml = typeRows.map(r =>
-    `<div class="ds-type-row">
-      <span style="${r.style}">${r.sample}</span>
-      <span class="ds-type-spec">${r.spec}</span>
-    </div>`
-  ).join('\n    ');
-
-  const spacingHtml = spacings.map(s =>
-    `<div class="ds-sp-row">
-      <span class="ds-sp-token">${s.token}</span>
-      <div class="ds-sp-bar" style="width:${s.val}"></div>
-      <span class="ds-sp-val">${s.val}</span>
-      <span style="font-size:11px;color:#888">${s.usage}</span>
-    </div>`
-  ).join('\n    ');
-
-  const built = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-
-  return wrap('', 'Design System — Avigail Bahat', `
-  <main class="inner-main">
-    <div class="inner-content ds-content">
-      <h1>Design system</h1>
-      <p class="page-sub">Visual language reference for avigailbahat.com</p>
-
-      <div class="ds-section">
-        <span class="ds-section-title">Colours</span>
-        <div class="ds-swatches">
-          ${swatchHtml}
-        </div>
-      </div>
-
-      <div class="ds-section">
-        <span class="ds-section-title">Typography</span>
-        ${typeHtml}
-      </div>
-
-      <div class="ds-section">
-        <span class="ds-section-title">Spacing</span>
-        <div class="ds-spacing">
-          ${spacingHtml}
-        </div>
-      </div>
-
-      <div class="ds-section">
-        <span class="ds-section-title">Components</span>
-
-        <div class="ds-comp-block">
-          <span class="ds-comp-label">Availability badge</span>
-          <div class="ds-comp-demo">
-            <div class="avail-dot-wrap" style="position:static;max-height:none;opacity:1;display:inline-flex">
-              <span class="avail-dot"></span>
-              <span class="avail-label">Available for work</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="ds-comp-block">
-          <span class="ds-comp-label">Nav links</span>
-          <div class="ds-comp-demo">
-            <nav style="display:flex;gap:4px;">
-              <a href="#" class="nav-demo" style="font-size:12px;color:#888;padding:5px 10px;border-radius:5px;">Home</a>
-              <a href="#" class="nav-demo nav-demo-hovered" style="font-size:12px;padding:5px 10px;border-radius:5px;">About</a>
-              <a href="#" class="nav-demo" style="font-size:12px;color:#0a0a0a;font-weight:500;padding:5px 10px;border-radius:5px;">CV (active)</a>
-            </nav>
-          </div>
-        </div>
-
-        <div class="ds-comp-block">
-          <span class="ds-comp-label">Footer tags</span>
-          <div class="ds-comp-demo ds-comp-demo-dark" style="padding:20px;">
-            <div class="footer-tags" style="margin:0">
-              <span class="ftag">Developer tools</span>
-              <span class="ftag">AI products</span>
-              <span class="ftag">Complex systems</span>
-              <span class="ftag">B2B SaaS</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="ds-comp-block">
-          <span class="ds-comp-label">Section label</span>
-          <div class="ds-comp-demo">
-            <p class="section-label" style="margin:0">Section label</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="ds-section">
-        <span class="ds-section-title">CSS variable reference</span>
-        <div class="ds-code">:root {
-  /* Accent */
-  --ac: #0a0a0a;
-
-  /* Borders */
-  --border: #ebebeb;
-
-  /* Spacing */
-  --sp-1: 4px;
-  --sp-2: 8px;
-  --sp-3: 12px;
-  --sp-4: 16px;
-  --sp-5: 24px;
-  --sp-6: 32px;
-  --sp-7: 48px;
-  --sp-8: 64px;
-}</div>
-      </div>
-
-      <p class="ds-updated">Last built: ${built}</p>
-    </div>
-  </main>`);
-}
-
 // ── Build ────────────────────────────────────────────────────
 
 async function build() {
   fs.mkdirSync(DIST, { recursive: true });
+  fs.mkdirSync(PROJECTS_DIR, { recursive: true });
   fs.mkdirSync(IMAGES, { recursive: true });
-  fs.copyFileSync('styles.css', path.join(DIST, 'styles.css'));
+  fs.copyFileSync('style.css', path.join(DIST, 'style.css'));
+  fs.copyFileSync('script.js', path.join(DIST, 'script.js'));
 
   console.log('Fetching project pages from Notion...');
   const raw = (await collectPages(ROOT_PAGE_ID))
@@ -932,23 +583,22 @@ async function build() {
     const icon = meta.icon?.type === 'emoji' ? meta.icon.emoji : '';
     const year = new Date(meta.created_time).getFullYear().toString();
     const summary = meta.properties?.Summary?.rich_text?.[0]?.plain_text || '';
-    const contentHtml = await toHtml(p.blocks);
+    const contentHtml = await toHtml(p.blocks, '../');
     const title = stripEmoji(p.title);
     const slug = slugify(title);
     projects.push({ ...p, title, icon, year, slug, summary, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
   }
 
   for (const proj of projects) {
-    fs.writeFileSync(path.join(DIST, `${proj.slug}.html`), projectPage(proj));
+    fs.writeFileSync(path.join(PROJECTS_DIR, `${proj.slug}.html`), projectPage(proj));
     stats.pages++;
-    console.log(`  ✓ ${proj.slug}.html`);
+    console.log(`  ✓ projects/${proj.slug}.html`);
   }
 
   for (const [file, html] of [
-    ['index.html',         indexPage(projects)],
-    ['about.html',         aboutPage()],
-    ['contact.html',       contactPage()],
-    ['design-system.html', designSystemPage()],
+    ['index.html',   indexPage(projects)],
+    ['about.html',   aboutPage()],
+    ['contact.html', contactPage()],
   ]) {
     fs.writeFileSync(path.join(DIST, file), html);
     stats.pages++;
