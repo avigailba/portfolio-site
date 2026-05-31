@@ -22,6 +22,9 @@ const CONTACT_PAGE_ID = '36e35a9ccf7a8188a447fd3e36ee88cd';
 const SKIP_IDS   = new Set([ABOUT_PAGE_ID, CONTACT_PAGE_ID]);
 const SKIP_SLUGS = new Set(['about', 'contact', 'cv', 'resume']);
 const DIST = 'dist';
+// NOTE (CLAUDE.md): The canonical generator name is generate.js and project pages should live
+// at dist/projects/[slug].html. This file is build.js for CI compatibility. Output paths
+// are currently dist/[slug].html — move to dist/projects/ as a future step.
 const IMAGES = path.join(DIST, 'images');
 
 let imgIdx = 0;
@@ -212,7 +215,7 @@ async function toHtml(blocks) {
             } catch (e) { stats.errors.push(`img-${imgIdx}: ${e.message}`); }
           }
         }
-        html += `<figure>\n  <img src="${url}" alt="${cap}" loading="lazy">\n${cap ? `  <figcaption>${cap}</figcaption>\n` : ''}</figure>\n`;
+        html += `<figure class="proj-img">\n  <img src="${url}" alt="${cap}" loading="lazy">\n${cap ? `  <figcaption>${cap}</figcaption>\n` : ''}</figure>\n`;
         break;
       }
     }
@@ -776,8 +779,8 @@ function designSystemPage() {
     { sample: 'Senior UX Designer',         spec: '20px / 500 / −0.01em',  style: 'font-size:20px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a' },
     { sample: 'Body large text sample.',    spec: '16px / 400 / lh 1.65',  style: 'font-size:16px;color:#444;line-height:1.65' },
     { sample: 'General body text.',         spec: '14px / 400 / lh 1.6',   style: 'font-size:14px;color:#444;line-height:1.6' },
-    { sample: 'Project description text.',  spec: '13px / 400 / lh 1.6',   style: 'font-size:13px;color:#555;line-height:1.6' },
-    { sample: 'SECTION LABEL',              spec: '11px / 500 / uppercase', style: 'font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:#bbb' },
+    { sample: 'Project description text.',  spec: '13px / 400 / lh 1.6',   style: 'font-size:13px;color:#444;line-height:1.6' },
+    { sample: 'SECTION LABEL',              spec: '11px / 500 / uppercase', style: 'font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:#888' },
   ];
   const spacings = [
     { token: '--sp-1', val: '4px',  usage: 'Tight gaps' },
@@ -795,7 +798,7 @@ function designSystemPage() {
       <div class="ds-swatch-box" style="background:${s.hex}"></div>
       <span class="ds-swatch-hex">${s.hex}</span>
       <span class="ds-swatch-name">${s.name}</span>
-      <span style="font-size:11px;color:#bbb;display:block">${s.usage}</span>
+      <span style="font-size:11px;color:#888;display:block">${s.usage}</span>
     </div>`
   ).join('\n      ');
 
@@ -811,7 +814,7 @@ function designSystemPage() {
       <span class="ds-sp-token">${s.token}</span>
       <div class="ds-sp-bar" style="width:${s.val}"></div>
       <span class="ds-sp-val">${s.val}</span>
-      <span style="font-size:11px;color:#bbb">${s.usage}</span>
+      <span style="font-size:11px;color:#888">${s.usage}</span>
     </div>`
   ).join('\n    ');
 
@@ -859,7 +862,7 @@ function designSystemPage() {
           <span class="ds-comp-label">Nav links</span>
           <div class="ds-comp-demo">
             <nav style="display:flex;gap:4px;">
-              <a href="#" class="nav-demo" style="font-size:12px;color:#767676;padding:5px 10px;border-radius:5px;">Home</a>
+              <a href="#" class="nav-demo" style="font-size:12px;color:#888;padding:5px 10px;border-radius:5px;">Home</a>
               <a href="#" class="nav-demo nav-demo-hovered" style="font-size:12px;padding:5px 10px;border-radius:5px;">About</a>
               <a href="#" class="nav-demo" style="font-size:12px;color:#0a0a0a;font-weight:500;padding:5px 10px;border-radius:5px;">CV (active)</a>
             </nav>
