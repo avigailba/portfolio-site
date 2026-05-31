@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Static portfolio site generator from Notion",
   "scripts": {
-    "build": "node build.js"
+    "build": "node generate.js"
   },
   "dependencies": {
     "@notionhq/client": "^2.2.15",

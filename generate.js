@@ -22,9 +22,8 @@ const CONTACT_PAGE_ID = '36e35a9ccf7a8188a447fd3e36ee88cd';
 const SKIP_IDS   = new Set([ABOUT_PAGE_ID, CONTACT_PAGE_ID]);
 const SKIP_SLUGS = new Set(['about', 'contact', 'cv', 'resume']);
 const DIST = 'dist';
-// NOTE (CLAUDE.md): The canonical generator name is generate.js and project pages should live
-// at dist/projects/[slug].html. This file is build.js for CI compatibility. Output paths
-// are currently dist/[slug].html — move to dist/projects/ as a future step.
+// NOTE: Project pages currently output to dist/[slug].html.
+// CLAUDE.md specifies dist/projects/[slug].html — move as a future step.
 const IMAGES = path.join(DIST, 'images');
 
 let imgIdx = 0;

@@ -30,9 +30,9 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: dist/images
-          key: images-${{ hashFiles('build.js') }}
+          key: images-${{ hashFiles('generate.js') }}
           restore-keys: images-
-      - run: node build.js
+      - run: node generate.js
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_TOKEN }}
       - uses: actions/upload-pages-artifact@v3
