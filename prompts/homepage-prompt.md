@@ -76,7 +76,7 @@ body {
 ## Lede
 
 ```html
-<p class="lede">Senior UX designer. 12 years at Wix building developer tools, site tools, marketplace, and AI. Work I genuinely love.</p>
+<p class="lede">Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.</p>
 ```
 
 ```css

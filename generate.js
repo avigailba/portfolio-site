@@ -15,9 +15,10 @@ const https = require('https');
 const http = require('http');
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
-const ROOT_PAGE_ID    = '9e31791fdedf4048bb784d0cbae06e51';
-const ABOUT_PAGE_ID   = '36e35a9ccf7a81f6953dcab2aebb27fc';
-const CONTACT_PAGE_ID = '36e35a9ccf7a8188a447fd3e36ee88cd';
+const ROOT_PAGE_ID      = '9e31791fdedf4048bb784d0cbae06e51';
+const ABOUT_PAGE_ID     = '36e35a9ccf7a81f6953dcab2aebb27fc';
+const CONTACT_PAGE_ID   = '36e35a9ccf7a8188a447fd3e36ee88cd';
+const HOMEPAGE_PAGE_ID  = '37135a9ccf7a81b2a7a7c0a2702d8c98';
 
 const SKIP_IDS   = new Set([ABOUT_PAGE_ID, CONTACT_PAGE_ID]);
 const SKIP_SLUGS = new Set(['about', 'contact', 'cv', 'resume']);
@@ -318,9 +319,7 @@ function wrap(prefix, title, body, extraScript = '') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter/400.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter/500.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter/700.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap">
   <link rel="stylesheet" href="${prefix}style.css">
 </head>
 <body>
@@ -335,7 +334,8 @@ function wrap(prefix, title, body, extraScript = '') {
 
 // ── Pages ────────────────────────────────────────────────────
 
-function indexPage(projects) {
+function indexPage(projects, tagline) {
+  tagline = tagline || "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
   const bySlug = {};
   for (const p of projects) bySlug[p.slug] = p;
 
@@ -389,7 +389,7 @@ function indexPage(projects) {
 
   return wrap('', 'Avigail Bahat — Product Designer', `
   <main class="home-band">
-    <p class="lede">Senior UX designer. 12 years at Wix building developer tools, site tools, marketplace, and AI. Work I genuinely love.</p>
+    <p class="lede">${tagline}</p>
     <p class="section-label">Featured work</p>
     <div class="feat-grid">
       ${featHtml}
@@ -496,42 +496,74 @@ function aboutPage() {
   return wrap('', 'About — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content">
-      <h1>About</h1>
-      <p class="page-sub">Senior UX Designer · Tel Aviv</p>
 
-      <p class="about-bio">
-        I'm Avigail, a senior UX designer with 12 years at Wix building developer tools, marketplace, and AI products. I work on complex, systems-level problems — the kind where the user is a developer, the surface area is huge, and the stakes are high.
-      </p>
-
-      <p class="section-label">What I do</p>
-      <p class="about-body">
-        I design end-to-end: discovery, definition, detailed UI, and working closely with engineering through delivery. I've led design on platform-level projects — monetisation systems, app marketplaces, developer tooling — where the challenge is as much about the mental model as the interface.
-      </p>
-
-      <p class="section-label">Now</p>
-      <p class="about-body">
-        I recently left Wix after 12 years and I'm looking for my next challenge. I'm particularly drawn to AI products, complex B2B systems, and places where design can make a meaningful difference to how developers and power users work.
-      </p>
+      <p class="about-bio">Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.</p>
 
       <p class="section-label">Experience</p>
 
       <div class="cv-role">
-        <div class="cv-role-meta">2013 – 2025 · Wix.com, Tel Aviv</div>
-        <div class="cv-role-title">Senior UX Designer</div>
-        <p class="cv-desc">Led design across developer platform, app marketplace, and monetisation systems. Owned end-to-end design for major platform features including AI billing infrastructure, app installation flows, developer payout systems, and internal tooling. Worked closely with product, engineering, and data teams across multiple squads.</p>
-        <p class="cv-proj-list">AI Credits, App Installation View, App Reviews Revamp, Developer Sale, App Collections, Payouts Page, Refund Flow, App Pricing Page, Internal App Review System, Submit &amp; Publish Widget, API Keys Page, Custom Element Settings, Development Site Creation, App Coupons</p>
+        <div class="cv-role-header"><span class="cv-title">UX Designer · Wix.com · 2014–2026</span></div>
+      </div>
+
+      <div class="cv-role">
+        <div class="cv-role-header"><span class="cv-years">2025–2026 · OS company</span></div>
+        <p class="cv-desc">Designed platform-level AI and developer-facing products. Led UX for the AI Credits system across Business Manager and Wixel, and redesigned the app installation data experience for developers.</p>
+        <p class="cv-proj-list">AI Credits Wallet, App Installation View</p>
+      </div>
+
+      <div class="cv-role">
+        <div class="cv-role-header"><span class="cv-years">2020–2025 · App Market</span></div>
+        <p class="cv-desc">Owned design across Wix's developer marketplace: monetisation infrastructure, platform tooling, and internal operations. Worked end-to-end across developer onboarding, payout systems, and marketplace tooling.</p>
+        <p class="cv-proj-list">App Pricing, Payouts, Refund Flow, Developer Sale, App Coupons, App Collections, App Reviews, Internal Review System, Submit &amp; Publish, API Keys, Development Site Creation</p>
+      </div>
+
+      <div class="cv-role">
+        <div class="cv-role-header"><span class="cv-years">2019–2020 · Labs</span></div>
+        <p class="cv-desc">Worked on experimental product initiatives within Wix, including a comments app and various early-stage features.</p>
+      </div>
+
+      <div class="cv-role">
+        <div class="cv-role-header"><span class="cv-years">2018–2019 · Media</span></div>
+        <p class="cv-desc">Designed the core video creation and management experience as part of the Wix Video product team.</p>
+      </div>
+
+      <div class="cv-role">
+        <div class="cv-role-header"><span class="cv-years">2014–2018 · Wix ADI</span></div>
+        <p class="cv-desc">One of the founding UX designers on Wix ADI, an AI-powered website builder. Helped define and design the product from the ground up.</p>
+      </div>
+
+      <div class="cv-role">
+        <div class="cv-role-header"><span class="cv-title">Marketing Designer &amp; Lead · Wix · 2012–2013</span></div>
+      </div>
+
+      <div class="cv-role">
+        <div class="cv-role-header"><span class="cv-title">Graphic Designer · McCann Erickson Israel · 2010–2012</span></div>
+      </div>
+
+      <div class="cv-role">
+        <div class="cv-role-header"><span class="cv-title">Graphics · Walla.co.il · 2008–2010</span></div>
+      </div>
+
+      <p class="section-label">Education</p>
+
+      <div class="cv-role">
+        <div class="cv-role-header"><span class="cv-years">2006–2010 · Shenkar College of Engineering &amp; Design</span></div>
+        <p class="cv-desc">B.Des. in Graphic Design</p>
+      </div>
+
+      <div class="cv-role">
+        <div class="cv-role-header"><span class="cv-years">2012 · Netcraft Academy</span></div>
+        <p class="cv-desc">UX course</p>
+      </div>
+
+      <div class="cv-role">
+        <div class="cv-role-header"><span class="cv-years">2004–2005 · Tel Aviv University</span></div>
+        <p class="cv-desc">Studies towards BA in Economics &amp; Philosophy</p>
       </div>
 
       <p class="section-label">Skills</p>
-      <p class="cv-skills">
-        Product design · Systems design · Design systems · UX research · Interaction design · Prototyping · Figma · Developer experience · B2B SaaS · Marketplace · AI products · Cross-functional collaboration
-      </p>
+      <p class="cv-skills">Figma · Google Suite · Cursor · Claude Code · Hebrew (native) · English</p>
 
-      <p class="section-label">Contact</p>
-      <div class="about-links">
-        <a href="mailto:avigailba@gmail.com" class="about-link">avigailba@gmail.com ↗</a>
-        <a href="https://www.linkedin.com/in/avigailbahat/" class="about-link">LinkedIn ↗</a>
-      </div>
     </div>
   </main>`);
 }
@@ -595,8 +627,16 @@ async function build() {
     console.log(`  ✓ projects/${proj.slug}.html`);
   }
 
+  // Fetch homepage tagline from Notion
+  let tagline = "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
+  try {
+    const hpBlocks = await notion.blocks.children.list({ block_id: HOMEPAGE_PAGE_ID });
+    const firstPara = hpBlocks.results.find(b => b.type === 'paragraph');
+    if (firstPara) tagline = plainText(firstPara.paragraph.rich_text) || tagline;
+  } catch (e) { console.log('Could not fetch homepage tagline, using default'); }
+
   for (const [file, html] of [
-    ['index.html',   indexPage(projects)],
+    ['index.html',   indexPage(projects, tagline)],
     ['about.html',   aboutPage()],
     ['contact.html', contactPage()],
   ]) {

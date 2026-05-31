@@ -27,7 +27,9 @@ This fetches all Notion pages and rebuilds `dist/`. To regenerate a single page,
 - White: `#fff`
 
 ### Typography
-- Font: Inter, loaded from jsDelivr at weights 400, 500, 700
+- **Titles** (`.feat-title`, `.proj-title`, `.lede`, `.footer-statement`): `Plus Jakarta Sans` — weights 300–800
+- **Body/UI** (everything else): `IBM Plex Sans` — weights 300–600 + italic
+- Loaded from Google Fonts: `https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap`
 - `-webkit-font-smoothing: antialiased` always on body
 
 ### Writing rules
@@ -211,6 +213,7 @@ Structure: bio intro → What I do → Now → Experience → Skills → Contact
 | Development Site Creation | 84911e6052cd480c807e6591b58833a9 |
 | About | 36e35a9ccf7a81f6953dcab2aebb27fc |
 | Contact | 36e35a9ccf7a8188a447fd3e36ee88cd |
+| Homepage (tagline) | 37135a9ccf7a81b2a7a7c0a2702d8c98 |
 
 ---
 

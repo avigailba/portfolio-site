@@ -9,10 +9,14 @@
 /* ── Reset ───────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
   color: #0a0a0a;
   background: #fff;
   -webkit-font-smoothing: antialiased;
+}
+
+.feat-title, .proj-title, .lede, .footer-statement {
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
@@ -26,7 +30,7 @@ button { font-family: inherit; }
   background: #fff;
   border-bottom: 0.5px solid transparent;
   transition: border-color 0.2s;
-  padding: 0 clamp(24px, 5%, 60px);
+  padding: 0 clamp(24px, 8%, 96px);
 }
 #site-header.scrolled { border-color: #ebebeb; }
 .header-inner {
@@ -328,7 +332,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 /* ── Footer ──────────────────────────────────────────────── */
 .site-footer {
   background: #0a0a0a;
-  padding: 64px clamp(24px, 5%, 60px) 48px;
+  padding: 64px clamp(24px, 8%, 96px) 48px;
 }
 .footer-inner {
   display: flex;
@@ -389,13 +393,9 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .footer-bottom { margin: 48px 0 0; font-size: 12px; color: rgba(255,255,255,0.3); }
 
 /* ── Inner pages ─────────────────────────────────────────── */
-.wrap { padding: 0 clamp(24px, 5%, 60px); }
-.inner-main { padding: 0 clamp(24px, 5%, 60px); }
-.inner-content {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 56px 0 80px;
-}
+.wrap { padding: 0 clamp(24px, 8%, 96px); }
+.inner-main { padding: 0 clamp(24px, 8%, 96px); }
+.inner-content { padding: 56px 0 80px; }
 .inner-content h1 {
   font-size: 32px;
   font-weight: 700;
@@ -428,8 +428,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .cv-proj-list { font-size: 13px; color: #888; font-style: italic; line-height: 1.6; margin-top: 8px; }
 /* legacy — keep for compatibility */
 .cv-role-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
-.cv-title { font-size: 14px; font-weight: 600; color: #0a0a0a; }
-.cv-years { font-size: 12px; color: #888; }
+.cv-title { font-size: 15px; font-weight: 600; color: #0a0a0a; }
+.cv-years { font-size: 15px; font-weight: 500; color: #0a0a0a; }
 .cv-company { font-size: 13px; color: #888; margin-bottom: 8px; }
 .cv-desc { font-size: 13px; color: #444; line-height: 1.65; }
 .cv-projects { margin-bottom: 4px; }
@@ -468,12 +468,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .contact-location { font-size: 12px; color: #888; }
 
 /* ── Project page ────────────────────────────────────────── */
-.proj-main { padding: 0 clamp(24px, 5%, 60px); }
-.proj-content {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 56px 0 80px;
-}
+.proj-main { padding: 0 clamp(24px, 8%, 96px); }
+.proj-content { padding: 56px 0 80px; }
 .proj-title {
   font-size: 42px;
   font-weight: 700;
@@ -526,7 +522,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 }
 
 /* ── More work (project pages) ───────────────────────────── */
-.more-section { padding: 0 clamp(24px, 5%, 60px); }
+.more-section { padding: 0 clamp(24px, 8%, 96px); }
 .more-inner {
   max-width: 640px;
   margin: 0 auto;
@@ -600,7 +596,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 960px) {
-  .home-band { width: 100%; max-width: 100%; padding-left: clamp(24px, 5%, 60px); padding-right: clamp(24px, 5%, 60px); }
+  .home-band { width: 100%; max-width: 100%; padding-left: clamp(24px, 8%, 96px); padding-right: clamp(24px, 8%, 96px); }
   .feat-grid { grid-template-columns: 1fr 1fr; width: 100%; max-width: 100%; height: auto; }
   .feat-card:nth-child(n+3) { border-top: 0.5px solid #ebebeb; }
 }
