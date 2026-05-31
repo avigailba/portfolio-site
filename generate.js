@@ -390,7 +390,7 @@ function indexPage(projects, tagline) {
 </div>`;
   }).join('\n  ');
 
-  return wrap('', 'Avigail Bahat — Product Designer', `
+  return wrap('', 'Avigail Bahat — Senior UX Designer', `
   <main class="home-band">
     <p class="lede">${tagline}</p>
     <p class="section-label">Featured work</p>
@@ -499,6 +499,8 @@ function aboutPage() {
   return wrap('', 'About — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content">
+
+      <p class="about-bio">Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools: for developers, for internal teams, and for end users.</p>
 
       <p class="section-label">Experience</p>
 
