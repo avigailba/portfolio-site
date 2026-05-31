@@ -200,11 +200,17 @@ async function toHtml(blocks) {
         if (url.includes('amazonaws.com') || url.includes('prod-files-secure')) {
           imgIdx++;
           const fname = `img-${imgIdx}.jpg`;
-          try {
-            await dlFile(url, path.join(IMAGES, fname));
+          const dest = path.join(IMAGES, fname);
+          if (fs.existsSync(dest)) {
             url = `images/${fname}`;
-            stats.images++;
-          } catch (e) { stats.errors.push(`img-${imgIdx}: ${e.message}`); }
+            stats.cached = (stats.cached || 0) + 1;
+          } else {
+            try {
+              await dlFile(url, dest);
+              url = `images/${fname}`;
+              stats.images++;
+            } catch (e) { stats.errors.push(`img-${imgIdx}: ${e.message}`); }
+          }
         }
         html += `<figure>\n  <img src="${url}" alt="${cap}" loading="lazy">\n${cap ? `  <figcaption>${cap}</figcaption>\n` : ''}</figure>\n`;
         break;
@@ -897,7 +903,7 @@ async function build() {
     console.log(`  ✓ ${file}`);
   }
 
-  console.log(`\n✓ Done — ${stats.pages} pages, ${stats.images} images downloaded`);
+  console.log(`\n✓ Done — ${stats.pages} pages, ${stats.images} images downloaded, ${stats.cached || 0} cached`);
   if (stats.errors.length) {
     console.log(`  ${stats.errors.length} error(s):`);
     stats.errors.forEach(e => console.log(`  - ${e}`));
