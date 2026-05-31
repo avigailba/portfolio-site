@@ -524,8 +524,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 /* ── More work (project pages) ───────────────────────────── */
 .more-section { padding: 0 clamp(24px, 8%, 96px); }
 .more-inner {
-  max-width: 640px;
-  margin: 0 auto;
   padding-top: 64px;
   border-top: 0.5px solid #ebebeb;
 }
