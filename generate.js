@@ -20,8 +20,8 @@ const ABOUT_PAGE_ID     = '36e35a9ccf7a81f6953dcab2aebb27fc';
 const CONTACT_PAGE_ID   = '36e35a9ccf7a8188a447fd3e36ee88cd';
 const HOMEPAGE_PAGE_ID  = '37135a9ccf7a81b2a7a7c0a2702d8c98';
 
-const SKIP_IDS   = new Set([ABOUT_PAGE_ID, CONTACT_PAGE_ID]);
-const SKIP_SLUGS = new Set(['about', 'contact', 'cv', 'resume']);
+const SKIP_IDS   = new Set([ABOUT_PAGE_ID, CONTACT_PAGE_ID, HOMEPAGE_PAGE_ID]);
+const SKIP_SLUGS = new Set(['about', 'contact', 'cv', 'resume', 'homepage']);
 const DIST        = 'dist';
 const PROJECTS_DIR = path.join(DIST, 'projects');
 const IMAGES      = path.join(DIST, 'images');

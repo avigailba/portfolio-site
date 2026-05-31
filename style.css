@@ -183,12 +183,12 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .feat-card:last-child { border-right: none; }
 .feat-card:hover { background: #f9f9f9; }
 .feat-title {
-  font-size: 28px;
+  font-size: clamp(18px, 2.2vw, 28px);
   font-weight: 700;
   color: #0a0a0a;
-  line-height: 1.3;
+  line-height: 1.2;
   letter-spacing: -0.02em;
-  display: inline-block;
+  display: block;
   transition: filter 0.2s;
 }
 .feat-sub {
