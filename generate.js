@@ -31,7 +31,7 @@ const stats = { pages: 0, images: 0, errors: [] };
 
 // Project metadata: categories, display title overrides, years, featured status
 const PROJECT_META = {
-  'ai-credits':                          { title: 'AI Credits',                  cats: 'developer',              display: 'Developer tools', year: 2026, featured: true },
+  'ai-credits-wallet':                          { title: 'AI Credits',                  cats: 'developer',              display: 'Developer tools', year: 2026, featured: true },
   'app-installation-page-for-developers': { title: 'App Installation View',       cats: 'developer',              display: 'Developer tools', year: 2025, featured: true },
   'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer',              display: 'Developer tools', year: 2024, featured: false },
   'developer-sale':                      { title: 'Developer Sale',               cats: 'developer monetisation', display: 'Monetisation',    year: 2024, featured: true },
@@ -49,7 +49,7 @@ const PROJECT_META = {
 
 // Featured rows shown on homepage (in order)
 const FEAT_ORDER = [
-  'ai-credits',
+  'ai-credits-wallet',
   'app-installation-page-for-developers',
   'internal-app-review-system',
   'developer-sale',
@@ -57,7 +57,7 @@ const FEAT_ORDER = [
 
 // One-line summaries shown on hover in the project list
 const PROJECT_SUMMARIES = {
-  'ai-credits':                          'Transparent AI usage billing across Wix\'s developer platform',
+  'ai-credits-wallet':                          'Transparent AI usage billing across Wix\'s developer platform',
   'app-installation-page-for-developers': 'Redesigned the app installation experience end-to-end',
   'app-reviews-revamp':                  'Improved app review flows for the Wix App Market',
   'developer-sale':                      'A monetisation campaign tool for app developers',

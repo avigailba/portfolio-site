@@ -7,7 +7,7 @@ A static portfolio site for Avigail Bahat, Senior UX Designer. Content is author
 ```
 node generate.js
 ```
-This fetches all Notion pages and rebuilds `dist/`. To regenerate a single page, pass the slug: `node generate.js ai-credits`.
+This fetches all Notion pages and rebuilds `dist/`. To regenerate a single page, pass the slug: `node generate.js ai-credits-wallet`.
 
 ---
 
@@ -45,7 +45,7 @@ dist/
   about.html              — about + CV (merged, no separate cv.html)
   contact.html            — contact page
   projects/
-    ai-credits.html
+    ai-credits-wallet.html
     app-installation-view.html
     ... (one file per project)
 style.css                 — all shared styles (single file)
@@ -221,7 +221,7 @@ Structure: bio intro → What I do → Now → Experience → Skills → Contact
 
 | Slug | Category | Year | Featured |
 |------|----------|------|---------|
-| ai-credits | developer | 2026 | yes |
+| ai-credits-wallet | developer | 2026 | yes |
 | app-installation-view | developer | 2025 | yes |
 | app-reviews-revamp | developer | 2024 | no |
 | developer-sale | developer monetisation | 2024 | yes |
