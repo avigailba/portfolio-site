@@ -497,8 +497,6 @@ function aboutPage() {
   <main class="inner-main">
     <div class="inner-content">
 
-      <p class="about-bio">Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.</p>
-
       <p class="section-label">Experience</p>
 
       <div class="cv-role">
@@ -595,6 +593,156 @@ function contactPage() {
   </main>`);
 }
 
+function designSystemPage() {
+  const swatches = [
+    { hex: '#0a0a0a', name: 'Black',     usage: 'Primary text, hover fill, footer bg' },
+    { hex: '#ffffff', name: 'White',     usage: 'Page background, text on dark' },
+    { hex: '#ebebeb', name: 'Border',    usage: 'All hairline borders' },
+    { hex: '#555555', name: 'Muted',     usage: 'Nav links, secondary text' },
+    { hex: '#222222', name: 'Body',      usage: 'Body copy, CV text' },
+    { hex: '#22c55e', name: 'Available', usage: 'Availability dot only' },
+  ];
+  const typeRows = [
+    { sample: 'Open to new work.',          spec: '36px / 700 / −0.02em',  style: 'font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a;line-height:1.15' },
+    { sample: 'Design system',              spec: '32px / 700 / −0.02em',  style: 'font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a' },
+    { sample: 'Senior UX Designer',         spec: '20px / 500 / −0.01em',  style: 'font-size:20px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a' },
+    { sample: 'Body large text sample.',    spec: '16px / 400 / lh 1.65',  style: 'font-size:16px;color:#222;line-height:1.65' },
+    { sample: 'General body text.',         spec: '15px / 400 / lh 1.6',   style: 'font-size:15px;color:#444;line-height:1.6' },
+    { sample: 'SECTION LABEL',              spec: '13px / 500 / uppercase', style: 'font-size:13px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:#555' },
+  ];
+  const spacings = [
+    { token: '--sp-1', val: '4px',  usage: 'Tight gaps' },
+    { token: '--sp-2', val: '8px',  usage: 'Icon-text gaps' },
+    { token: '--sp-3', val: '12px', usage: 'List row padding' },
+    { token: '--sp-4', val: '16px', usage: 'Component internal' },
+    { token: '--sp-5', val: '24px', usage: 'Section gaps' },
+    { token: '--sp-6', val: '32px', usage: 'Page horizontal padding' },
+    { token: '--sp-7', val: '48px', usage: 'Section vertical spacing' },
+    { token: '--sp-8', val: '64px', usage: 'Footer padding, large gaps' },
+  ];
+
+  const swatchHtml = swatches.map(s =>
+    `<div class="ds-swatch">
+      <div class="ds-swatch-box" style="background:${s.hex}"></div>
+      <span class="ds-swatch-hex">${s.hex}</span>
+      <span class="ds-swatch-name">${s.name}</span>
+      <span style="font-size:14px;color:#555;display:block">${s.usage}</span>
+    </div>`
+  ).join('\n      ');
+
+  const typeHtml = typeRows.map(r =>
+    `<div class="ds-type-row">
+      <span style="${r.style}">${r.sample}</span>
+      <span class="ds-type-spec">${r.spec}</span>
+    </div>`
+  ).join('\n    ');
+
+  const spacingHtml = spacings.map(s =>
+    `<div class="ds-sp-row">
+      <span class="ds-sp-token">${s.token}</span>
+      <div class="ds-sp-bar" style="width:${s.val}"></div>
+      <span class="ds-sp-val">${s.val}</span>
+      <span style="font-size:14px;color:#555">${s.usage}</span>
+    </div>`
+  ).join('\n    ');
+
+  const built = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  return wrap('', 'Design System — Avigail Bahat', `
+  <main class="inner-main">
+    <div class="inner-content ds-content">
+      <h1>Design system</h1>
+      <p class="page-sub">Visual language reference for avigailbahat.com</p>
+
+      <div class="ds-section">
+        <span class="ds-section-title">Colours</span>
+        <div class="ds-swatches">
+          ${swatchHtml}
+        </div>
+      </div>
+
+      <div class="ds-section">
+        <span class="ds-section-title">Typography</span>
+        ${typeHtml}
+      </div>
+
+      <div class="ds-section">
+        <span class="ds-section-title">Spacing</span>
+        <div class="ds-spacing">
+          ${spacingHtml}
+        </div>
+      </div>
+
+      <div class="ds-section">
+        <span class="ds-section-title">Components</span>
+
+        <div class="ds-comp-block">
+          <span class="ds-comp-label">Availability badge</span>
+          <div class="ds-comp-demo">
+            <div class="avail-dot-wrap" style="position:static;max-height:none;opacity:1;display:inline-flex">
+              <span class="avail-dot"></span>
+              <span class="avail-label">Available for work</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-comp-block">
+          <span class="ds-comp-label">Nav links</span>
+          <div class="ds-comp-demo">
+            <nav style="display:flex;gap:4px;">
+              <a href="#" style="font-size:14px;color:#555;padding:5px 10px;border-radius:5px;">Home</a>
+              <a href="#" style="font-size:14px;padding:5px 10px;border-radius:5px;background:#0a0a0a;color:#fff;">About (hover)</a>
+              <a href="#" style="font-size:14px;color:#0a0a0a;font-weight:500;padding:5px 10px;border-radius:5px;">CV (active)</a>
+            </nav>
+          </div>
+        </div>
+
+        <div class="ds-comp-block">
+          <span class="ds-comp-label">Footer tags</span>
+          <div class="ds-comp-demo ds-comp-demo-dark" style="padding:20px;">
+            <div class="footer-tags" style="margin:0">
+              <span class="ftag">Developer tools</span>
+              <span class="ftag">AI products</span>
+              <span class="ftag">Complex systems</span>
+              <span class="ftag">B2B SaaS</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-comp-block">
+          <span class="ds-comp-label">Section label</span>
+          <div class="ds-comp-demo">
+            <p class="section-label" style="margin:0">Section label</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-section">
+        <span class="ds-section-title">CSS variable reference</span>
+        <div class="ds-code">:root {
+  /* Accent */
+  --ac: #0a0a0a;
+
+  /* Borders */
+  --border: #ebebeb;
+
+  /* Spacing */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+}</div>
+      </div>
+
+      <p class="ds-updated">Last built: ${built}</p>
+    </div>
+  </main>`);
+}
+
 // ── Build ────────────────────────────────────────────────────
 
 async function build() {
@@ -636,9 +784,10 @@ async function build() {
   } catch (e) { console.log('Could not fetch homepage tagline, using default'); }
 
   for (const [file, html] of [
-    ['index.html',   indexPage(projects, tagline)],
-    ['about.html',   aboutPage()],
-    ['contact.html', contactPage()],
+    ['index.html',          indexPage(projects, tagline)],
+    ['about.html',          aboutPage()],
+    ['contact.html',        contactPage()],
+    ['design-system.html',  designSystemPage()],
   ]) {
     fs.writeFileSync(path.join(DIST, file), html);
     stats.pages++;
