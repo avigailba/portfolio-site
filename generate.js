@@ -503,47 +503,42 @@ function aboutPage() {
       <p class="section-label">Experience</p>
 
       <div class="cv-role">
-        <div class="cv-role-header"><span class="cv-title">UX Designer · Wix.com · 2014–2026</span></div>
+        <span class="cv-title">UX Designer · Wix.com · 2014–2026</span>
+        <div class="cv-sub-roles">
+
+          <div class="cv-sub-role">
+            <span class="cv-years">2025–2026 · OS company</span>
+            <p class="cv-desc">Designed platform-level AI and developer-facing products. Led UX for the AI Credits system across Business Manager and Wixel, and redesigned the app installation data experience for developers.</p>
+            <p class="cv-proj-list">AI Credits Wallet, App Installation View</p>
+          </div>
+
+          <div class="cv-sub-role">
+            <span class="cv-years">2020–2025 · App Market</span>
+            <p class="cv-desc">Owned design across Wix's developer marketplace: monetisation infrastructure, platform tooling, and internal operations. Worked end-to-end across developer onboarding, payout systems, and marketplace tooling.</p>
+            <p class="cv-proj-list">App Pricing, Payouts, Refund Flow, Developer Sale, App Coupons, App Collections, App Reviews, Internal Review System, Submit &amp; Publish, API Keys, Development Site Creation</p>
+          </div>
+
+          <div class="cv-sub-role">
+            <span class="cv-years">2019–2020 · Labs</span>
+            <p class="cv-desc">Worked on experimental product initiatives within Wix, including a comments app and various early-stage features.</p>
+          </div>
+
+          <div class="cv-sub-role">
+            <span class="cv-years">2018–2019 · Media</span>
+            <p class="cv-desc">Designed the core video creation and management experience as part of the Wix Video product team.</p>
+          </div>
+
+          <div class="cv-sub-role">
+            <span class="cv-years">2014–2018 · Wix ADI</span>
+            <p class="cv-desc">One of the founding UX designers on Wix ADI, an AI-powered website builder. Helped define and design the product from the ground up.</p>
+          </div>
+
+        </div>
       </div>
 
-      <div class="cv-role">
-        <div class="cv-role-header"><span class="cv-years">2025–2026 · OS company</span></div>
-        <p class="cv-desc">Designed platform-level AI and developer-facing products. Led UX for the AI Credits system across Business Manager and Wixel, and redesigned the app installation data experience for developers.</p>
-        <p class="cv-proj-list">AI Credits Wallet, App Installation View</p>
-      </div>
-
-      <div class="cv-role">
-        <div class="cv-role-header"><span class="cv-years">2020–2025 · App Market</span></div>
-        <p class="cv-desc">Owned design across Wix's developer marketplace: monetisation infrastructure, platform tooling, and internal operations. Worked end-to-end across developer onboarding, payout systems, and marketplace tooling.</p>
-        <p class="cv-proj-list">App Pricing, Payouts, Refund Flow, Developer Sale, App Coupons, App Collections, App Reviews, Internal Review System, Submit &amp; Publish, API Keys, Development Site Creation</p>
-      </div>
-
-      <div class="cv-role">
-        <div class="cv-role-header"><span class="cv-years">2019–2020 · Labs</span></div>
-        <p class="cv-desc">Worked on experimental product initiatives within Wix, including a comments app and various early-stage features.</p>
-      </div>
-
-      <div class="cv-role">
-        <div class="cv-role-header"><span class="cv-years">2018–2019 · Media</span></div>
-        <p class="cv-desc">Designed the core video creation and management experience as part of the Wix Video product team.</p>
-      </div>
-
-      <div class="cv-role">
-        <div class="cv-role-header"><span class="cv-years">2014–2018 · Wix ADI</span></div>
-        <p class="cv-desc">One of the founding UX designers on Wix ADI, an AI-powered website builder. Helped define and design the product from the ground up.</p>
-      </div>
-
-      <div class="cv-role">
-        <div class="cv-role-header"><span class="cv-title">Marketing Designer &amp; Lead · Wix · 2012–2013</span></div>
-      </div>
-
-      <div class="cv-role">
-        <div class="cv-role-header"><span class="cv-title">Graphic Designer · McCann Erickson Israel · 2010–2012</span></div>
-      </div>
-
-      <div class="cv-role">
-        <div class="cv-role-header"><span class="cv-title">Graphics · Walla.co.il · 2008–2010</span></div>
-      </div>
+      <div class="cv-role"><span class="cv-title">Marketing Designer &amp; Lead · Wix · 2012–2013</span></div>
+      <div class="cv-role"><span class="cv-title">Graphic Designer · McCann Erickson Israel · 2010–2012</span></div>
+      <div class="cv-role"><span class="cv-title">Graphics · Walla.co.il · 2008–2010</span></div>
 
       <p class="section-label">Education</p>
 
