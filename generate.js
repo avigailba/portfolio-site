@@ -947,7 +947,6 @@ async function build() {
   for (const [file, html] of [
     ['index.html',         indexPage(projects)],
     ['about.html',         aboutPage()],
-    ['cv.html',            cvPage()],
     ['contact.html',       contactPage()],
     ['design-system.html', designSystemPage()],
   ]) {
