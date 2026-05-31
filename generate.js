@@ -279,7 +279,7 @@ function hdr(prefix) {
 </header>`;
 }
 
-function ftr() {
+function ftr(prefix = '') {
   return `<footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-left">
@@ -305,6 +305,9 @@ function ftr() {
       <a href="https://www.linkedin.com/in/avigailbahat/" class="footer-link">
         <span>LinkedIn</span><span class="footer-arr">↗</span>
       </a>
+      <a href="${prefix}design-system.html" class="footer-link">
+        <span>Design system</span><span class="footer-arr">↗</span>
+      </a>
     </div>
   </div>
   <div class="footer-bottom">© 2026 Avigail Bahat</div>
@@ -325,7 +328,7 @@ function wrap(prefix, title, body, extraScript = '') {
 <body>
   ${hdr(prefix)}
   ${body}
-  ${ftr()}
+  ${ftr(prefix)}
   <script src="${prefix}script.js"></script>
   ${extraScript}
 </body>
