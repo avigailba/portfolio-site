@@ -14,8 +14,9 @@ This fetches all Notion pages and rebuilds `dist/`. To regenerate a single page,
 ## Design system
 
 ### Layout
-- **Horizontal padding: `clamp(24px, 5%, 60px)`** on all sections — header, page content, footer, more-work section.
-- Homepage content is wrapped in `.page-wrap` (max-width: 744px, margin: 0 auto).
+- **Horizontal padding: `clamp(24px, 5%, 60px)`** on header, footer, inner pages, project pages, more-work section.
+- Homepage uses `.home-band`: `width: 80vw; max-width: 80vw; margin: 0 auto` — contains lede, feat-grid, work-header, and list. At ≤960px resets to `width: 100%` with clamp padding.
+- `.feat-grid` also has `width: 80vw; max-width: 80vw; margin: 0 auto; overflow: hidden` — both the band and grid are 80vw so they share the same left edge.
 - Inner pages (about, contact) and project pages use `.inner-content` / `.proj-content` (max-width: 640px, margin: 0 auto).
 
 ### Colors

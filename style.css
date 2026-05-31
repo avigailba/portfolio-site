@@ -120,10 +120,11 @@ nav a:hover { background: #0a0a0a; color: #fff; }
 nav a.active { color: #0a0a0a; font-weight: 500; }
 
 /* ── Homepage wrapper ────────────────────────────────────── */
-.page-wrap {
-  max-width: 744px;
+.home-band {
+  width: 80vw;
+  max-width: 80vw;
   margin: 0 auto;
-  padding: 0 clamp(24px, 5%, 60px) 80px;
+  padding-bottom: 80px;
 }
 
 /* ── Lede ────────────────────────────────────────────────── */
@@ -154,6 +155,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   width: 80vw;
+  max-width: 80vw;
   height: 30vh;
   margin: 0 auto;
   border-top: 0.5px solid #ebebeb;
@@ -598,7 +600,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 960px) {
-  .feat-grid { grid-template-columns: 1fr 1fr; width: 100%; height: auto; }
+  .home-band { width: 100%; max-width: 100%; padding-left: clamp(24px, 5%, 60px); padding-right: clamp(24px, 5%, 60px); }
+  .feat-grid { grid-template-columns: 1fr 1fr; width: 100%; max-width: 100%; height: auto; }
   .feat-card:nth-child(n+3) { border-top: 0.5px solid #ebebeb; }
 }
 @media (max-width: 600px) {

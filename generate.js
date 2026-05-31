@@ -388,7 +388,7 @@ function indexPage(projects) {
   }).join('\n  ');
 
   return wrap('', 'Avigail Bahat — Product Designer', `
-  <div class="page-wrap"><main>
+  <main class="home-band">
     <p class="lede">Senior UX designer. 12 years at Wix building developer tools, site tools, marketplace, and AI. Work I genuinely love.</p>
     <p class="section-label">Featured work</p>
     <div class="feat-grid">
@@ -407,7 +407,7 @@ function indexPage(projects) {
     <div id="list">
       ${listHtml}
     </div>
-  </main></div>`);
+  </main>`);
 }
 
 function projectPage(proj) {
