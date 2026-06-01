@@ -645,22 +645,22 @@ function contactPage() {
 function designSystemPage() {
   const swatches = [
     { hex: '#0a0a0a', name: 'Black',     usage: 'Primary text, hover fill, footer bg' },
+    { hex: '#555555', name: 'Gray',      usage: 'All secondary text: nav, labels, years, body copy' },
     { hex: '#ffffff', name: 'White',     usage: 'Page background, text on dark' },
-    { hex: '#ebebeb', name: 'Border',    usage: 'All hairline borders (--border)' },
-    { hex: '#555555', name: 'Muted',     usage: 'Nav, labels, years, arrows, secondary text' },
-    { hex: '#444444', name: 'Body',      usage: 'Prose paragraphs, CV desc' },
-    { hex: '#121212', name: 'Dark body', usage: 'Project page paragraphs and lists' },
     { hex: '#f5f5f5', name: 'Surface',   usage: 'Sticky title bg, image placeholder' },
+    { hex: '#ebebeb', name: 'Border',    usage: 'All hairline borders (--border)' },
     { hex: '#22c55e', name: 'Available', usage: 'Availability dot only' },
   ];
   const typeRows = [
-    { sample: 'AI Credits',                 spec: '64px / 700 / −0.03em / Plus Jakarta Sans', style: 'font-size:64px;font-weight:700;letter-spacing:-0.03em;color:#0a0a0a;line-height:1.1;font-family:"Plus Jakarta Sans",sans-serif' },
-    { sample: 'Design system',              spec: '32px / 700 / −0.02em / Inter',             style: 'font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a' },
-    { sample: 'Senior UX designer.',        spec: '28px / 500 / −0.01em / Plus Jakarta Sans', style: 'font-size:28px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;font-family:"Plus Jakarta Sans",sans-serif' },
-    { sample: 'Wix was introducing a Credits Wallet as part of Premium plans.', spec: '18px / 400 / Inter / lh 1.7', style: 'font-size:18px;color:#555;line-height:1.7' },
-    { sample: 'Body copy in about and contact pages.',              spec: '16px / 400 / Inter / lh 1.65', style: 'font-size:16px;color:#555;line-height:1.65' },
-    { sample: 'Nav links, years, tags, meta',                       spec: '14px / 400 / Inter',            style: 'font-size:14px;color:#555' },
-    { sample: 'SECTION LABEL',                                      spec: '15px / 400 / uppercase / #555', style: 'font-size:15px;letter-spacing:0.07em;text-transform:uppercase;color:#555' },
+    { sample: 'AI Credits',                 spec: '64px / 800 / −0.03em / Plus Jakarta Sans', where: 'Project page title (.proj-title)',                         style: 'font-size:64px;font-weight:800;letter-spacing:-0.03em;color:#0a0a0a;line-height:1.1;font-family:"Plus Jakarta Sans",sans-serif' },
+    { sample: 'Featured card title',        spec: '42px / 800 / −0.02em / Plus Jakarta Sans', where: 'Homepage featured cards (.feat-title)',                    style: 'font-size:42px;font-weight:800;letter-spacing:-0.02em;color:#0a0a0a;line-height:1.1;font-family:"Plus Jakarta Sans",sans-serif' },
+    { sample: 'Design system',              spec: '32px / 700 / −0.02em / Inter',             where: 'Inner page h1, footer statement (.footer-statement)',       style: 'font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a' },
+    { sample: 'Senior UX designer.',        spec: '28px / 500 / −0.01em / Plus Jakarta Sans', where: 'Homepage lede (.lede)',                                    style: 'font-size:28px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;font-family:"Plus Jakarta Sans",sans-serif' },
+    { sample: 'Transparent AI usage billing across the platform.', spec: '20px / 500 / Inter', where: 'Project page subtitle (.proj-subtitle)',                  style: 'font-size:20px;font-weight:500;color:#0a0a0a;line-height:1.4' },
+    { sample: 'Wix was introducing a Credits Wallet.',             spec: '18px / 400 / Inter / lh 1.7', where: 'Project page body, list rows (.proj-content p, .row-title)', style: 'font-size:18px;color:#555;line-height:1.7' },
+    { sample: 'Body copy in about and contact pages.',             spec: '16px / 400 / Inter / lh 1.65', where: 'About, contact, CV text (.cv-desc, .contact-intro)',        style: 'font-size:16px;color:#555;line-height:1.65' },
+    { sample: 'Nav links, years, tags, meta',                      spec: '14px / 400 / Inter',            where: 'Nav links, row meta, tag labels',                          style: 'font-size:14px;color:#555' },
+    { sample: 'SECTION LABEL',                                     spec: '13px / 400 / uppercase / #555', where: 'Section headers (.section-label)',                          style: 'font-size:13px;letter-spacing:0.07em;text-transform:uppercase;color:#555' },
   ];
   const spacings = [
     { token: '--sp-1', val: '4px',  usage: 'Tight gaps' },
@@ -686,8 +686,11 @@ function designSystemPage() {
     const colorMatch = r.style.match(/color:([^;]+)/);
     const color = colorMatch ? colorMatch[1].trim() : '#0a0a0a';
     return `<div class="ds-type-row">
-      <span style="${r.style}">${r.sample}</span>
-      <span class="ds-type-spec">${r.spec}<span class="ds-type-color"><span class="ds-type-dot" style="background:${color}"></span>${color}</span></span>
+      <div class="ds-type-sample" style="${r.style}">${r.sample}</div>
+      <div class="ds-type-meta">
+        <span class="ds-type-spec">${r.spec}<span class="ds-type-color"><span class="ds-type-dot" style="background:${color}"></span>${color}</span></span>
+        <span class="ds-type-where">${r.where}</span>
+      </div>
     </div>`;
   }).join('\n    ');
 
@@ -703,6 +706,7 @@ function designSystemPage() {
   const built = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
   const changelog = [
+    { date: '1 Jun 2026', change: 'Design system: colour swatches in 6-column grid; type scale shows where each style appears' },
     { date: '1 Jun 2026', change: 'feat-title bumped to 42px / weight 800 (Plus Jakarta Sans)' },
     { date: '1 Jun 2026', change: 'All body and secondary text unified to #555 — removed #444 and #121212' },
     { date: '1 Jun 2026', change: 'Type scale consolidated: footer-statement 36px → 32px / Inter; row-title 20px/500 → 18px/400; CV text 15px → 16px; proj-subtitle weight 400 → 500, color #555 → #0a0a0a' },
