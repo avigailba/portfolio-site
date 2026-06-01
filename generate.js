@@ -519,10 +519,12 @@ var CURRENT_SLUG = '${proj.slug}';
 (function(){
   var tw = document.getElementById('proj-title-wrap');
   if (!tw) return;
-  var threshold = 60;
+  var condensed = false;
   window.addEventListener('scroll', function() {
-    tw.classList.toggle('condensed', window.scrollY > threshold);
-  });
+    var y = window.scrollY;
+    if (!condensed && y > 60) { condensed = true; tw.classList.add('condensed'); }
+    else if (condensed && y < 20) { condensed = false; tw.classList.remove('condensed'); }
+  }, { passive: true });
 })();
 </script>`, '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">\n  ');
 }
