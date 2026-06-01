@@ -684,12 +684,14 @@ function designSystemPage() {
     </div>`
   ).join('\n      ');
 
-  const typeHtml = typeRows.map(r =>
-    `<div class="ds-type-row">
+  const typeHtml = typeRows.map(r => {
+    const colorMatch = r.style.match(/color:([^;]+)/);
+    const color = colorMatch ? colorMatch[1].trim() : '#0a0a0a';
+    return `<div class="ds-type-row">
       <span style="${r.style}">${r.sample}</span>
-      <span class="ds-type-spec">${r.spec}</span>
-    </div>`
-  ).join('\n    ');
+      <span class="ds-type-spec">${r.spec}<span class="ds-type-color"><span class="ds-type-dot" style="background:${color}"></span>${color}</span></span>
+    </div>`;
+  }).join('\n    ');
 
   const spacingHtml = spacings.map(s =>
     `<div class="ds-sp-row">
