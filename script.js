@@ -5,8 +5,8 @@
   var condensed = false;
   window.addEventListener('scroll', function() {
     var y = window.scrollY;
-    if (!condensed && y > 60) { condensed = true; hdr.classList.add('scrolled'); }
-    else if (condensed && y < 20) { condensed = false; hdr.classList.remove('scrolled'); }
+    if (!condensed && y > 60) { condensed = true; hdr.classList.add('scrolled'); document.body.classList.add('hdr-scrolled'); }
+    else if (condensed && y < 20) { condensed = false; hdr.classList.remove('scrolled'); document.body.classList.remove('hdr-scrolled'); }
   }, { passive: true });
   var path = window.location.pathname;
   document.querySelectorAll('nav a').forEach(function(a) {

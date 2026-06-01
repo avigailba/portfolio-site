@@ -470,13 +470,13 @@ var CURRENT_SLUG = '${proj.slug}';
 </script>`;
 
   return wrap(prefix, `${title} — Avigail Bahat`, `
-  <div class="proj-page-grid">
-    <div class="proj-gutter proj-gutter-left">
-      ${prevProj ? `<a class="proj-nav-btn" href="${prevProj.slug}.html" aria-label="Previous project"><i class="ti ti-arrow-left"></i><span class="proj-nav-name">${prevTitle}</span></a>` : ''}
-    </div>
-    <main class="proj-main">
-      <p class="proj-breadcrumb"><a href="../index.html">Home</a> / ${title}</p>
-      <div class="proj-title-wrap" id="proj-title-wrap">
+  <div class="proj-title-block" id="proj-title-block">
+    <div class="ptb-inner">
+      <div class="ptb-nav ptb-nav-left">
+        ${prevProj ? `<a class="proj-nav-btn" href="${prevProj.slug}.html" aria-label="Previous project"><i class="ti ti-arrow-left"></i><span class="proj-nav-name">${prevTitle}</span></a>` : ''}
+      </div>
+      <div class="ptb-content">
+        <p class="proj-breadcrumb"><a href="../index.html">Home</a> / ${title}</p>
         <h1 class="proj-title">${title}</h1>
         ${proj.subtitle ? `<p class="proj-subtitle">${proj.subtitle}</p>` : ''}
         <div class="proj-meta">
@@ -487,13 +487,19 @@ var CURRENT_SLUG = '${proj.slug}';
           <span class="proj-meta-item">Wix</span>
         </div>
       </div>
+      <div class="ptb-nav ptb-nav-right">
+        ${nextProj ? `<a class="proj-nav-btn" href="${nextProj.slug}.html" aria-label="Next project"><i class="ti ti-arrow-right"></i><span class="proj-nav-name">${nextTitle}</span></a>` : ''}
+      </div>
+    </div>
+  </div>
+  <div class="proj-page-grid">
+    <div class="proj-gutter proj-gutter-left"></div>
+    <main class="proj-main">
       <div class="proj-content">
         ${proj.contentHtml}
       </div>
     </main>
-    <div class="proj-gutter proj-gutter-right">
-      ${nextProj ? `<a class="proj-nav-btn" href="${nextProj.slug}.html" aria-label="Next project"><i class="ti ti-arrow-right"></i><span class="proj-nav-name">${nextTitle}</span></a>` : ''}
-    </div>
+    <div class="proj-gutter proj-gutter-right"></div>
   </div>
   <section class="more-section">
     <div class="more-inner">
@@ -517,11 +523,11 @@ var CURRENT_SLUG = '${proj.slug}';
   </div>`, moreJs + `
 <script>
 (function(){
-  var tw = document.getElementById('proj-title-wrap');
-  if (!tw) return;
+  var tb = document.getElementById('proj-title-block');
+  if (!tb) return;
   var threshold = 60;
   window.addEventListener('scroll', function() {
-    tw.classList.toggle('condensed', window.scrollY > threshold);
+    tb.classList.toggle('condensed', window.scrollY > threshold);
   });
 })();
 </script>`, '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">\n  ');

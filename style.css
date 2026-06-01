@@ -475,6 +475,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   align-self: start;
   position: sticky;
   top: 56px;
+  z-index: 6;
   display: flex;
   justify-content: center;
   padding-top: 36px;
@@ -499,6 +500,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   max-width: 52px;
   line-height: 1.4;
   text-align: center;
+  transition: opacity 0.3s ease;
 }
 .proj-breadcrumb {
   font-size: 12px;
@@ -510,18 +512,32 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .proj-title-wrap {
   position: sticky;
   top: 56px;
-  background: #fff;
+  background: #f5f5f5;
   z-index: 5;
-  padding-top: 28px;
-  padding-bottom: 14px;
+  display: flex;
+  align-items: stretch;
+  margin-left: calc(-1 * clamp(40px, 20vw, 240px));
+  width: calc(100% + 2 * clamp(40px, 20vw, 240px));
   border-bottom: 0.5px solid #ebebeb;
-  transition: padding 0.25s ease;
 }
-.proj-title-wrap.condensed { padding-top: 18px; padding-bottom: 10px; }
+
+.ptw-body {
+  flex: 1;
+  min-width: 0;
+  padding: 28px clamp(40px, 20vw, 240px) 14px;
+  transition: padding 0.35s ease;
+}
+.ptw-arrow { display: none; }
+.proj-title-wrap.condensed {
+  background: #f5f5f5;
+}
+.proj-title-wrap.condensed .ptw-body { padding-top: 12px; padding-bottom: 12px; }
 .proj-title-wrap.condensed .proj-subtitle { opacity: 0; max-height: 0; margin: 0; overflow: hidden; }
-.proj-title-wrap.condensed .proj-title { font-size: 22px !important; }
-.proj-title-wrap.condensed .proj-meta { padding-bottom: 8px; }
-.proj-subtitle { font-size: 20px; font-weight: 400; color: #555; margin-bottom: 8px; line-height: 1.4; transition: opacity 0.2s ease, max-height 0.25s ease; max-height: 60px; overflow: hidden; }
+.proj-title-wrap.condensed .proj-title { font-size: 18px !important; font-weight: 600 !important; margin-bottom: 2px; }
+.proj-title-wrap.condensed .proj-meta { margin-bottom: 0; }
+.proj-subtitle { font-size: 20px; font-weight: 400; color: #555; margin-bottom: 8px; line-height: 1.4; transition: opacity 0.25s ease, max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); max-height: 60px; overflow: hidden; }
+
+
 .proj-main { padding: 0; }
 .proj-content { padding: 24px 0 80px; max-width: 860px; }
 .proj-title {
