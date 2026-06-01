@@ -324,7 +324,7 @@ function ftr(prefix = '') {
 }
 
 // prefix: '' for root pages, '../' for project pages
-function wrap(prefix, title, body, extraScript = '') {
+function wrap(prefix, title, body, extraScript = '', extraHead = '') {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -332,8 +332,7 @@ function wrap(prefix, title, body, extraScript = '') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <link rel="stylesheet" href="${prefix}style.css">
+  ${extraHead}<link rel="stylesheet" href="${prefix}style.css">
 </head>
 <body>
   ${hdr(prefix)}
@@ -525,7 +524,7 @@ var CURRENT_SLUG = '${proj.slug}';
     tw.classList.toggle('condensed', window.scrollY > threshold);
   });
 })();
-</script>`);
+</script>`, '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">\n  ');
 }
 
 function aboutPage() {
