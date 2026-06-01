@@ -702,6 +702,28 @@ function designSystemPage() {
 
   const built = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
+  const changelog = [
+    { date: '1 Jun 2026', change: 'feat-title bumped to 42px / weight 800 (Plus Jakarta Sans)' },
+    { date: '1 Jun 2026', change: 'All body and secondary text unified to #555 — removed #444 and #121212' },
+    { date: '1 Jun 2026', change: 'Type scale consolidated: footer-statement 36px → 32px / Inter; row-title 20px/500 → 18px/400; CV text 15px → 16px; proj-subtitle weight 400 → 500, color #555 → #0a0a0a' },
+    { date: '1 Jun 2026', change: 'Design system type scale rows show inline color swatch and hex value' },
+    { date: '1 Jun 2026', change: 'Design system swatches and type scale updated to match actual site tokens' },
+    { date: '1 Jun 2026', change: 'Removed Wix from project page metadata' },
+    { date: '1 Jun 2026', change: 'Project page layout: 3-column grid with sticky gutters for prev/next navigation' },
+    { date: '1 Jun 2026', change: 'Sticky condensing title block on project pages (ptb-inner)' },
+    { date: '1 Jun 2026', change: 'Tabler icons CDN moved to project pages only' },
+    { date: '1 Jun 2026', change: 'Row hover: subtitle fades in, no title movement, overflow fixed' },
+    { date: '1 Jun 2026', change: 'Typography: Plus Jakarta Sans for titles, Inter for all UI and body' },
+    { date: '1 Jun 2026', change: 'Gray token consolidated to #555 (was #888, then #555)' },
+    { date: '1 Jun 2026', change: 'Horizontal padding changed to clamp(40px, 20%, 240px) sitewide' },
+  ];
+  const changelogHtml = changelog.map(c =>
+    `<div class="ds-cl-row">
+      <span class="ds-cl-date">${c.date}</span>
+      <span class="ds-cl-text">${c.change}</span>
+    </div>`
+  ).join('\n    ');
+
   return wrap('', 'Design System — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content ds-content">
@@ -790,6 +812,13 @@ function designSystemPage() {
   --sp-7: 48px;
   --sp-8: 64px;
 }</div>
+      </div>
+
+      <div class="ds-section">
+        <span class="ds-section-title">Changelog</span>
+        <div class="ds-changelog">
+          ${changelogHtml}
+        </div>
       </div>
 
       <p class="ds-updated">Last built: ${built}</p>
