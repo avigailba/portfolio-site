@@ -324,7 +324,7 @@ function ftr(prefix = '') {
 }
 
 // prefix: '' for root pages, '../' for project pages
-function wrap(prefix, title, body, extraScript = '', extraHead = '') {
+function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass = '') {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -334,7 +334,7 @@ function wrap(prefix, title, body, extraScript = '', extraHead = '') {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap">
   ${extraHead}<link rel="stylesheet" href="${prefix}style.css">
 </head>
-<body>
+<body${bodyClass ? ` class="${bodyClass}"` : ''}>
   ${hdr(prefix)}
   ${body}
   ${ftr(prefix)}
@@ -471,12 +471,10 @@ var CURRENT_SLUG = '${proj.slug}';
 
   return wrap(prefix, `${title} — Avigail Bahat`, `
   <div class="proj-page-grid">
-    <div class="proj-gutter proj-gutter-left">
-      ${prevProj ? `<a class="proj-nav-btn" href="${prevProj.slug}.html" aria-label="Previous project"><i class="ti ti-arrow-left"></i><span class="proj-nav-name">${prevTitle}</span></a>` : ''}
-    </div>
+    <div class="proj-gutter proj-gutter-left"></div>
     <main class="proj-main">
-      <p class="proj-breadcrumb"><a href="../index.html">Home</a> / ${title}</p>
       <div class="proj-title-wrap" id="proj-title-wrap">
+        <p class="proj-breadcrumb"><a href="../index.html">Home</a> / ${title}</p>
         <h1 class="proj-title">${title}</h1>
         ${proj.subtitle ? `<p class="proj-subtitle">${proj.subtitle}</p>` : ''}
         <div class="proj-meta">
@@ -487,13 +485,15 @@ var CURRENT_SLUG = '${proj.slug}';
           <span class="proj-meta-item">Wix</span>
         </div>
       </div>
+      <div class="proj-side-nav">
+        ${prevProj ? `<a class="proj-nav-btn proj-nav-prev" href="${prevProj.slug}.html" aria-label="Previous project"><i class="ti ti-arrow-left"></i><span class="proj-nav-name">${prevTitle}</span></a>` : ''}
+        ${nextProj ? `<a class="proj-nav-btn proj-nav-next" href="${nextProj.slug}.html" aria-label="Next project"><i class="ti ti-arrow-right"></i><span class="proj-nav-name">${nextTitle}</span></a>` : ''}
+      </div>
       <div class="proj-content">
         ${proj.contentHtml}
       </div>
     </main>
-    <div class="proj-gutter proj-gutter-right">
-      ${nextProj ? `<a class="proj-nav-btn" href="${nextProj.slug}.html" aria-label="Next project"><i class="ti ti-arrow-right"></i><span class="proj-nav-name">${nextTitle}</span></a>` : ''}
-    </div>
+    <div class="proj-gutter proj-gutter-right"></div>
   </div>
   <section class="more-section">
     <div class="more-inner">
@@ -519,12 +519,31 @@ var CURRENT_SLUG = '${proj.slug}';
 (function(){
   var tw = document.getElementById('proj-title-wrap');
   if (!tw) return;
-  var threshold = 60;
-  window.addEventListener('scroll', function() {
-    tw.classList.toggle('condensed', window.scrollY > threshold);
-  });
+  var bc = tw.querySelector('.proj-breadcrumb');
+  var sub = tw.querySelector('.proj-subtitle');
+  var title = tw.querySelector('.proj-title');
+  var R = 110;
+  var TITLE_FROM = 64, TITLE_TO = 22, PAD_FROM = 28, PAD_TO = 14;
+  var BC_H = 24, BC_MB = 16, SUB_H = 60, SUB_MB = 8;
+  var ticking = false;
+  function lerp(a, b, p){ return a + (b - a) * p; }
+  function ease(p){ return 1 - Math.pow(1 - p, 3); }
+  function update(){
+    ticking = false;
+    var raw = Math.min(Math.max(window.scrollY / R, 0), 1);
+    var p = ease(raw);
+    var fade = Math.min(raw * 2.2, 1);
+    if (title) title.style.fontSize = lerp(TITLE_FROM, TITLE_TO, p) + 'px';
+    tw.style.paddingTop = lerp(PAD_FROM, PAD_TO, p) + 'px';
+    tw.style.paddingBottom = lerp(PAD_FROM, PAD_TO, p) + 'px';
+    if (bc){ bc.style.maxHeight = lerp(BC_H, 0, p) + 'px'; bc.style.marginBottom = lerp(BC_MB, 0, p) + 'px'; bc.style.opacity = lerp(1, 0, fade); }
+    if (sub){ sub.style.maxHeight = lerp(SUB_H, 0, p) + 'px'; sub.style.marginBottom = lerp(SUB_MB, 0, p) + 'px'; sub.style.opacity = lerp(1, 0, fade); }
+tw.classList.toggle('condensed', raw > 0.4);
+  }
+  window.addEventListener('scroll', function(){ if (!ticking){ ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
 })();
-</script>`, '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">\n  ');
+</script>`, '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">\n  ', 'proj-page');
 }
 
 function aboutPage() {
