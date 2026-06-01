@@ -14,6 +14,7 @@ body {
   color: #0a0a0a;
   background: #fff;
   -webkit-font-smoothing: antialiased;
+  overflow-anchor: none;
 }
 
 .feat-title, .proj-title, .lede, .footer-statement {
@@ -40,7 +41,6 @@ button { font-family: inherit; }
   align-items: center;
   padding-top: 32px;
   padding-bottom: 32px;
-  transition: padding 0.3s ease;
 }
 #site-header.scrolled .header-inner {
   padding-top: 14px;
@@ -69,7 +69,7 @@ button { font-family: inherit; }
   color: #555;
   max-height: 18px;
   opacity: 1;
-  transition: max-height 0.3s ease, opacity 0.2s ease;
+  overflow: hidden;
 }
 #site-header.scrolled .logo-role {
   max-height: 0;
@@ -86,7 +86,7 @@ button { font-family: inherit; }
   max-height: 28px;
   opacity: 1;
   overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.2s ease, margin 0.3s ease, padding 0.3s ease;
+  overflow: hidden;
 }
 #site-header.scrolled .avail-dot-wrap {
   max-height: 0;
@@ -470,6 +470,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .proj-page-grid {
   display: grid;
   grid-template-columns: clamp(40px, 20%, 240px) 1fr clamp(40px, 20%, 240px);
+  overflow-x: clip;
 }
 .proj-gutter {
   align-self: start;
@@ -488,57 +489,54 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   text-decoration: none;
   opacity: 0.55;
   transition: opacity 0.2s;
-  color: #0C447C;
+  color: #555;
 }
 .proj-nav-btn:hover { opacity: 1; }
 .proj-nav-btn i { font-size: 20px; }
 .proj-nav-name {
-  font-size: 11px;
-  font-weight: 500;
-  color: #0C447C;
+  font-size: 14px;
+  font-weight: 400;
+  color: #555;
   writing-mode: vertical-rl;
   max-width: 52px;
   line-height: 1.4;
   text-align: center;
-  transition: opacity 0.3s ease;
 }
+/* Prev/next project arrows: vertical, in the side padding, fixed so they stay in place on scroll */
+.proj-side-nav .proj-nav-btn { position: fixed; top: 40vh; z-index: 8; }
+.proj-side-nav .proj-nav-prev { left: clamp(24px, 7vw, 150px); }
+.proj-side-nav .proj-nav-next { right: clamp(24px, 7vw, 150px); }
 .proj-breadcrumb {
-  font-size: 12px;
-  color: #888;
+  font-size: 14px;
+  color: #555;
   margin-bottom: 16px;
+  opacity: 1;
+  max-height: 24px;
+  overflow: hidden;
 }
-.proj-breadcrumb a { color: #888; text-decoration: none; }
+.proj-breadcrumb a { color: #555; text-decoration: none; }
 .proj-breadcrumb a:hover { color: #0a0a0a; }
 .proj-title-wrap {
   position: sticky;
   top: 56px;
-  background: #f5f5f5;
+  background: #fff;
   z-index: 5;
-  display: flex;
-  align-items: stretch;
   margin-left: calc(-1 * clamp(40px, 20vw, 240px));
-  width: calc(100% + 2 * clamp(40px, 20vw, 240px));
-  border-bottom: 0.5px solid #ebebeb;
+  margin-right: calc(-1 * clamp(40px, 20vw, 240px));
+  padding-top: 28px;
+  padding-bottom: 28px;
+  padding-left: clamp(40px, 20vw, 240px);
+  padding-right: clamp(40px, 20vw, 240px);
+  transition: box-shadow 0.2s ease;
 }
-
-.ptw-body {
-  flex: 1;
-  min-width: 0;
-  padding: 28px clamp(40px, 20vw, 240px) 14px;
-  transition: padding 0.35s ease;
-}
-.ptw-arrow { display: none; }
-.proj-title-wrap.condensed {
-  background: #f5f5f5;
-}
-.proj-title-wrap.condensed .ptw-body { padding-top: 12px; padding-bottom: 12px; }
+.proj-title-wrap.condensed { box-shadow: 0 1px 0 rgba(10,10,10,0.04), 0 6px 16px -12px rgba(10,10,10,0.18); }
+.proj-title-wrap.condensed .proj-breadcrumb { opacity: 0; max-height: 0; margin-bottom: 0; pointer-events: none; }
 .proj-title-wrap.condensed .proj-subtitle { opacity: 0; max-height: 0; margin: 0; overflow: hidden; }
-.proj-title-wrap.condensed .proj-title { font-size: 18px !important; font-weight: 600 !important; margin-bottom: 2px; }
-.proj-title-wrap.condensed .proj-meta { margin-bottom: 0; }
-.proj-subtitle { font-size: 20px; font-weight: 400; color: #555; margin-bottom: 8px; line-height: 1.4; transition: opacity 0.25s ease, max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); max-height: 60px; overflow: hidden; }
-
-
-.proj-main { padding: 0; }
+.proj-title-wrap.condensed .proj-title { font-size: 22px; }
+.proj-title-wrap.condensed .proj-meta { padding-bottom: 0; }
+.proj-title-wrap .proj-meta { margin-bottom: 0; }
+.proj-subtitle { font-size: 20px; font-weight: 400; color: #555; margin-bottom: 8px; line-height: 1.4; max-height: 60px; overflow: hidden; }
+.proj-main { padding: 0; position: relative; }
 .proj-content { padding: 24px 0 80px; max-width: 860px; }
 .proj-title {
   font-size: 64px;

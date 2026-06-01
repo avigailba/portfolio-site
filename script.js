@@ -2,12 +2,25 @@
 (function() {
   var hdr = document.getElementById('site-header');
   if (!hdr) return;
-  var condensed = false;
-  window.addEventListener('scroll', function() {
-    var y = window.scrollY;
-    if (!condensed && y > 60) { condensed = true; hdr.classList.add('scrolled'); document.body.classList.add('hdr-scrolled'); }
-    else if (condensed && y < 20) { condensed = false; hdr.classList.remove('scrolled'); document.body.classList.remove('hdr-scrolled'); }
-  }, { passive: true });
+  var inner = hdr.querySelector('.header-inner');
+  var role  = hdr.querySelector('.logo-role');
+  var dot   = hdr.querySelector('.avail-dot-wrap');
+  var R = 110, OFFSET = 60;
+  var ticking = false;
+  function lerp(a, b, p) { return a + (b - a) * p; }
+  function ease(p) { return 1 - Math.pow(1 - p, 3); }
+  function update() {
+    ticking = false;
+    var raw = Math.min(Math.max((window.scrollY - OFFSET) / R, 0), 1);
+    var p   = ease(raw);
+    var fade = Math.min(raw * 2.2, 1);
+    if (inner) { inner.style.paddingTop = lerp(32, 14, p) + 'px'; inner.style.paddingBottom = lerp(32, 14, p) + 'px'; }
+    if (role)  { role.style.maxHeight = lerp(18, 0, p) + 'px'; role.style.opacity = 1 - fade; }
+    if (dot)   { dot.style.maxHeight = lerp(28, 0, p) + 'px'; dot.style.opacity = 1 - fade; dot.style.paddingTop = lerp(4, 0, p) + 'px'; dot.style.paddingBottom = lerp(4, 0, p) + 'px'; dot.style.marginLeft = lerp(4, 0, p) + 'px'; }
+    hdr.classList.toggle('scrolled', raw > 0.4);
+  }
+  window.addEventListener('scroll', function() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
   var path = window.location.pathname;
   document.querySelectorAll('nav a').forEach(function(a) {
     var href = a.getAttribute('href') || '';
