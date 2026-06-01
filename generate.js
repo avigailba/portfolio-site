@@ -775,7 +775,7 @@ async function build() {
     const contentHtml = await toHtml(p.blocks, '../');
     const title = stripEmoji(p.title);
     const slug = slugify(title);
-    const subtitle = firstSubtitle(p.blocks) || PROJECT_SUMMARIES[slug] || '';
+    const subtitle = firstSubtitle(p.blocks) || summary || PROJECT_SUMMARIES[slug] || '';
     projects.push({ ...p, title, icon, year, slug, summary, subtitle, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
   }
 
