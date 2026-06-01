@@ -57,20 +57,20 @@ const FEAT_ORDER = [
 
 // One-line summaries shown on hover in the project list
 const PROJECT_SUMMARIES = {
-  'ai-credits-wallet':                          'Transparent AI usage billing across Wix\'s developer platform',
-  'app-installation-page-for-developers': 'Redesigned the app installation experience end-to-end',
-  'app-reviews-revamp':                  'Improved app review flows for the Wix App Market',
-  'developer-sale':                      'A monetisation campaign tool for app developers',
-  'app-collections-internal-manager':    'Curated app groupings for discovery and editorial placement',
-  'payouts-page':                        'Dashboard for developers to track earnings and payout history',
-  'refund-flow':                         'End-to-end refund process for app purchases',
-  'app-pricing-page-projects':           'Redesigned pricing presentation for marketplace apps',
-  'internal-app-review-system':          'Replaced a spreadsheet-based review process with a structured tool',
-  'submit-publish-widget':               'Streamlined app submission and publishing for developers',
-  'custom-element-component-settings':   'Settings UI for Wix\'s custom HTML element widget',
-  'api-keys-page':                       'Key management interface for Wix\'s developer platform',
-  'development-site-creation':           'Onboarding flow for creating Wix development sites',
-  'app-coupons':                         'Coupon and discount tools for app monetisation',
+  'ai-credits-wallet':                          'AI credits billing system across Business Manager and Wixel',
+  'app-installation-page-for-developers': 'Developer dashboard for installation data and user insights',
+  'app-reviews-revamp':                  'Redesigned reviews management experience for App Market developers',
+  'developer-sale':                      'Native sales infrastructure for app developers on the marketplace',
+  'app-collections-internal-manager':    'Curation tooling for App Market vertical collections',
+  'payouts-page':                        'In-product earnings visibility for App Market developers',
+  'refund-flow':                         'Self-serve refund flow replacing manual support intervention',
+  'app-pricing-page-projects':           'Long-term UX evolution of App Market pricing infrastructure',
+  'internal-app-review-system':          'Workflow tool for Account Managers to review marketplace apps',
+  'submit-publish-widget':               'Submission requirements surfaced in-context during the publishing flow',
+  'custom-element-component-settings':   'Visual settings builder for Wix Custom Element apps',
+  'api-keys-page':                       'Secure key generation and management for Wix platform developers',
+  'development-site-creation':           'Self-serve provisioning of premium test sites for developers',
+  'app-coupons':                         'Self-serve coupon creation for App Market developers',
 };
 
 function slugify(s) {
@@ -137,7 +137,7 @@ function rt(richText) {
     }).join('');
 }
 
-async function toHtml(blocks, imgPrefix = '') {
+async function toHtml(blocks, imgPrefix = '', skipFirstPara = false) {
   let html = '', uList = false, oList = false, firstParaSeen = false;
   for (const b of blocks) {
     if (b.type !== 'bulleted_list_item' && uList) { html += '</ul>\n'; uList = false; }
@@ -150,6 +150,10 @@ async function toHtml(blocks, imgPrefix = '') {
         const plain = rich.map(x => x.plain_text).join('').trim();
         if (!plain || isDateString(plain)) break;
         if (!firstParaSeen && rich.length > 0 && rich.every(t => t.annotations?.italic)) {
+          firstParaSeen = true;
+          break;
+        }
+        if (!firstParaSeen && skipFirstPara) {
           firstParaSeen = true;
           break;
         }
@@ -763,7 +767,7 @@ async function build() {
     const icon = meta.icon?.type === 'emoji' ? meta.icon.emoji : '';
     const year = new Date(meta.created_time).getFullYear().toString();
     const summary = meta.properties?.Summary?.rich_text?.[0]?.plain_text || '';
-    const contentHtml = await toHtml(p.blocks, '../');
+    const contentHtml = await toHtml(p.blocks, '../', true);
     const title = stripEmoji(p.title);
     const slug = slugify(title);
     projects.push({ ...p, title, icon, year, slug, summary, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
