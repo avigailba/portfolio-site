@@ -470,7 +470,6 @@ var CURRENT_SLUG = '${proj.slug}';
         <span class="proj-meta-sep">·</span>
         <span class="proj-meta-item">Wix</span>
       </div>
-      ${(proj.callout || proj.excerpt) ? `<p class="proj-intro">${proj.callout || proj.excerpt}</p>` : ''}
       ${proj.contentHtml}
     </div>
   </main>
