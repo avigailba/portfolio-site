@@ -237,6 +237,15 @@ function excerpt(blocks) {
   return p ? p.paragraph.rich_text.map(t => t.plain_text).join('').slice(0, 180) : '';
 }
 
+function firstSubtitle(blocks) {
+  const b = blocks.find(b => {
+    if (b.type !== 'paragraph' || !b.paragraph.rich_text.length) return false;
+    const plain = b.paragraph.rich_text.map(t => t.plain_text).join('').trim();
+    return plain.length > 0 && !isDateString(plain) && b.paragraph.rich_text.every(t => t.annotations?.italic);
+  });
+  return b ? b.paragraph.rich_text.map(t => t.plain_text).join('').trim() : '';
+}
+
 function firstCallout(blocks) {
   const c = blocks.find(b => b.type === 'callout' && b.callout.rich_text.length);
   if (!c) return '';
@@ -462,7 +471,7 @@ var CURRENT_SLUG = '${proj.slug}';
   <main class="proj-main">
     <div class="proj-content">
       <h1 class="proj-title">${title}</h1>
-      ${PROJECT_SUMMARIES[proj.slug] ? `<p class="proj-subtitle">${PROJECT_SUMMARIES[proj.slug]}</p>` : ''}
+      ${proj.subtitle ? `<p class="proj-subtitle">${proj.subtitle}</p>` : ''}
       <div class="proj-meta">
         <span class="proj-meta-item">${year}</span>
         <span class="proj-meta-sep">·</span>
@@ -766,7 +775,8 @@ async function build() {
     const contentHtml = await toHtml(p.blocks, '../');
     const title = stripEmoji(p.title);
     const slug = slugify(title);
-    projects.push({ ...p, title, icon, year, slug, summary, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
+    const subtitle = firstSubtitle(p.blocks) || PROJECT_SUMMARIES[slug] || '';
+    projects.push({ ...p, title, icon, year, slug, summary, subtitle, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
   }
 
   for (const proj of projects) {
