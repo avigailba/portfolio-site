@@ -332,6 +332,7 @@ function wrap(prefix, title, body, extraScript = '') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <link rel="stylesheet" href="${prefix}style.css">
 </head>
 <body>
@@ -422,12 +423,14 @@ function indexPage(projects, tagline) {
   </main>`);
 }
 
-function projectPage(proj) {
+function projectPage(proj, prevProj, nextProj) {
   const prefix = '../';
   const meta  = PROJECT_META[proj.slug] || {};
   const title = meta.title || proj.title;
   const year  = meta.year  || proj.year;
   const cat   = meta.display || 'Product Design';
+  const prevTitle = prevProj ? (PROJECT_META[prevProj.slug]?.title || prevProj.title) : null;
+  const nextTitle = nextProj ? (PROJECT_META[nextProj.slug]?.title || nextProj.title) : null;
 
   const allProjectsJs = Object.entries(PROJECT_META)
     .map(([slug, m]) => {
@@ -468,20 +471,31 @@ var CURRENT_SLUG = '${proj.slug}';
 </script>`;
 
   return wrap(prefix, `${title} — Avigail Bahat`, `
-  <main class="proj-main">
-    <div class="proj-content">
-      <h1 class="proj-title">${title}</h1>
-      ${proj.subtitle ? `<p class="proj-subtitle">${proj.subtitle}</p>` : ''}
-      <div class="proj-meta">
-        <span class="proj-meta-item">${year}</span>
-        <span class="proj-meta-sep">·</span>
-        <span class="proj-meta-item">${cat}</span>
-        <span class="proj-meta-sep">·</span>
-        <span class="proj-meta-item">Wix</span>
-      </div>
-      ${proj.contentHtml}
+  <div class="proj-page-grid">
+    <div class="proj-gutter proj-gutter-left">
+      ${prevProj ? `<a class="proj-nav-btn" href="${prevProj.slug}.html" aria-label="Previous project"><i class="ti ti-arrow-left"></i><span class="proj-nav-name">${prevTitle}</span></a>` : ''}
     </div>
-  </main>
+    <main class="proj-main">
+      <p class="proj-breadcrumb"><a href="../index.html">Home</a> / ${title}</p>
+      <div class="proj-title-wrap" id="proj-title-wrap">
+        <h1 class="proj-title">${title}</h1>
+        ${proj.subtitle ? `<p class="proj-subtitle">${proj.subtitle}</p>` : ''}
+        <div class="proj-meta">
+          <span class="proj-meta-item">${year}</span>
+          <span class="proj-meta-sep">·</span>
+          <span class="proj-meta-item">${cat}</span>
+          <span class="proj-meta-sep">·</span>
+          <span class="proj-meta-item">Wix</span>
+        </div>
+      </div>
+      <div class="proj-content">
+        ${proj.contentHtml}
+      </div>
+    </main>
+    <div class="proj-gutter proj-gutter-right">
+      ${nextProj ? `<a class="proj-nav-btn" href="${nextProj.slug}.html" aria-label="Next project"><i class="ti ti-arrow-right"></i><span class="proj-nav-name">${nextTitle}</span></a>` : ''}
+    </div>
+  </div>
   <section class="more-section">
     <div class="more-inner">
       <p class="more-label">More work</p>
@@ -501,7 +515,17 @@ var CURRENT_SLUG = '${proj.slug}';
       </div>
       <button class="lb-handle lb-next" aria-label="Next">›</button>
     </div>
-  </div>`, moreJs);
+  </div>`, moreJs + `
+<script>
+(function(){
+  var tw = document.getElementById('proj-title-wrap');
+  if (!tw) return;
+  var threshold = 60;
+  window.addEventListener('scroll', function() {
+    tw.classList.toggle('condensed', window.scrollY > threshold);
+  });
+})();
+</script>`);
 }
 
 function aboutPage() {
@@ -779,10 +803,12 @@ async function build() {
     projects.push({ ...p, title, icon, year, slug, summary, subtitle, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
   }
 
-  for (const proj of projects) {
-    fs.writeFileSync(path.join(PROJECTS_DIR, `${proj.slug}.html`), projectPage(proj));
+  for (let i = 0; i < projects.length; i++) {
+    const prev = projects[i - 1] || null;
+    const next = projects[i + 1] || null;
+    fs.writeFileSync(path.join(PROJECTS_DIR, `${projects[i].slug}.html`), projectPage(projects[i], prev, next));
     stats.pages++;
-    console.log(`  ✓ projects/${proj.slug}.html`);
+    console.log(`  ✓ projects/${projects[i].slug}.html`);
   }
 
   // Fetch homepage tagline from Notion
