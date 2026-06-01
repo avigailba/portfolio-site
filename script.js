@@ -2,9 +2,12 @@
 (function() {
   var hdr = document.getElementById('site-header');
   if (!hdr) return;
+  var condensed = false;
   window.addEventListener('scroll', function() {
-    hdr.classList.toggle('scrolled', window.scrollY > 40);
-  });
+    var y = window.scrollY;
+    if (!condensed && y > 60) { condensed = true; hdr.classList.add('scrolled'); }
+    else if (condensed && y < 20) { condensed = false; hdr.classList.remove('scrolled'); }
+  }, { passive: true });
   var path = window.location.pathname;
   document.querySelectorAll('nav a').forEach(function(a) {
     var href = a.getAttribute('href') || '';
