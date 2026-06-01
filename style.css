@@ -307,7 +307,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   font-size: 20px;
   font-weight: 500;
   color: #0a0a0a;
-  transition: transform 0.2s ease;
   line-height: 1.3;
 }
 .rsub {
@@ -318,15 +317,12 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  transform: translateY(4px);
-  transition: max-height 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+  transition: max-height 0.2s ease, opacity 0.2s ease;
 }
-.row:hover .row-title { transform: translateY(-10px); }
 .row:hover .rsub {
   max-height: 24px;
   opacity: 1;
   margin-top: 4px;
-  transform: translateY(-10px);
 }
 .row-year { font-size: 14px; color: #555; flex-shrink: 0; min-width: 36px; text-align: right; }
 .row-arr { font-size: 14px; opacity: 0; transition: opacity 0.2s ease; color: #555; flex-shrink: 0; }
