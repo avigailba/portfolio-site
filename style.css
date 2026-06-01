@@ -140,6 +140,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   line-height: 1.4;
   letter-spacing: -0.01em;
   padding: 48px 0 56px;
+  max-width: 32ch;
 }
 
 /* ── Section label ───────────────────────────────────────── */
@@ -453,7 +454,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 
 /* ── Project page ────────────────────────────────────────── */
 .proj-main { padding: 0 clamp(40px, 20%, 240px); }
-.proj-content { padding: 56px 0 80px; }
+.proj-content { padding: 56px 0 80px; max-width: 68ch; }
 .proj-title {
   font-size: 42px;
   font-weight: 700;

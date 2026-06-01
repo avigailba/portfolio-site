@@ -462,6 +462,7 @@ var CURRENT_SLUG = '${proj.slug}';
   <main class="proj-main">
     <div class="proj-content">
       <h1 class="proj-title">${title}</h1>
+      ${PROJECT_SUMMARIES[proj.slug] ? `<p class="proj-subtitle">${PROJECT_SUMMARIES[proj.slug]}</p>` : ''}
       <div class="proj-meta">
         <span class="proj-meta-item">${year}</span>
         <span class="proj-meta-sep">·</span>
