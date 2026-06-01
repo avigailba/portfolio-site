@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Effect Demo</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="proj-page">
+
+<header id="site-header">
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <div class="logo-text">
+        <a href="dist/index.html" class="logo-name">Avigail Bahat</a>
+        <span class="logo-role">Senior UX Designer</span>
+      </div>
+      <div class="avail-dot-wrap">
+        <span class="avail-dot"></span>
+        <span class="avail-label">Available for work</span>
+      </div>
+    </div>
+    <nav>
+      <a href="dist/index.html">Home</a>
+      <a href="dist/about.html">About</a>
+      <a href="dist/contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="proj-page-grid">
+  <div class="proj-gutter proj-gutter-left">
+    <a class="proj-nav-btn" href="#" aria-label="Previous project">
+      <i class="ti ti-arrow-left"></i>
+      <span class="proj-nav-name">App Coupons</span>
+    </a>
+  </div>
+
+  <main class="proj-main">
+    <p class="proj-breadcrumb"><a href="dist/index.html">Home</a> / App Installation View</p>
+
+    <div class="proj-title-wrap" id="proj-title-wrap">
+      <a class="ptw-arrow ptw-prev" href="#" aria-label="Previous project">←</a>
+      <div class="ptw-body">
+        <h1 class="proj-title">App Installation View</h1>
+        <p class="proj-subtitle">Redesigning the data experience for developers installing apps on Wix</p>
+        <div class="proj-meta">
+          <span class="proj-meta-item">2025</span>
+          <span class="proj-meta-sep">·</span>
+          <span class="proj-meta-item">Developer tools</span>
+          <span class="proj-meta-sep">·</span>
+          <span class="proj-meta-item">Wix</span>
+        </div>
+      </div>
+      <a class="ptw-arrow ptw-next" href="#" aria-label="Next project">→</a>
+    </div>
+
+    <div class="proj-content">
+      <p class="proj-intro">Developers installing apps on Wix had no visibility into what data the app would access. I redesigned the installation flow to surface permissions clearly and give developers confidence at the moment of installation.</p>
+
+      <h2>What I Did</h2>
+      <ul>
+        <li>Mapped the full installation journey across first-time and re-installation flows</li>
+        <li>Designed a new permissions display that categorised data access by type</li>
+        <li>Created a layered disclosure model — summary on install, detail on demand</li>
+        <li>Ran usability tests with 6 external developers and iterated based on findings</li>
+        <li>Delivered specs for mobile, tablet, and desktop breakpoints</li>
+      </ul>
+
+      <h2>Impact</h2>
+      <ul>
+        <li>Developers reported significantly higher confidence in installation decisions</li>
+        <li>Support tickets related to unexpected data access dropped markedly post-launch</li>
+        <li>The permissions pattern was adopted as a standard across other install surfaces</li>
+      </ul>
+
+      <div class="proj-img" style="height:320px;background:#f5f5f5;border-radius:8px;margin:32px 0;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:14px;">Image placeholder</div>
+      <div class="proj-img" style="height:320px;background:#f0f0f0;border-radius:8px;margin:32px 0;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:14px;">Image placeholder</div>
+      <div class="proj-img" style="height:320px;background:#ebebeb;border-radius:8px;margin:32px 0;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:14px;">Image placeholder</div>
+
+      <h2>Bottom Line</h2>
+      <p>This project reinforced the value of surfacing the right information at the right moment. Transparency at install time builds trust — and trust reduces friction downstream.</p>
+    </div>
+  </main>
+
+  <div class="proj-gutter proj-gutter-right">
+    <a class="proj-nav-btn" href="#" aria-label="Next project">
+      <i class="ti ti-arrow-right"></i>
+      <span class="proj-nav-name">App Reviews Revamp</span>
+    </a>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+(function(){
+  var tw = document.getElementById('proj-title-wrap');
+  if (!tw) return;
+  var condensed = false;
+  window.addEventListener('scroll', function() {
+    var y = window.scrollY;
+    if (!condensed && y > 60) { condensed = true; tw.classList.add('condensed'); }
+    else if (condensed && y < 20) { condensed = false; tw.classList.remove('condensed'); }
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>

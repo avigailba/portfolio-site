@@ -481,8 +481,6 @@ var CURRENT_SLUG = '${proj.slug}';
           <span class="proj-meta-item">${year}</span>
           <span class="proj-meta-sep">·</span>
           <span class="proj-meta-item">${cat}</span>
-          <span class="proj-meta-sep">·</span>
-          <span class="proj-meta-item">Wix</span>
         </div>
       </div>
       <div class="proj-side-nav">
