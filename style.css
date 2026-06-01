@@ -288,26 +288,27 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   padding: 28px 0;
   border-bottom: 0.5px solid #ebebeb;
   cursor: pointer;
-  transition: background 0.2s ease, padding 0.2s ease;
+  transition: background 0.2s ease;
 }
 .row-wrap:first-of-type .row { border-top: 0.5px solid #ebebeb; }
-.row:hover { background: #f7f7f7; padding-left: 8px; padding-right: 8px; }
-.row:hover .rsub { max-height: 40px; opacity: 1; }
+.row:hover { background: #f7f7f7; }
+.row:hover .row-title { transform: translateY(-4px); }
+.row:hover .rsub { opacity: 1; transform: translateY(-4px); }
 .row:hover .row-arr { opacity: 1; }
 
 .num { font-size: 14px; font-weight: 500; color: #555; min-width: 22px; flex-shrink: 0; }
-.rmain { flex: 1; min-width: 0; }
-.row-title { font-size: 20px; font-weight: 500; color: #0a0a0a; }
+.rmain { flex: 1; min-width: 0; overflow: hidden; }
+.row-title { font-size: 20px; font-weight: 500; color: #0a0a0a; transition: transform 0.2s ease; }
 .rsub {
   font-size: 14px;
   color: #555;
-  max-height: 0;
   opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease, opacity 0.2s ease;
-  margin-top: 1px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  margin-top: 2px;
   white-space: nowrap;
   text-overflow: ellipsis;
+  overflow: hidden;
+  transform: translateY(4px);
 }
 .row-year { font-size: 14px; color: #555; flex-shrink: 0; min-width: 36px; text-align: right; }
 .row-arr { font-size: 14px; opacity: 0; transition: opacity 0.2s ease; color: #555; flex-shrink: 0; }
