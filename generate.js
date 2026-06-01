@@ -655,7 +655,6 @@ function designSystemPage() {
   ];
   const typeRows = [
     { sample: 'AI Credits',                 spec: '64px / 700 / −0.03em / Plus Jakarta Sans', style: 'font-size:64px;font-weight:700;letter-spacing:-0.03em;color:#0a0a0a;line-height:1.1;font-family:"Plus Jakarta Sans",sans-serif' },
-    { sample: 'Open to new work.',          spec: '36px / 700 / −0.02em / Plus Jakarta Sans', style: 'font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a;line-height:1.15;font-family:"Plus Jakarta Sans",sans-serif' },
     { sample: 'Design system',              spec: '32px / 700 / −0.02em / Inter',             style: 'font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a' },
     { sample: 'Senior UX designer.',        spec: '28px / 500 / −0.01em / Plus Jakarta Sans', style: 'font-size:28px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;font-family:"Plus Jakarta Sans",sans-serif' },
     { sample: 'Wix was introducing a Credits Wallet as part of Premium plans.', spec: '18px / 400 / Inter / lh 1.7', style: 'font-size:18px;color:#121212;line-height:1.7' },
