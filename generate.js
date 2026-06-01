@@ -530,7 +530,7 @@ var CURRENT_SLUG = '${proj.slug}';
   function ease(p){ return 1 - Math.pow(1 - p, 3); }
   function update(){
     ticking = false;
-    var raw = Math.min(Math.max(window.scrollY / R, 0), 1);
+    var raw = Math.min(Math.max((window.scrollY - 60) / R, 0), 1);
     var p = ease(raw);
     var fade = Math.min(raw * 2.2, 1);
     if (title) title.style.fontSize = lerp(TITLE_FROM, TITLE_TO, p) + 'px';

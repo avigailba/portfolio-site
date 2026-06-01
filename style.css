@@ -41,7 +41,6 @@ button { font-family: inherit; }
   align-items: center;
   padding-top: 32px;
   padding-bottom: 32px;
-  transition: padding 0.3s ease;
 }
 #site-header.scrolled .header-inner {
   padding-top: 14px;
@@ -70,7 +69,7 @@ button { font-family: inherit; }
   color: #555;
   max-height: 18px;
   opacity: 1;
-  transition: max-height 0.3s ease, opacity 0.2s ease;
+  overflow: hidden;
 }
 #site-header.scrolled .logo-role {
   max-height: 0;
@@ -87,7 +86,7 @@ button { font-family: inherit; }
   max-height: 28px;
   opacity: 1;
   overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.2s ease, margin 0.3s ease, padding 0.3s ease;
+  overflow: hidden;
 }
 #site-header.scrolled .avail-dot-wrap {
   max-height: 0;
