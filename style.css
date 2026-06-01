@@ -298,7 +298,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .rmain {
   flex: 1;
   min-width: 0;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
