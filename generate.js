@@ -137,7 +137,7 @@ function rt(richText) {
     }).join('');
 }
 
-async function toHtml(blocks, imgPrefix = '', skipFirstPara = false) {
+async function toHtml(blocks, imgPrefix = '') {
   let html = '', uList = false, oList = false, firstParaSeen = false;
   for (const b of blocks) {
     if (b.type !== 'bulleted_list_item' && uList) { html += '</ul>\n'; uList = false; }
@@ -150,10 +150,6 @@ async function toHtml(blocks, imgPrefix = '', skipFirstPara = false) {
         const plain = rich.map(x => x.plain_text).join('').trim();
         if (!plain || isDateString(plain)) break;
         if (!firstParaSeen && rich.length > 0 && rich.every(t => t.annotations?.italic)) {
-          firstParaSeen = true;
-          break;
-        }
-        if (!firstParaSeen && skipFirstPara) {
           firstParaSeen = true;
           break;
         }
@@ -767,7 +763,7 @@ async function build() {
     const icon = meta.icon?.type === 'emoji' ? meta.icon.emoji : '';
     const year = new Date(meta.created_time).getFullYear().toString();
     const summary = meta.properties?.Summary?.rich_text?.[0]?.plain_text || '';
-    const contentHtml = await toHtml(p.blocks, '../', true);
+    const contentHtml = await toHtml(p.blocks, '../');
     const title = stripEmoji(p.title);
     const slug = slugify(title);
     projects.push({ ...p, title, icon, year, slug, summary, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
