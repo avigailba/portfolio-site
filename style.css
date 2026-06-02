@@ -889,13 +889,14 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .lede { font-size: 22px; padding: 28px 0 34px; }
   .section-label { font-size: 13px; letter-spacing: 0.09em; }
 
-  /* Project title wrap — override desktop negative margins */
+  /* Project title wrap — not sticky on mobile (overflow-x:clip breaks sticky in iOS Safari) */
   .proj-title-wrap {
+    position: static;
     margin-left: -20px;
     margin-right: -20px;
     padding-left: 20px;
     padding-right: 20px;
-    top: 52px;
+    box-shadow: none !important;
   }
 
   /* Project back button */
