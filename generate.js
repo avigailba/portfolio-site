@@ -544,12 +544,20 @@ tw.classList.toggle('condensed', raw > 0.4);
 </script>`, '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">\n  ', 'proj-page');
 }
 
-function aboutPage() {
+function aboutPage(notionHtml) {
+  // If Notion content fetched, use it; otherwise use hardcoded fallback
+  if (notionHtml && notionHtml.trim()) {
+    return wrap('', 'About — Avigail Bahat', `
+  <main class="inner-main">
+    <div class="inner-content about-notion">
+      ${notionHtml}
+    </div>
+  </main>`);
+  }
+
   return wrap('', 'About — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content">
-
-      <p class="about-bio">Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools: for developers, for internal teams, and for end users.</p>
 
       <p class="section-label">Experience</p>
 
@@ -842,43 +850,54 @@ async function build() {
   fs.copyFileSync('style.css', path.join(DIST, 'style.css'));
   fs.copyFileSync('script.js', path.join(DIST, 'script.js'));
 
-  console.log('Fetching project pages from Notion...');
-  const raw = (await collectPages(ROOT_PAGE_ID))
-    .filter(p => !SKIP_IDS.has(p.id) && !SKIP_SLUGS.has(slugify(p.title)));
-  console.log(`Found ${raw.length} projects`);
-
-  const projects = [];
-  for (const p of raw) {
-    const meta = await notion.pages.retrieve({ page_id: p.id });
-    const icon = meta.icon?.type === 'emoji' ? meta.icon.emoji : '';
-    const year = new Date(meta.created_time).getFullYear().toString();
-    const summary = meta.properties?.Summary?.rich_text?.[0]?.plain_text || '';
-    const contentHtml = await toHtml(p.blocks, '../');
-    const title = stripEmoji(p.title);
-    const slug = slugify(title);
-    const subtitle = firstSubtitle(p.blocks) || summary || PROJECT_SUMMARIES[slug] || '';
-    projects.push({ ...p, title, icon, year, slug, summary, subtitle, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
-  }
-
-  for (let i = 0; i < projects.length; i++) {
-    const prev = projects[i - 1] || null;
-    const next = projects[i + 1] || null;
-    fs.writeFileSync(path.join(PROJECTS_DIR, `${projects[i].slug}.html`), projectPage(projects[i], prev, next));
-    stats.pages++;
-    console.log(`  ✓ projects/${projects[i].slug}.html`);
-  }
-
-  // Fetch homepage tagline from Notion
+  let projects = [];
   let tagline = "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
+  let aboutHtml = '';
+
   try {
-    const hpBlocks = await notion.blocks.children.list({ block_id: HOMEPAGE_PAGE_ID });
-    const firstPara = hpBlocks.results.find(b => b.type === 'paragraph');
-    if (firstPara) tagline = plainText(firstPara.paragraph.rich_text) || tagline;
-  } catch (e) { console.log('Could not fetch homepage tagline, using default'); }
+    console.log('Fetching project pages from Notion...');
+    const raw = (await collectPages(ROOT_PAGE_ID))
+      .filter(p => !SKIP_IDS.has(p.id) && !SKIP_SLUGS.has(slugify(p.title)));
+    console.log(`Found ${raw.length} projects`);
+
+    for (const p of raw) {
+      const meta = await notion.pages.retrieve({ page_id: p.id });
+      const icon = meta.icon?.type === 'emoji' ? meta.icon.emoji : '';
+      const year = new Date(meta.created_time).getFullYear().toString();
+      const summary = meta.properties?.Summary?.rich_text?.[0]?.plain_text || '';
+      const contentHtml = await toHtml(p.blocks, '../');
+      const title = stripEmoji(p.title);
+      const slug = slugify(title);
+      const subtitle = firstSubtitle(p.blocks) || summary || PROJECT_SUMMARIES[slug] || '';
+      projects.push({ ...p, title, icon, year, slug, summary, subtitle, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
+    }
+
+    for (let i = 0; i < projects.length; i++) {
+      const prev = projects[i - 1] || null;
+      const next = projects[i + 1] || null;
+      fs.writeFileSync(path.join(PROJECTS_DIR, `${projects[i].slug}.html`), projectPage(projects[i], prev, next));
+      stats.pages++;
+      console.log(`  ✓ projects/${projects[i].slug}.html`);
+    }
+
+    try {
+      const hpBlocks = await notion.blocks.children.list({ block_id: HOMEPAGE_PAGE_ID });
+      const firstPara = hpBlocks.results.find(b => b.type === 'paragraph');
+      if (firstPara) tagline = plainText(firstPara.paragraph.rich_text) || tagline;
+    } catch (e) { console.log('Could not fetch homepage tagline, using default'); }
+
+    try {
+      const aboutBlocks = await fetchBlocks(ABOUT_PAGE_ID);
+      aboutHtml = await toHtml(aboutBlocks, '');
+    } catch (e) { console.log('Could not fetch About page from Notion, using fallback'); }
+
+  } catch (e) {
+    console.log('Notion fetch failed:', e.message, '— building with static fallback');
+  }
 
   for (const [file, html] of [
     ['index.html',          indexPage(projects, tagline)],
-    ['about.html',          aboutPage()],
+    ['about.html',          aboutPage(aboutHtml)],
     ['contact.html',        contactPage()],
     ['design-system.html',  designSystemPage()],
   ]) {
