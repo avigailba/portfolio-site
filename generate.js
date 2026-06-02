@@ -300,6 +300,7 @@ function hdr(prefix) {
     </div>
     <nav>
       <a href="${prefix}index.html">Home</a>
+      <a href="${prefix}index.html#home-allwork">Work</a>
       <a href="${prefix}about.html">About</a>
       <a href="${prefix}contact.html">Contact</a>
     </nav>
@@ -460,18 +461,17 @@ function indexPage(projects, tagline) {
       ${featHtml}
     </div>
     <div id="home-allwork" class="work-header">
-      <span class="section-label">All work</span>
       <div class="filters">
-        <button class="filter-btn active" data-f="all">All</button>
+        <button class="filter-btn active" data-f="all">All projects</button>
         <button class="filter-btn" data-f="developer">Developer tools</button>
         <button class="filter-btn" data-f="monetisation">Monetisation</button>
         <button class="filter-btn" data-f="internal">Internal tools</button>
         <button class="filter-btn" data-f="cms">CMS</button>
       </div>
       <div class="mob-filter" id="mob-filter">
-        <button class="mob-filter-btn" id="mob-filter-btn">All <span class="mob-filter-caret">▼</span></button>
+        <button class="mob-filter-btn" id="mob-filter-btn">All projects <span class="mob-filter-caret">▼</span></button>
         <div class="mob-filter-drop" id="mob-filter-drop">
-          <button class="mob-filter-opt active" data-f="all">All</button>
+          <button class="mob-filter-opt active" data-f="all">All projects</button>
           <button class="mob-filter-opt" data-f="developer">Developer tools</button>
           <button class="mob-filter-opt" data-f="monetisation">Monetisation</button>
           <button class="mob-filter-opt" data-f="internal">Internal tools</button>
@@ -796,6 +796,11 @@ function designSystemPage() {
   const built = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
   const changelog = [
+    { date: '2 Jun 2026', change: 'Project page images now use site padding (clamp(40px, 20%, 240px)) — content aligned with header' },
+    { date: '2 Jun 2026', change: 'Prev/next project nav buttons changed to blue (#2563eb)' },
+    { date: '2 Jun 2026', change: 'All work section label removed — filters shown directly. All filter renamed All projects' },
+    { date: '2 Jun 2026', change: 'Work nav link added to desktop header' },
+    { date: '2 Jun 2026', change: 'Featured grid no longer bleeds on mobile — negative margins reset to 0 at ≤960px' },
     { date: '2 Jun 2026', change: 'Type scale numbered (1–12) so styles can be referenced by number' },
     { date: '2 Jun 2026', change: 'feat-title merged with proj-title: 42px/800 → 64px/700/−0.03em/Plus Jakarta Sans' },
     { date: '2 Jun 2026', change: 'proj-content h2 merged with inner-content h1: 28px/600 → 32px/700/−0.02em/Inter — type scale consolidated from 14 to 12 steps' },
@@ -901,6 +906,14 @@ function designSystemPage() {
             <button class="mob-burger" style="display:flex;position:static;">
               <span></span><span></span><span></span>
             </button>
+          </div>
+        </div>
+
+        <div class="ds-comp-block">
+          <span class="ds-comp-label">Project nav buttons (prev/next)</span>
+          <div class="ds-comp-demo" style="display:flex;gap:48px;align-items:center;">
+            <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><i class="ti ti-arrow-left"></i><span class="proj-nav-name">AI Credits</span></a>
+            <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><i class="ti ti-arrow-right"></i><span class="proj-nav-name">App Reviews</span></a>
           </div>
         </div>
 
