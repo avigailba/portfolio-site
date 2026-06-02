@@ -599,11 +599,18 @@ tw.classList.toggle('condensed', raw > 0.4);
 function aboutPage(notionHtml) {
   // If Notion content fetched, use it; otherwise use hardcoded fallback
   if (notionHtml && notionHtml.trim()) {
-    const withoutBio = notionHtml.replace(/^[\s\S]*?<\/p>\s*/, '');
+    const firstParaMatch = notionHtml.match(/^<p>([\s\S]*?)<\/p>/);
+    const bioText = firstParaMatch ? firstParaMatch[1] : '';
+    const withoutBio = notionHtml.replace(/^<p>[\s\S]*?<\/p>\s*/, '');
     return wrap('', 'About — Avigail Bahat', `
   <main class="inner-main">
-    <div class="inner-content about-notion">
-      ${withoutBio}
+    <div class="inner-content">
+      <h1>About</h1>
+      <p class="page-sub">Senior UX Designer · Tel Aviv</p>
+      ${bioText ? `<p class="about-bio">${bioText}</p>` : ''}
+      <div class="about-notion">
+        ${withoutBio}
+      </div>
     </div>
   </main>`);
   }
@@ -611,6 +618,10 @@ function aboutPage(notionHtml) {
   return wrap('', 'About — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content">
+
+      <h1>About</h1>
+      <p class="page-sub">Senior UX Designer · Tel Aviv</p>
+      <p class="about-bio">I design tools for the people who build things: developers, internal teams, and the end users who never see the plumbing.</p>
 
       <p class="section-label">Experience</p>
 

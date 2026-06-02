@@ -790,7 +790,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
     display: block; font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 26px; font-weight: 600; letter-spacing: -0.02em;
     padding: 14px 0; color: #0a0a0a; border-bottom: 0.5px solid #ebebeb;
-    text-decoration: none; transition: opacity 0.15s;
+    text-decoration: none; text-align: left; transition: opacity 0.15s;
   }
   .mob-panel-link:active { opacity: 0.5; }
   .mob-panel-foot { margin-top: auto; padding-top: 28px; }
