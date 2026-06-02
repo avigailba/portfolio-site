@@ -34,7 +34,7 @@ jobs:
           restore-keys: images-
       - run: node generate.js
         env:
-          NOTION_API_KEY: ${{ secrets.NOTION_TOKEN }}
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
