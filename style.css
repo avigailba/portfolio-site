@@ -209,33 +209,32 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 
 /* WordArt hover effects */
 .feat-card:nth-child(1):hover .feat-title {
-  background: linear-gradient(90deg, #e91e63, #ff6b35, #ffd700, #00c896, #4361ee, #9b5de5);
+  background: linear-gradient(180deg, #dbe4ff 0%, #88a4ff 50%, #6f93ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.1));
+  filter: drop-shadow(1px 1px 0 #5e83ff) drop-shadow(2px 2px 0 #4f74ee) drop-shadow(3px 3px 0 #3f63e0) drop-shadow(4px 4px 0 #3253c9) drop-shadow(5px 5px 0 #2645a8);
 }
 .feat-card:nth-child(2):hover .feat-title {
-  background: linear-gradient(180deg, #ffe566, #f4a100, #b86e00);
+  background: linear-gradient(180deg, #ffeccb 0%, #ffc070 50%, #ffae4d 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(1px 1px 0 #8b5400) drop-shadow(2px 2px 0 #5a3600);
+  filter: drop-shadow(1px 1px 0 #ff9e2e) drop-shadow(2px 2px 0 #f08a1c) drop-shadow(3px 3px 0 #db7714) drop-shadow(4px 4px 0 #bd6210) drop-shadow(5px 5px 0 #9c4f0c);
 }
 .feat-card:nth-child(3):hover .feat-title {
-  background: linear-gradient(135deg, #c026d3, #a855f7, #ec4899);
+  background: linear-gradient(180deg, #efd9ff 0%, #cd9bfd 50%, #bd84fb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(1px 2px 0 rgba(192,38,211,0.2));
-  font-style: italic;
+  filter: drop-shadow(1px 1px 0 #ad62f8) drop-shadow(2px 2px 0 #9a4cee) drop-shadow(3px 3px 0 #863bda) drop-shadow(4px 4px 0 #7030bd) drop-shadow(5px 5px 0 #5a2493);
 }
 .feat-card:nth-child(4):hover .feat-title {
-  background: linear-gradient(180deg, #7dd3fc, #0ea5e9, #0369a1);
+  background: linear-gradient(180deg, #c2f7e1 0%, #5ce6b8 50%, #2fd9a0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(1px 1px 0 #01507a) drop-shadow(2px 2px 0 #013650);
+  filter: drop-shadow(1px 1px 0 #18cf92) drop-shadow(2px 2px 0 #11bd84) drop-shadow(3px 3px 0 #0ea876) drop-shadow(4px 4px 0 #0a8a60) drop-shadow(5px 5px 0 #07724e);
 }
 
 /* ── Work header + filters ───────────────────────────────── */
