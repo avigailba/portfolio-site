@@ -529,14 +529,14 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   text-decoration: none;
   opacity: 0.55;
   transition: opacity 0.2s;
-  color: #555;
+  color: #0a0a0a;
 }
 .proj-nav-btn:hover { opacity: 1; }
 .proj-nav-btn i { font-size: 20px; }
 .proj-nav-name {
   font-size: 14px;
   font-weight: 400;
-  color: #555;
+  color: #0a0a0a;
   writing-mode: vertical-rl;
   max-width: 52px;
   line-height: 1.4;
