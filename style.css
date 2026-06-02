@@ -159,8 +159,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   height: 30vh;
   border-top: 0.5px solid #ebebeb;
   border-bottom: 0.5px solid #ebebeb;
-  margin-left: calc(-1 * clamp(40px, 20%, 240px));
-  margin-right: calc(-1 * clamp(40px, 20%, 240px));
   margin-bottom: 56px;
   overflow: hidden;
 }
@@ -271,10 +269,11 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 /* ── Project list rows ────────────────────────────────────── */
 .row-wrap {
   overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 120px;
+  opacity: 0;
+  transition: opacity 0.28s ease;
 }
-.row-wrap.open { max-height: 120px; }
+.row-wrap.open { opacity: 1; }
 .row-wrap.hidden { display: none; }
 
 .row {
@@ -593,7 +592,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   border-top: 0.5px solid #ebebeb;
 }
 /* More-work rows start visible (no accordion) */
-#more-list .row-wrap { max-height: 120px; }
+#more-list .row-wrap { opacity: 1; }
 .more-label { font-size: 14px; color: #555; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 16px; }
 .more-cta { display: flex; justify-content: flex-end; padding-top: 16px; padding-bottom: 64px; }
 .more-cta-link { font-size: 15px; font-weight: 500; color: #0a0a0a; text-decoration: none; transition: opacity 0.15s; }
