@@ -500,24 +500,10 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .cv-skills { font-size: 16px; color: #555; line-height: 1.8; }
 
 /* ── Contact ─────────────────────────────────────────────── */
-.contact-intro { font-size: 16px; color: #555; line-height: 1.65; max-width: 480px; margin-bottom: 48px; }
-.contact-links { display: flex; flex-direction: column; margin-bottom: 40px; }
-.contact-link {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 14px 0;
-  border-bottom: 0.5px solid var(--border);
-  text-decoration: none;
-  transition: background 0.13s, padding 0.13s;
-}
-.contact-link:first-child { border-top: 0.5px solid var(--border); }
-.contact-link:hover { background: #0a0a0a; padding-left: 10px; padding-right: 10px; border-color: #0a0a0a; }
-.contact-link:hover .contact-link-label,
-.contact-link:hover .contact-link-val { color: #fff; }
-.contact-link-label { font-size: 14px; color: #555; min-width: 80px; transition: color 0.13s; }
-.contact-link-val { font-size: 14px; font-weight: 500; color: #0a0a0a; transition: color 0.13s; }
-.contact-arr { opacity: 0.5; }
+.contact-intro { font-size: 16px; color: #555; line-height: 1.65; max-width: 480px; margin-bottom: 32px; }
+.contact-simple-links { display: flex; flex-direction: column; gap: 8px; margin-bottom: 40px; }
+.contact-plain-link { font-size: 16px; color: #0a0a0a; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.contact-plain-link:hover { color: #555; }
 .contact-location { font-size: 14px; color: #555; }
 
 /* ── Project page ────────────────────────────────────────── */
