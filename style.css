@@ -453,13 +453,37 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 }
 
 /* ── About (Notion content) ─────────────────────────────── */
-.about-notion h1 { font-size: 32px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em; margin: 48px 0 16px; }
-.about-notion h2 { font-size: 13px; font-weight: 400; color: #555; letter-spacing: 0.07em; text-transform: uppercase; margin: 40px 0 16px; }
-.about-notion h3 { font-size: 18px; font-weight: 600; color: #0a0a0a; margin: 24px 0 8px; }
-.about-notion p  { font-size: 16px; color: #555; line-height: 1.65; margin-bottom: 12px; }
-.about-notion ul, .about-notion ol { font-size: 16px; color: #555; line-height: 1.65; padding-left: 20px; margin-bottom: 12px; }
-.about-notion li { margin-bottom: 4px; }
+/* About page — Notion-generated HTML styling */
+.about-notion { max-width: 720px; padding: 56px 0 80px; }
+
+/* Section labels: Experience, Education, Skills */
+.about-notion h2 {
+  font-size: 12px;
+  font-weight: 400;
+  color: #888;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 48px 0 20px;
+  padding-top: 24px;
+  border-top: 0.5px solid #ebebeb;
+}
+.about-notion h2:first-child { margin-top: 0; border-top: none; padding-top: 0; }
+
+/* Role titles and year headings: bold-only paragraphs */
+.about-notion p { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 4px; }
+.about-notion p:has(> strong:only-child) { font-size: 16px; color: #0a0a0a; font-weight: 600; margin-top: 20px; margin-bottom: 2px; }
+.about-notion p:has(> strong:only-child):first-of-type { margin-top: 0; }
+
+/* Project lists: italic-only paragraphs */
+.about-notion p:has(> em:only-child) { font-size: 14px; color: #888; margin-bottom: 16px; }
+
+/* Dividers */
+.about-notion hr { border: none; border-top: 0.5px solid #ebebeb; margin: 32px 0; }
+
+/* Links */
+.about-notion a { color: #0a0a0a; text-decoration: underline; text-underline-offset: 3px; }
 .about-notion strong { font-weight: 600; color: #0a0a0a; }
+.about-notion em { font-style: italic; }
 
 /* ── CV ──────────────────────────────────────────────────── */
 .cv-role { margin-bottom: 40px; }
@@ -716,4 +740,9 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .site-footer { padding-top: 48px; padding-bottom: 32px; }
   .footer-right { min-width: unset; }
   .lb-handle { display: none; }
+  .about-notion { padding: 32px 0 60px; }
+  .about-notion h2 { font-size: 11px; margin: 32px 0 16px; padding-top: 20px; }
+  .ds-type-row { flex-direction: column; gap: 8px; }
+  .ds-type-meta { text-align: left; align-items: flex-start; }
+  .ds-swatches { grid-template-columns: repeat(3, 1fr); }
 }
