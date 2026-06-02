@@ -159,6 +159,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   height: 30vh;
   border-top: 0.5px solid #ebebeb;
   border-bottom: 0.5px solid #ebebeb;
+  margin-left: calc(-1 * clamp(40px, 20%, 240px));
+  margin-right: calc(-1 * clamp(40px, 20%, 240px));
   margin-bottom: 56px;
   overflow: hidden;
 }
