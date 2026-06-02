@@ -27,6 +27,24 @@ const HOMEPAGE_PAGE_ID  = '37135a9ccf7a81b2a7a7c0a2702d8c98';
 
 const SKIP_IDS   = new Set([ABOUT_PAGE_ID, CONTACT_PAGE_ID, HOMEPAGE_PAGE_ID]);
 const SKIP_SLUGS = new Set(['about', 'contact', 'cv', 'resume', 'homepage']);
+
+// Stable slug overrides by Notion page ID — prevents slug changes when Notion titles change
+const NOTION_ID_TO_SLUG = {
+  '31135a9ccf7a804caf72da07638205bc': 'ai-credits-wallet',
+  '31135a9ccf7a80358e3cead5465c89f8': 'app-installation-page-for-developers',
+  '31135a9ccf7a80bdad92eff1f90e6ecf': 'app-reviews-revamp',
+  '17d35a9ccf7a80c69ceafb3f7973485a': 'developer-sale',
+  'da073f156b004fbb87d927849587a28c': 'app-collections-internal-manager',
+  '71024356b51b4ce8b46c21fa3a442020': 'internal-app-review-system',
+  '0f54649479514c65bc990b4b594d0cb1': 'payouts-page',
+  'b103bffdedd247569c67b422c90cfcd3': 'refund-flow',
+  '17d35a9ccf7a8021b6ebcccd15c1d39d': 'app-pricing-page-projects',
+  'c4b2bd7033384f7792fb167115baac33': 'submit-publish-widget',
+  'ad5fdda62b7344068e537404e15ee8ad': 'app-coupons',
+  '9053adab5f3144159fc991711d4e82f7': 'custom-element-component-settings',
+  'af4b341536b44d5495d067982a1b358c': 'api-keys-page',
+  '84911e6052cd480c807e6591b58833a9': 'development-site-creation',
+};
 const DIST        = 'dist';
 const PROJECTS_DIR = path.join(DIST, 'projects');
 const IMAGES      = path.join(DIST, 'images');
@@ -37,16 +55,16 @@ const stats = { pages: 0, images: 0, errors: [] };
 // Project metadata: categories, display title overrides, years, featured status
 const PROJECT_META = {
   'ai-credits-wallet':                          { title: 'AI Credits',                  cats: 'developer',              display: 'Developer tools', year: 2026, featured: true },
-  'app-installation-page-for-developers': { title: 'App Installation View',       cats: 'developer',              display: 'Developer tools', year: 2025, featured: true },
+  'app-installation-page-for-developers': { title: 'App Installations Page',      cats: 'developer',              display: 'Developer tools', year: 2025, featured: true },
   'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer',              display: 'Developer tools', year: 2024, featured: false },
   'developer-sale':                      { title: 'Developer Sale',               cats: 'monetisation',           display: 'Monetisation',    year: 2024, featured: true },
-  'app-collections-internal-manager':    { title: 'App Collections',              cats: 'internal',               display: 'Internal tools',  year: 2024, featured: false },
+  'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'internal',               display: 'Internal tools',  year: 2024, featured: false },
   'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
   'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
-  'app-pricing-page-projects':           { title: 'App Pricing Page',             cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
-  'internal-app-review-system':          { title: 'Internal App Review System',   cats: 'internal',               display: 'Internal tools',  year: 2022, featured: true },
+  'app-pricing-page-projects':           { title: 'App Pricing Page Projects',    cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
+  'internal-app-review-system':          { title: 'App Review System',            cats: 'internal',               display: 'Internal tools',  year: 2022, featured: true },
   'submit-publish-widget':               { title: 'Submit & Publish Widget',      cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
-  'custom-element-component-settings':   { title: 'Custom Element Settings',      cats: 'cms',                    display: 'CMS',             year: 2022, featured: false },
+  'custom-element-component-settings':   { title: 'Custom Element Component Settings', cats: 'cms',               display: 'CMS',             year: 2022, featured: false },
   'api-keys-page':                       { title: 'API Keys Page',                cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
   'development-site-creation':           { title: 'Development Site Creation',    cats: 'developer',              display: 'Developer tools', year: 2021, featured: false },
   'app-coupons':                         { title: 'App Coupons',                  cats: 'monetisation',           display: 'Monetisation',    year: 2021, featured: false },
@@ -372,7 +390,7 @@ function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass =
 // ── Pages ────────────────────────────────────────────────────
 
 function indexPage(projects, tagline) {
-  tagline = tagline || "Senior UX designer. I like the problems that need a whiteboard and finding a surprising solution. I've spent my career building tools - for developers, for internal teams, and for end users.";
+  tagline = tagline || "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
   const bySlug = {};
   for (const p of projects) bySlug[p.slug] = p;
 
@@ -923,7 +941,7 @@ async function build() {
   fs.copyFileSync('script.js', path.join(DIST, 'script.js'));
 
   let projects = [];
-  let tagline = "Senior UX designer. I like the problems that need a whiteboard and finding a surprising solution. I've spent my career building tools - for developers, for internal teams, and for end users.";
+  let tagline = "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
   let aboutHtml = '';
 
   try {
@@ -939,7 +957,7 @@ async function build() {
       const summary = meta.properties?.Summary?.rich_text?.[0]?.plain_text || '';
       const contentHtml = await toHtml(p.blocks, '../');
       const title = stripEmoji(p.title);
-      const slug = slugify(title);
+      const slug = NOTION_ID_TO_SLUG[p.id.replace(/-/g, '')] || slugify(title);
       const subtitle = firstSubtitle(p.blocks) || summary || PROJECT_SUMMARIES[slug] || '';
       projects.push({ ...p, title, icon, year, slug, summary, subtitle, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
     }
