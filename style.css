@@ -341,11 +341,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   text-overflow: ellipsis;
   transition: max-height 0.2s ease, opacity 0.2s ease;
 }
-.row:hover .rsub {
-  max-height: 24px;
-  opacity: 1;
-  margin-top: 4px;
-}
 .row-year { font-size: 14px; color: #555; flex-shrink: 0; min-width: 36px; text-align: right; }
 .row-arr { font-size: 14px; opacity: 0; transition: opacity 0.2s ease; color: #555; flex-shrink: 0; }
 .cat-tag {
