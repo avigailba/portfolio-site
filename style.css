@@ -889,6 +889,15 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .lede { font-size: 22px; padding: 28px 0 34px; }
   .section-label { font-size: 13px; letter-spacing: 0.09em; }
 
+  /* Project title wrap — override desktop negative margins */
+  .proj-title-wrap {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    top: 52px;
+  }
+
   /* Project back button */
   .mob-proj-back {
     display: inline-flex; align-items: center; gap: 5px;
