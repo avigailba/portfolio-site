@@ -435,7 +435,7 @@ function projectPage(proj, prevProj, nextProj) {
   const allProjectsJs = Object.entries(PROJECT_META)
     .map(([slug, m]) => {
       const sub = (PROJECT_SUMMARIES[slug] || '').replace(/'/g, "\\'");
-      return `  { slug: '${slug}', title: '${m.title.replace(/'/g, "\\'")}', sub: '${sub}', cat: '${m.display}', year: ${m.year}, featured: ${m.featured} }`;
+      return `  { slug: '${slug}', title: '${m.title.replace(/'/g, "\\'")}', sub: '${sub}', cat: '${m.display}', cats: '${m.cats}', year: ${m.year}, featured: ${m.featured} }`;
     })
     .join(',\n');
 
@@ -454,7 +454,7 @@ var CURRENT_SLUG = '${proj.slug}';
     var wrap = document.createElement('div');
     wrap.className = 'row-wrap';
     wrap.innerHTML =
-      '<div class="row" onclick="window.location.href=\\'' + p.slug + '.html\\'">' +
+      '<div class="row" data-cat="' + p.cats + '" onclick="window.location.href=\\'' + p.slug + '.html\\'">' +
         '<span class="num">' + String(i + 1).padStart(2, '0') + '</span>' +
         '<div class="rmain">' +
           '<div class="row-title">' + p.title + '</div>' +
@@ -716,6 +716,7 @@ function designSystemPage() {
   const built = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
   const changelog = [
+    { date: '2 Jun 2026', change: 'Featured card WordArt hover: brighter luminous gradients with 5-step coloured depth shadows — blue (card 1), amber (card 2), violet (card 3), emerald (card 4)' },
     { date: '2 Jun 2026', change: 'All-work rows: animated gradient title on hover ("Gradient Flow") — category-coloured accent pair flows across the title; number and arrow pick up flat accent; respects prefers-reduced-motion' },
     { date: '2 Jun 2026', change: 'Row accordion changed from max-height to opacity animation — prevents footer flash on page load' },
     { date: '2 Jun 2026', change: 'Homepage content padding unified to clamp(40px, 20%, 240px) — aligns header, content, and footer left edges' },
