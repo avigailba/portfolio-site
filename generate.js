@@ -341,6 +341,7 @@ function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass =
   ${ftr(prefix)}
   <script src="${prefix}script.js"></script>
   ${extraScript}
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>`;
 }
