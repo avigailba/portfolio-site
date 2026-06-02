@@ -825,6 +825,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .mob-view-sm { padding: 6px 13px; font-size: 13px; }
 
   /* Work rows — stacked layout */
+  .row-wrap { opacity: 1; }
   .row { padding: 22px 0; }
   .rmain { flex-direction: column; align-items: flex-start; }
   .rsub {
@@ -840,7 +841,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .row-year { display: none; }
   .row-arr { display: none; }
   .mob-row-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
-  .mob-row-foot { margin-top: 14px; }
+  .mob-row-foot { display: block; margin-top: 14px; }
   .cat-tag { font-size: 13px; padding: 3px 9px; }
   .feat-tag { font-size: 13px; padding: 3px 9px; }
 
