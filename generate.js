@@ -8,6 +8,11 @@ if (!process.env.NOTION_API_KEY) {
   } catch (e) {}
 }
 process.env.NOTION_API_KEY = process.env.NOTION_API_KEY || process.env.NOTION_TOKEN;
+if (!process.env.NOTION_API_KEY) {
+  console.error('ERROR: NOTION_API_KEY is not set — building static fallback only');
+} else {
+  console.log('NOTION_API_KEY found:', process.env.NOTION_API_KEY.slice(0, 8) + '...');
+}
 const { Client } = require('@notionhq/client');
 const fs = require('fs');
 const path = require('path');
@@ -34,11 +39,11 @@ const PROJECT_META = {
   'ai-credits-wallet':                          { title: 'AI Credits',                  cats: 'developer',              display: 'Developer tools', year: 2026, featured: true },
   'app-installation-page-for-developers': { title: 'App Installation View',       cats: 'developer',              display: 'Developer tools', year: 2025, featured: true },
   'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer',              display: 'Developer tools', year: 2024, featured: false },
-  'developer-sale':                      { title: 'Developer Sale',               cats: 'developer monetisation', display: 'Monetisation',    year: 2024, featured: true },
-  'app-collections-internal-manager':    { title: 'App Collections',              cats: 'developer internal',     display: 'Internal tools',  year: 2024, featured: false },
+  'developer-sale':                      { title: 'Developer Sale',               cats: 'monetisation',           display: 'Monetisation',    year: 2024, featured: true },
+  'app-collections-internal-manager':    { title: 'App Collections',              cats: 'internal',               display: 'Internal tools',  year: 2024, featured: false },
   'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
   'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
-  'app-pricing-page-projects':           { title: 'App Pricing Page',             cats: 'developer monetisation', display: 'Monetisation',    year: 2023, featured: false },
+  'app-pricing-page-projects':           { title: 'App Pricing Page',             cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
   'internal-app-review-system':          { title: 'Internal App Review System',   cats: 'internal',               display: 'Internal tools',  year: 2022, featured: true },
   'submit-publish-widget':               { title: 'Submit & Publish Widget',      cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
   'custom-element-component-settings':   { title: 'Custom Element Settings',      cats: 'cms',                    display: 'CMS',             year: 2022, featured: false },
@@ -430,7 +435,7 @@ function projectPage(proj, prevProj, nextProj) {
   const allProjectsJs = Object.entries(PROJECT_META)
     .map(([slug, m]) => {
       const sub = (PROJECT_SUMMARIES[slug] || '').replace(/'/g, "\\'");
-      return `  { slug: '${slug}', title: '${m.title.replace(/'/g, "\\'")}', sub: '${sub}', cat: '${m.display}', year: ${m.year}, featured: ${m.featured} }`;
+      return `  { slug: '${slug}', title: '${m.title.replace(/'/g, "\\'")}', sub: '${sub}', cat: '${m.display}', cats: '${m.cats}', year: ${m.year}, featured: ${m.featured} }`;
     })
     .join(',\n');
 
@@ -449,7 +454,7 @@ var CURRENT_SLUG = '${proj.slug}';
     var wrap = document.createElement('div');
     wrap.className = 'row-wrap';
     wrap.innerHTML =
-      '<div class="row" onclick="window.location.href=\\'' + p.slug + '.html\\'">' +
+      '<div class="row" data-cat="' + p.cats + '" onclick="window.location.href=\\'' + p.slug + '.html\\'">' +
         '<span class="num">' + String(i + 1).padStart(2, '0') + '</span>' +
         '<div class="rmain">' +
           '<div class="row-title">' + p.title + '</div>' +
@@ -711,6 +716,7 @@ function designSystemPage() {
   const built = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
   const changelog = [
+    { date: '2 Jun 2026', change: 'Featured card WordArt hover: brighter luminous gradients with 5-step coloured depth shadows — blue (card 1), amber (card 2), violet (card 3), emerald (card 4)' },
     { date: '2 Jun 2026', change: 'All-work rows: animated gradient title on hover ("Gradient Flow") — category-coloured accent pair flows across the title; number and arrow pick up flat accent; respects prefers-reduced-motion' },
     { date: '2 Jun 2026', change: 'Row accordion changed from max-height to opacity animation — prevents footer flash on page load' },
     { date: '2 Jun 2026', change: 'Homepage content padding unified to clamp(40px, 20%, 240px) — aligns header, content, and footer left edges' },
