@@ -274,10 +274,6 @@ function hdr(prefix) {
         <a href="${prefix}index.html" class="logo-name">Avigail Bahat</a>
         <span class="logo-role">Senior UX Designer</span>
       </div>
-      <div class="avail-dot-wrap">
-        <span class="avail-dot"></span>
-        <span class="avail-label">Available for work</span>
-      </div>
     </div>
     <nav>
       <a href="${prefix}index.html">Home</a>
@@ -632,7 +628,7 @@ function contactPage() {
       <p class="page-sub">Let's talk.</p>
 
       <p class="contact-intro">
-        I'm currently looking for my next role. If you're working on something interesting — developer tools, AI products, complex B2B systems — I'd love to hear about it.
+        I'm currently looking for my next role. If you're working on something interesting - developer tools, AI products, complex B2B systems - I'd love to hear about it.
       </p>
 
       <div class="contact-links">
