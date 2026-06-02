@@ -964,7 +964,8 @@ async function build() {
     } catch (e) { console.log('Could not fetch About page from Notion, using fallback'); }
 
   } catch (e) {
-    console.log('Notion fetch failed:', e.message, '— building with static fallback');
+    console.error('Notion fetch failed:', e.code || e.status, e.message);
+    console.error('Full error:', JSON.stringify(e.body || e, null, 2));
   }
 
   // Generate fallback pages for any META slugs not fetched from Notion
