@@ -456,7 +456,6 @@ function indexPage(projects, tagline) {
   return wrap('', 'Avigail Bahat — Senior UX Designer', `
   <main class="home-band">
     <p class="lede">${tagline}</p>
-    <p class="section-label">Featured work</p>
     <div class="feat-grid">
       ${featHtml}
     </div>
@@ -744,20 +743,13 @@ function designSystemPage() {
     { hex: '#22c55e', name: 'Available', usage: 'Availability dot only' },
   ];
   const typeRows = [
-    { sample: 'AI Credits',                  spec: '64px / 700 / −0.03em / Plus Jakarta Sans', where: 'Project page title (.proj-title)',                                    style: 'font-size:64px;font-weight:700;letter-spacing:-0.03em;color:#0a0a0a;line-height:1.1;font-family:"Plus Jakarta Sans",sans-serif' },
-    { sample: 'Featured card title',         spec: '42px / 800 / −0.02em / Plus Jakarta Sans', where: 'Homepage featured cards (.feat-title)',                               style: 'font-size:42px;font-weight:800;letter-spacing:-0.02em;color:#0a0a0a;line-height:1.1;font-family:"Plus Jakarta Sans",sans-serif' },
-    { sample: 'Design system',               spec: '32px / 700 / −0.02em / Inter',             where: 'Inner page h1, footer statement (.inner-content h1, .footer-statement)', style: 'font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a' },
-    { sample: 'Background, context, constraints.', spec: '28px / 600 / Inter',               where: 'Project content section headings (.proj-content h2)',                   style: 'font-size:28px;font-weight:600;color:#0a0a0a' },
+    { sample: 'AI Credits',                  spec: '54px / 700 / −0.03em / Plus Jakarta Sans', where: 'Project page title, featured cards (.proj-title, .feat-title)',        style: 'font-size:54px;font-weight:700;letter-spacing:-0.03em;color:#0a0a0a;line-height:1.1;font-family:"Plus Jakarta Sans",sans-serif' },
+    { sample: 'Design system',               spec: '32px / 700 / −0.02em / Inter',             where: 'Inner page h1, footer statement, project section headings (.inner-content h1, .footer-statement, .proj-content h2)', style: 'font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a' },
     { sample: 'Senior UX designer.',         spec: '28px / 500 / −0.01em / Plus Jakarta Sans', where: 'Homepage lede (.lede)',                                               style: 'font-size:28px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;font-family:"Plus Jakarta Sans",sans-serif' },
-    { sample: 'Transparent AI usage billing across the platform.', spec: '20px / 500 / Inter', where: 'Project subtitle, content sub-headings (.proj-subtitle, .proj-content h3)', style: 'font-size:20px;font-weight:500;color:#0a0a0a;line-height:1.4' },
-    { sample: 'UX Designer · Wix.com · 2014–2026', spec: '18px / 600 / Inter',              where: 'CV role titles (.cv-title)',                                            style: 'font-size:18px;font-weight:600;color:#0a0a0a' },
-    { sample: 'Wix was introducing a Credits Wallet.',  spec: '18px / 400 / Inter / lh 1.7', where: 'Project content body, all-work row titles (.proj-content p, .row-title)', style: 'font-size:18px;color:#555;line-height:1.7' },
-    { sample: 'The app marketplace had no standardised billing layer.',  spec: '17px / 500 / −0.01em / lh 1.6', where: 'Project opening paragraph (.proj-intro)',           style: 'font-size:17px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;line-height:1.6' },
-    { sample: 'Body copy in about and contact pages.', spec: '16px / 400 / Inter / lh 1.7',  where: 'About, contact, CV text (.cv-desc, .cv-years, .contact-intro)',         style: 'font-size:16px;color:#555;line-height:1.7' },
-    { sample: 'Replaced manual support intervention.',  spec: '15px / 400 / Inter / lh 1.75', where: 'Project description blocks (.proj-body)',                              style: 'font-size:15px;color:#555;line-height:1.75' },
-    { sample: 'FEATURED WORK',               spec: '15px / 400 / uppercase / 0.07em',         where: 'Section headers (.section-label, .more-label)',                        style: 'font-size:15px;letter-spacing:0.07em;text-transform:uppercase;color:#555' },
+    { sample: 'Transparent AI usage billing across the platform.', spec: '20px / 500 / Inter', where: 'Project subtitle, content sub-headings, CV role titles (.proj-subtitle, .proj-content h3, .cv-title)', style: 'font-size:20px;font-weight:500;color:#0a0a0a;line-height:1.4' },
+    { sample: 'Body copy — project content, about, contact, work rows.', spec: '16px / 400 / Inter / lh 1.7 / #555', where: 'All body and secondary text (.proj-intro, .proj-content p, .proj-body, .row-title, .cv-desc, .cv-years, .contact-intro)', style: 'font-size:16px;color:#555;line-height:1.7' },
+    { sample: 'FEATURED WORK · EXPERIENCE',  spec: '14px / 400 / uppercase / 0.07–0.08em',   where: 'Section labels, about page section labels (.section-label, .more-label, .about-notion h2)', style: 'font-size:14px;letter-spacing:0.07em;text-transform:uppercase;color:#555' },
     { sample: 'Nav links, years, tags, meta', spec: '14px / 400 / Inter',                    where: 'Nav links, row meta, tag labels, footer text',                          style: 'font-size:14px;color:#555' },
-    { sample: 'EXPERIENCE',                  spec: '12px / 400 / uppercase / 0.08em / #888',  where: 'About page section labels (.about-notion h2)',                          style: 'font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#888' },
   ];
   const spacings = [
     { token: '--sp-1', val: '4px',  usage: 'Tight gaps' },
@@ -779,10 +771,11 @@ function designSystemPage() {
     </div>`
   ).join('\n      ');
 
-  const typeHtml = typeRows.map(r => {
+  const typeHtml = typeRows.map((r, i) => {
     const colorMatch = r.style.match(/color:([^;]+)/);
     const color = colorMatch ? colorMatch[1].trim() : '#0a0a0a';
     return `<div class="ds-type-row">
+      <span class="ds-type-num">${i + 1}</span>
       <div class="ds-type-sample" style="${r.style}">${r.sample}</div>
       <div class="ds-type-meta">
         <span class="ds-type-spec">${r.spec}<span class="ds-type-color"><span class="ds-type-dot" style="background:${color}"></span>${color}</span></span>
@@ -803,6 +796,9 @@ function designSystemPage() {
   const built = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
   const changelog = [
+    { date: '2 Jun 2026', change: 'Type scale numbered (1–12) so styles can be referenced by number' },
+    { date: '2 Jun 2026', change: 'feat-title merged with proj-title: 42px/800 → 64px/700/−0.03em/Plus Jakarta Sans' },
+    { date: '2 Jun 2026', change: 'proj-content h2 merged with inner-content h1: 28px/600 → 32px/700/−0.02em/Inter — type scale consolidated from 14 to 12 steps' },
     { date: '2 Jun 2026', change: 'Featured card WordArt hover: brighter luminous gradients with 5-step coloured depth shadows — blue (card 1), amber (card 2), violet (card 3), emerald (card 4)' },
     { date: '2 Jun 2026', change: 'All-work rows: animated gradient title on hover ("Gradient Flow") — category-coloured accent pair flows across the title; number and arrow pick up flat accent; respects prefers-reduced-motion' },
     { date: '2 Jun 2026', change: 'Row accordion changed from max-height to opacity animation — prevents footer flash on page load' },
@@ -858,12 +854,62 @@ function designSystemPage() {
         <span class="ds-section-title">Components</span>
 
         <div class="ds-comp-block">
-          <span class="ds-comp-label">Availability badge</span>
-          <div class="ds-comp-demo">
-            <div class="avail-dot-wrap" style="position:static;max-height:none;opacity:1;display:inline-flex">
-              <span class="avail-dot"></span>
-              <span class="avail-label">Available for work</span>
+          <span class="ds-comp-label">Work item</span>
+          <div class="ds-comp-demo" style="padding:0 24px;">
+            <div class="row-wrap open" style="max-height:none;">
+              <div class="row" data-cat="developer" style="border-top:0.5px solid #ebebeb;">
+                <span class="num">01</span>
+                <div class="rmain">
+                  <span class="row-title">AI Credits Wallet</span>
+                  <span class="rsub">End-to-end billing transparency for AI usage across the platform</span>
+                </div>
+                <span class="cat-tag">developer</span>
+                <span class="row-year">2026</span>
+                <span class="row-arr">↗</span>
+              </div>
             </div>
+          </div>
+        </div>
+
+        <div class="ds-comp-block">
+          <span class="ds-comp-label">Filter buttons</span>
+          <div class="ds-comp-demo" style="display:flex;gap:16px;align-items:center;">
+            <button class="filter-btn">All</button>
+            <button class="filter-btn active">Developer</button>
+            <button class="filter-btn">Monetisation</button>
+          </div>
+        </div>
+
+        <div class="ds-comp-block">
+          <span class="ds-comp-label">Pill button (mobile view)</span>
+          <div class="ds-comp-demo" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <a href="#" class="mob-view-btn" style="display:inline-flex;">View case study ↗</a>
+            <a href="#" class="mob-view-btn mob-view-sm" style="display:inline-flex;">View ↗</a>
+          </div>
+        </div>
+
+        <div class="ds-comp-block">
+          <span class="ds-comp-label">More CTA link</span>
+          <div class="ds-comp-demo">
+            <a href="#" class="more-cta-link">All work →</a>
+          </div>
+        </div>
+
+        <div class="ds-comp-block">
+          <span class="ds-comp-label">Hamburger (mobile)</span>
+          <div class="ds-comp-demo">
+            <button class="mob-burger" style="display:flex;position:static;">
+              <span></span><span></span><span></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="ds-comp-block">
+          <span class="ds-comp-label">Lightbox controls</span>
+          <div class="ds-comp-demo ds-comp-demo-dark" style="display:flex;gap:12px;align-items:center;">
+            <button class="lb-handle" style="position:static;">‹</button>
+            <button class="lb-handle" style="position:static;">›</button>
+            <button class="lb-close" style="position:static;font-size:20px;background:none;border:none;color:rgba(255,255,255,0.6);cursor:pointer;padding:8px;line-height:1;">✕</button>
           </div>
         </div>
 
