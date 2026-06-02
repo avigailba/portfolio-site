@@ -126,10 +126,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 
 /* ── Homepage wrapper ────────────────────────────────────── */
 .home-band {
-  width: 80vw;
-  max-width: 80vw;
-  margin: 0 auto;
-  padding-bottom: 80px;
+  padding: 0 clamp(40px, 20%, 240px) 80px;
 }
 
 /* ── Lede ────────────────────────────────────────────────── */
@@ -159,10 +156,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .feat-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  width: 80vw;
-  max-width: 80vw;
   height: 30vh;
-  margin: 0 auto;
   border-top: 0.5px solid #ebebeb;
   border-bottom: 0.5px solid #ebebeb;
   margin-bottom: 56px;
@@ -674,8 +668,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 960px) {
-  .home-band { width: 100%; max-width: 100%; padding-left: clamp(40px, 20%, 240px); padding-right: clamp(40px, 20%, 240px); }
-  .feat-grid { grid-template-columns: 1fr 1fr; width: 100%; max-width: 100%; height: auto; }
+  .feat-grid { grid-template-columns: 1fr 1fr; height: auto; }
   .feat-card:nth-child(n+3) { border-top: 0.5px solid #ebebeb; }
 }
 @media (max-width: 600px) {
