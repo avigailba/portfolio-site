@@ -331,16 +331,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   white-space: nowrap;
   transition: color 0.2s ease;
 }
-.rsub {
-  font-size: 14px;
-  color: #555;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  transition: max-height 0.2s ease, opacity 0.2s ease;
-}
+.rsub { display: none; }
 .row-year { font-size: 14px; color: #555; flex-shrink: 0; min-width: 36px; text-align: right; }
 .row-arr { font-size: 14px; opacity: 0; transition: opacity 0.2s ease; color: #555; flex-shrink: 0; }
 .cat-tag {
