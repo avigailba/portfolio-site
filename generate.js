@@ -547,10 +547,11 @@ tw.classList.toggle('condensed', raw > 0.4);
 function aboutPage(notionHtml) {
   // If Notion content fetched, use it; otherwise use hardcoded fallback
   if (notionHtml && notionHtml.trim()) {
+    const withoutBio = notionHtml.replace(/^[\s\S]*?<\/p>\s*/, '');
     return wrap('', 'About — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content about-notion">
-      ${notionHtml}
+      ${withoutBio}
     </div>
   </main>`);
   }
