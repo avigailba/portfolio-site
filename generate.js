@@ -706,6 +706,9 @@ function designSystemPage() {
   const built = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
   const changelog = [
+    { date: '2 Jun 2026', change: 'All-work rows: animated gradient title on hover ("Gradient Flow") — category-coloured accent pair flows across the title; number and arrow pick up flat accent; respects prefers-reduced-motion' },
+    { date: '2 Jun 2026', change: 'Row accordion changed from max-height to opacity animation — prevents footer flash on page load' },
+    { date: '2 Jun 2026', change: 'Homepage content padding unified to clamp(40px, 20%, 240px) — aligns header, content, and footer left edges' },
     { date: '1 Jun 2026', change: 'Design system: colour swatches in 6-column grid; type scale shows where each style appears' },
     { date: '1 Jun 2026', change: 'feat-title bumped to 42px / weight 800 (Plus Jakarta Sans)' },
     { date: '1 Jun 2026', change: 'All body and secondary text unified to #555 — removed #444 and #121212' },
