@@ -452,6 +452,15 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   max-width: 560px;
 }
 
+/* ── About (Notion content) ─────────────────────────────── */
+.about-notion h1 { font-size: 32px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em; margin: 48px 0 16px; }
+.about-notion h2 { font-size: 13px; font-weight: 400; color: #555; letter-spacing: 0.07em; text-transform: uppercase; margin: 40px 0 16px; }
+.about-notion h3 { font-size: 18px; font-weight: 600; color: #0a0a0a; margin: 24px 0 8px; }
+.about-notion p  { font-size: 16px; color: #555; line-height: 1.65; margin-bottom: 12px; }
+.about-notion ul, .about-notion ol { font-size: 16px; color: #555; line-height: 1.65; padding-left: 20px; margin-bottom: 12px; }
+.about-notion li { margin-bottom: 4px; }
+.about-notion strong { font-weight: 600; color: #0a0a0a; }
+
 /* ── CV ──────────────────────────────────────────────────── */
 .cv-role { margin-bottom: 40px; }
 .cv-sub-roles { border-left: 1.5px solid #ebebeb; padding-left: 20px; margin-top: 12px; }
