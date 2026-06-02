@@ -319,13 +319,17 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   flex: 1;
   min-width: 0;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 .row-title {
   font-size: 18px;
   font-weight: 400;
   color: #0a0a0a;
   line-height: 1.3;
+  transition: transform 0.2s ease;
 }
+.row:hover .row-title { transform: translateY(-9px); }
 .rsub {
   font-size: 13px;
   color: #555;
@@ -333,7 +337,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   overflow: hidden;
   text-overflow: ellipsis;
   position: absolute;
-  top: 100%;
+  top: calc(50% + 5px);
   left: 0;
   opacity: 0;
   transition: opacity 0.2s ease;
