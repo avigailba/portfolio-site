@@ -8,6 +8,11 @@ if (!process.env.NOTION_API_KEY) {
   } catch (e) {}
 }
 process.env.NOTION_API_KEY = process.env.NOTION_API_KEY || process.env.NOTION_TOKEN;
+if (!process.env.NOTION_API_KEY) {
+  console.error('ERROR: NOTION_API_KEY is not set — building static fallback only');
+} else {
+  console.log('NOTION_API_KEY found:', process.env.NOTION_API_KEY.slice(0, 8) + '...');
+}
 const { Client } = require('@notionhq/client');
 const fs = require('fs');
 const path = require('path');
