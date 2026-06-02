@@ -392,7 +392,8 @@ function indexPage(projects, tagline) {
 
   // Full list: sort by year desc, then by PROJECT_META insertion order
   const metaSlugs = Object.keys(PROJECT_META);
-  const allSlugs = metaSlugs.filter(s => bySlug[s]);
+  // When Notion is unavailable projects is empty — fall back to all known slugs
+  const allSlugs = projects.length > 0 ? metaSlugs.filter(s => bySlug[s]) : [...metaSlugs];
   for (const p of projects) {
     if (!PROJECT_META[p.slug] && !allSlugs.includes(p.slug)) allSlugs.push(p.slug);
   }
@@ -964,6 +965,24 @@ async function build() {
 
   } catch (e) {
     console.log('Notion fetch failed:', e.message, '— building with static fallback');
+  }
+
+  // Generate fallback pages for any META slugs not fetched from Notion
+  const generatedSlugs = new Set(projects.map(p => p.slug));
+  for (const [slug, meta] of Object.entries(PROJECT_META)) {
+    if (generatedSlugs.has(slug)) continue;
+    const summary = PROJECT_SUMMARIES[slug] || '';
+    const fallbackProj = {
+      slug,
+      title: meta.title,
+      year: String(meta.year),
+      summary,
+      subtitle: '',
+      contentHtml: summary ? `<p class="proj-intro">${summary}</p>` : '',
+    };
+    fs.writeFileSync(path.join(PROJECTS_DIR, `${slug}.html`), projectPage(fallbackProj, null, null));
+    stats.pages++;
+    console.log(`  ✓ projects/${slug}.html (static fallback)`);
   }
 
   for (const [file, html] of [
