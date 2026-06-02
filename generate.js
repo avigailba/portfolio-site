@@ -372,7 +372,7 @@ function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass =
 // ── Pages ────────────────────────────────────────────────────
 
 function indexPage(projects, tagline) {
-  tagline = tagline || "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
+  tagline = tagline || "Senior UX designer. I like the problems that need a whiteboard and finding a surprising solution. I've spent my career building tools - for developers, for internal teams, and for end users.";
   const bySlug = {};
   for (const p of projects) bySlug[p.slug] = p;
 
@@ -923,7 +923,7 @@ async function build() {
   fs.copyFileSync('script.js', path.join(DIST, 'script.js'));
 
   let projects = [];
-  let tagline = "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
+  let tagline = "Senior UX designer. I like the problems that need a whiteboard and finding a surprising solution. I've spent my career building tools - for developers, for internal teams, and for end users.";
   let aboutHtml = '';
 
   try {
