@@ -73,6 +73,78 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
   });
 });
 
+// ── Mobile hamburger menu ────────────────────────────────────
+(function() {
+  var btn = document.getElementById('mob-menu-btn');
+  var scrim = document.getElementById('mob-scrim');
+  var panel = document.getElementById('mob-panel');
+  var closeBtn = document.getElementById('mob-panel-close');
+  if (!btn || !panel) return;
+  function openMenu() {
+    scrim.classList.add('open');
+    panel.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    scrim.classList.remove('open');
+    panel.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  btn.addEventListener('click', openMenu);
+  scrim.addEventListener('click', closeMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  panel.querySelectorAll('.mob-panel-link').forEach(function(link) {
+    link.addEventListener('click', closeMenu);
+  });
+  // Work link: on homepage scroll to section; on other pages navigate normally
+  var workLink = panel.querySelector('.mob-work-link');
+  if (workLink) {
+    workLink.addEventListener('click', function(e) {
+      var allwork = document.getElementById('home-allwork');
+      if (allwork) {
+        e.preventDefault();
+        closeMenu();
+        setTimeout(function() { allwork.scrollIntoView({ behavior: 'smooth' }); }, 50);
+      }
+    });
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeMenu();
+  });
+})();
+
+// ── Mobile filter dropdown ───────────────────────────────────
+(function() {
+  var filterBtn = document.getElementById('mob-filter-btn');
+  var filterDrop = document.getElementById('mob-filter-drop');
+  if (!filterBtn || !filterDrop) return;
+  filterBtn.addEventListener('click', function() {
+    var open = filterDrop.classList.toggle('open');
+    filterBtn.classList.toggle('open', open);
+  });
+  filterDrop.querySelectorAll('.mob-filter-opt').forEach(function(opt) {
+    opt.addEventListener('click', function() {
+      var f = opt.dataset.f;
+      // Sync with desktop filter to reuse its filtering logic
+      var desktopBtn = document.querySelector('.filter-btn[data-f="' + f + '"]');
+      if (desktopBtn) desktopBtn.click();
+      // Update mobile button label and active state
+      filterDrop.querySelectorAll('.mob-filter-opt').forEach(function(o) { o.classList.remove('active'); });
+      opt.classList.add('active');
+      var labelNode = filterBtn.childNodes[0];
+      if (labelNode) labelNode.textContent = opt.textContent.replace('✓', '').trim() + ' ';
+      filterBtn.classList.remove('open');
+      filterDrop.classList.remove('open');
+    });
+  });
+  document.addEventListener('click', function(e) {
+    if (!filterBtn.contains(e.target) && !filterDrop.contains(e.target)) {
+      filterBtn.classList.remove('open');
+      filterDrop.classList.remove('open');
+    }
+  });
+})();
+
 // ── Footer tag pulse animation ───────────────────────────────
 (function() {
   document.querySelectorAll('.ftag').forEach(function(tag) {

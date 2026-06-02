@@ -285,8 +285,31 @@ function hdr(prefix) {
       <a href="${prefix}about.html">About</a>
       <a href="${prefix}contact.html">Contact</a>
     </nav>
+    <button class="mob-burger" id="mob-menu-btn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-</header>`;
+</header>
+<div class="mob-scrim" id="mob-scrim"></div>
+<aside class="mob-panel" id="mob-panel">
+  <div class="mob-panel-top">
+    <span class="mob-panel-title">Avigail Bahat</span>
+    <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
+  </div>
+  <nav class="mob-panel-nav">
+    <a href="${prefix}index.html" class="mob-panel-link">Home</a>
+    <a href="${prefix}index.html#home-allwork" class="mob-panel-link mob-work-link">Work</a>
+    <a href="${prefix}about.html" class="mob-panel-link">About</a>
+    <a href="${prefix}contact.html" class="mob-panel-link">Contact</a>
+    <a href="${prefix}design-system.html" class="mob-panel-link">Design system</a>
+  </nav>
+  <div class="mob-panel-foot">
+    <div class="mob-panel-social">
+      <a href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span class="mob-arr">↗</span></a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span class="mob-arr">↗</span></a>
+    </div>
+  </div>
+</aside>`;
 }
 
 function ftr(prefix = '') {
@@ -360,6 +383,9 @@ function indexPage(projects, tagline) {
   <div class="feat-title">${meta.title}</div>
   ${summary ? `<div class="feat-sub">${summary}</div>` : ''}
   <div class="feat-arr">↗</div>
+  <div class="feat-foot">
+    <a class="mob-view-btn" href="projects/${slug}.html" onclick="event.stopPropagation()">View project <span>↗</span></a>
+  </div>
 </div>`;
   }).join('\n  ');
 
@@ -391,9 +417,16 @@ function indexPage(projects, tagline) {
     <div class="rmain">
       <div class="row-title">${title}</div>
       ${summary ? `<div class="rsub">${summary}</div>` : ''}
+      <div class="mob-row-meta">
+        ${featured ? `<span class="feat-tag">Featured</span>` : ''}
+        ${display ? `<span class="cat-tag">${display}</span>` : ''}
+      </div>
+      <div class="mob-row-foot">
+        <a class="mob-view-btn mob-view-sm" href="projects/${slug}.html" onclick="event.stopPropagation()">View <span>↗</span></a>
+      </div>
     </div>
-    ${featured ? `<span class="feat-tag">Featured</span>` : ''}
-    <span class="cat-tag">${display}</span>
+    ${featured ? `<span class="feat-tag desk-only">Featured</span>` : ''}
+    <span class="cat-tag desk-only">${display}</span>
     <span class="row-year">${year}</span>
     <span class="row-arr">↗</span>
   </div>
@@ -407,7 +440,7 @@ function indexPage(projects, tagline) {
     <div class="feat-grid">
       ${featHtml}
     </div>
-    <div class="work-header">
+    <div id="home-allwork" class="work-header">
       <span class="section-label">All work</span>
       <div class="filters">
         <button class="filter-btn active" data-f="all">All</button>
@@ -415,6 +448,16 @@ function indexPage(projects, tagline) {
         <button class="filter-btn" data-f="monetisation">Monetisation</button>
         <button class="filter-btn" data-f="internal">Internal tools</button>
         <button class="filter-btn" data-f="cms">CMS</button>
+      </div>
+      <div class="mob-filter" id="mob-filter">
+        <button class="mob-filter-btn" id="mob-filter-btn">All <span class="mob-filter-caret">▼</span></button>
+        <div class="mob-filter-drop" id="mob-filter-drop">
+          <button class="mob-filter-opt active" data-f="all">All</button>
+          <button class="mob-filter-opt" data-f="developer">Developer tools</button>
+          <button class="mob-filter-opt" data-f="monetisation">Monetisation</button>
+          <button class="mob-filter-opt" data-f="internal">Internal tools</button>
+          <button class="mob-filter-opt" data-f="cms">CMS</button>
+        </div>
       </div>
     </div>
     <div id="list">
@@ -459,9 +502,16 @@ var CURRENT_SLUG = '${proj.slug}';
         '<div class="rmain">' +
           '<div class="row-title">' + p.title + '</div>' +
           '<div class="rsub">' + p.sub + '</div>' +
+          '<div class="mob-row-meta">' +
+            (p.featured ? '<span class="feat-tag">Featured</span>' : '') +
+            '<span class="cat-tag">' + p.cat + '</span>' +
+          '</div>' +
+          '<div class="mob-row-foot">' +
+            '<a class="mob-view-btn mob-view-sm" href="' + p.slug + '.html" onclick="event.stopPropagation()">View <span>↗</span></a>' +
+          '</div>' +
         '</div>' +
-        (p.featured ? '<span class="feat-tag">Featured</span>' : '') +
-        '<span class="cat-tag">' + p.cat + '</span>' +
+        (p.featured ? '<span class="feat-tag desk-only">Featured</span>' : '') +
+        '<span class="cat-tag desk-only">' + p.cat + '</span>' +
         '<span class="row-year">' + p.year + '</span>' +
         '<span class="row-arr">↗</span>' +
       '</div>';
@@ -475,6 +525,7 @@ var CURRENT_SLUG = '${proj.slug}';
     <div class="proj-gutter proj-gutter-left"></div>
     <main class="proj-main">
       <div class="proj-title-wrap" id="proj-title-wrap">
+        <a href="../index.html" class="mob-proj-back">← Work</a>
         <p class="proj-breadcrumb"><a href="../index.html">Home</a> / ${title}</p>
         <h1 class="proj-title">${title}</h1>
         ${proj.subtitle ? `<p class="proj-subtitle">${proj.subtitle}</p>` : ''}
