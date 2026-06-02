@@ -825,7 +825,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .mob-view-sm { padding: 6px 13px; font-size: 13px; }
 
   /* Work rows — stacked layout */
-  .row-wrap { opacity: 1; }
+  .row-wrap { opacity: 1; max-height: none; overflow: visible; }
   .row { padding: 22px 0; }
   .rmain { flex-direction: column; align-items: flex-start; }
   .rsub {
