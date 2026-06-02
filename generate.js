@@ -636,15 +636,9 @@ function contactPage() {
         I'm currently looking for my next role. If you're working on something interesting - developer tools, AI products, complex B2B systems - I'd love to hear about it.
       </p>
 
-      <div class="contact-links">
-        <a href="mailto:avigailba@gmail.com" class="contact-link">
-          <span class="contact-link-label">Email</span>
-          <span class="contact-link-val">avigailba@gmail.com <span class="contact-arr">↗</span></span>
-        </a>
-        <a href="https://www.linkedin.com/in/avigailbahat/" class="contact-link">
-          <span class="contact-link-label">LinkedIn</span>
-          <span class="contact-link-val">avigailbahat <span class="contact-arr">↗</span></span>
-        </a>
+      <div class="contact-simple-links">
+        <a href="mailto:avigailba@gmail.com" class="contact-plain-link">avigailba@gmail.com</a>
+        <a href="https://www.linkedin.com/in/avigailbahat/" class="contact-plain-link">LinkedIn</a>
       </div>
 
       <p class="contact-location">Based in Tel Aviv. Open to remote and hybrid opportunities.</p>
