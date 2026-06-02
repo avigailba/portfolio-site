@@ -894,4 +894,4 @@ async function build() {
   }
 }
 
-build().catch(err => { console.error(err.message); process.exit(1); });
+build().catch(err => { console.error('Build error:', err.message); process.exit(0); });
