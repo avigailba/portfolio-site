@@ -703,6 +703,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   body.proj-page #site-header.scrolled { border-color: transparent; }
   .hdr-row { padding: 0; transition: none; }
   #site-header.scrolled .hdr-row { padding: 0; }
+  .mob-logo-name { font-size: 46px; font-weight: 300; letter-spacing: -0.02em; transition: font-size 0.25s; }
+  #site-header.scrolled .mob-logo-name { font-size: 16px; font-weight: 500; }
   .mob-logo-role { font-size: 13px; }
   .home-band { width: 100%; max-width: 100%; padding: 0 20px 60px; }
   .inner-main, .proj-main, .more-section { padding: 0 20px; }
