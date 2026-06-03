@@ -539,7 +539,11 @@ var CURRENT_SLUG = '${proj.slug}';
       </div>
       <div class="proj-title-wrap" id="proj-title-wrap">
         <p class="proj-breadcrumb"><a href="../index.html">Home</a> / ${title}</p>
-        <h1 class="proj-title">${title}</h1>
+        <div class="proj-title-row">
+          ${prevProj ? `<a href="${prevProj.slug}.html" class="proj-nav-arr" aria-label="Previous project">←</a>` : '<span class="proj-nav-arr proj-nav-arr-empty"></span>'}
+          <h1 class="proj-title">${title}</h1>
+          ${nextProj ? `<a href="${nextProj.slug}.html" class="proj-nav-arr" aria-label="Next project">→</a>` : '<span class="proj-nav-arr proj-nav-arr-empty"></span>'}
+        </div>
         ${proj.subtitle ? `<p class="proj-subtitle">${proj.subtitle}</p>` : ''}
         <div class="proj-meta">
           <span class="proj-meta-item">${year}</span>
@@ -581,7 +585,7 @@ var CURRENT_SLUG = '${proj.slug}';
   var sub = tw.querySelector('.proj-subtitle');
   var title = tw.querySelector('.proj-title');
   var R = 110;
-  var TITLE_FROM = 64, TITLE_TO = 22, PAD_FROM = 28, PAD_TO = 14;
+  var TITLE_FROM = window.innerWidth <= 480 ? 32 : (window.innerWidth <= 600 ? 40 : 64), TITLE_TO = 22, PAD_FROM = window.innerWidth <= 600 ? 20 : 28, PAD_TO = 14;
   var BC_H = 24, BC_MB = 16, SUB_H = 60, SUB_MB = 8;
   var ticking = false;
   function lerp(a, b, p){ return a + (b - a) * p; }
