@@ -67,7 +67,7 @@ body.proj-page #site-header.scrolled { border-color: transparent; }
   max-height: 18px;
   opacity: 1;
   overflow: hidden;
-  transition: max-height 0.25s, opacity 0.2s;
+  transition: max-height 0.4s ease, opacity 0.35s ease;
 }
 #site-header.scrolled .mob-logo-role {
   max-height: 0;
@@ -697,14 +697,14 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
     padding: 14px 20px;
     background: #fff;
     border-bottom: 0.5px solid transparent;
-    transition: border-color 0.25s, padding 0.25s;
+    transition: border-color 0.4s, padding 0.4s;
   }
   #site-header.scrolled { padding: 10px 20px; border-color: #ebebeb; }
   body.proj-page #site-header.scrolled { border-color: transparent; }
   .hdr-row { padding: 0; transition: none; }
   #site-header.scrolled .hdr-row { padding: 0; }
-  .mob-logo-name { font-size: 46px; font-weight: 300; letter-spacing: -0.02em; transition: font-size 0.25s; }
-  #site-header.scrolled .mob-logo-name { font-size: 16px; font-weight: 500; }
+  .mob-logo-name { font-size: 46px; font-weight: 300; letter-spacing: -0.02em; transition: font-size 0.4s ease, letter-spacing 0.4s ease; }
+  #site-header.scrolled .mob-logo-name { font-size: 22px; letter-spacing: -0.01em; }
   .mob-logo-role { font-size: 13px; }
   .home-band { width: 100%; max-width: 100%; padding: 0 20px 60px; }
   .inner-main, .proj-main, .more-section { padding: 0 20px; }

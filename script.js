@@ -5,7 +5,7 @@
   var ticking = false;
   function update() {
     ticking = false;
-    hdr.classList.toggle('scrolled', window.scrollY > 24);
+    hdr.classList.toggle('scrolled', window.scrollY > 60);
   }
   window.addEventListener('scroll', function() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   update();
