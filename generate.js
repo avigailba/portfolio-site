@@ -302,7 +302,7 @@ function hdr(prefix, showProgress = false) {
       <a href="${prefix}about.html">About</a>
       <a href="${prefix}contact.html">Contact</a>
     </nav>
-    <button class="mob-burger" id="mob-menu-btn" aria-label="Menu">
+    <button class="mob-burger" id="open-menu" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
   </div>${showProgress ? '\n  <div class="read-progress" id="read-progress"></div>' : ''}

@@ -9,9 +9,8 @@
     var y = window.scrollY;
     hdr.classList.toggle('scrolled', y > 24);
     if (progress) {
-      var doc = document.documentElement;
-      var total = doc.scrollHeight - doc.clientHeight;
-      progress.style.width = (total > 0 ? (y / total * 100) : 0) + '%';
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.setProperty('--pct', max > 0 ? (y / max * 100) + '%' : '0%');
     }
   }
   window.addEventListener('scroll', function() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
@@ -69,7 +68,7 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
 
 // ── Mobile hamburger menu ────────────────────────────────────
 (function() {
-  var btn = document.getElementById('mob-menu-btn');
+  var btn = document.getElementById('open-menu');
   var scrim = document.getElementById('mob-scrim');
   var panel = document.getElementById('mob-panel');
   var closeBtn = document.getElementById('mob-panel-close');

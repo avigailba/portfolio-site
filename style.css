@@ -28,10 +28,10 @@ button { font-family: inherit; }
 #site-header {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 100;
   background: #fff;
   border-bottom: 0.5px solid transparent;
-  transition: border-color 0.2s;
+  transition: border-color 0.25s;
   padding: 0 clamp(40px, 20%, 240px);
 }
 #site-header.scrolled { border-color: #ebebeb; }
@@ -42,7 +42,7 @@ body.proj-page #site-header.scrolled { border-color: transparent; }
   align-items: center;
   padding-top: 32px;
   padding-bottom: 32px;
-  transition: padding 0.2s ease;
+  transition: padding 0.25s ease;
 }
 #site-header.scrolled .hdr-row {
   padding-top: 14px;
@@ -51,9 +51,9 @@ body.proj-page #site-header.scrolled { border-color: transparent; }
 .mob-logo {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  overflow: hidden;
+  gap: 1px;
   text-decoration: none;
+  color: inherit;
 }
 .mob-logo-name {
   font-size: 16px;
@@ -67,16 +67,19 @@ body.proj-page #site-header.scrolled { border-color: transparent; }
   max-height: 18px;
   opacity: 1;
   overflow: hidden;
-  transition: max-height 0.2s ease, opacity 0.2s ease;
+  transition: max-height 0.25s, opacity 0.2s;
 }
 #site-header.scrolled .mob-logo-role {
   max-height: 0;
   opacity: 0;
 }
 .read-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   height: 2px;
+  width: var(--pct, 0%);
   background: #0a0a0a;
-  width: 0%;
   transition: width 0.1s linear;
 }
 nav {
@@ -703,12 +706,14 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
     background: rgba(255,255,255,0.82);
     -webkit-backdrop-filter: saturate(180%) blur(16px);
     backdrop-filter: saturate(180%) blur(16px);
-    transition: padding 0.2s ease, border-color 0.2s;
+    border-bottom: 0.5px solid transparent;
+    transition: border-color 0.25s, padding 0.25s;
   }
   #site-header.scrolled { padding: 10px 20px; border-color: #ebebeb; }
   body.proj-page #site-header.scrolled { border-color: transparent; }
   .hdr-row { padding: 0; transition: none; }
   #site-header.scrolled .hdr-row { padding: 0; }
+  .mob-logo-role { font-size: 13px; }
   .home-band { width: 100%; max-width: 100%; padding: 0 20px 60px; }
   .inner-main, .proj-main, .more-section { padding: 0 20px; }
   .proj-page-grid { grid-template-columns: 0 1fr 0; overflow: visible; }
