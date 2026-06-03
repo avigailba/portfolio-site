@@ -742,11 +742,10 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .mob-panel-link {
     display: block; font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 26px; font-weight: 600; letter-spacing: -0.02em;
-    padding: 14px 0; color: #aaa; border-bottom: 0.5px solid #ebebeb;
+    padding: 14px 0; color: #0a0a0a; border-bottom: 0.5px solid #ebebeb;
     text-decoration: none; text-align: left; transition: opacity 0.15s;
   }
-  .mob-panel-link.active { color: #0a0a0a; }
-  .mob-panel-link.active::after { content: ' ↗'; }
+  .mob-panel-link.active { font-weight: 700; }
   .mob-panel-link:active { opacity: 0.5; }
   .mob-panel-foot { margin-top: auto; padding-top: 24px; border-top: 0.5px solid #ebebeb; }
   .mob-panel-social { display: flex; flex-direction: column; gap: 2px; }
