@@ -861,104 +861,180 @@ function designSystemPage() {
       <div class="ds-section">
         <span class="ds-section-title">Components</span>
 
-        <div class="ds-comp-block">
-          <span class="ds-comp-label">Work item</span>
-          <div class="ds-comp-demo" style="padding:0 24px;">
-            <div class="row-wrap open" style="max-height:none;">
-              <div class="row" data-cat="developer" style="border-top:0.5px solid #ebebeb;">
-                <span class="num">01</span>
-                <div class="rmain">
-                  <span class="row-title">AI Credits Wallet</span>
-                  <span class="rsub">End-to-end billing transparency for AI usage across the platform</span>
+        <div class="ds-tabs">
+          <button class="ds-tab-btn active" onclick="dsTab(this,'desktop')">Desktop</button>
+          <button class="ds-tab-btn" onclick="dsTab(this,'mobile')">Mobile</button>
+        </div>
+
+        <!-- Desktop tab -->
+        <div class="ds-tab-panel active" id="ds-tab-desktop">
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Work item row</span>
+            <div class="ds-comp-demo" style="padding:0 24px;">
+              <div class="row-wrap open" style="max-height:none;">
+                <div class="row" data-cat="developer" style="border-top:0.5px solid #ebebeb;">
+                  <span class="num">01</span>
+                  <div class="rmain">
+                    <span class="row-title">AI Credits Wallet</span>
+                    <span class="rsub">End-to-end billing transparency for AI usage across the platform</span>
+                  </div>
+                  <span class="cat-tag">developer</span>
+                  <span class="row-year">2026</span>
+                  <span class="row-arr">View ↗</span>
                 </div>
-                <span class="cat-tag">developer</span>
-                <span class="row-year">2026</span>
-                <span class="row-arr">↗</span>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="ds-comp-block">
-          <span class="ds-comp-label">Filter buttons</span>
-          <div class="ds-comp-demo" style="display:flex;gap:16px;align-items:center;">
-            <button class="filter-btn active">All projects</button>
-            <button class="filter-btn">Developer tools</button>
-            <button class="filter-btn">Monetisation</button>
-          </div>
-        </div>
-
-        <div class="ds-comp-block">
-          <span class="ds-comp-label">Pill button (mobile view)</span>
-          <div class="ds-comp-demo" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-            <a href="#" class="mob-view-btn" style="display:inline-flex;">View case study ↗</a>
-            <a href="#" class="mob-view-btn mob-view-sm" style="display:inline-flex;">View ↗</a>
-          </div>
-        </div>
-
-        <div class="ds-comp-block">
-          <span class="ds-comp-label">More CTA link</span>
-          <div class="ds-comp-demo">
-            <a href="#" class="more-cta-link">All work →</a>
-          </div>
-        </div>
-
-        <div class="ds-comp-block">
-          <span class="ds-comp-label">Hamburger (mobile)</span>
-          <div class="ds-comp-demo">
-            <button class="mob-burger" style="display:flex;position:static;">
-              <span></span><span></span><span></span>
-            </button>
-          </div>
-        </div>
-
-        <div class="ds-comp-block">
-          <span class="ds-comp-label">Project nav buttons (prev/next)</span>
-          <div class="ds-comp-demo" style="display:flex;gap:48px;align-items:center;">
-            <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><i class="ti ti-arrow-left"></i><span class="proj-nav-name">AI Credits</span></a>
-            <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><i class="ti ti-arrow-right"></i><span class="proj-nav-name">App Reviews</span></a>
-          </div>
-        </div>
-
-        <div class="ds-comp-block">
-          <span class="ds-comp-label">Lightbox controls</span>
-          <div class="ds-comp-demo ds-comp-demo-dark" style="display:flex;gap:12px;align-items:center;">
-            <button class="lb-handle" style="position:static;">‹</button>
-            <button class="lb-handle" style="position:static;">›</button>
-            <button class="lb-close" style="position:static;font-size:20px;background:none;border:none;color:rgba(255,255,255,0.6);cursor:pointer;padding:8px;line-height:1;">✕</button>
-          </div>
-        </div>
-
-        <div class="ds-comp-block">
-          <span class="ds-comp-label">Nav links</span>
-          <div class="ds-comp-demo">
-            <nav style="display:flex;gap:4px;">
-              <a href="#" style="font-size:14px;color:#555;padding:5px 10px;border-radius:5px;">Home</a>
-              <a href="#" style="font-size:14px;color:#555;padding:5px 10px;border-radius:5px;">Work</a>
-              <a href="#" style="font-size:14px;padding:5px 10px;border-radius:5px;background:#0a0a0a;color:#fff;">About (hover)</a>
-              <a href="#" style="font-size:14px;color:#0a0a0a;font-weight:500;padding:5px 10px;border-radius:5px;">Contact (active)</a>
-            </nav>
-          </div>
-        </div>
-
-        <div class="ds-comp-block">
-          <span class="ds-comp-label">Footer tags</span>
-          <div class="ds-comp-demo ds-comp-demo-dark" style="padding:20px;">
-            <div class="footer-tags" style="margin:0">
-              <span class="ftag">Developer tools</span>
-              <span class="ftag">AI products</span>
-              <span class="ftag">Complex systems</span>
-              <span class="ftag">B2B SaaS</span>
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Filter buttons</span>
+            <div class="ds-comp-demo" style="display:flex;gap:16px;align-items:center;">
+              <button class="filter-btn active">All projects</button>
+              <button class="filter-btn">Developer tools</button>
+              <button class="filter-btn">Monetisation</button>
             </div>
           </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Nav links</span>
+            <div class="ds-comp-demo">
+              <nav style="display:flex;gap:4px;">
+                <a href="#" style="font-size:14px;color:#555;padding:5px 10px;border-radius:5px;">Home</a>
+                <a href="#" style="font-size:14px;color:#555;padding:5px 10px;border-radius:5px;">Work</a>
+                <a href="#" style="font-size:14px;padding:5px 10px;border-radius:5px;background:#0a0a0a;color:#fff;">About (hover)</a>
+                <a href="#" style="font-size:14px;color:#0a0a0a;font-weight:500;padding:5px 10px;border-radius:5px;">Contact (active)</a>
+              </nav>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Project nav buttons (prev / next)</span>
+            <div class="ds-comp-demo" style="display:flex;gap:48px;align-items:center;">
+              <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> AI Credits</span></a>
+              <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><span class="proj-nav-name">App Reviews <i class="ti ti-arrow-right"></i></span></a>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">More work CTA</span>
+            <div class="ds-comp-demo">
+              <a href="#" class="more-cta-link">See all work →</a>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Lightbox controls</span>
+            <div class="ds-comp-demo ds-comp-demo-dark" style="display:flex;gap:12px;align-items:center;">
+              <button class="lb-handle" style="position:static;">‹</button>
+              <button class="lb-handle" style="position:static;">›</button>
+              <button class="lb-close" style="position:static;font-size:20px;background:none;border:none;color:rgba(255,255,255,0.6);cursor:pointer;padding:8px;line-height:1;">✕</button>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Footer tags</span>
+            <div class="ds-comp-demo ds-comp-demo-dark" style="padding:20px;">
+              <div class="footer-tags" style="margin:0">
+                <span class="ftag">Developer tools</span>
+                <span class="ftag">AI products</span>
+                <span class="ftag">Complex systems</span>
+                <span class="ftag">B2B SaaS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Section label</span>
+            <div class="ds-comp-demo">
+              <p class="section-label" style="margin:0">All projects</p>
+            </div>
+          </div>
+
         </div>
 
-        <div class="ds-comp-block">
-          <span class="ds-comp-label">Section label</span>
-          <div class="ds-comp-demo">
-            <p class="section-label" style="margin:0">Section label</p>
+        <!-- Mobile tab -->
+        <div class="ds-tab-panel" id="ds-tab-mobile">
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Hamburger button</span>
+            <div class="ds-comp-demo">
+              <button class="mob-burger" style="display:flex;position:static;">
+                <span></span><span></span><span></span>
+              </button>
+            </div>
           </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Slide-in menu panel</span>
+            <div class="ds-comp-demo" style="padding:0;overflow:hidden;">
+              <div style="max-width:300px;padding:20px 24px 24px;background:#fff;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+                  <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;color:#0a0a0a;">Avigail Bahat</span>
+                  <button style="width:30px;height:30px;border-radius:8px;border:0.5px solid #ebebeb;display:flex;align-items:center;justify-content:center;font-size:14px;color:#555;background:none;cursor:pointer;">✕</button>
+                </div>
+                <div>
+                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#0a0a0a;border-bottom:0.5px solid #ebebeb;">Home ↗</span>
+                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;border-bottom:0.5px solid #ebebeb;">Work</span>
+                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;border-bottom:0.5px solid #ebebeb;">About</span>
+                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;border-bottom:0.5px solid #ebebeb;">Contact</span>
+                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;">Design system</span>
+                </div>
+                <div style="margin-top:16px;padding-top:16px;border-top:0.5px solid #ebebeb;">
+                  <div style="display:flex;justify-content:space-between;font-size:14px;color:#555;padding:7px 0;">avigailba@gmail.com <span>↗</span></div>
+                  <div style="display:flex;justify-content:space-between;font-size:14px;color:#555;padding:7px 0;">LinkedIn <span>↗</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Work row (mobile)</span>
+            <div class="ds-comp-demo" style="padding:0 16px;">
+              <div style="display:flex;align-items:center;gap:10px;padding:14px 0;border-top:0.5px solid #ebebeb;border-bottom:0.5px solid #ebebeb;">
+                <span style="font-size:12px;font-weight:500;color:#555;min-width:22px;flex-shrink:0;">01</span>
+                <div style="flex:1;min-width:0;">
+                  <span style="display:block;font-size:16px;font-weight:400;color:#0a0a0a;line-height:1.3;">AI Credits Wallet</span>
+                  <span style="display:block;font-size:12px;color:#555;margin-top:3px;">AI credits billing system across Business Manager and Wixel</span>
+                </div>
+                <span style="font-size:13px;font-weight:500;color:#2b6cff;flex-shrink:0;">View ↗</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">View buttons</span>
+            <div class="ds-comp-demo" style="display:flex;gap:24px;align-items:center;">
+              <a href="#" style="font-size:14px;font-weight:500;color:#2b6cff;text-decoration:none;">View project ↗</a>
+              <a href="#" style="font-size:13px;font-weight:500;color:#2b6cff;text-decoration:none;">View ↗</a>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Filter pill + dropdown</span>
+            <div class="ds-comp-demo" style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+              <div>
+                <span style="display:block;font-size:11px;color:#555;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Closed</span>
+                <button style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#0a0a0a;padding:7px 13px;border:0.5px solid #ebebeb;border-radius:999px;background:none;cursor:pointer;font-family:inherit;">All projects <span style="font-size:10px;color:#555;">▾</span></button>
+              </div>
+              <div>
+                <span style="display:block;font-size:11px;color:#555;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Open</span>
+                <button style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#fff;padding:7px 13px;border:0.5px solid #0a0a0a;border-radius:999px;background:#0a0a0a;cursor:pointer;font-family:inherit;">All projects <span style="font-size:10px;color:rgba(255,255,255,0.6);">▴</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Featured card (mobile)</span>
+            <div class="ds-comp-demo" style="padding:20px 0;border-left:none;border-right:none;border-radius:0;">
+              <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:48px;font-weight:800;letter-spacing:-0.03em;line-height:1.05;color:#0a0a0a;margin-bottom:10px;">AI Credits</div>
+              <div style="font-size:15px;color:#555;margin-bottom:14px;">AI credits billing system across Business Manager and Wixel</div>
+              <a href="#" style="font-size:14px;font-weight:500;color:#2b6cff;text-decoration:none;">View project ↗</a>
+            </div>
+          </div>
+
         </div>
+
       </div>
 
       <div class="ds-section">
@@ -991,7 +1067,15 @@ function designSystemPage() {
 
       <p class="ds-updated">Last built: ${built}</p>
     </div>
-  </main>`);
+  </main>
+  <script>
+  function dsTab(btn, tab) {
+    document.querySelectorAll('.ds-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.ds-tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('ds-tab-' + tab).classList.add('active');
+  }
+  </script>`);
 }
 
 // ── Build ────────────────────────────────────────────────────
