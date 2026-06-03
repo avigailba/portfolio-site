@@ -1,23 +1,18 @@
-// ── Header: scroll condense + active nav ────────────────────
+// ── Header: scroll condense + progress bar + active nav ─────
 (function() {
   var hdr = document.getElementById('site-header');
   if (!hdr) return;
-  var inner = hdr.querySelector('.header-inner');
-  var role  = hdr.querySelector('.logo-role');
-  var dot   = hdr.querySelector('.avail-dot-wrap');
-  var R = 110, OFFSET = 60;
+  var progress = document.getElementById('read-progress');
   var ticking = false;
-  function lerp(a, b, p) { return a + (b - a) * p; }
-  function ease(p) { return 1 - Math.pow(1 - p, 3); }
   function update() {
     ticking = false;
-    var raw = Math.min(Math.max((window.scrollY - OFFSET) / R, 0), 1);
-    var p   = ease(raw);
-    var fade = Math.min(raw * 2.2, 1);
-    if (inner) { inner.style.paddingTop = lerp(32, 14, p) + 'px'; inner.style.paddingBottom = lerp(32, 14, p) + 'px'; }
-    if (role)  { role.style.maxHeight = lerp(18, 0, p) + 'px'; role.style.opacity = 1 - fade; }
-    if (dot)   { dot.style.maxHeight = lerp(28, 0, p) + 'px'; dot.style.opacity = 1 - fade; dot.style.paddingTop = lerp(4, 0, p) + 'px'; dot.style.paddingBottom = lerp(4, 0, p) + 'px'; dot.style.marginLeft = lerp(4, 0, p) + 'px'; }
-    hdr.classList.toggle('scrolled', raw > 0.4);
+    var y = window.scrollY;
+    hdr.classList.toggle('scrolled', y > 24);
+    if (progress) {
+      var doc = document.documentElement;
+      var total = doc.scrollHeight - doc.clientHeight;
+      progress.style.width = (total > 0 ? (y / total * 100) : 0) + '%';
+    }
   }
   window.addEventListener('scroll', function() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   update();

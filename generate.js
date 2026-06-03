@@ -289,15 +289,13 @@ async function hydrateTables(blocks) {
 // ── Layout ──────────────────────────────────────────────────
 
 // prefix: '' for root pages, '../' for project pages in dist/projects/
-function hdr(prefix) {
+function hdr(prefix, showProgress = false) {
   return `<header id="site-header">
-  <div class="header-inner">
-    <div class="logo-wrap">
-      <div class="logo-text">
-        <a href="${prefix}index.html" class="logo-name">Avigail Bahat</a>
-        <span class="logo-role">Senior UX Designer</span>
-      </div>
-    </div>
+  <div class="hdr-row">
+    <a href="${prefix}index.html" class="mob-logo">
+      <span class="mob-logo-name">Avigail Bahat</span>
+      <span class="mob-logo-role">Senior UX Designer</span>
+    </a>
     <nav>
       <a href="${prefix}index.html">Home</a>
       <a href="${prefix}index.html#home-allwork">Work</a>
@@ -307,7 +305,7 @@ function hdr(prefix) {
     <button class="mob-burger" id="mob-menu-btn" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
-  </div>
+  </div>${showProgress ? '\n  <div class="read-progress" id="read-progress"></div>' : ''}
 </header>
 <div class="mob-scrim" id="mob-scrim"></div>
 <aside class="mob-panel" id="mob-panel">
@@ -380,7 +378,7 @@ function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass =
   ${extraHead}<link rel="stylesheet" href="${prefix}style.css">
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
-  ${hdr(prefix)}
+  ${hdr(prefix, bodyClass === 'proj-page')}
   ${body}
   ${ftr(prefix)}
   <script src="${prefix}script.js"></script>
