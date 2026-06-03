@@ -695,9 +695,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   /* Layout */
   #site-header {
     padding: 14px 20px;
-    background: rgba(255,255,255,0.82);
-    -webkit-backdrop-filter: saturate(180%) blur(16px);
-    backdrop-filter: saturate(180%) blur(16px);
+    background: #fff;
     border-bottom: 0.5px solid transparent;
     transition: border-color 0.25s, padding 0.25s;
   }
@@ -897,7 +895,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
     border-bottom: none;
   }
   .proj-title-row .proj-title-m {
-    font-size: 38px;
+    font-size: 48px;
     margin-bottom: 0;
   }
 
@@ -933,17 +931,18 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
     flex-shrink: 0;
   }
   .proj-nav-text:active { color: #0a0a0a; }
+  .proj-meta-m .proj-nav-text:last-child { margin-left: auto; }
 
-  /* Meta row — border above in expanded (divider between title and nav) */
+  /* Meta row */
   .proj-meta-m {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding-top: 12px;
+    padding-top: 8px;
     padding-bottom: 0;
-    border-top: 0.5px solid #ebebeb;
+    border-top: none;
     border-bottom: none;
-    margin-top: 12px;
+    margin-top: 8px;
     margin-bottom: 20px;
     max-height: 40px;
     overflow: hidden;
