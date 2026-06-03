@@ -546,7 +546,6 @@ var CURRENT_SLUG = '${proj.slug}';
         </div>
         <div class="proj-meta-m">
           <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='${prevProj.slug}.html'">← Previous</button>
-          <span class="psep">·</span>
           <span class="pm">${year}</span>
           <span class="psep">·</span>
           <span class="pm">${cat}</span>
