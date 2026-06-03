@@ -478,41 +478,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   grid-template-columns: 0 1fr 0;
   overflow-x: clip;
 }
-.proj-gutter {
-  align-self: start;
-  position: sticky;
-  top: 56px;
-  z-index: 6;
-  display: flex;
-  justify-content: center;
-  padding-top: 36px;
-}
-.proj-nav-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #2563eb;
-  gap: 8px;
-  text-decoration: none;
-  opacity: 0.55;
-  transition: opacity 0.2s;
-  color: #0a0a0a;
-}
-.proj-nav-btn:hover { opacity: 1; }
-.proj-nav-btn i { font-size: 20px; }
-.proj-nav-name {
-  font-size: 14px;
-  font-weight: 400;
-  color: #2563eb;
-  writing-mode: vertical-rl;
-  max-width: 52px;
-  line-height: 1.4;
-  text-align: center;
-}
-/* Prev/next project arrows: vertical, in the side padding, fixed so they stay in place on scroll */
-.proj-side-nav .proj-nav-btn { position: fixed; top: 40vh; z-index: 8; }
-.proj-side-nav .proj-nav-prev { left: clamp(24px, 7vw, 150px); }
-.proj-side-nav .proj-nav-next { right: clamp(24px, 7vw, 150px); }
 .proj-breadcrumb {
   font-size: 14px;
   color: #555;
@@ -703,15 +668,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .home-band { width: 100%; max-width: 100%; padding: 0 20px 60px; }
   .inner-main, .proj-main, .more-section { padding: 0 20px; }
   .proj-page-grid { grid-template-columns: 0 1fr 0; overflow: visible; }
-  /* Prev/next nav: inline bar on mobile */
-  .proj-side-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 4px; }
-  /* Use matching specificity to override .proj-side-nav .proj-nav-btn { position: fixed } */
-  .proj-side-nav .proj-nav-btn { display: flex; position: static; opacity: 1; flex-direction: row; align-items: center; gap: 4px; top: auto; }
-  .proj-side-nav .proj-nav-prev { left: auto; }
-  .proj-side-nav .proj-nav-next { right: auto; flex-direction: row-reverse; }
-  .proj-nav-name { font-size: 13px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .proj-nav-btn i { font-size: 16px; }
-
   /* Desktop nav → hamburger */
   #site-header nav { display: none; }
   .mob-burger {
