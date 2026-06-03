@@ -744,8 +744,7 @@ function designSystemPage() {
     { hex: '#0a0a0a', name: 'Black',     usage: 'Primary text, hover fill, footer bg' },
     { hex: '#555555', name: 'Gray',      usage: 'All secondary text: nav, labels, years, body copy' },
     { hex: '#ffffff', name: 'White',     usage: 'Page background, text on dark' },
-    { hex: '#f5f5f5', name: 'Surface',   usage: 'Sticky title bg, image placeholder' },
-    { hex: '#ebebeb', name: 'Border',    usage: 'All hairline borders (--border)' },
+    { hex: '#ebebeb', name: 'Surface / Border', usage: 'Hairline borders, surface backgrounds (--border)' },
     { hex: '#22c55e', name: 'Available', usage: 'Availability dot only' },
   ];
   const typeRows = [
