@@ -32,7 +32,7 @@ button { font-family: inherit; }
   background: #fff;
   border-bottom: 0.5px solid transparent;
   transition: border-color 0.2s;
-  padding: 0 clamp(20px, 5%, 80px);
+  padding: 0 clamp(40px, 20%, 240px);
 }
 #site-header.scrolled { border-color: #ebebeb; }
 .header-inner {
@@ -93,7 +93,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 
 /* ── Homepage wrapper ────────────────────────────────────── */
 .home-band {
-  padding: 0 clamp(20px, 5%, 80px) 80px;
+  padding: 0 clamp(40px, 20%, 240px) 80px;
 }
 
 /* ── Lede ────────────────────────────────────────────────── */
@@ -125,8 +125,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   grid-template-columns: repeat(4, 1fr);
   border-top: 0.5px solid #ebebeb;
   border-bottom: 0.5px solid #ebebeb;
-  margin-left: calc(-1 * clamp(20px, 5%, 80px));
-  margin-right: calc(-1 * clamp(20px, 5%, 80px));
+  margin-left: calc(-1 * clamp(40px, 20%, 240px));
+  margin-right: calc(-1 * clamp(40px, 20%, 240px));
   margin-bottom: 56px;
 }
 .feat-card {
@@ -334,7 +334,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 /* ── Footer ──────────────────────────────────────────────── */
 .site-footer {
   background: #0a0a0a;
-  padding: 64px clamp(20px, 5%, 80px) 48px;
+  padding: 64px clamp(40px, 20%, 240px) 48px;
 }
 .footer-inner {
   display: flex;
@@ -395,7 +395,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .footer-bottom { margin: 48px 0 0; font-size: 14px; color: rgba(255,255,255,0.3); }
 
 /* ── Inner pages ─────────────────────────────────────────── */
-.inner-main { padding: 0 clamp(20px, 5%, 80px); }
+.inner-main { padding: 0 clamp(40px, 20%, 240px); }
 .inner-content { padding: 56px 0 80px; max-width: 720px; }
 .ds-content { max-width: none; }
 .inner-content h1 {
