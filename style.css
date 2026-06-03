@@ -897,7 +897,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
     border-bottom: none;
   }
   .proj-title-row .proj-title-m {
-    font-size: 48px;
+    font-size: 38px;
     margin-bottom: 0;
   }
 
@@ -924,7 +924,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .proj-nav-text {
     display: block;
     font-size: 14px;
-    color: #555;
+    color: #0055cc;
     background: none;
     border: none;
     padding: 0;
@@ -934,18 +934,20 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   }
   .proj-nav-text:active { color: #0a0a0a; }
 
-  /* Meta row — border below in expanded */
+  /* Meta row — border above in expanded (divider between title and nav) */
   .proj-meta-m {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding-top: 8px;
-    padding-bottom: 14px;
-    border-bottom: 0.5px solid #ebebeb;
+    padding-top: 12px;
+    padding-bottom: 0;
+    border-top: 0.5px solid #ebebeb;
+    border-bottom: none;
+    margin-top: 12px;
     margin-bottom: 20px;
     max-height: 40px;
     overflow: hidden;
-    transition: max-height 0.2s, opacity 0.2s, margin 0.2s, padding 0.2s, border-color 0.2s;
+    transition: max-height 0.2s, opacity 0.2s, margin 0.2s, padding 0.2s;
   }
 
   /* Subtitle (outside sticky) */
