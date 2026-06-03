@@ -54,7 +54,7 @@ const stats = { pages: 0, images: 0, errors: [] };
 
 // Project metadata: categories, display title overrides, years, featured status
 const PROJECT_META = {
-  'ai-credits-wallet':                          { title: 'AI Credits',                  cats: 'developer',              display: 'Developer tools', year: 2026, featured: true },
+  'ai-credits-wallet':                          { title: 'AI Credits', featTitle: 'AI<br>Credits', cats: 'developer',              display: 'Developer tools', year: 2026, featured: true },
   'app-installation-page-for-developers': { title: 'App Installations Page',      cats: 'developer',              display: 'Developer tools', year: 2025, featured: true },
   'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer',              display: 'Developer tools', year: 2024, featured: false },
   'developer-sale':                      { title: 'Developer Sale',               cats: 'developer monetisation', display: 'Monetisation',    year: 2024, featured: true },
@@ -400,7 +400,7 @@ function indexPage(projects, tagline) {
     const meta = PROJECT_META[slug];
     const summary = PROJECT_SUMMARIES[slug] || '';
     return `<div class="feat-card" onclick="location.href='projects/${slug}.html'">
-  <div class="feat-title">${meta.title}</div>
+  <div class="feat-title">${meta.featTitle || meta.title}</div>
   ${summary ? `<div class="feat-sub">${summary}</div>` : ''}
   <div class="feat-arr">↗</div>
   <div class="feat-foot">

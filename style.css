@@ -496,7 +496,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .proj-nav-btn {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   color: #2563eb;
   gap: 8px;
   text-decoration: none;
