@@ -867,8 +867,11 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
     top: 56px;
     margin-left: 0;
     margin-right: 0;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 14px 20px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition: box-shadow 0.2s ease, padding 0.2s;
   }
 
   /* Mobile project nav arrows */
@@ -901,8 +904,9 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .proj-nav-arr-empty { visibility: hidden; }
   .proj-title-wrap.condensed .proj-nav-arr { width: 28px; height: 28px; min-width: 28px; }
   .proj-title-wrap.condensed {
-    background: #fff;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.92);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.05), 0 6px 18px -12px rgba(0,0,0,0.15);
   }
   .proj-meta { max-height: 40px; }
 
