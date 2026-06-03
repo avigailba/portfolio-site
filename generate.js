@@ -585,7 +585,7 @@ var CURRENT_SLUG = '${proj.slug}';
   var sub = tw.querySelector('.proj-subtitle');
   var title = tw.querySelector('.proj-title');
   var R = 110;
-  var TITLE_FROM = window.innerWidth <= 480 ? 32 : (window.innerWidth <= 600 ? 40 : 64), TITLE_TO = 22, PAD_FROM = window.innerWidth <= 600 ? 20 : 28, PAD_TO = 14;
+  var TITLE_FROM = window.innerWidth <= 768 ? 38 : 64, TITLE_TO = 22, PAD_FROM = window.innerWidth <= 768 ? 20 : 28, PAD_TO = 14;
   var BC_H = 24, BC_MB = 16, SUB_H = 60, SUB_MB = 8;
   var ticking = false;
   function lerp(a, b, p){ return a + (b - a) * p; }
