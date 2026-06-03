@@ -57,11 +57,11 @@ const PROJECT_META = {
   'ai-credits-wallet':                          { title: 'AI Credits',                  cats: 'developer',              display: 'Developer tools', year: 2026, featured: true },
   'app-installation-page-for-developers': { title: 'App Installations Page',      cats: 'developer',              display: 'Developer tools', year: 2025, featured: true },
   'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer',              display: 'Developer tools', year: 2024, featured: false },
-  'developer-sale':                      { title: 'Developer Sale',               cats: 'monetisation',           display: 'Monetisation',    year: 2024, featured: true },
-  'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'internal',               display: 'Internal tools',  year: 2024, featured: false },
+  'developer-sale':                      { title: 'Developer Sale',               cats: 'developer monetisation', display: 'Monetisation',    year: 2024, featured: true },
+  'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'developer internal',     display: 'Internal tools',  year: 2024, featured: false },
   'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
   'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
-  'app-pricing-page-projects':           { title: 'App Pricing Page Projects',    cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
+  'app-pricing-page-projects':           { title: 'App Pricing Page Projects',    cats: 'developer monetisation', display: 'Monetisation',    year: 2023, featured: false },
   'internal-app-review-system':          { title: 'App Review System',            cats: 'internal',               display: 'Internal tools',  year: 2022, featured: true },
   'submit-publish-widget':               { title: 'Submit & Publish Widget',      cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
   'custom-element-component-settings':   { title: 'Custom Element Component Settings', cats: 'cms',               display: 'CMS',             year: 2022, featured: false },
@@ -460,27 +460,29 @@ function indexPage(projects, tagline) {
     <div class="feat-grid">
       ${featHtml}
     </div>
-    <div id="home-allwork" class="work-header">
-      <div class="filters">
-        <button class="filter-btn active" data-f="all">All projects</button>
-        <button class="filter-btn" data-f="developer">Developer tools</button>
-        <button class="filter-btn" data-f="monetisation">Monetisation</button>
-        <button class="filter-btn" data-f="internal">Internal tools</button>
-        <button class="filter-btn" data-f="cms">CMS</button>
-      </div>
-      <div class="mob-filter" id="mob-filter">
-        <button class="mob-filter-btn" id="mob-filter-btn">All projects <span class="mob-filter-caret">▼</span></button>
-        <div class="mob-filter-drop" id="mob-filter-drop">
-          <button class="mob-filter-opt active" data-f="all">All projects</button>
-          <button class="mob-filter-opt" data-f="developer">Developer tools</button>
-          <button class="mob-filter-opt" data-f="monetisation">Monetisation</button>
-          <button class="mob-filter-opt" data-f="internal">Internal tools</button>
-          <button class="mob-filter-opt" data-f="cms">CMS</button>
+    <div class="home-allwork" id="home-allwork">
+      <div class="work-header">
+        <div class="filters">
+          <button class="filter-btn active" data-f="all">All projects</button>
+          <button class="filter-btn" data-f="developer">Developer tools</button>
+          <button class="filter-btn" data-f="monetisation">Monetisation</button>
+          <button class="filter-btn" data-f="internal">Internal tools</button>
+          <button class="filter-btn" data-f="cms">CMS</button>
+        </div>
+        <div class="mob-filter" id="mob-filter">
+          <button class="mob-filter-btn" id="mob-filter-btn">All projects <span class="mob-filter-caret">▼</span></button>
+          <div class="mob-filter-drop" id="mob-filter-drop">
+            <button class="mob-filter-opt active" data-f="all">All projects</button>
+            <button class="mob-filter-opt" data-f="developer">Developer tools</button>
+            <button class="mob-filter-opt" data-f="monetisation">Monetisation</button>
+            <button class="mob-filter-opt" data-f="internal">Internal tools</button>
+            <button class="mob-filter-opt" data-f="cms">CMS</button>
+          </div>
         </div>
       </div>
-    </div>
-    <div id="list">
-      ${listHtml}
+      <div id="list">
+        ${listHtml}
+      </div>
     </div>
   </main>`);
 }

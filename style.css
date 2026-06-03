@@ -203,6 +203,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 }
 
 /* ── Work header + filters ───────────────────────────────── */
+.home-allwork { max-width: 840px; }
 .work-header {
   display: flex;
   align-items: baseline;
