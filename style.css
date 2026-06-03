@@ -409,6 +409,11 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .inner-content .page-sub { font-size: 14px; color: #555; margin-bottom: 48px; }
 
 /* ── About ───────────────────────────────────────────────── */
+.about-contact { display: flex; flex-direction: column; gap: 12px; }
+.about-contact-link { font-size: 16px; color: #0a0a0a; text-decoration: none; }
+.about-contact-link:hover { text-decoration: underline; }
+.about-arr { color: #555; }
+
 .about-bio {
   font-size: 18px;
   font-weight: 500;
