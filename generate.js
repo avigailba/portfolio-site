@@ -320,7 +320,6 @@ function hdr(prefix) {
     <a href="${prefix}index.html#home-allwork" class="mob-panel-link mob-work-link">Work</a>
     <a href="${prefix}about.html" class="mob-panel-link">About</a>
     <a href="${prefix}contact.html" class="mob-panel-link">Contact</a>
-    <a href="${prefix}design-system.html" class="mob-panel-link">Design system</a>
   </nav>
   <div class="mob-panel-foot">
     <div class="mob-panel-social">
