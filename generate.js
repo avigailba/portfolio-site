@@ -432,25 +432,19 @@ function indexPage(projects, tagline) {
     const year    = meta?.year    || proj?.year    || '';
     const summary = proj?.summary || PROJECT_SUMMARIES[slug] || '';
     const featured = meta?.featured || false;
-    return `<div class="row-wrap">
-  <div class="row" data-cat="${cats}" onclick="location.href='projects/${slug}.html'">
+    return `<div class="row-wrap" data-cat="${cats}">
+  <a href="projects/${slug}.html" class="row" data-cat="${cats}">
     <span class="num">${String(i + 1).padStart(2, '0')}</span>
     <div class="rmain">
-      <div class="row-title">${title}</div>
-      ${summary ? `<div class="rsub">${summary}</div>` : ''}
-      <div class="mob-row-meta">
-        ${featured ? `<span class="feat-tag">Featured</span>` : ''}
-        ${display ? `<span class="cat-tag">${display}</span>` : ''}
-      </div>
-      <div class="mob-row-foot">
-        <a class="mob-view-btn mob-view-sm" href="projects/${slug}.html" onclick="event.stopPropagation()">View <span>↗</span></a>
-      </div>
+      <span class="row-title">${title}</span>
+      ${summary ? `<span class="rsub">${summary}</span>` : ''}
     </div>
-    ${featured ? `<span class="feat-tag desk-only">Featured</span>` : ''}
-    <span class="cat-tag desk-only">${display}</span>
+    ${featured ? `<span class="feat-tag" title="Featured">★</span>` : ''}
+    ${display ? `<span class="cat-tag">${display}</span>` : ''}
     <span class="row-year">${year}</span>
-    <span class="row-arr">↗</span>
-  </div>
+    <span class="row-arr">View ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+  </a>
 </div>`;
   }).join('\n  ');
 
@@ -463,24 +457,24 @@ function indexPage(projects, tagline) {
     <div class="home-allwork" id="home-allwork">
       <div class="work-header">
         <div class="filters">
-          <button class="filter-btn active" data-f="all">All projects</button>
-          <button class="filter-btn" data-f="developer">Developer tools</button>
-          <button class="filter-btn" data-f="monetisation">Monetisation</button>
-          <button class="filter-btn" data-f="internal">Internal tools</button>
-          <button class="filter-btn" data-f="cms">CMS</button>
+          <button class="filter-btn active" data-filter="all">All projects</button>
+          <button class="filter-btn" data-filter="developer">Developer tools</button>
+          <button class="filter-btn" data-filter="monetisation">Monetisation</button>
+          <button class="filter-btn" data-filter="internal">Internal tools</button>
+          <button class="filter-btn" data-filter="cms">CMS</button>
         </div>
         <div class="mob-filter" id="mob-filter">
           <button class="mob-filter-btn" id="mob-filter-btn">All projects <span class="mob-filter-caret">▼</span></button>
           <div class="mob-filter-drop" id="mob-filter-drop">
-            <button class="mob-filter-opt active" data-f="all">All projects</button>
-            <button class="mob-filter-opt" data-f="developer">Developer tools</button>
-            <button class="mob-filter-opt" data-f="monetisation">Monetisation</button>
-            <button class="mob-filter-opt" data-f="internal">Internal tools</button>
-            <button class="mob-filter-opt" data-f="cms">CMS</button>
+            <button class="mob-filter-opt active" data-filter="all">All projects</button>
+            <button class="mob-filter-opt" data-filter="developer">Developer tools</button>
+            <button class="mob-filter-opt" data-filter="monetisation">Monetisation</button>
+            <button class="mob-filter-opt" data-filter="internal">Internal tools</button>
+            <button class="mob-filter-opt" data-filter="cms">CMS</button>
           </div>
         </div>
       </div>
-      <div id="list">
+      <div id="all-list">
         ${listHtml}
       </div>
     </div>
@@ -516,26 +510,21 @@ var CURRENT_SLUG = '${proj.slug}';
   if (!list) return;
   pick.forEach(function(p, i) {
     var wrap = document.createElement('div');
-    wrap.className = 'row-wrap';
+    wrap.className = 'row-wrap open';
+    wrap.setAttribute('data-cat', p.cats);
     wrap.innerHTML =
-      '<div class="row" data-cat="' + p.cats + '" onclick="window.location.href=\\'' + p.slug + '.html\\'">' +
+      '<a href="' + p.slug + '.html" class="row" data-cat="' + p.cats + '">' +
         '<span class="num">' + String(i + 1).padStart(2, '0') + '</span>' +
         '<div class="rmain">' +
-          '<div class="row-title">' + p.title + '</div>' +
-          '<div class="rsub">' + p.sub + '</div>' +
-          '<div class="mob-row-meta">' +
-            (p.featured ? '<span class="feat-tag">Featured</span>' : '') +
-            '<span class="cat-tag">' + p.cat + '</span>' +
-          '</div>' +
-          '<div class="mob-row-foot">' +
-            '<a class="mob-view-btn mob-view-sm" href="' + p.slug + '.html" onclick="event.stopPropagation()">View <span>↗</span></a>' +
-          '</div>' +
+          '<span class="row-title">' + p.title + '</span>' +
+          '<span class="rsub">' + p.sub + '</span>' +
         '</div>' +
-        (p.featured ? '<span class="feat-tag desk-only">Featured</span>' : '') +
-        '<span class="cat-tag desk-only">' + p.cat + '</span>' +
+        (p.featured ? '<span class="feat-tag" title="Featured">★</span>' : '') +
+        '<span class="cat-tag">' + p.cat + '</span>' +
         '<span class="row-year">' + p.year + '</span>' +
-        '<span class="row-arr">↗</span>' +
-      '</div>';
+        '<span class="row-arr">View ↗</span>' +
+        '<div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>' +
+      '</a>';
     list.appendChild(wrap);
   });
 })();

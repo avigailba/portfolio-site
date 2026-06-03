@@ -34,7 +34,7 @@
 
 // ── Row accordion (homepage) ─────────────────────────────────
 (function() {
-  var list = document.getElementById('list');
+  var list = document.getElementById('all-list');
   if (!list) return;
   var wraps = Array.from(list.querySelectorAll('.row-wrap'));
   var fired = false;
@@ -56,10 +56,9 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
   btn.addEventListener('click', function() {
     document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
-    var f = btn.dataset.f;
-    document.querySelectorAll('#list .row-wrap').forEach(function(wrap) {
-      var row = wrap.querySelector('.row');
-      var cats = (row ? (row.dataset.cat || '') : '').split(' ');
+    var f = btn.dataset.filter;
+    document.querySelectorAll('#all-list .row-wrap').forEach(function(wrap) {
+      var cats = (wrap.dataset.cat || '').split(' ');
       if (f === 'all' || cats.indexOf(f) !== -1) {
         wrap.classList.remove('hidden');
       } else {
@@ -67,7 +66,7 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
       }
     });
     var i = 1;
-    document.querySelectorAll('#list .row-wrap:not(.hidden) .num').forEach(function(n) {
+    document.querySelectorAll('#all-list .row-wrap:not(.hidden) .num').forEach(function(n) {
       n.textContent = String(i++).padStart(2, '0');
     });
   });
@@ -124,9 +123,9 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
   });
   filterDrop.querySelectorAll('.mob-filter-opt').forEach(function(opt) {
     opt.addEventListener('click', function() {
-      var f = opt.dataset.f;
+      var f = opt.dataset.filter;
       // Sync with desktop filter to reuse its filtering logic
-      var desktopBtn = document.querySelector('.filter-btn[data-f="' + f + '"]');
+      var desktopBtn = document.querySelector('.filter-btn[data-filter="' + f + '"]');
       if (desktopBtn) desktopBtn.click();
       // Update mobile button label and active state
       filterDrop.querySelectorAll('.mob-filter-opt').forEach(function(o) { o.classList.remove('active'); });
