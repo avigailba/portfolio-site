@@ -540,20 +540,19 @@ var CURRENT_SLUG = '${proj.slug}';
         ${prevProj ? `<a class="proj-nav-btn proj-nav-prev" href="${prevProj.slug}.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> ${prevTitle}</span></a>` : '<span></span>'}
         ${nextProj ? `<a class="proj-nav-btn proj-nav-next" href="${nextProj.slug}.html" aria-label="Next project"><span class="proj-nav-name">${nextTitle} <i class="ti ti-arrow-right"></i></span></a>` : '<span></span>'}
       </div>
-      <div class="proj-title-wrap" id="proj-title-wrap">
-        <p class="proj-breadcrumb"><a href="../index.html">Home</a> / ${title}</p>
+      <div class="proj-title-sticky" id="proj-title-sticky">
         <div class="proj-title-row">
-          ${prevProj ? `<a href="${prevProj.slug}.html" class="proj-nav-arr" aria-label="Previous project">←</a>` : '<span class="proj-nav-arr proj-nav-arr-empty"></span>'}
-          <h1 class="proj-title">${title}</h1>
-          ${nextProj ? `<a href="${nextProj.slug}.html" class="proj-nav-arr" aria-label="Next project">→</a>` : '<span class="proj-nav-arr proj-nav-arr-empty"></span>'}
+          <button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='${prevProj.slug}.html'">←</button>
+          <h1 class="proj-title-m">${title}</h1>
+          <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">→</button>
         </div>
-        ${proj.subtitle ? `<p class="proj-subtitle">${proj.subtitle}</p>` : ''}
-        <div class="proj-meta">
-          <span class="proj-meta-item">${year}</span>
-          <span class="proj-meta-sep">·</span>
-          <span class="proj-meta-item">${cat}</span>
+        <div class="proj-meta-m">
+          <span class="pm">${year}</span>
+          <span class="pm psep">·</span>
+          <span class="pm">${cat}</span>
         </div>
       </div>
+      ${proj.subtitle ? `<p class="proj-subtitle-m">${proj.subtitle}</p>` : ''}
       <div class="proj-content">
         ${proj.contentHtml}
       </div>
@@ -582,31 +581,31 @@ var CURRENT_SLUG = '${proj.slug}';
   </div>`, moreJs + `
 <script>
 (function(){
-  var tw = document.getElementById('proj-title-wrap');
-  if (!tw) return;
-  var bc = tw.querySelector('.proj-breadcrumb');
-  var sub = tw.querySelector('.proj-subtitle');
-  var title = tw.querySelector('.proj-title');
-  var R = 110;
-  var TITLE_FROM = window.innerWidth <= 768 ? 38 : 64, TITLE_TO = 22, PAD_FROM = window.innerWidth <= 768 ? 20 : 28, PAD_TO = 14;
-  var BC_H = 24, BC_MB = 16, SUB_H = 60, SUB_MB = 8;
-  var ticking = false;
-  function lerp(a, b, p){ return a + (b - a) * p; }
-  function ease(p){ return 1 - Math.pow(1 - p, 3); }
-  function update(){
-    ticking = false;
-    var raw = Math.min(Math.max((window.scrollY - 60) / R, 0), 1);
-    var p = ease(raw);
-    var fade = Math.min(raw * 2.2, 1);
-    if (title) title.style.fontSize = lerp(TITLE_FROM, TITLE_TO, p) + 'px';
-    tw.style.paddingTop = lerp(PAD_FROM, PAD_TO, p) + 'px';
-    tw.style.paddingBottom = lerp(PAD_FROM, PAD_TO, p) + 'px';
-    if (bc){ bc.style.maxHeight = lerp(BC_H, 0, p) + 'px'; bc.style.marginBottom = lerp(BC_MB, 0, p) + 'px'; bc.style.opacity = lerp(1, 0, fade); }
-    if (sub){ sub.style.maxHeight = lerp(SUB_H, 0, p) + 'px'; sub.style.marginBottom = lerp(SUB_MB, 0, p) + 'px'; sub.style.opacity = lerp(1, 0, fade); }
-tw.classList.toggle('condensed', raw > 0.4);
+  var sticky = document.getElementById('proj-title-sticky');
+  if (!sticky) return;
+  var isMobile = window.innerWidth <= 768;
+  if (isMobile) {
+    window.addEventListener('scroll', function(){
+      sticky.classList.toggle('condensed', window.scrollY > 56);
+    }, { passive: true });
+  } else {
+    var titleEl = sticky.querySelector('.proj-title-m');
+    var R = 110, TITLE_FROM = 54, TITLE_TO = 22, PAD_FROM = 28, PAD_TO = 14;
+    var ticking = false;
+    function lerp(a, b, t){ return a + (b - a) * t; }
+    function ease(t){ return 1 - Math.pow(1 - t, 3); }
+    function update(){
+      ticking = false;
+      var raw = Math.min(Math.max((window.scrollY - 60) / R, 0), 1);
+      var p = ease(raw);
+      if (titleEl) titleEl.style.fontSize = lerp(TITLE_FROM, TITLE_TO, p) + 'px';
+      sticky.style.paddingTop = lerp(PAD_FROM, PAD_TO, p) + 'px';
+      sticky.style.paddingBottom = lerp(PAD_FROM, PAD_TO, p) + 'px';
+      sticky.classList.toggle('condensed', raw > 0.4);
+    }
+    window.addEventListener('scroll', function(){ if (!ticking){ ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
   }
-  window.addEventListener('scroll', function(){ if (!ticking){ ticking = true; requestAnimationFrame(update); } }, { passive: true });
-  update();
 })();
 </script>`, '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">\n  ', 'proj-page');
 }
@@ -1118,8 +1117,8 @@ async function build() {
     }
 
     for (let i = 0; i < projects.length; i++) {
-      const prev = projects[i - 1] || null;
-      const next = projects[i + 1] || null;
+      const prev = projects[(i - 1 + projects.length) % projects.length];
+      const next = projects[(i + 1) % projects.length];
       fs.writeFileSync(path.join(PROJECTS_DIR, `${projects[i].slug}.html`), projectPage(projects[i], prev, next));
       stats.pages++;
       console.log(`  ✓ projects/${projects[i].slug}.html`);
