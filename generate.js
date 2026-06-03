@@ -878,8 +878,8 @@ function designSystemPage() {
         <div class="ds-comp-block">
           <span class="ds-comp-label">Filter buttons</span>
           <div class="ds-comp-demo" style="display:flex;gap:16px;align-items:center;">
-            <button class="filter-btn">All</button>
-            <button class="filter-btn active">Developer</button>
+            <button class="filter-btn active">All projects</button>
+            <button class="filter-btn">Developer tools</button>
             <button class="filter-btn">Monetisation</button>
           </div>
         </div>
@@ -930,8 +930,9 @@ function designSystemPage() {
           <div class="ds-comp-demo">
             <nav style="display:flex;gap:4px;">
               <a href="#" style="font-size:14px;color:#555;padding:5px 10px;border-radius:5px;">Home</a>
+              <a href="#" style="font-size:14px;color:#555;padding:5px 10px;border-radius:5px;">Work</a>
               <a href="#" style="font-size:14px;padding:5px 10px;border-radius:5px;background:#0a0a0a;color:#fff;">About (hover)</a>
-              <a href="#" style="font-size:14px;color:#0a0a0a;font-weight:500;padding:5px 10px;border-radius:5px;">CV (active)</a>
+              <a href="#" style="font-size:14px;color:#0a0a0a;font-weight:500;padding:5px 10px;border-radius:5px;">Contact (active)</a>
             </nav>
           </div>
         </div>
