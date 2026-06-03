@@ -374,6 +374,9 @@ function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass =
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="icon" type="image/png" sizes="32x32" href="${prefix}favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="${prefix}favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="${prefix}apple-touch-icon.png">
   ${extraHead}<link rel="stylesheet" href="${prefix}style.css">
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
@@ -1088,6 +1091,9 @@ async function build() {
   fs.mkdirSync(IMAGES, { recursive: true });
   fs.copyFileSync('style.css', path.join(DIST, 'style.css'));
   fs.copyFileSync('script.js', path.join(DIST, 'script.js'));
+  ['favicon-32x32.png','favicon-16x16.png','apple-touch-icon.png'].forEach(f => {
+    if (fs.existsSync(f)) fs.copyFileSync(f, path.join(DIST, f));
+  });
 
   let projects = [];
   let tagline = "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
