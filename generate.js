@@ -362,7 +362,7 @@ function ftr(prefix = '') {
       </a>
     </div>
   </div>
-  <div class="footer-bottom">© 2026 Avigail Bahat</div>
+  <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
 </footer>`;
 }
 
