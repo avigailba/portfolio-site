@@ -631,6 +631,12 @@ function aboutPage(notionHtml) {
       <div class="about-notion">
         ${withoutBio}
       </div>
+      <p class="section-label">Contact</p>
+      <div class="about-contact">
+        <a href="mailto:avigailba@gmail.com" class="about-contact-link">avigailba@gmail.com <span class="about-arr">↗</span></a>
+        <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer" class="about-contact-link">LinkedIn <span class="about-arr">↗</span></a>
+        <a href="https://docs.google.com/document/d/1f0pEtgv_I89h16hgUF0ncW52EBcFwVPrjrJFzW3teI4/edit?usp=sharing" target="_blank" rel="noreferrer" class="about-contact-link">CV <span class="about-arr">↗</span></a>
+      </div>
     </div>
   </main>`);
   }
