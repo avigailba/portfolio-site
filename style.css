@@ -597,7 +597,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 }
 
 /* ── More work (project pages) ───────────────────────────── */
-.more-section { padding: 0 clamp(20px, 5%, 80px); }
+.more-section { padding: 0 clamp(40px, 20%, 240px); }
 .more-inner {
   padding-top: 64px;
   border-top: 0.5px solid #ebebeb;
@@ -704,9 +704,11 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .inner-main, .proj-main, .more-section { padding: 0 20px; }
   .proj-page-grid { grid-template-columns: 0 1fr 0; overflow: visible; }
   /* Prev/next nav: inline bar on mobile */
-  .proj-nav-btn { display: flex; position: static; opacity: 1; flex-direction: row; align-items: center; gap: 4px; top: auto; left: auto; right: auto; }
   .proj-side-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 4px; }
-  .proj-nav-next { flex-direction: row-reverse; }
+  /* Use matching specificity to override .proj-side-nav .proj-nav-btn { position: fixed } */
+  .proj-side-nav .proj-nav-btn { display: flex; position: static; opacity: 1; flex-direction: row; align-items: center; gap: 4px; top: auto; }
+  .proj-side-nav .proj-nav-prev { left: auto; }
+  .proj-side-nav .proj-nav-next { right: auto; flex-direction: row-reverse; }
   .proj-nav-name { font-size: 13px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .proj-nav-btn i { font-size: 16px; }
 
