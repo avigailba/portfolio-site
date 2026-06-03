@@ -869,15 +869,15 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
     top: 56px;
     margin-left: -20px;
     margin-right: -20px;
-    padding: 16px 20px;
+    padding: 32px 20px 16px;
     background: rgba(255,255,255,0.92);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    transition: padding 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    transition: padding 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
-  .proj-title-sticky.hide-at-bottom { opacity: 0; pointer-events: none; }
   .proj-title-sticky.condensed {
     padding: 10px 20px;
+    background: #fff;
     box-shadow: 0 1px 0 rgba(0,0,0,0.05), 0 6px 18px -12px rgba(0,0,0,0.15);
   }
   /* Condensed: arrows appear, title shrinks, meta collapses */
@@ -885,6 +885,10 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .proj-title-sticky.condensed .proj-title-row { display: flex; align-items: center; gap: 10px; }
   .proj-title-sticky.condensed .proj-nav-arr { display: flex; }
   .proj-title-sticky.condensed .proj-meta-m { max-height: 0; opacity: 0; margin: 0; padding: 0; border-color: transparent; }
+  /* At-bottom: morph to "More work", hide arrows and meta */
+  .proj-title-sticky.at-bottom .proj-nav-arr { display: none; }
+  .proj-title-sticky.at-bottom .proj-title-row { display: block; }
+  .proj-title-sticky.at-bottom .proj-meta-m { max-height: 0; opacity: 0; margin: 0; padding: 0; }
 
   /* Title row — block in expanded so title is full-width, no border */
   .proj-title-row {
@@ -893,7 +897,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
     border-bottom: none;
   }
   .proj-title-row .proj-title-m {
-    font-size: 38px;
+    font-size: 48px;
     margin-bottom: 0;
   }
 

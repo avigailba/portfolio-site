@@ -590,11 +590,19 @@ var CURRENT_SLUG = '${proj.slug}';
     window.addEventListener('scroll', function(){
       sticky.classList.toggle('condensed', window.scrollY > 56);
     }, { passive: true });
+    var titleEl2 = sticky.querySelector('.proj-title-m');
+    var origTitle = titleEl2 ? titleEl2.textContent : '';
     var sentinel = document.querySelector('.more-section');
-    if (sentinel && window.IntersectionObserver) {
+    if (sentinel && titleEl2 && window.IntersectionObserver) {
       new IntersectionObserver(function(entries){
-        sticky.classList.toggle('hide-at-bottom', entries[0].isIntersecting);
-      }).observe(sentinel);
+        if (entries[0].isIntersecting) {
+          titleEl2.textContent = 'More work';
+          sticky.classList.add('at-bottom');
+        } else {
+          titleEl2.textContent = origTitle;
+          sticky.classList.remove('at-bottom');
+        }
+      }, { threshold: 0.1 }).observe(sentinel);
     }
   } else {
     var titleEl = sticky.querySelector('.proj-title-m');
