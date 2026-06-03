@@ -901,9 +901,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .proj-nav-arr-empty { visibility: hidden; }
   .proj-title-wrap.condensed .proj-nav-arr { width: 28px; height: 28px; min-width: 28px; }
   .proj-title-wrap.condensed {
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: #fff;
     box-shadow: 0 1px 0 rgba(0,0,0,0.05);
   }
   .proj-meta { max-height: 40px; }
