@@ -135,6 +135,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   cursor: pointer;
   min-height: 300px;
   min-width: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -143,7 +144,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .feat-card:last-child { border-right: none; }
 .feat-card:hover { background: #f9f9f9; }
 .feat-title {
-  font-size: 54px;
+  font-size: clamp(18px, 2.5vw, 54px);
   font-weight: 700;
   color: #0a0a0a;
   line-height: 1.1;
