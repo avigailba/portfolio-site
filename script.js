@@ -1,17 +1,11 @@
-// ── Header: scroll condense + progress bar + active nav ─────
+// ── Header: scroll condense + active nav ────────────────────
 (function() {
   var hdr = document.getElementById('site-header');
   if (!hdr) return;
-  var progress = document.getElementById('read-progress');
   var ticking = false;
   function update() {
     ticking = false;
-    var y = window.scrollY;
-    hdr.classList.toggle('scrolled', y > 24);
-    if (progress) {
-      var max = document.documentElement.scrollHeight - window.innerHeight;
-      progress.style.setProperty('--pct', max > 0 ? (y / max * 100) + '%' : '0%');
-    }
+    hdr.classList.toggle('scrolled', window.scrollY > 24);
   }
   window.addEventListener('scroll', function() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   update();

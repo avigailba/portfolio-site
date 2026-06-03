@@ -73,15 +73,6 @@ body.proj-page #site-header.scrolled { border-color: transparent; }
   max-height: 0;
   opacity: 0;
 }
-.read-progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 2px;
-  width: var(--pct, 0%);
-  background: #0a0a0a;
-  transition: width 0.1s linear;
-}
 nav {
   display: flex;
   gap: 4px;
@@ -888,29 +879,26 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
     padding: 10px 20px;
     box-shadow: 0 1px 0 rgba(0,0,0,0.05), 0 6px 18px -12px rgba(0,0,0,0.15);
   }
+  /* Condensed: arrows appear, title shrinks, meta collapses */
   .proj-title-sticky.condensed .proj-title-m { font-size: 22px; }
-  .proj-title-sticky.condensed .proj-nav-arr { width: 28px; height: 28px; min-width: 28px; }
-  .proj-title-sticky.condensed .proj-meta-m { max-height: 0; opacity: 0; margin: 0; padding: 0; }
-  .proj-title-sticky.condensed .proj-title-row { padding-bottom: 0; border-bottom: none; }
+  .proj-title-sticky.condensed .proj-title-row { display: flex; align-items: center; gap: 10px; }
+  .proj-title-sticky.condensed .proj-nav-arr { display: flex; }
+  .proj-title-sticky.condensed .proj-meta-m { max-height: 0; opacity: 0; margin: 0; padding: 0; border-color: transparent; }
 
-  /* Title row */
+  /* Title row — block in expanded so title is full-width, no border */
   .proj-title-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding-bottom: 14px;
-    border-bottom: 0.5px solid #ebebeb;
+    display: block;
+    padding-bottom: 0;
+    border-bottom: none;
   }
   .proj-title-row .proj-title-m {
-    flex: 1;
-    min-width: 0;
-    font-size: 32px;
+    font-size: 38px;
     margin-bottom: 0;
   }
 
-  /* Arrows */
+  /* Arrows — hidden in expanded, shown in condensed */
   .proj-nav-arr {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     width: 34px;
@@ -923,20 +911,35 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
     background: none;
     flex-shrink: 0;
     cursor: pointer;
-    transition: background 0.15s, width 0.2s, height 0.2s;
+    transition: background 0.15s;
   }
   .proj-nav-arr:active { background: #f0f0f0; color: #0a0a0a; }
 
-  /* Meta row */
+  /* Text prev/next in meta row */
+  .proj-nav-text {
+    font-size: 14px;
+    color: #555;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .proj-nav-text:active { color: #0a0a0a; }
+
+  /* Meta row — border below in expanded */
   .proj-meta-m {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding-top: 12px;
+    padding-top: 8px;
+    padding-bottom: 14px;
+    border-bottom: 0.5px solid #ebebeb;
     margin-bottom: 20px;
     max-height: 40px;
     overflow: hidden;
-    transition: max-height 0.2s, opacity 0.2s, margin 0.2s, padding 0.2s;
+    transition: max-height 0.2s, opacity 0.2s, margin 0.2s, padding 0.2s, border-color 0.2s;
   }
 
   /* Subtitle (outside sticky) */

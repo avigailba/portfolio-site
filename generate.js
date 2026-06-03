@@ -289,7 +289,7 @@ async function hydrateTables(blocks) {
 // ── Layout ──────────────────────────────────────────────────
 
 // prefix: '' for root pages, '../' for project pages in dist/projects/
-function hdr(prefix, showProgress = false) {
+function hdr(prefix) {
   return `<header id="site-header">
   <div class="hdr-row">
     <a href="${prefix}index.html" class="mob-logo">
@@ -305,7 +305,7 @@ function hdr(prefix, showProgress = false) {
     <button class="mob-burger" id="open-menu" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
-  </div>${showProgress ? '\n  <div class="read-progress" id="read-progress"></div>' : ''}
+  </div>
 </header>
 <div class="mob-scrim" id="mob-scrim"></div>
 <aside class="mob-panel" id="mob-panel">
@@ -378,7 +378,7 @@ function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass =
   ${extraHead}<link rel="stylesheet" href="${prefix}style.css">
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
-  ${hdr(prefix, bodyClass === 'proj-page')}
+  ${hdr(prefix)}
   ${body}
   ${ftr(prefix)}
   <script src="${prefix}script.js"></script>
@@ -545,9 +545,13 @@ var CURRENT_SLUG = '${proj.slug}';
           <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">→</button>
         </div>
         <div class="proj-meta-m">
+          <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='${prevProj.slug}.html'">← Previous</button>
+          <span class="psep">·</span>
           <span class="pm">${year}</span>
-          <span class="pm psep">·</span>
+          <span class="psep">·</span>
           <span class="pm">${cat}</span>
+          <span class="psep">·</span>
+          <button class="proj-nav-text" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">Next →</button>
         </div>
       </div>
       ${proj.subtitle ? `<p class="proj-subtitle-m">${proj.subtitle}</p>` : ''}
