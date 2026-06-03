@@ -588,6 +588,12 @@ var CURRENT_SLUG = '${proj.slug}';
     window.addEventListener('scroll', function(){
       sticky.classList.toggle('condensed', window.scrollY > 56);
     }, { passive: true });
+    var sentinel = document.querySelector('.more-section');
+    if (sentinel && window.IntersectionObserver) {
+      new IntersectionObserver(function(entries){
+        sticky.classList.toggle('hide-at-bottom', entries[0].isIntersecting);
+      }).observe(sentinel);
+    }
   } else {
     var titleEl = sticky.querySelector('.proj-title-m');
     var R = 110, TITLE_FROM = 54, TITLE_TO = 22, PAD_FROM = 28, PAD_TO = 14;

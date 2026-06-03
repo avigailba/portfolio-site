@@ -863,8 +863,9 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
     background: rgba(255,255,255,0.92);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    transition: padding 0.2s ease, box-shadow 0.2s ease;
+    transition: padding 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
   }
+  .proj-title-sticky.hide-at-bottom { opacity: 0; pointer-events: none; }
   .proj-title-sticky.condensed {
     padding: 10px 20px;
     box-shadow: 0 1px 0 rgba(0,0,0,0.05), 0 6px 18px -12px rgba(0,0,0,0.15);
