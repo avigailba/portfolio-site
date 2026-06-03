@@ -736,11 +736,13 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .mob-panel-link {
     display: block; font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 26px; font-weight: 600; letter-spacing: -0.02em;
-    padding: 14px 0; color: #0a0a0a; border-bottom: 0.5px solid #ebebeb;
+    padding: 14px 0; color: #aaa; border-bottom: 0.5px solid #ebebeb;
     text-decoration: none; text-align: left; transition: opacity 0.15s;
   }
+  .mob-panel-link.active { color: #0a0a0a; }
+  .mob-panel-link.active::after { content: ' ↗'; }
   .mob-panel-link:active { opacity: 0.5; }
-  .mob-panel-foot { margin-top: auto; padding-top: 28px; }
+  .mob-panel-foot { margin-top: auto; padding-top: 24px; border-top: 0.5px solid #ebebeb; }
   .mob-panel-social { display: flex; flex-direction: column; gap: 2px; }
   .mob-panel-social a {
     display: flex; align-items: center; justify-content: space-between;
@@ -762,8 +764,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .feat-card:nth-child(n+3) { border-top: none; }
   .feat-card:hover { background: #fff; }
   .feat-title {
-    font-size: 40px; font-weight: 700; letter-spacing: -0.03em;
-    line-height: 1.1; min-height: unset; margin-bottom: 12px;
+    font-size: 48px; font-weight: 800; letter-spacing: -0.03em;
+    line-height: 1.05; min-height: unset; margin-bottom: 12px;
   }
   /* Disable WordArt hover on touch screens */
   .feat-card:nth-child(1):hover .feat-title,
@@ -778,13 +780,11 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 
   /* View buttons */
   .mob-view-btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 14px; font-weight: 500; color: #0a0a0a;
-    border: 0.5px solid #d8d8d8; border-radius: 999px; padding: 8px 16px;
-    text-decoration: none; transition: background 0.16s, color 0.16s, border-color 0.16s;
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 14px; font-weight: 500; color: #2b6cff;
+    text-decoration: none; border: none; background: none; padding: 0;
   }
-  .mob-view-btn:active { background: #0a0a0a; color: #fff; border-color: #0a0a0a; }
-  .mob-view-sm { padding: 6px 13px; font-size: 13px; }
+  .mob-view-sm { font-size: 13px; }
 
   /* Work rows — stacked layout */
   .row-wrap { opacity: 1; max-height: none; overflow: visible; }
