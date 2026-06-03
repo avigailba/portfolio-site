@@ -489,7 +489,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 }
 .proj-nav-btn {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   color: #2563eb;
   gap: 8px;
@@ -497,16 +497,18 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   opacity: 0.55;
   transition: opacity 0.2s;
 }
+.proj-nav-next { flex-direction: row-reverse; }
 .proj-nav-btn:hover { opacity: 1; }
-.proj-nav-btn i { font-size: 20px; }
+.proj-nav-btn i { font-size: 18px; flex-shrink: 0; }
 .proj-nav-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   color: #2563eb;
-  writing-mode: vertical-rl;
-  max-width: 52px;
-  line-height: 1.4;
-  text-align: center;
+  max-width: 100px;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 /* Prev/next project arrows: fixed in the side margins */
 .proj-side-nav .proj-nav-btn { position: fixed; top: 40vh; z-index: 8; }
