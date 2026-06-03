@@ -1,0 +1,2399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile Portfolio — Avigail Bahat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: #e8e8e8;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 40px;
+  min-height: 100vh;
+  background: #e8e8e8;
+}
+
+/* iPhone frame */
+.iphone-frame {
+  width: 390px;
+  height: 844px;
+  border-radius: 50px;
+  border: 6px solid #1a1a1a;
+  box-shadow:
+    0 0 0 1px #333,
+    0 30px 80px rgba(0,0,0,0.4),
+    0 10px 30px rgba(0,0,0,0.25);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.iphone-screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 44px;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+}
+
+.dynamic-island {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 34px;
+  background: #000;
+  border-radius: 17px;
+  z-index: 200;
+}
+
+.home-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 134px;
+  height: 5px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 3px;
+  z-index: 200;
+}
+
+/* Mob app root */
+.mob {
+  --ac: #0a0a0a;
+  --gray: #555;
+  --border: #ebebeb;
+  --surface: #f5f5f5;
+  --pad: 20px;
+  --tw-accent: #2b6cff;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: #fff;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 44px;
+  overflow: hidden;
+}
+
+.mob button { all: unset; cursor: pointer; }
+.mob a { color: inherit; text-decoration: none; }
+
+/* Scrollable page container */
+.mob-page {
+  position: absolute;
+  top: 58px; /* below dynamic island */
+  left: 0; right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Header */
+.mob-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: padding 0.2s ease, border-color 0.2s ease;
+  padding: 14px var(--pad) 14px;
+  border-bottom: 0.5px solid transparent;
+}
+
+.mob-header.condensed {
+  padding: 10px var(--pad);
+  border-bottom-color: var(--border);
+}
+
+.mob-header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mob-logo-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ac);
+  display: block;
+  line-height: 1.2;
+}
+
+.mob-logo-role {
+  font-size: 12px;
+  color: var(--gray);
+  max-height: 18px;
+  opacity: 1;
+  overflow: hidden;
+  transition: max-height 0.2s ease, opacity 0.2s ease;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.mob-header.condensed .mob-logo-role {
+  max-height: 0;
+  opacity: 0;
+}
+
+.mob-hamburger {
+  width: 38px;
+  height: 38px;
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: #fff;
+}
+
+.mob-hamburger span {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  background: var(--ac);
+  border-radius: 1px;
+}
+
+.mob-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--tw-accent);
+  transition: width 0.1s linear;
+}
+
+/* Slide-in menu */
+.mob-menu-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(10,10,10,0.32);
+  z-index: 50;
+  border-radius: 44px;
+}
+
+.mob-menu-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 82%;
+  background: #fff;
+  z-index: 51;
+  transform: translateX(100%);
+  transition: transform 0.34s ease-out;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0 44px 44px 0;
+  overflow: hidden;
+}
+
+.mob-menu-panel.open {
+  transform: translateX(0);
+}
+
+.mob-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 70px 24px 20px;
+}
+
+.mob-menu-close {
+  width: 30px;
+  height: 30px;
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--gray);
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.mob-menu-nav {
+  flex: 1;
+  padding: 8px 24px;
+  overflow-y: auto;
+}
+
+.mob-menu-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  padding: 16px 0;
+  border-bottom: 0.5px solid var(--border);
+  color: #aaa;
+  cursor: pointer;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.mob-menu-link.active {
+  color: var(--ac);
+}
+
+.mob-menu-footer {
+  padding: 20px 24px 40px;
+  border-top: 0.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mob-menu-footer a {
+  font-size: 14px;
+  color: var(--gray);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Lede */
+.mob-lede {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--ac);
+  line-height: 1.4;
+  padding: 28px var(--pad) 24px;
+}
+
+/* Section label */
+.mob-section-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--gray);
+  padding: 0 var(--pad);
+  margin-bottom: 0;
+}
+
+/* Featured cards */
+.mob-feat-card {
+  padding: 20px var(--pad);
+  border-bottom: 0.5px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.mob-feat-card:first-of-type {
+  border-top: 0.5px solid var(--border);
+  margin-top: 12px;
+}
+
+.mob-feat-card:active {
+  background: #f7f7f7;
+}
+
+.mob-feat-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--ac);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.mob-feat-sub {
+  font-size: 14px;
+  color: var(--gray);
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+.mob-feat-btn {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--tw-accent);
+  display: inline-flex;
+  align-items: center;
+}
+
+.mob-feat-btn.outline {
+  border: 0.5px solid var(--tw-accent);
+  border-radius: 3px;
+  padding: 5px 10px;
+}
+
+/* All work section */
+.mob-work-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px var(--pad) 0;
+}
+
+.mob-filter-btn {
+  font-size: 13px;
+  color: var(--gray);
+  border: 0.5px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 12px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.mob-filter-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: #fff;
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  z-index: 30;
+  min-width: 170px;
+  overflow: hidden;
+}
+
+.mob-filter-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-size: 13px;
+  padding: 12px 16px;
+  background: none;
+  color: var(--gray);
+  border-bottom: 0.5px solid var(--border);
+  cursor: pointer;
+}
+
+.mob-filter-option:last-child {
+  border-bottom: none;
+}
+
+.mob-filter-option.active {
+  color: var(--tw-accent);
+  font-weight: 500;
+}
+
+/* Work rows */
+.mob-rows {
+  padding: 0 var(--pad);
+  margin-top: 14px;
+}
+
+.mob-row {
+  padding: 14px 0;
+  border-bottom: 0.5px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mob-row:first-child {
+  border-top: 0.5px solid var(--border);
+}
+
+.mob-row-top {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.mob-row-num {
+  font-size: 12px;
+  color: var(--gray);
+  min-width: 22px;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+.mob-row-title {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ac);
+  line-height: 1.3;
+  flex: 1;
+}
+
+.mob-row-sub {
+  font-size: 12px;
+  color: var(--gray);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 32px;
+}
+
+.mob-row-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 32px;
+  margin-top: 2px;
+}
+
+.mob-cat-tag {
+  font-size: 12px;
+  color: var(--gray);
+  border: 0.5px solid var(--border);
+  border-radius: 3px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.mob-row-view {
+  font-size: 13px;
+  color: var(--tw-accent);
+}
+
+/* Project header */
+.mob-proj-header {
+  position: sticky;
+  z-index: 35;
+  background: rgba(255,255,255,0.95);
+  transition: padding 0.2s ease, box-shadow 0.2s ease;
+  padding: 16px var(--pad);
+  border-bottom: 0.5px solid transparent;
+}
+
+.mob-proj-header.condensed {
+  padding: 10px var(--pad);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 1px 0 var(--border);
+}
+
+.mob-proj-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mob-proj-nav-btn {
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  font-size: 18px;
+  transition: width 0.2s ease, height 0.2s ease, font-size 0.2s ease;
+  background: #fff;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+}
+
+.mob-proj-header.condensed .mob-proj-nav-btn {
+  width: 26px;
+  height: 26px;
+  font-size: 14px;
+}
+
+.mob-proj-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ac);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  flex: 1;
+  transition: font-size 0.2s ease;
+  min-width: 0;
+}
+
+.mob-proj-header.condensed .mob-proj-title {
+  font-size: 18px;
+}
+
+.mob-proj-meta {
+  font-size: 12px;
+  color: var(--gray);
+  margin-top: 8px;
+  max-height: 32px;
+  opacity: 1;
+  overflow: hidden;
+  transition: max-height 0.2s ease, opacity 0.2s ease, margin 0.2s ease;
+}
+
+.mob-proj-header.condensed .mob-proj-meta {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+}
+
+/* Project content */
+.mob-proj-content {
+  padding: 24px var(--pad) 0;
+}
+
+.mob-proj-intro {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ac);
+  line-height: 1.6;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.mob-proj-h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ac);
+  margin-bottom: 12px;
+  margin-top: 28px;
+}
+
+.mob-proj-ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mob-proj-ul li {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.65;
+  padding-left: 14px;
+  position: relative;
+}
+
+.mob-proj-ul li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: #bbb;
+}
+
+.mob-proj-p {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.65;
+}
+
+.mob-proj-figure {
+  margin: 20px 0;
+}
+
+.mob-proj-img {
+  width: 100%;
+  border-radius: 6px;
+  display: block;
+  background: var(--surface);
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.mob-proj-img:active {
+  opacity: 0.9;
+}
+
+.mob-proj-caption {
+  font-size: 12px;
+  color: var(--gray);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.mob-proj-bottom-line {
+  font-size: 15px;
+  color: #444;
+  line-height: 1.7;
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* More work on project page */
+.mob-more-work {
+  padding: 32px var(--pad) 0;
+}
+
+.mob-back-link {
+  font-size: 14px;
+  color: var(--tw-accent);
+  padding: 20px var(--pad) 0;
+  display: block;
+}
+
+.mob-see-all {
+  display: block;
+  font-size: 14px;
+  color: var(--tw-accent);
+  padding: 20px 0 4px;
+  cursor: pointer;
+}
+
+/* Bottom pager */
+.mob-pager {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  height: 56px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 0.5px solid var(--border);
+  display: flex;
+  align-items: center;
+}
+
+.mob-pager-prev,
+.mob-pager-next {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.mob-pager-prev {
+  padding: 0 var(--pad);
+  gap: 6px;
+}
+
+.mob-pager-next {
+  padding: 0 var(--pad);
+  gap: 6px;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.mob-pager-arrow {
+  font-size: 18px;
+  color: var(--gray);
+  flex-shrink: 0;
+}
+
+.mob-pager-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ac);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.mob-pager-divider {
+  width: 0.5px;
+  height: 28px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* Lightbox */
+.mob-lightbox {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 44px;
+  padding: 16px;
+}
+
+.mob-lightbox-img {
+  max-width: 100%;
+  max-height: 80%;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
+.mob-lightbox-caption {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  margin-top: 12px;
+  line-height: 1.4;
+}
+
+.mob-lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.mob-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.mob-lightbox-nav.prev { left: 12px; }
+.mob-lightbox-nav.next { right: 12px; }
+
+/* Footer */
+.mob-footer {
+  background: #0a0a0a;
+  padding: 32px var(--pad) 52px;
+  margin-top: 40px;
+}
+
+.mob-footer-statement {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.mob-footer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.mob-footer-tag {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  border: 0.5px solid rgba(255,255,255,0.2);
+  border-radius: 3px;
+  padding: 4px 8px;
+}
+
+.mob-footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.mob-footer-link {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  background: none;
+  text-align: left;
+}
+
+.mob-footer-copy {
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.5;
+}
+
+/* About page */
+.mob-about-content {
+  padding: 24px var(--pad) 0;
+}
+
+.mob-about-bio {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ac);
+  line-height: 1.6;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.mob-cv-section-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--gray);
+  margin-bottom: 20px;
+  margin-top: 28px;
+}
+
+.mob-cv-role {
+  margin-bottom: 28px;
+}
+
+.mob-cv-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ac);
+  display: block;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.mob-cv-sub-roles {
+  border-left: 1.5px solid var(--border);
+  padding-left: 16px;
+  margin-top: 10px;
+}
+
+.mob-cv-sub-role {
+  margin-bottom: 18px;
+}
+
+.mob-cv-sub-role:last-child {
+  margin-bottom: 0;
+}
+
+.mob-cv-years {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ac);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.mob-cv-desc {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.65;
+  margin-top: 4px;
+}
+
+.mob-cv-proj-list {
+  font-size: 12px;
+  color: var(--gray);
+  font-style: italic;
+  line-height: 1.6;
+  margin-top: 5px;
+}
+
+.mob-skills {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.8;
+}
+
+.mob-contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.mob-contact-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  color: var(--ac);
+  padding: 16px 0;
+  border-bottom: 0.5px solid var(--border);
+  cursor: pointer;
+}
+
+.mob-contact-link:first-child {
+  border-top: 0.5px solid var(--border);
+}
+
+/* Contact page */
+.mob-contact-content {
+  padding: 24px var(--pad) 0;
+}
+
+/* Design system page */
+.mob-ds-content {
+  padding: 24px var(--pad) 0;
+}
+
+.mob-ds-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ac);
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+.mob-ds-section {
+  margin-bottom: 28px;
+}
+
+.mob-ds-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--gray);
+  margin-bottom: 12px;
+}
+
+.mob-ds-swatches {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mob-ds-swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.mob-ds-swatch-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 0.5px solid rgba(0,0,0,0.1);
+}
+
+.mob-ds-swatch-name {
+  font-size: 10px;
+  color: var(--gray);
+  text-align: center;
+}
+
+.mob-ds-type-row {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.mob-ds-type-label {
+  font-size: 10px;
+  color: var(--gray);
+  margin-bottom: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Tweaks panel */
+.tweaks-panel {
+  width: 220px;
+  background: #fff;
+  border: 0.5px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px 16px;
+  position: sticky;
+  top: 40px;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.tweaks-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0a0a0a;
+  margin-bottom: 18px;
+}
+
+.tweaks-group {
+  margin-bottom: 18px;
+}
+
+.tweaks-group-label {
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.tweaks-sub-label {
+  font-size: 11px;
+  color: #555;
+  margin-bottom: 6px;
+  margin-top: 10px;
+}
+
+.tweaks-pill-group {
+  display: flex;
+  border: 0.5px solid #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.tweaks-pill {
+  flex: 1;
+  font-size: 12px;
+  padding: 7px 0;
+  text-align: center;
+  cursor: pointer;
+  background: #fff;
+  color: #666;
+  border: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.tweaks-pill.active {
+  background: #0a0a0a;
+  color: #fff;
+}
+
+.tweaks-swatches {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tweaks-swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  border: 2px solid transparent;
+  transition: border-color 0.15s;
+}
+
+.tweaks-swatch.selected {
+  border-color: #2b6cff;
+  box-shadow: 0 0 0 2px #fff inset;
+}
+
+.tweaks-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.tweaks-toggle-label {
+  font-size: 12px;
+  color: #555;
+}
+
+.tweaks-switch {
+  width: 34px;
+  height: 20px;
+  border-radius: 10px;
+  background: #ddd;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.tweaks-switch.on {
+  background: #0a0a0a;
+}
+
+.tweaks-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s;
+}
+
+.tweaks-switch.on::after {
+  transform: translateX(14px);
+}
+
+.tweaks-divider {
+  height: 0.5px;
+  background: #f0f0f0;
+  margin: 14px 0;
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useRef, useEffect, useCallback, useMemo } = React;
+
+const PROJECTS = [
+  {
+    slug: 'ai-credits-wallet',
+    title: 'AI Credits',
+    subtitle: 'AI credits billing system across Business Manager and Wixel',
+    cats: 'developer',
+    display: 'Developer tools',
+    year: 2026,
+    featured: true,
+    intro: "Wix was introducing a Credits Wallet as part of Premium plans, enabling AI-powered features across Business Manager and Wixel. I led the end-to-end UX for the Credits Balance component and credit model, designing for transparency and consistent upgrade behavior across surfaces.",
+    whatIDid: [
+      "Designed a platformized credits balance component across Business Manager (site level), Wixel (desktop and mobile), and AI vertical pages",
+      "Designed a two-tier credit model: free account with a daily credit allotment, and Premium wallet tied to site plans",
+      "Defined clear paywall, notifications and upgrade behavior when credits run out",
+      "Partnered with Premium, AI verticals, and Legal on scope and monetization",
+      "Defined a collaborator credits wallet (not shipped)"
+    ],
+    impact: "Credits consumption grew dramatically in the months following launch, reflecting the rapid adoption of AI features across Wix products.",
+    images: [
+      { src: 'dist/images/img-1.jpg', caption: 'Free wallet inside Business Manager' },
+      { src: 'dist/images/img-2.jpg', caption: 'Subscription wallet inside Business Manager' },
+      { src: 'dist/images/img-3.jpg', caption: 'Free wallet inside Wixel' },
+    ],
+    bottomLine: "The challenge was not just designing the components. It was defining what 'credits' means for users across very different contexts, and making sure the model felt consistent and transparent regardless of where they encountered it.",
+  },
+  {
+    slug: 'app-installation-page-for-developers',
+    title: 'App Installations Page',
+    subtitle: 'Developer dashboard for installation data and user insights',
+    cats: 'developer',
+    display: 'Developer tools',
+    year: 2025,
+    featured: true,
+    intro: "I led UX for a new developer-facing data hub that surfaces installation and user insights in the developer dashboard, built in response to high-volume demand. The work required defining the information architecture for complex server-side data from scratch, collaborating closely with backend engineers and documentation writers.",
+    whatIDid: [
+      "Defined the information architecture for complex server-side data",
+      "Partnered with backend engineers and documentation writers to align on APIs and data exposure",
+      "Designed a scannable, action-oriented table letting developers view, copy, and act on installation data",
+      "Assisted the developer team in implementing this page using Cursor and then Claude Code"
+    ],
+    impact: "Since opening to all developers, the majority of those who visited the Wix Developer Center and had published apps discovered the table. Of those who saw it, the majority took actions: applying filters, copying data, and using search.",
+    images: [
+      { src: 'dist/images/img-12.jpg', caption: 'Default table view showing app installation data per developer' },
+      { src: 'dist/images/img-15.jpg', caption: 'Full columns view with all available data fields visible' },
+      { src: 'dist/images/img-16.jpg', caption: 'Added features and fixed bugs using Cursor' },
+    ],
+    bottomLine: "The hardest part was not designing the table. It was figuring out what data could realistically be surfaced through the API and making it genuinely useful for developers with very different technical needs.",
+  },
+  {
+    slug: 'app-reviews-revamp',
+    title: 'App Reviews Revamp',
+    subtitle: 'Redesigned reviews management experience for App Market developers',
+    cats: 'developer',
+    display: 'Developer tools',
+    year: 2024,
+    featured: false,
+    intro: "I initiated and led the UX redesign of the reviews management experience for Wix App Market developers. Starting with research to identify pain points, I designed a unified dashboard that aggregates feedback across all of a developer's apps.",
+    whatIDid: [
+      "Conducted research on developer needs and mapped key pain points",
+      "Designed a unified reviews dashboard with filtering, sorting, and response management",
+      "Changed the review opening pattern from inline accordion to a modal, making it reusable across the platform",
+      "Planned an AI-assisted flow for reporting and removing inappropriate reviews"
+    ],
+    impact: "The project was not shipped, but it set the direction for how cross-app review management should work at scale.",
+    images: [
+      { src: 'dist/images/img-17.jpg', caption: 'Reviews dashboard: aggregated view across all apps' },
+      { src: 'dist/images/img-20.jpg', caption: 'Review management modal: reading a review and drafting a reply' },
+    ],
+    bottomLine: "Reviews are one of those features that feel simple until you're designing them at scale. The challenge was figuring out what a developer with ten apps actually needs to see.",
+  },
+  {
+    slug: 'developer-sale',
+    title: 'Developer Sale',
+    subtitle: 'Native sales infrastructure for app developers on the marketplace',
+    cats: 'developer monetisation',
+    display: 'Monetisation',
+    year: 2024,
+    featured: true,
+    intro: "The Wix App Market had no native sales infrastructure. Developers couldn't run their own promotions, and Wix had no mechanism for market-wide sales events. I led the end-to-end UX for a new sales framework covering different offer types.",
+    whatIDid: [
+      "Designed the end-to-end sale creation flow enabling developers to set up promotional sales",
+      "Designed the sale management interface with clear differentiation between developer-initiated and Wix-hosted events",
+      "Defined offer types, discount structures, and eligibility rules across coupons, dev sales, and Wix-wide events",
+      "Designed the UX for participating in Wix-wide sale events, including app-facing plan and cycle selectors"
+    ],
+    impact: "The first Wix Sale had a significant portion of eligible apps join, with the majority choosing the maximum discount. It drove strong month-over-month increases in App Market visits, new subscriptions, and upgrade revenue. Pricing pages with a sale converted at a significantly higher rate than non-sale pages.",
+    images: [
+      { src: 'dist/images/img-26.jpg', caption: 'Sales tab in the developer dashboard' },
+      { src: 'dist/images/img-27.jpg', caption: 'Developer sale creation flow' },
+      { src: 'dist/images/img-29.jpg', caption: 'Sales management dashboard' },
+    ],
+    bottomLine: "The real design challenge was not the sale creation form. It was making three structurally different offer types feel like a coherent system to developers who just want to run a discount.",
+  },
+  {
+    slug: 'app-collections-internal-manager',
+    title: 'App Collections Manager',
+    subtitle: 'Curation tooling for App Market vertical collections',
+    cats: 'developer internal',
+    display: 'Internal tools',
+    year: 2024,
+    featured: false,
+    intro: "Wix's App Market surfaces curated collections of apps for different business verticals. I designed the internal tooling that lets the App Market team create, manage, and publish these collections without engineering involvement.",
+    whatIDid: [
+      "Designed the collections management interface for internal curation teams",
+      "Defined the workflow for creating, editing, and publishing app collections",
+      "Designed app search and selection tools within the manager",
+      "Built logic for ordering, featuring, and categorizing apps within collections"
+    ],
+    impact: "Reduced the time to create and update collections, giving the curation team direct control over what users see in marketplace verticals.",
+    images: [],
+    bottomLine: "Internal tools live or die on how well they map to the actual workflow of the people using them. Getting that right meant spending significant time understanding the curation process before designing anything.",
+  },
+  {
+    slug: 'payouts-page',
+    title: 'Payouts Page',
+    subtitle: 'In-product earnings visibility for App Market developers',
+    cats: 'monetisation',
+    display: 'Monetisation',
+    year: 2023,
+    featured: false,
+    intro: "Before the Payouts tab existed, developers had no in-product visibility into their earnings. I designed a developer-facing payouts dashboard with overview and transactions views, and later integrated a self-serve refund flow directly within the dashboard.",
+    whatIDid: [
+      "Defined the information architecture for the payouts dashboard (overview and transactions views)",
+      "Designed the payouts overview showing total collections, billing fees, and expected payout amounts",
+      "Designed the transactions tab with filtering and search for historical payout data",
+      "Integrated a self-serve refund flow directly within the payout dashboard"
+    ],
+    impact: "Actively used since early 2021, with a consistent and growing number of unique developers viewing their payouts data each month. Eliminated the need to contact support for earnings visibility.",
+    images: [
+      { src: 'dist/images/img-55.jpg', caption: 'Payouts dashboard: earnings summary and transactions tab' },
+      { src: 'dist/images/img-56.jpg', caption: 'Transactions tab with filtering, search, and inline refund actions' },
+    ],
+    bottomLine: "Financial transparency is one of those things that should feel completely unremarkable to the person using it. Getting the information architecture right here mattered more than any individual screen.",
+  },
+  {
+    slug: 'refund-flow',
+    title: 'Refund Flow',
+    subtitle: 'Self-serve refund flow replacing manual support intervention',
+    cats: 'monetisation',
+    display: 'Monetisation',
+    year: 2023,
+    featured: false,
+    intro: "Wix App Market developers had no way to issue refunds directly. Every request required manual support intervention. I designed the refund flow embedded within the payouts transaction table, covering the full lifecycle.",
+    whatIDid: [
+      "Mapped the end-to-end refund journey and identified key decision points and edge cases",
+      "Designed the refund initiation UI within the transactions table (inline action)",
+      "Designed the confirmation dialog, processing state, and success/error states",
+      "Collaborated with finance and engineering to ensure design matched backend refund logic"
+    ],
+    impact: "Eliminated manual Dev Relations team intervention for every refund. Refund volume grew significantly year over year as the platform scaled.",
+    images: [
+      { src: 'dist/images/img-59.jpg', caption: 'Entry point: Request refund action in the transactions table row menu' },
+      { src: 'dist/images/img-60.jpg', caption: 'Review step: confirm refund details before submitting' },
+    ],
+    bottomLine: "A refund flow sounds simple, but the hard part is the edge cases: what state is the subscription in, what does the developer actually need to confirm, and how do you make a consequential financial action feel safe without adding too much friction.",
+  },
+  {
+    slug: 'app-pricing-page-projects',
+    title: 'App Pricing Page',
+    subtitle: 'Long-term UX evolution of App Market pricing infrastructure',
+    cats: 'developer monetisation',
+    display: 'Monetisation',
+    year: 2023,
+    featured: false,
+    intro: "The Wix App Market pricing infrastructure is the foundation for how developers monetize their apps. I owned the long-term UX evolution across multiple shipping cycles: introducing flexible billing models, transforming plan creation, redesigning the pricing comparison interface, and leading the migration to Wix-managed free trials.",
+    whatIDid: [
+      "Led UX for Wix-managed Free Trial: $0 upfront checkout with auto-billing at trial end",
+      "Designed UX for Pay-as-you-go and Metered Billing pricing models",
+      "Redesigned the 'add a plan' experience from a constrained modal to a full-page dedicated flow",
+      "Led platform-wide migration plan for apps already on self-managed trials"
+    ],
+    impact: "Strong trial-to-paid conversion and significant subscription growth in the first year of Wix-managed free trials.",
+    images: [
+      { src: 'dist/images/img-63.jpg', caption: 'Flow comparison: old self-managed vs new Wix-managed free trial' },
+      { src: 'dist/images/img-66.jpg', caption: 'Conditions matrix mapping valid plan combinations' },
+    ],
+    bottomLine: "Pricing infrastructure is infrastructure: the decisions you make constrain everything downstream, and changing them later is expensive. Getting the model right mattered more than the UI.",
+  },
+  {
+    slug: 'internal-app-review-system',
+    title: 'App Review System',
+    subtitle: 'Workflow tool for Account Managers to review marketplace apps',
+    cats: 'internal',
+    display: 'Internal tools',
+    year: 2022,
+    featured: true,
+    intro: "Wix App Market's internal review platform is the tool Account Managers use to evaluate and approve apps submitted to the marketplace. As the team scaled, Account Managers began bypassing the old tool in favor of Google Docs and Slides for their actual review work, a clear signal the platform wasn't meeting their needs.",
+    whatIDid: [
+      "Conducted discovery research to identify pain points causing Account Managers to use external tools",
+      "Redesigned the platform's UI aligned to Wix Style React guidelines",
+      "Restructured the system architecture to better support organizational scale",
+      "Designed a new integrated review workflow enabling in-platform commenting and report submission",
+      "Facilitated a bug hunt session with Account Managers to validate the redesign before launch"
+    ],
+    impact: "The tool is still actively used by Wix's Developer Relations team. It reduced account manager workload, shortened the review cycle, and made app evaluations faster and more consistent.",
+    images: [
+      { src: 'dist/images/img-45.jpg', caption: 'Apps dashboard: full list of apps under review with status and assignments' },
+      { src: 'dist/images/img-47.jpg', caption: 'Per-app activity log: every status change tracked chronologically' },
+      { src: 'dist/images/img-48.jpg', caption: 'Review report: comments organized by path, flagging issues by type' },
+    ],
+    bottomLine: "The most telling signal was that the team had already voted with their feet, doing the actual work outside the platform. Success was not about launching a redesign. It was about building something good enough that they would stop reaching for Google Docs.",
+  },
+  {
+    slug: 'submit-publish-widget',
+    title: 'Submit & Publish Widget',
+    subtitle: 'Submission requirements surfaced in-context during the publishing flow',
+    cats: 'developer',
+    display: 'Developer tools',
+    year: 2022,
+    featured: false,
+    intro: "Developers submitting apps to the Wix App Market had to navigate to a separate page to check submission requirements, disconnected from their workflow. I replaced the fragmented checklist with a contextual sidebar widget that surfaced blockers and recommendations in real time.",
+    whatIDid: [
+      "Replaced the fragmented tab-based submission checklist with a contextual sidebar widget",
+      "Designed three adaptive layout states: minimized, widget, and expanded",
+      "Surfaced real-time blockers and recommendations directly in context",
+      "Extended the system to support auto-publishing for changes that don't require a full review"
+    ],
+    impact: "Reduced the volume of apps rejected for basic submission issues, and gave developers immediate visibility into what was blocking their submission.",
+    images: [
+      { src: 'dist/images/img-80.jpg', caption: 'Widget view with active blockers: submission disabled with count of issues' },
+      { src: 'dist/images/img-82.jpg', caption: 'Open panel: blockers tab showing each issue with a direct action' },
+    ],
+    bottomLine: "The insight that drove this project was that developers were not ignoring the requirements, they just weren't seeing them at the right moment. Putting the checklist in context, next to the actual work, changed the behavior.",
+  },
+  {
+    slug: 'custom-element-component-settings',
+    title: 'Custom Element Settings',
+    subtitle: 'Visual settings builder for Wix Custom Element apps',
+    cats: 'cms',
+    display: 'CMS',
+    year: 2022,
+    featured: false,
+    intro: "Wix Custom Elements allow third-party developers to embed their own web components into Wix sites. I designed the settings panel builder: a tool that lets developers define the configuration UI that site owners see when they add a custom element to their site.",
+    whatIDid: [
+      "Designed the settings builder interface for defining custom element configuration panels",
+      "Defined the component types available (text, toggle, dropdown, color picker, etc.)",
+      "Designed the preview pane showing how settings panels appear to site owners",
+      "Worked with platform engineers to align on the data model and capabilities"
+    ],
+    impact: "Enabled developers to create richer, more configurable custom elements without requiring custom development of settings UIs.",
+    images: [],
+    bottomLine: "Designing a tool for configuring a tool for configuring an app is an interesting recursive challenge. The key was keeping the mental model clear at each level of abstraction.",
+  },
+  {
+    slug: 'api-keys-page',
+    title: 'API Keys Page',
+    subtitle: 'Secure key generation and management for Wix platform developers',
+    cats: 'developer',
+    display: 'Developer tools',
+    year: 2022,
+    featured: false,
+    intro: "Wix platform developers needed a secure, self-serve way to generate and manage API keys for accessing Wix APIs. I designed the API keys management page in the developer dashboard, covering key generation, permissions, expiry, and revocation.",
+    whatIDid: [
+      "Designed the API keys management page covering the full key lifecycle",
+      "Defined the permissions and scope model for API keys",
+      "Designed the key creation flow with name, scope selection, and expiry settings",
+      "Designed revocation and rotation patterns with appropriate confirmation friction"
+    ],
+    impact: "Gave developers self-serve access to API key management, reducing support requests and enabling faster integration workflows.",
+    images: [],
+    bottomLine: "API key management is a trust-sensitive surface: developers are creating credentials that could cause real damage if misused. Every destructive action (revoke, delete) needed the right amount of friction without being obstructive.",
+  },
+  {
+    slug: 'development-site-creation',
+    title: 'Development Site Creation',
+    subtitle: 'Self-serve provisioning of premium test sites for developers',
+    cats: 'developer',
+    display: 'Developer tools',
+    year: 2021,
+    featured: false,
+    intro: "Wix developers building apps needed access to premium Wix sites to test their apps in realistic conditions. Previously this required manual provisioning through support. I designed the self-serve flow for creating development sites directly from the developer dashboard.",
+    whatIDid: [
+      "Designed the development site creation flow from the developer dashboard",
+      "Defined the site type options and plan configuration for test environments",
+      "Designed the management view for existing development sites",
+      "Worked with the Wix sites team to align on provisioning capabilities and limits"
+    ],
+    impact: "Enabled developers to self-provision test environments, reducing wait time and support volume for a previously manual process.",
+    images: [],
+    bottomLine: "Developers testing their apps should be able to create a realistic environment in under two minutes. Getting that right meant simplifying choices that had previously required support team involvement.",
+  },
+  {
+    slug: 'app-coupons',
+    title: 'App Coupons',
+    subtitle: 'Self-serve coupon creation for App Market developers',
+    cats: 'monetisation',
+    display: 'Monetisation',
+    year: 2021,
+    featured: false,
+    intro: "App Market developers wanted to offer discounts to specific users without running broad sales. I designed the self-serve coupon creation flow, enabling developers to generate discount codes tied to specific apps, plans, and usage limits.",
+    whatIDid: [
+      "Designed the coupon creation flow: code, discount type, applicable plans, and usage limits",
+      "Designed the coupon management dashboard with status, usage tracking, and expiry",
+      "Defined the rules for coupon eligibility and stacking behavior",
+      "Worked with billing infrastructure team to align on constraints"
+    ],
+    impact: "Gave developers a self-serve promotional tool, enabling targeted discounting without requiring platform-wide sale events.",
+    images: [],
+    bottomLine: "Coupons seem simple but have surprisingly sharp edges: what happens when a coupon is applied to a plan that already has a discount? Defining the rules clearly upfront prevented a lot of edge cases downstream.",
+  },
+];
+
+const FEAT_ORDER = ['ai-credits-wallet', 'app-installation-page-for-developers', 'internal-app-review-system', 'developer-sale'];
+
+const FEAT_COLORS = ['#2b6cff', '#f4660b', '#8b5cf6', '#0aa17a'];
+
+const ACCENT_MAP = {
+  black: '#0a0a0a',
+  blue: '#2b6cff',
+  green: '#0aa17a',
+  violet: '#8b5cf6',
+  orange: '#f4660b',
+};
+
+const CAT_COLOR_MAP = {
+  developer: '#2b6cff',
+  monetisation: '#0aa17a',
+  internal: '#8b5cf6',
+  cms: '#f4660b',
+};
+
+function getCatColor(cats) {
+  const first = cats.split(' ')[0];
+  return CAT_COLOR_MAP[first] || '#555';
+}
+
+function getFeaturedProjects() {
+  return FEAT_ORDER.map(slug => PROJECTS.find(p => p.slug === slug)).filter(Boolean);
+}
+
+function getMoreWork(currentSlug) {
+  const others = PROJECTS.filter(p => p.slug !== currentSlug);
+  const shuffled = [...others].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 4);
+}
+
+// ─── Lightbox ───────────────────────────────────────────────────────────────
+function Lightbox({ images, index, onClose, onNav }) {
+  const img = images[index];
+  const touchStartX = useRef(null);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 40) {
+      if (dx < 0 && index < images.length - 1) onNav(1);
+      else if (dx > 0 && index > 0) onNav(-1);
+    }
+    touchStartX.current = null;
+  };
+
+  return (
+    <div
+      className="mob-lightbox"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      <button className="mob-lightbox-close" onClick={onClose}>✕</button>
+      {index > 0 && (
+        <button className="mob-lightbox-nav prev" onClick={() => onNav(-1)}>‹</button>
+      )}
+      {index < images.length - 1 && (
+        <button className="mob-lightbox-nav next" onClick={() => onNav(1)}>›</button>
+      )}
+      <img
+        className="mob-lightbox-img"
+        src={img.src}
+        alt={img.caption}
+      />
+      {img.caption && (
+        <div className="mob-lightbox-caption">{img.caption}</div>
+      )}
+    </div>
+  );
+}
+
+// ─── Header ─────────────────────────────────────────────────────────────────
+function MobHeader({ scrollTop, screen, totalHeight, containerHeight, onMenuOpen, accentColor }) {
+  const condensed = scrollTop > 24;
+  const isProject = screen === 'project';
+  const progress = isProject
+    ? Math.min(scrollTop / Math.max(1, totalHeight - containerHeight), 1) * 100
+    : 0;
+
+  return (
+    <div className={`mob-header${condensed ? ' condensed' : ''}`} style={{ position: 'sticky', top: 0, zIndex: 40 }}>
+      <div className="mob-header-inner">
+        <div>
+          <span className="mob-logo-name">Avigail Bahat</span>
+          <div className="mob-logo-role">Senior UX Designer</div>
+        </div>
+        <button className="mob-hamburger" onClick={onMenuOpen} aria-label="Open menu">
+          <span />
+          <span />
+          <span />
+        </button>
+      </div>
+      {isProject && (
+        <div
+          className="mob-progress-bar"
+          style={{ width: `${progress}%`, background: accentColor }}
+        />
+      )}
+    </div>
+  );
+}
+
+// ─── Slide-in Menu ──────────────────────────────────────────────────────────
+function SlideMenu({ open, screen, onClose, onGo }) {
+  const links = [
+    { label: 'Home', target: 'home' },
+    { label: 'Work', target: 'work' },
+    { label: 'About', target: 'about' },
+    { label: 'Contact', target: 'contact' },
+    { label: 'Design system', target: 'ds' },
+  ];
+
+  const activeTarget = screen === 'project' ? 'work' : screen;
+
+  return (
+    <>
+      {open && (
+        <div className="mob-menu-scrim" onClick={onClose} />
+      )}
+      <div className={`mob-menu-panel${open ? ' open' : ''}`}>
+        <div className="mob-menu-header">
+          <span className="mob-logo-name" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Avigail Bahat</span>
+          <button className="mob-menu-close" onClick={onClose}>✕</button>
+        </div>
+        <nav className="mob-menu-nav">
+          {links.map(link => (
+            <button
+              key={link.target}
+              className={`mob-menu-link${activeTarget === link.target ? ' active' : ''}`}
+              onClick={() => { onGo(link.target); onClose(); }}
+            >
+              {link.label}
+              {activeTarget === link.target && <span style={{ fontSize: 18 }}>↗</span>}
+            </button>
+          ))}
+        </nav>
+        <div className="mob-menu-footer">
+          <a href="mailto:avigailba@gmail.com">avigailba@gmail.com ↗</a>
+          <a href="https://linkedin.com/in/avigailbahat" target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
+      </div>
+    </>
+  );
+}
+
+// ─── Footer ─────────────────────────────────────────────────────────────────
+function MobFooter({ onGo }) {
+  const tags = ['Developer tools', 'AI products', 'Complex systems', 'B2B SaaS', 'Platform design', 'Marketplace'];
+  return (
+    <div className="mob-footer">
+      <div className="mob-footer-statement">Open to new work.</div>
+      <div className="mob-footer-tags">
+        {tags.map(t => <span key={t} className="mob-footer-tag">{t}</span>)}
+      </div>
+      <div className="mob-footer-links">
+        <a href="mailto:avigailba@gmail.com" className="mob-footer-link">avigailba@gmail.com ↗</a>
+        <a href="https://linkedin.com/in/avigailbahat" target="_blank" rel="noopener" className="mob-footer-link">LinkedIn ↗</a>
+        <button className="mob-footer-link" onClick={() => onGo('ds')}>Design system ↗</button>
+      </div>
+      <div className="mob-footer-copy">© 2026 Avigail Bahat. Built using Notion and Claude.</div>
+    </div>
+  );
+}
+
+// ─── Home Screen ────────────────────────────────────────────────────────────
+function HomeScreen({ tweaks, accentColor, onGo }) {
+  const [filter, setFilter] = useState('all');
+  const [filterOpen, setFilterOpen] = useState(false);
+  const featProjects = useMemo(() => getFeaturedProjects(), []);
+
+  const filterOptions = [
+    { value: 'all', label: 'All projects' },
+    { value: 'developer', label: 'Developer tools' },
+    { value: 'monetisation', label: 'Monetisation' },
+    { value: 'internal', label: 'Internal tools' },
+    { value: 'cms', label: 'CMS' },
+  ];
+
+  const filteredProjects = useMemo(() => {
+    if (filter === 'all') return PROJECTS;
+    return PROJECTS.filter(p => p.cats.split(' ').includes(filter));
+  }, [filter]);
+
+  const currentFilterLabel = filterOptions.find(o => o.value === filter)?.label || 'All projects';
+
+  const btnStyle = tweaks.btnStyle;
+  const btnAlign = tweaks.btnAlign;
+
+  return (
+    <div>
+      {/* Lede */}
+      <div className="mob-lede">
+        Senior UX designer. I like the problems that need a whiteboard and finding surprising solutions. I've spent my career building tools: for developers, for internal teams, and for end users.
+      </div>
+
+      {/* Featured */}
+      <div id="mob-featured">
+        <div className="mob-section-label" style={{ paddingTop: 8 }}>Featured</div>
+        {featProjects.map((proj, i) => {
+          const titleColor = tweaks.colorfulTitles ? FEAT_COLORS[i] : 'var(--ac)';
+          return (
+            <div
+              key={proj.slug}
+              className="mob-feat-card"
+              onClick={() => onGo('project', proj.slug)}
+            >
+              <div className="mob-feat-title" style={{ color: titleColor }}>{proj.title}</div>
+              <div className="mob-feat-sub">{proj.subtitle}</div>
+              <div style={{ textAlign: btnAlign === 'right' ? 'right' : 'left' }}>
+                <span
+                  className={`mob-feat-btn${btnStyle === 'outline' ? ' outline' : ''}`}
+                  style={{ color: accentColor, borderColor: accentColor }}
+                >
+                  View project ↗
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* All work */}
+      <div id="mob-allwork">
+        <div className="mob-work-header">
+          <span className="mob-section-label" style={{ padding: 0 }}>All work</span>
+          <div style={{ position: 'relative' }}>
+            <button
+              className="mob-filter-btn"
+              onClick={() => setFilterOpen(o => !o)}
+            >
+              {currentFilterLabel} ▾
+            </button>
+            {filterOpen && (
+              <div className="mob-filter-dropdown">
+                {filterOptions.map(opt => (
+                  <button
+                    key={opt.value}
+                    className={`mob-filter-option${filter === opt.value ? ' active' : ''}`}
+                    style={filter === opt.value ? { color: accentColor } : {}}
+                    onClick={() => { setFilter(opt.value); setFilterOpen(false); }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="mob-rows">
+          {filteredProjects.map((proj, i) => {
+            const catColor = tweaks.catColor ? getCatColor(proj.cats) : 'var(--gray)';
+            const numColor = tweaks.catColor ? getCatColor(proj.cats) : 'var(--gray)';
+            return (
+              <div
+                key={proj.slug}
+                className="mob-row"
+                onClick={() => onGo('project', proj.slug)}
+              >
+                <div className="mob-row-top">
+                  <span className="mob-row-num" style={{ color: numColor }}>{String(i + 1).padStart(2, '0')}</span>
+                  <span className="mob-row-title">{proj.title}</span>
+                </div>
+                <div className="mob-row-sub">{proj.subtitle}</div>
+                <div className="mob-row-bottom">
+                  <span
+                    className="mob-cat-tag"
+                    style={{ color: catColor, borderColor: tweaks.catColor ? catColor : 'var(--border)' }}
+                  >
+                    {proj.display}
+                  </span>
+                  <span className="mob-row-view" style={{ color: accentColor }}>View ↗</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <MobFooter onGo={onGo} />
+    </div>
+  );
+}
+
+// ─── Project Screen ──────────────────────────────────────────────────────────
+function ProjectScreen({ slug, scrollTop, scrollRef, tweaks, accentColor, onGo, onLightbox }) {
+  const proj = PROJECTS.find(p => p.slug === slug);
+  const idx = PROJECTS.findIndex(p => p.slug === slug);
+  const n = PROJECTS.length;
+  const prevIdx = (idx - 1 + n) % n;
+  const nextIdx = (idx + 1) % n;
+  const prevProj = PROJECTS[prevIdx];
+  const nextProj = PROJECTS[nextIdx];
+
+  const moreWork = useMemo(() => getMoreWork(slug), [slug]);
+
+  if (!proj) return null;
+
+  const condensed = scrollTop > 56;
+  const HEADER_H = condensed ? 52 : 72;
+
+  const catColor = tweaks.catColor ? getCatColor(proj.cats) : 'var(--gray)';
+
+  return (
+    <div>
+      {/* Back link */}
+      <button className="mob-back-link" style={{ color: accentColor, display: 'block', paddingLeft: 20, paddingTop: 20, paddingBottom: 0, background: 'none', fontSize: 14, cursor: 'pointer' }} onClick={() => onGo('home')}>
+        ← Work
+      </button>
+
+      {/* Sticky project title bar */}
+      <div
+        className={`mob-proj-header${condensed ? ' condensed' : ''}`}
+        style={{ top: condensed ? 52 : 58 }}
+      >
+        <div className="mob-proj-title-row">
+          <button
+            className="mob-proj-nav-btn"
+            onClick={() => onGo('project', prevProj.slug)}
+            title={prevProj.title}
+          >←</button>
+          <div className="mob-proj-title">{proj.title}</div>
+          <button
+            className="mob-proj-nav-btn"
+            onClick={() => onGo('project', nextProj.slug)}
+            title={nextProj.title}
+          >→</button>
+        </div>
+        <div className="mob-proj-meta" style={{ color: catColor }}>
+          {proj.year} · {proj.display}
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="mob-proj-content">
+        <p className="mob-proj-intro">{proj.intro}</p>
+
+        {proj.whatIDid && proj.whatIDid.length > 0 && (
+          <>
+            <h2 className="mob-proj-h2">What I Did</h2>
+            <ul className="mob-proj-ul">
+              {proj.whatIDid.map((item, i) => <li key={i}>{item}</li>)}
+            </ul>
+          </>
+        )}
+
+        {proj.impact && (
+          <>
+            <h2 className="mob-proj-h2">Impact</h2>
+            <p className="mob-proj-p">{proj.impact}</p>
+          </>
+        )}
+
+        {proj.images && proj.images.length > 0 && (
+          <div style={{ marginTop: 8 }}>
+            {proj.images.map((img, i) => (
+              <figure className="mob-proj-figure" key={i}>
+                <img
+                  className="mob-proj-img"
+                  src={img.src}
+                  alt={img.caption}
+                  onClick={() => onLightbox(proj.images, i)}
+                />
+                {img.caption && (
+                  <figcaption className="mob-proj-caption">{img.caption}</figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        )}
+
+        {proj.bottomLine && (
+          <>
+            <h2 className="mob-proj-h2">Bottom line</h2>
+            <p className="mob-proj-bottom-line">{proj.bottomLine}</p>
+          </>
+        )}
+      </div>
+
+      {/* More work */}
+      <div className="mob-more-work">
+        <div className="mob-section-label" style={{ padding: 0, marginBottom: 14 }}>More work</div>
+        <div className="mob-rows" style={{ padding: 0 }}>
+          {moreWork.map((p, i) => {
+            const pCatColor = tweaks.catColor ? getCatColor(p.cats) : 'var(--gray)';
+            return (
+              <div
+                key={p.slug}
+                className="mob-row"
+                onClick={() => onGo('project', p.slug)}
+              >
+                <div className="mob-row-top">
+                  <span className="mob-row-num" style={{ color: pCatColor }}>{String(i + 1).padStart(2, '0')}</span>
+                  <span className="mob-row-title">{p.title}</span>
+                </div>
+                <div className="mob-row-sub">{p.subtitle}</div>
+                <div className="mob-row-bottom">
+                  <span
+                    className="mob-cat-tag"
+                    style={{ color: pCatColor, borderColor: tweaks.catColor ? pCatColor : 'var(--border)' }}
+                  >
+                    {p.display}
+                  </span>
+                  <span className="mob-row-view" style={{ color: accentColor }}>View ↗</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <button className="mob-see-all" style={{ color: accentColor }} onClick={() => onGo('work')}>
+          See all work →
+        </button>
+      </div>
+
+      {/* Bottom pager */}
+      <div className="mob-pager">
+        <button className="mob-pager-prev" onClick={() => onGo('project', prevProj.slug)}>
+          <span className="mob-pager-arrow">←</span>
+          <span className="mob-pager-label">{prevProj.title}</span>
+        </button>
+        <div className="mob-pager-divider" />
+        <button className="mob-pager-next" onClick={() => onGo('project', nextProj.slug)}>
+          <span className="mob-pager-label">{nextProj.title}</span>
+          <span className="mob-pager-arrow">→</span>
+        </button>
+      </div>
+
+      <MobFooter onGo={onGo} />
+    </div>
+  );
+}
+
+// ─── About Screen ────────────────────────────────────────────────────────────
+function AboutScreen({ accentColor, onGo }) {
+  return (
+    <div>
+      <div className="mob-about-content">
+        <p className="mob-about-bio">
+          Designer based in Tel Aviv. Curious, relentless, always learning. I love questioning everything and making complex systems work better.
+        </p>
+
+        <div className="mob-cv-section-title">Experience</div>
+
+        <div className="mob-cv-role">
+          <span className="mob-cv-title">UX Designer · Wix.com · 2014–2026</span>
+          <div className="mob-cv-sub-roles">
+            <div className="mob-cv-sub-role">
+              <span className="mob-cv-years">2025–2026 · OS company</span>
+              <p className="mob-cv-desc">Designed platform-level AI and developer-facing products. Led UX for the AI Credits system across Business Manager and Wixel, and redesigned the app installation data experience for developers.</p>
+              <p className="mob-cv-proj-list">AI Credits, App Installations Page</p>
+            </div>
+            <div className="mob-cv-sub-role">
+              <span className="mob-cv-years">2020–2025 · App Market</span>
+              <p className="mob-cv-desc">Owned design across Wix's developer marketplace: monetisation infrastructure, platform tooling, and internal operations.</p>
+              <p className="mob-cv-proj-list">Developer Sale, App Pricing Page, Payouts Page, Refund Flow, App Reviews, Submit &amp; Publish Widget, App Coupons, Internal Review System, App Collections Manager</p>
+            </div>
+            <div className="mob-cv-sub-role">
+              <span className="mob-cv-years">2019–2020 · Labs</span>
+              <p className="mob-cv-desc">Worked on experimental product initiatives within Wix.</p>
+            </div>
+            <div className="mob-cv-sub-role">
+              <span className="mob-cv-years">2018–2019 · Media</span>
+              <p className="mob-cv-desc">Designed the core video creation and management experience.</p>
+            </div>
+            <div className="mob-cv-sub-role">
+              <span className="mob-cv-years">2014–2018 · Wix ADI</span>
+              <p className="mob-cv-desc">One of the founding UX designers on Wix ADI, an AI-powered website builder.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mob-cv-role">
+          <span className="mob-cv-title">Marketing Designer and Lead · Wix · 2012–2013</span>
+        </div>
+
+        <div className="mob-cv-role">
+          <span className="mob-cv-title">Graphic Designer · McCann Erickson Israel · 2010–2012</span>
+        </div>
+
+        <div className="mob-cv-role">
+          <span className="mob-cv-title">Graphics · Walla.co.il · 2008–2010</span>
+        </div>
+
+        <div className="mob-cv-section-title">Education</div>
+
+        <div className="mob-cv-role">
+          <div style={{ marginBottom: 6 }}>
+            <span className="mob-cv-years">2006–2010 · Shenkar College</span>
+            <p className="mob-cv-desc">B.Des. in Graphic Design</p>
+          </div>
+        </div>
+
+        <div className="mob-cv-role">
+          <div style={{ marginBottom: 6 }}>
+            <span className="mob-cv-years">2012 · Netcraft Academy</span>
+            <p className="mob-cv-desc">UX course</p>
+          </div>
+        </div>
+
+        <div className="mob-cv-role">
+          <div style={{ marginBottom: 6 }}>
+            <span className="mob-cv-years">2004–2005 · Tel Aviv University</span>
+            <p className="mob-cv-desc">Economics and Philosophy</p>
+          </div>
+        </div>
+
+        <div className="mob-cv-section-title">Skills</div>
+        <p className="mob-skills">Figma · Google Suite · Cursor · Claude Code</p>
+
+        <div className="mob-cv-section-title" style={{ marginTop: 28 }}>Contact</div>
+        <div className="mob-contact-links" style={{ marginTop: 0 }}>
+          <a href="mailto:avigailba@gmail.com" className="mob-contact-link">
+            avigailba@gmail.com
+            <span style={{ color: accentColor }}>↗</span>
+          </a>
+          <a href="https://linkedin.com/in/avigailbahat" target="_blank" rel="noopener" className="mob-contact-link">
+            LinkedIn
+            <span style={{ color: accentColor }}>↗</span>
+          </a>
+          <a href="https://docs.google.com/document/d/1example" target="_blank" rel="noopener" className="mob-contact-link">
+            CV (Google Docs)
+            <span style={{ color: accentColor }}>↗</span>
+          </a>
+        </div>
+      </div>
+      <MobFooter onGo={onGo} />
+    </div>
+  );
+}
+
+// ─── Contact Screen ──────────────────────────────────────────────────────────
+function ContactScreen({ accentColor, onGo }) {
+  return (
+    <div>
+      <div className="mob-contact-content">
+        <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, fontWeight: 700, color: '#0a0a0a', letterSpacing: '-0.02em', marginBottom: 8, lineHeight: 1.1 }}>
+          Contact
+        </div>
+        <p style={{ fontSize: 15, color: '#555', lineHeight: 1.6, marginBottom: 28, paddingBottom: 28, borderBottom: '0.5px solid #ebebeb', marginTop: 12 }}>
+          Open to new work, collaborations, and interesting conversations.
+        </p>
+        <div>
+          <a href="mailto:avigailba@gmail.com" className="mob-contact-link" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 16, color: '#0a0a0a', padding: '16px 0', borderBottom: '0.5px solid #ebebeb', borderTop: '0.5px solid #ebebeb' }}>
+            avigailba@gmail.com
+            <span style={{ color: accentColor, fontSize: 18 }}>↗</span>
+          </a>
+          <a href="https://linkedin.com/in/avigailbahat" target="_blank" rel="noopener" className="mob-contact-link" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 16, color: '#0a0a0a', padding: '16px 0', borderBottom: '0.5px solid #ebebeb' }}>
+            LinkedIn
+            <span style={{ color: accentColor, fontSize: 18 }}>↗</span>
+          </a>
+          <a href="https://docs.google.com/document/d/1example" target="_blank" rel="noopener" className="mob-contact-link" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 16, color: '#0a0a0a', padding: '16px 0', borderBottom: '0.5px solid #ebebeb' }}>
+            CV (Google Docs)
+            <span style={{ color: accentColor, fontSize: 18 }}>↗</span>
+          </a>
+        </div>
+      </div>
+      <MobFooter onGo={onGo} />
+    </div>
+  );
+}
+
+// ─── Design System Screen ────────────────────────────────────────────────────
+function DSScreen({ tweaks, accentColor, onGo }) {
+  const accentColors = [
+    { name: 'Black', value: '#0a0a0a' },
+    { name: 'Blue', value: '#2b6cff' },
+    { name: 'Green', value: '#0aa17a' },
+    { name: 'Violet', value: '#8b5cf6' },
+    { name: 'Orange', value: '#f4660b' },
+  ];
+
+  const typeScale = [
+    { label: 'Lede', sample: 'Senior UX designer.', style: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 24, fontWeight: 500, color: '#0a0a0a', lineHeight: 1.4 } },
+    { label: 'Featured title', sample: 'AI Credits', style: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 36, fontWeight: 700, color: '#0a0a0a', letterSpacing: '-0.03em', lineHeight: 1.1 } },
+    { label: 'Project title', sample: 'App Pricing Page', style: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, fontWeight: 700, color: '#0a0a0a', letterSpacing: '-0.02em', lineHeight: 1.1 } },
+    { label: 'Section h2', sample: 'What I Did', style: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 17, fontWeight: 700, color: '#0a0a0a' } },
+    { label: 'Body (intro)', sample: 'I led UX for a new developer-facing data hub.', style: { fontFamily: 'Inter', fontSize: 16, fontWeight: 500, color: '#0a0a0a', lineHeight: 1.6 } },
+    { label: 'Body (copy)', sample: 'Defined the information architecture from scratch.', style: { fontFamily: 'Inter', fontSize: 14, fontWeight: 400, color: '#555', lineHeight: 1.65 } },
+    { label: 'Row title', sample: 'Developer Sale', style: { fontFamily: 'Inter', fontSize: 16, fontWeight: 400, color: '#0a0a0a' } },
+    { label: 'Label (uppercase)', sample: 'FEATURED', style: { fontFamily: 'Inter', fontSize: 11, fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#555' } },
+    { label: 'Caption / meta', sample: '2026 · Developer tools', style: { fontFamily: 'Inter', fontSize: 12, color: '#555' } },
+  ];
+
+  return (
+    <div>
+      <div className="mob-ds-content">
+        <div className="mob-ds-title">Design system</div>
+
+        <div className="mob-ds-section">
+          <div className="mob-ds-label">Colors</div>
+          <div className="mob-ds-swatches" style={{ gap: 12, marginBottom: 12 }}>
+            <div className="mob-ds-swatch">
+              <div className="mob-ds-swatch-dot" style={{ background: '#0a0a0a' }} />
+              <div className="mob-ds-swatch-name">--ac</div>
+            </div>
+            <div className="mob-ds-swatch">
+              <div className="mob-ds-swatch-dot" style={{ background: '#555' }} />
+              <div className="mob-ds-swatch-name">--gray</div>
+            </div>
+            <div className="mob-ds-swatch">
+              <div className="mob-ds-swatch-dot" style={{ background: '#ebebeb', border: '1px solid #ddd' }} />
+              <div className="mob-ds-swatch-name">--border</div>
+            </div>
+            <div className="mob-ds-swatch">
+              <div className="mob-ds-swatch-dot" style={{ background: '#f5f5f5', border: '1px solid #ddd' }} />
+              <div className="mob-ds-swatch-name">--surface</div>
+            </div>
+          </div>
+          <div className="mob-ds-label" style={{ marginTop: 12 }}>Accent colors</div>
+          <div className="mob-ds-swatches">
+            {accentColors.map(c => (
+              <div className="mob-ds-swatch" key={c.name}>
+                <div className="mob-ds-swatch-dot" style={{ background: c.value }} />
+                <div className="mob-ds-swatch-name">{c.name}</div>
+              </div>
+            ))}
+          </div>
+          <div className="mob-ds-label" style={{ marginTop: 14 }}>Category colors</div>
+          <div className="mob-ds-swatches">
+            {Object.entries(CAT_COLOR_MAP).map(([cat, color]) => (
+              <div className="mob-ds-swatch" key={cat}>
+                <div className="mob-ds-swatch-dot" style={{ background: color }} />
+                <div className="mob-ds-swatch-name">{cat}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mob-ds-section">
+          <div className="mob-ds-label">Type scale</div>
+          {typeScale.map((t, i) => (
+            <div key={i} className="mob-ds-type-row">
+              <div className="mob-ds-type-label">{t.label}</div>
+              <div style={t.style}>{t.sample}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mob-ds-section">
+          <div className="mob-ds-label">Components</div>
+
+          {/* Button */}
+          <div className="mob-ds-type-row">
+            <div className="mob-ds-type-label">Button — text style</div>
+            <span style={{ fontSize: 13, color: accentColor }}>View project ↗</span>
+          </div>
+          <div className="mob-ds-type-row">
+            <div className="mob-ds-type-label">Button — outline style</div>
+            <span style={{ fontSize: 13, color: accentColor, border: `0.5px solid ${accentColor}`, borderRadius: 3, padding: '5px 10px' }}>View project ↗</span>
+          </div>
+
+          {/* Tag */}
+          <div className="mob-ds-type-row">
+            <div className="mob-ds-type-label">Category tag</div>
+            <span style={{ fontSize: 12, color: '#555', border: '0.5px solid #e0e0e0', borderRadius: 3, padding: '3px 8px' }}>Developer tools</span>
+          </div>
+
+          {/* Row item sample */}
+          <div className="mob-ds-type-row">
+            <div className="mob-ds-type-label">Row item</div>
+            <div style={{ border: '0.5px solid #ebebeb', borderRadius: 6, padding: '12px 0', overflow: 'hidden' }}>
+              <div style={{ display: 'flex', gap: 10, alignItems: 'baseline', padding: '0 12px' }}>
+                <span style={{ fontSize: 12, color: '#555', minWidth: 22 }}>01</span>
+                <span style={{ fontSize: 16, color: '#0a0a0a' }}>AI Credits</span>
+              </div>
+              <div style={{ fontSize: 12, color: '#555', padding: '4px 12px 4px 44px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                AI credits billing system across Business Manager and Wixel
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 12px 0 44px' }}>
+                <span style={{ fontSize: 12, color: '#555', border: '0.5px solid #e0e0e0', borderRadius: 3, padding: '3px 8px' }}>Developer tools</span>
+                <span style={{ fontSize: 13, color: accentColor }}>View ↗</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mob-ds-section">
+          <div className="mob-ds-label">Current tweaks</div>
+          <div style={{ fontSize: 13, color: '#555', lineHeight: 2 }}>
+            <div>Button style: <strong>{tweaks.btnStyle}</strong></div>
+            <div>Button align: <strong>{tweaks.btnAlign}</strong></div>
+            <div>Accent: <span style={{ display: 'inline-block', width: 12, height: 12, borderRadius: '50%', background: accentColor, verticalAlign: 'middle', marginRight: 4 }} /><strong>{accentColor}</strong></div>
+            <div>Category color-coding: <strong>{tweaks.catColor ? 'on' : 'off'}</strong></div>
+            <div>Colorful titles: <strong>{tweaks.colorfulTitles ? 'on' : 'off'}</strong></div>
+          </div>
+        </div>
+      </div>
+      <MobFooter onGo={onGo} />
+    </div>
+  );
+}
+
+// ─── Tweaks Panel ────────────────────────────────────────────────────────────
+function TweaksPanel({ tweaks, onChange }) {
+  const accentOptions = [
+    { key: 'black', color: '#0a0a0a' },
+    { key: 'blue', color: '#2b6cff' },
+    { key: 'green', color: '#0aa17a' },
+    { key: 'violet', color: '#8b5cf6' },
+    { key: 'orange', color: '#f4660b' },
+  ];
+
+  return (
+    <div className="tweaks-panel">
+      <div className="tweaks-title">Tweaks</div>
+
+      <div className="tweaks-group">
+        <div className="tweaks-group-label">Buttons</div>
+        <div className="tweaks-sub-label" style={{ marginTop: 0 }}>Style</div>
+        <div className="tweaks-pill-group">
+          <button
+            className={`tweaks-pill${tweaks.btnStyle === 'text' ? ' active' : ''}`}
+            onClick={() => onChange({ ...tweaks, btnStyle: 'text' })}
+          >Text</button>
+          <button
+            className={`tweaks-pill${tweaks.btnStyle === 'outline' ? ' active' : ''}`}
+            onClick={() => onChange({ ...tweaks, btnStyle: 'outline' })}
+          >Outline</button>
+        </div>
+        <div className="tweaks-sub-label">Align</div>
+        <div className="tweaks-pill-group">
+          <button
+            className={`tweaks-pill${tweaks.btnAlign === 'left' ? ' active' : ''}`}
+            onClick={() => onChange({ ...tweaks, btnAlign: 'left' })}
+          >Left</button>
+          <button
+            className={`tweaks-pill${tweaks.btnAlign === 'right' ? ' active' : ''}`}
+            onClick={() => onChange({ ...tweaks, btnAlign: 'right' })}
+          >Right</button>
+        </div>
+      </div>
+
+      <div className="tweaks-divider" />
+
+      <div className="tweaks-group">
+        <div className="tweaks-group-label">Color</div>
+        <div className="tweaks-sub-label" style={{ marginTop: 0 }}>Accent</div>
+        <div className="tweaks-swatches">
+          {accentOptions.map(opt => (
+            <button
+              key={opt.key}
+              className={`tweaks-swatch${tweaks.accent === opt.key ? ' selected' : ''}`}
+              style={{ background: opt.color }}
+              onClick={() => onChange({ ...tweaks, accent: opt.key })}
+              title={opt.key}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="tweaks-divider" />
+
+      <div className="tweaks-group">
+        <div className="tweaks-toggle-row">
+          <span className="tweaks-toggle-label">Category color-coding</span>
+          <button
+            className={`tweaks-switch${tweaks.catColor ? ' on' : ''}`}
+            onClick={() => onChange({ ...tweaks, catColor: !tweaks.catColor })}
+          />
+        </div>
+      </div>
+
+      <div className="tweaks-group" style={{ marginBottom: 0 }}>
+        <div className="tweaks-toggle-row">
+          <span className="tweaks-toggle-label">Colorful featured titles</span>
+          <button
+            className={`tweaks-switch${tweaks.colorfulTitles ? ' on' : ''}`}
+            onClick={() => onChange({ ...tweaks, colorfulTitles: !tweaks.colorfulTitles })}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── App ─────────────────────────────────────────────────────────────────────
+function App() {
+  const [screen, setScreen] = useState('home');
+  const [slug, setSlug] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrollTop, setScrollTop] = useState(0);
+  const [lightbox, setLightbox] = useState(null);
+  const [tweaks, setTweaks] = useState({
+    btnStyle: 'text',
+    btnAlign: 'left',
+    accent: 'blue',
+    catColor: false,
+    colorfulTitles: false,
+  });
+
+  const scrollRef = useRef(null);
+
+  const accentColor = ACCENT_MAP[tweaks.accent] || '#2b6cff';
+
+  const go = useCallback((target, newSlug) => {
+    if (target === 'work') {
+      setScreen('home');
+      setSlug('');
+      setMenuOpen(false);
+      setTimeout(() => {
+        const container = scrollRef.current;
+        if (container) {
+          const el = container.querySelector('#mob-allwork');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 80);
+      return;
+    }
+    setScreen(target);
+    setSlug(newSlug || '');
+    setMenuOpen(false);
+    setScrollTop(0);
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+    setLightbox(null);
+  }, []);
+
+  const handleScroll = useCallback((e) => {
+    setScrollTop(e.target.scrollTop);
+  }, []);
+
+  const handleLightbox = useCallback((images, index) => {
+    setLightbox({ images, index });
+  }, []);
+
+  const closeLightbox = useCallback(() => setLightbox(null), []);
+
+  const navLightbox = useCallback((dir) => {
+    setLightbox(lb => {
+      if (!lb) return null;
+      const newIndex = Math.max(0, Math.min(lb.images.length - 1, lb.index + dir));
+      return { ...lb, index: newIndex };
+    });
+  }, []);
+
+  const totalHeight = scrollRef.current ? scrollRef.current.scrollHeight : 1;
+  const containerHeight = scrollRef.current ? scrollRef.current.clientHeight : 1;
+
+  // CSS custom properties update
+  const mobStyle = {
+    '--tw-accent': accentColor,
+  };
+
+  return (
+    <div id="root-inner" style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 32 }}>
+      {/* iPhone Frame */}
+      <div className="iphone-frame">
+        <div className="iphone-screen">
+          {/* Dynamic island */}
+          <div className="dynamic-island" />
+
+          {/* Mob app */}
+          <div className="mob" style={mobStyle}>
+            {/* Overlay menu */}
+            <SlideMenu
+              open={menuOpen}
+              screen={screen}
+              onClose={() => setMenuOpen(false)}
+              onGo={go}
+            />
+
+            {/* Lightbox */}
+            {lightbox && (
+              <Lightbox
+                images={lightbox.images}
+                index={lightbox.index}
+                onClose={closeLightbox}
+                onNav={navLightbox}
+              />
+            )}
+
+            {/* Scrollable container */}
+            <div
+              className="mob-page"
+              ref={scrollRef}
+              onScroll={handleScroll}
+              style={{ top: 58, paddingBottom: 20 }}
+            >
+              {/* Sticky header inside scroll container */}
+              <MobHeader
+                scrollTop={scrollTop}
+                screen={screen}
+                totalHeight={totalHeight}
+                containerHeight={containerHeight}
+                onMenuOpen={() => setMenuOpen(true)}
+                accentColor={accentColor}
+              />
+
+              {/* Screen content */}
+              {screen === 'home' && (
+                <HomeScreen
+                  tweaks={tweaks}
+                  accentColor={accentColor}
+                  onGo={go}
+                />
+              )}
+              {screen === 'project' && (
+                <ProjectScreen
+                  slug={slug}
+                  scrollTop={scrollTop}
+                  scrollRef={scrollRef}
+                  tweaks={tweaks}
+                  accentColor={accentColor}
+                  onGo={go}
+                  onLightbox={handleLightbox}
+                />
+              )}
+              {screen === 'about' && (
+                <AboutScreen accentColor={accentColor} onGo={go} />
+              )}
+              {screen === 'contact' && (
+                <ContactScreen accentColor={accentColor} onGo={go} />
+              )}
+              {screen === 'ds' && (
+                <DSScreen tweaks={tweaks} accentColor={accentColor} onGo={go} />
+              )}
+            </div>
+
+            {/* Home indicator */}
+            <div className="home-indicator" />
+          </div>
+        </div>
+      </div>
+
+      {/* Tweaks panel */}
+      <TweaksPanel tweaks={tweaks} onChange={setTweaks} />
+    </div>
+  );
+}
+
+const container = document.getElementById('root');
+const reactRoot = ReactDOM.createRoot(container);
+reactRoot.render(<App />);
+</script>
+</body>
+</html>
