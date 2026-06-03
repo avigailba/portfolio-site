@@ -543,6 +543,10 @@ var CURRENT_SLUG = '${proj.slug}';
   <div class="proj-page-grid">
     <div class="proj-gutter proj-gutter-left"></div>
     <main class="proj-main">
+      <div class="proj-side-nav">
+        ${prevProj ? `<a class="proj-nav-btn proj-nav-prev" href="${prevProj.slug}.html" aria-label="Previous project"><i class="ti ti-arrow-left"></i><span class="proj-nav-name">${prevTitle}</span></a>` : '<span></span>'}
+        ${nextProj ? `<a class="proj-nav-btn proj-nav-next" href="${nextProj.slug}.html" aria-label="Next project"><i class="ti ti-arrow-right"></i><span class="proj-nav-name">${nextTitle}</span></a>` : '<span></span>'}
+      </div>
       <div class="proj-title-wrap" id="proj-title-wrap">
         <p class="proj-breadcrumb"><a href="../index.html">Home</a> / ${title}</p>
         <h1 class="proj-title">${title}</h1>
