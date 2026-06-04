@@ -393,6 +393,13 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .inner-main { padding: 0 clamp(40px, 20%, 240px); }
 .inner-content { padding: 56px 0 80px; max-width: 720px; }
 .ds-content { max-width: none; }
+.ds-content .page-sub { margin-bottom: 0; }
+.ds-notion-status { font-size: 13px; margin-top: 16px; margin-bottom: 48px; display: flex; align-items: center; gap: 6px; }
+.ds-notion-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.ds-notion-connected { color: #16a34a; }
+.ds-notion-connected .ds-notion-dot { background: #16a34a; }
+.ds-notion-static { color: #999; }
+.ds-notion-static .ds-notion-dot { background: #ccc; }
 .inner-content h1 {
   font-size: 32px;
   font-weight: 700;

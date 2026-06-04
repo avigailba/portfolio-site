@@ -549,9 +549,11 @@ var CURRENT_SLUG = '${proj.slug}';
         </div>
         ${proj.subtitle ? `<p class="proj-subtitle-m">${proj.subtitle}</p>` : ''}
         <div class="proj-meta-m">
+          ${prevProj ? `<button class="proj-nav-text" aria-label="Previous project" onclick="location.href='${prevProj.slug}.html'">← Previous</button>` : ''}
           <span class="pm">${year}</span>
           <span class="psep">·</span>
           ${catHtml}
+          ${nextProj ? `<button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">Next →</button>` : ''}
         </div>
       </div>
       <div class="proj-content">
@@ -756,7 +758,7 @@ function contactPage() {
   </main>`);
 }
 
-function designSystemPage() {
+function designSystemPage(notionConnected) {
   const swatches = [
     { hex: '#0a0a0a', name: 'Black',     usage: 'Primary text, hover fill, footer bg' },
     { hex: '#555555', name: 'Gray',      usage: 'All secondary text: nav, labels, years, body copy' },
@@ -857,6 +859,7 @@ function designSystemPage() {
     <div class="inner-content ds-content">
       <h1>Design system</h1>
       <p class="page-sub">Visual language reference for avigailbahat.com</p>
+      <p class="ds-notion-status ${notionConnected ? 'ds-notion-connected' : 'ds-notion-static'}"><span class="ds-notion-dot"></span>${notionConnected ? 'Live — content from Notion' : 'Static fallback — Notion not connected'}</p>
 
       <div class="ds-section">
         <span class="ds-section-title">Colours</span>
@@ -1177,7 +1180,7 @@ async function build() {
     ['index.html',          indexPage(projects, tagline)],
     ['about.html',          aboutPage(aboutHtml)],
     ['contact.html',        contactPage()],
-    ['design-system.html',  designSystemPage()],
+    ['design-system.html',  designSystemPage(projects.length > 0)],
   ]) {
     fs.writeFileSync(path.join(DIST, file), html);
     stats.pages++;
