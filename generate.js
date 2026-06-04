@@ -54,20 +54,20 @@ const stats = { pages: 0, images: 0, errors: [] };
 
 // Project metadata: categories, display title overrides, years, featured status
 const PROJECT_META = {
-  'ai-credits-wallet':                          { title: 'AI Credits', featTitle: 'AI<br>Credits', cats: 'developer',              display: 'Developer tools', year: 2026, featured: true },
-  'app-installation-page-for-developers': { title: 'App Installations Page',      cats: 'developer',              display: 'Developer tools', year: 2025, featured: true },
+  'ai-credits-wallet':                          { title: 'AI Credits', featTitle: 'AI<br>Credits', cats: 'monetisation',          display: 'Monetisation',    year: 2026, featured: true },
+  'app-installation-page-for-developers': { title: 'App Installations Page',      cats: 'developer cms',          display: 'Developer tools', year: 2025, featured: true },
   'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer',              display: 'Developer tools', year: 2024, featured: false },
-  'developer-sale':                      { title: 'Developer Sale',               cats: 'developer monetisation', display: 'Monetisation',    year: 2024, featured: true },
-  'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'developer internal',     display: 'Internal tools',  year: 2024, featured: false },
-  'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
+  'developer-sale':                      { title: 'Developer Sale',               cats: 'developer monetisation cms', display: 'Monetisation', year: 2024, featured: true },
+  'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'developer internal cms', display: 'Internal tools',  year: 2024, featured: false },
+  'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',       display: 'Monetisation',    year: 2023, featured: false },
   'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
   'app-pricing-page-projects':           { title: 'App Pricing Page Projects',    cats: 'developer monetisation', display: 'Monetisation',    year: 2023, featured: false },
-  'internal-app-review-system':          { title: 'App Review System',            cats: 'internal',               display: 'Internal tools',  year: 2022, featured: true },
+  'internal-app-review-system':          { title: 'App Review System',            cats: 'internal cms',           display: 'Internal tools',  year: 2022, featured: true },
   'submit-publish-widget':               { title: 'Submit & Publish Widget',      cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
-  'custom-element-component-settings':   { title: 'Custom Element Component Settings', cats: 'cms',               display: 'CMS',             year: 2022, featured: false },
-  'api-keys-page':                       { title: 'API Keys Page',                cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
+  'custom-element-component-settings':   { title: 'Custom Element Component Settings', cats: 'developer',          display: 'Developer tools', year: 2022, featured: false },
+  'api-keys-page':                       { title: 'API Keys Page',                cats: 'developer cms',          display: 'Developer tools', year: 2022, featured: false },
   'development-site-creation':           { title: 'Development Site Creation',    cats: 'developer',              display: 'Developer tools', year: 2021, featured: false },
-  'app-coupons':                         { title: 'App Coupons',                  cats: 'monetisation',           display: 'Monetisation',    year: 2021, featured: false },
+  'app-coupons':                         { title: 'App Coupons',                  cats: 'monetisation cms',       display: 'Monetisation',    year: 2021, featured: false },
 };
 
 // Featured rows shown on homepage (in order)
@@ -426,7 +426,7 @@ function indexPage(projects, tagline) {
   const listHtml = allSlugs.map((slug, i) => {
     const meta = PROJECT_META[slug];
     const proj = bySlug[slug];
-    const title   = meta?.title   || proj?.title   || slug;
+    const title   = proj?.title   || meta?.title   || slug;
     const cats    = meta?.cats    || '';
     const display = meta?.display || '';
     const year    = meta?.year    || proj?.year    || '';
@@ -484,9 +484,12 @@ function indexPage(projects, tagline) {
 function projectPage(proj, prevProj, nextProj) {
   const prefix = '../';
   const meta  = PROJECT_META[proj.slug] || {};
-  const title = meta.title || proj.title;
+  const title = proj.title || meta.title;
   const year  = meta.year  || proj.year;
-  const cat   = meta.display || 'Product Design';
+  const CAT_LABELS = { developer: 'Developer tools', monetisation: 'Monetisation', cms: 'CMS', internal: 'Internal tools' };
+  const catHtml = (meta.cats || '').split(' ').filter(Boolean)
+    .map(c => `<span class="pm">${CAT_LABELS[c] || c}</span>`).join('<span class="psep">·</span>')
+    || `<span class="pm">${meta.display || 'Product design'}</span>`;
   const prevTitle = prevProj ? (PROJECT_META[prevProj.slug]?.title || prevProj.title) : null;
   const nextTitle = nextProj ? (PROJECT_META[nextProj.slug]?.title || nextProj.title) : null;
 
@@ -540,20 +543,17 @@ var CURRENT_SLUG = '${proj.slug}';
       </div>
       <div class="proj-title-sticky" id="proj-title-sticky">
         <div class="proj-title-row">
-          <button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='${prevProj.slug}.html'">←</button>
+          ${prevProj ? `<button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='${prevProj.slug}.html'">←</button>` : ''}
           <h1 class="proj-title-m">${title}</h1>
-          <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">→</button>
+          ${nextProj ? `<button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">→</button>` : ''}
         </div>
+        ${proj.subtitle ? `<p class="proj-subtitle-m">${proj.subtitle}</p>` : ''}
         <div class="proj-meta-m">
-          <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='${prevProj.slug}.html'">← Previous</button>
           <span class="pm">${year}</span>
           <span class="psep">·</span>
-          <span class="pm">${cat}</span>
-          <span class="psep">·</span>
-          <button class="proj-nav-text" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">Next →</button>
+          ${catHtml}
         </div>
       </div>
-      ${proj.subtitle ? `<p class="proj-subtitle-m">${proj.subtitle}</p>` : ''}
       <div class="proj-content">
         ${proj.contentHtml}
       </div>
@@ -1165,8 +1165,8 @@ async function build() {
       title: meta.title,
       year: String(meta.year),
       summary,
-      subtitle: '',
-      contentHtml: summary ? `<p class="proj-intro">${summary}</p>` : '',
+      subtitle: summary,
+      contentHtml: '',
     };
     fs.writeFileSync(path.join(PROJECTS_DIR, `${slug}.html`), projectPage(fallbackProj, null, null));
     stats.pages++;
