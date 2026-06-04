@@ -571,9 +571,10 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .proj-content hr + hr { display: none; }
 .proj-content a { color: #0a0a0a; text-decoration: underline; text-underline-offset: 2px; }
 .proj-content code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.875em; background: #f5f5f3; padding: 0.1em 0.3em; border-radius: 4px; }
-.col-layout { display: grid; gap: 12px; margin: 24px 0; }
+.col-layout { display: grid; gap: 16px; margin: 24px 0; align-items: start; }
 .col-2 { grid-template-columns: 1fr 1fr; }
 .col-3 { grid-template-columns: 1fr 1fr 1fr; }
+.col-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
 .col figure { margin: 0; }
 .col img { width: 100%; }
 .callout {
@@ -965,7 +966,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .more-inner { padding-top: 40px; }
 
   /* Images */
-  .col-2, .col-3 { grid-template-columns: 1fr; }
+  .col-2, .col-3, .col-4 { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   .hdr-row { padding: 0; }
