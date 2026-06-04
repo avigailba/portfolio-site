@@ -393,6 +393,13 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .inner-main { padding: 0 clamp(40px, 20%, 240px); }
 .inner-content { padding: 56px 0 80px; max-width: 720px; }
 .ds-content { max-width: none; }
+.ds-content .page-sub { margin-bottom: 0; }
+.ds-notion-status { font-size: 13px; margin-top: 16px; margin-bottom: 48px; display: flex; align-items: center; gap: 6px; }
+.ds-notion-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.ds-notion-connected { color: #16a34a; }
+.ds-notion-connected .ds-notion-dot { background: #16a34a; }
+.ds-notion-static { color: #999; }
+.ds-notion-static .ds-notion-dot { background: #ccc; }
 .inner-content h1 {
   font-size: 32px;
   font-weight: 700;
@@ -503,8 +510,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   display: inline-block;
 }
 .proj-nav-name .ti { font-size: 14px; vertical-align: -1px; }
-/* Prev/next project arrows: fixed, spanning each gutter, centered */
-.proj-side-nav .proj-nav-btn { position: fixed; top: 40vh; z-index: 8; text-align: center; }
+/* Prev/next project arrows: fixed, spanning each gutter */
+.proj-side-nav .proj-nav-btn { position: fixed; top: 50%; transform: translateY(-50%); z-index: 8; display: flex; align-items: center; justify-content: center; }
 .proj-side-nav .proj-nav-prev { left: 0; right: calc(100vw - clamp(40px, 20vw, 240px)); }
 .proj-side-nav .proj-nav-next { left: calc(100vw - clamp(40px, 20vw, 240px)); right: 0; }
 /* ── Project page sticky title ────────────────────────────── */
@@ -523,6 +530,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 }
 .proj-title-sticky.condensed { box-shadow: 0 1px 0 rgba(10,10,10,0.04), 0 6px 16px -12px rgba(10,10,10,0.18); }
 .proj-title-sticky.condensed .proj-meta-m { max-height: 0; opacity: 0; margin-bottom: 0; padding: 0; pointer-events: none; }
+.proj-title-sticky.condensed .proj-subtitle-m { max-height: 0; opacity: 0; margin: 0; pointer-events: none; }
 .proj-title-sticky.condensed .proj-title-row { padding-bottom: 0; border-bottom: none; }
 .proj-title-sticky.condensed .proj-title-m { font-size: 22px; }
 
@@ -538,7 +546,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   line-height: 1.1;
   transition: font-size 0.2s;
 }
-.proj-subtitle-m { font-size: 20px; font-weight: 500; color: #0a0a0a; margin-bottom: 24px; line-height: 1.4; max-width: 68ch; padding-bottom: 0; }
+.proj-subtitle-m { font-size: 20px; font-weight: 500; color: #0a0a0a; margin-top: 12px; margin-bottom: 0; line-height: 1.4; max-width: 68ch; overflow: hidden; max-height: 80px; transition: max-height 0.25s ease, opacity 0.25s ease, margin 0.25s ease; }
 .proj-meta-m { display: flex; align-items: center; gap: 16px; margin-bottom: 0; padding-top: 12px; max-height: 48px; overflow: hidden; transition: max-height 0.25s ease, opacity 0.25s ease, margin 0.25s ease, padding 0.25s ease; }
 .pm { font-size: 14px; color: #555; }
 .psep { font-size: 14px; color: #ccc; }
@@ -884,6 +892,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .proj-title-sticky.condensed .proj-title-row { display: flex; align-items: center; gap: 10px; }
   .proj-title-sticky.condensed .proj-nav-arr { display: flex; }
   .proj-title-sticky.condensed .proj-meta-m { max-height: 0; opacity: 0; margin: 0; padding: 0; border-color: transparent; }
+  .proj-title-sticky.condensed .proj-subtitle-m { max-height: 0; opacity: 0; margin: 0; }
   /* At-bottom: morph to "More work", hide arrows and meta */
   .proj-title-sticky.at-bottom .proj-nav-arr { display: none; }
   .proj-title-sticky.at-bottom .proj-title-row { display: block; }
@@ -950,16 +959,18 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
     transition: max-height 0.2s, opacity 0.2s, margin 0.2s, padding 0.2s;
   }
 
-  /* Subtitle (outside sticky) */
+  /* Subtitle (inside sticky) */
   .proj-subtitle-m {
     font-size: 19px;
     font-weight: 500;
     line-height: 1.4;
     letter-spacing: -0.01em;
-    margin-bottom: 26px;
-    padding-bottom: 26px;
-    border-bottom: 0.5px solid #ebebeb;
+    margin-top: 8px;
+    margin-bottom: 0;
     color: #0a0a0a;
+    overflow: hidden;
+    max-height: 80px;
+    transition: max-height 0.2s, opacity 0.2s, margin 0.2s;
   }
 
   /* More section */
