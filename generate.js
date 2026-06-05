@@ -1117,7 +1117,7 @@ function designSystemPage(notionConnected) {
     });
   })();
   function dsAuth() {
-    if (document.getElementById('ds-pw').value === 'design2026') {
+    if (document.getElementById('ds-pw').value === '2108') {
       sessionStorage.setItem('ds_auth', '1');
       document.getElementById('ds-gate').style.display = 'none';
     } else {
