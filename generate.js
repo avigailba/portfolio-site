@@ -855,6 +855,18 @@ function designSystemPage(notionConnected) {
   ).join('\n    ');
 
   return wrap('', 'Design System — Avigail Bahat', `
+  <div id="ds-gate" style="position:fixed;inset:0;z-index:999;background:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+    <div style="max-width:300px;width:100%;padding:0 24px;">
+      <p style="font-size:15px;color:#555;margin-bottom:20px;text-align:center;">Enter password</p>
+      <input id="ds-pw" type="password" placeholder="Password" autocomplete="current-password"
+        style="width:100%;font-size:15px;padding:10px 14px;border:0.5px solid #ebebeb;border-radius:6px;outline:none;font-family:inherit;box-sizing:border-box;margin-bottom:10px;display:block;">
+      <button onclick="dsAuth()"
+        style="width:100%;font-size:15px;padding:10px 14px;background:#0a0a0a;color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:inherit;">
+        Enter
+      </button>
+      <p id="ds-err" style="font-size:13px;color:#c00;margin-top:10px;display:none;text-align:center;">Incorrect password</p>
+    </div>
+  </div>
   <main class="inner-main">
     <div class="inner-content ds-content">
       <h1>Design system</h1>
@@ -1096,6 +1108,23 @@ function designSystemPage(notionConnected) {
     document.querySelectorAll('.ds-tab-panel').forEach(function(p) { p.classList.remove('active'); });
     btn.classList.add('active');
     document.getElementById('ds-tab-' + tab).classList.add('active');
+  }
+  (function() {
+    var gate = document.getElementById('ds-gate');
+    if (sessionStorage.getItem('ds_auth') === '1') { gate.style.display = 'none'; return; }
+    document.getElementById('ds-pw').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') dsAuth();
+    });
+  })();
+  function dsAuth() {
+    if (document.getElementById('ds-pw').value === 'design2026') {
+      sessionStorage.setItem('ds_auth', '1');
+      document.getElementById('ds-gate').style.display = 'none';
+    } else {
+      document.getElementById('ds-err').style.display = 'block';
+      document.getElementById('ds-pw').value = '';
+      document.getElementById('ds-pw').focus();
+    }
   }
   </script>`);
 }
