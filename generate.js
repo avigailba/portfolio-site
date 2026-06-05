@@ -1109,15 +1109,9 @@ function designSystemPage(notionConnected) {
     btn.classList.add('active');
     document.getElementById('ds-tab-' + tab).classList.add('active');
   }
-  (function() {
-    var gate = document.getElementById('ds-gate');
-    if (sessionStorage.getItem('ds_auth') === '1') { gate.style.display = 'none'; return; }
-    document.getElementById('ds-pw').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') dsAuth();
-    });
-  })();
-  function dsAuth() {
-    if (document.getElementById('ds-pw').value === '2108') {
+  window.dsAuth = function() {
+    var val = (document.getElementById('ds-pw').value || '').trim();
+    if (val === '2108') {
       sessionStorage.setItem('ds_auth', '1');
       document.getElementById('ds-gate').style.display = 'none';
     } else {
@@ -1125,7 +1119,14 @@ function designSystemPage(notionConnected) {
       document.getElementById('ds-pw').value = '';
       document.getElementById('ds-pw').focus();
     }
-  }
+  };
+  (function() {
+    var gate = document.getElementById('ds-gate');
+    if (sessionStorage.getItem('ds_auth') === '1') { gate.style.display = 'none'; return; }
+    document.getElementById('ds-pw').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') window.dsAuth();
+    });
+  })();
   </script>`);
 }
 
