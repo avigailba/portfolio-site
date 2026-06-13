@@ -450,7 +450,12 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 /* First paragraph = bio — larger and darker */
 .about-notion > p:first-child { font-size: 18px; font-weight: 500; color: #555; line-height: 1.5; letter-spacing: -0.01em; margin-bottom: 40px; max-width: 560px; }
 /* Year labels */
-.about-notion .notion-years { font-size: 14px; color: #555; margin-top: 24px; margin-bottom: 0; }
+.about-notion .notion-years { font-size: 14px; color: #555; margin-top: 0; margin-bottom: 0; }
+
+/* CV row: year column + content column */
+.about-notion .cv-row { display: grid; grid-template-columns: 100px 1fr; gap: 0 32px; margin-bottom: 32px; }
+.about-notion .cv-col-year { padding-top: 3px; }
+.about-notion .cv-col-content p:last-child { margin-bottom: 0; }
 /* Entry wrapper — consistent spacing regardless of content */
 .about-notion .cv-entry { margin-bottom: 24px; }
 /* Combined year · company · role line */
@@ -998,6 +1003,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .lb-handle { width: 36px; height: 36px; font-size: 18px; }
   .about-notion { padding: 32px 0 60px; }
   .about-notion h2 { margin: 32px 0 16px; padding-top: 20px; }
+  .about-notion .cv-row { grid-template-columns: 1fr; gap: 2px; margin-bottom: 24px; }
   .ds-type-row { flex-direction: column; gap: 8px; }
   .ds-type-meta { text-align: left; align-items: flex-start; }
   .ds-swatches { grid-template-columns: repeat(2, 1fr); }

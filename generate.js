@@ -637,8 +637,20 @@ function aboutPage(notionHtml) {
     // Merge <p><strong>Company</strong></p><p>Role</p> → <p><strong>Company · Role</strong></p>
     // Only matches short role-title lines (no period, ≤80 chars) to avoid absorbing description paragraphs
     content = content.replace(/<p><strong>([^<]+)<\/strong><\/p>\s*<p>([^<.]{1,80}?)<\/p>/g, '<p><strong>$1 · $2</strong></p>');
-    // Contact links: add class to standalone link paragraphs
-    content = content.replace(/<p><a href="([^"]+)"([^>]*)>([^<]+)<\/a><\/p>/g, '<p><a href="$1"$2 class="about-contact-inline">$3</a></p>');
+    // Normalize column layouts (year col | content col | ...empty cols) → cv-row
+    content = content.replace(/<div class="col-layout col-\d+">((?:<div class="col">[\s\S]*?<\/div>)+)<\/div>/g, (match, inner) => {
+      const cols = [];
+      const colRegex = /<div class="col">([\s\S]*?)<\/div>/g;
+      let m;
+      while ((m = colRegex.exec(inner)) !== null) cols.push(m[1].trim());
+      if (cols.length < 2) return match;
+      return `<div class="cv-row"><div class="cv-col-year">${cols[0]}</div><div class="cv-col-content">${cols[1]}</div></div>`;
+    });
+    // Contact links: blue text + icon (↗ for external/email, ↓ for CV/download)
+    content = content.replace(/<p><a href="([^"]+)"([^>]*)>([^<]+)<\/a><\/p>/g, (match, href, attrs, text) => {
+      const icon = href.includes('docs.google.com') ? ' ↓' : ' ↗';
+      return `<p><a href="${href}"${attrs} class="about-contact-inline">${text}${icon}</a></p>`;
+    });
     return wrap('', 'About — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content">
