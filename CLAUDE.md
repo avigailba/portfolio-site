@@ -168,49 +168,36 @@ Mobile interaction (in script.js):
 
 ## About page — CV layout
 
-The about page (`aboutPage()` in generate.js) is a **static template** — it does not fetch from Notion. Update the function directly to change content.
+The about page (`aboutPage()` in generate.js) **fetches all content from Notion** (page ID: `36e35a9ccf7a81f6953dcab2aebb27fc`). The generator passes the Notion HTML through directly, with one transformation: year-range paragraphs (`2025→2026`) get a `notion-years` class added.
 
-Structure: bio intro → What I do → Now → Experience → Skills → Contact
+Structure in Notion (in order): bio intro → Contact → Education → Experience → Skills
 
-### Experience entry HTML pattern
-Top-level roles use `.cv-title`. Roles with sub-periods (e.g. Wix) nest `.cv-sub-roles` inside.
+### Notion content format
 
-```html
-<!-- Top-level role with sub-periods -->
-<div class="cv-role">
-  <span class="cv-title">UX Designer · Wix.com · 2014–2026</span>
-  <div class="cv-sub-roles">
-    <div class="cv-sub-role">
-      <span class="cv-years">2025–2026 · OS company</span>
-      <p class="cv-desc">Description.</p>
-      <p class="cv-proj-list">Project A, Project B</p>
-    </div>
-  </div>
-</div>
-
-<!-- Standalone role (no sub-periods) -->
-<div class="cv-role"><span class="cv-title">Graphic Designer · Studio · 2010–2012</span></div>
-
-<!-- Education entry -->
-<div class="cv-role">
-  <div class="cv-role-header"><span class="cv-years">2006–2010 · School Name</span></div>
-  <p class="cv-desc">Degree description.</p>
-</div>
+Each experience entry in Notion is structured as separate paragraphs:
+```
+2025→2026
+**Wix - OS Company**
+Senior UX Designer
+Description text here.
+*Project A, Project B*
 ```
 
-### CV CSS
+Year paragraphs matching `\d{4}[→–]\d{4}` are transformed to `<p class="notion-years">`.
+
+### About page CSS classes
 ```css
-.cv-role { margin-bottom: 40px; }
-.cv-sub-roles { border-left: 1.5px solid #ebebeb; padding-left: 20px; margin-top: 12px; }
-.cv-sub-role { margin-bottom: 24px; }
-.cv-sub-role:last-child { margin-bottom: 0; }
-.cv-role-header { margin-bottom: 6px; }
-.cv-title { font-size: 18px; font-weight: 600; color: #0a0a0a; display: block; margin-bottom: 16px; margin-top: 8px; }
-.cv-years { font-size: 15px; font-weight: 600; color: #0a0a0a; display: block; }
-.cv-desc { font-size: 15px; color: #444; line-height: 1.7; margin-top: 4px; }
-.cv-proj-list { font-size: 14px; color: #555; font-style: italic; line-height: 1.6; margin-top: 6px; }
-.cv-skills { font-size: 15px; color: #444; line-height: 1.8; }
+.about-notion { /* wraps all Notion-rendered content */ }
+.about-notion h2 { /* section headings: Contact, Education, Experience, Skills */ }
+.about-notion .notion-years { font-size: 12px; color: #555; margin-top: 24px; margin-bottom: 2px; }
+.about-notion p:has(> strong:only-child) { /* company name line */ font-size: 16px; font-weight: 600; color: #0a0a0a; }
 ```
+
+### Static fallback
+If Notion is unreachable, `aboutPage()` renders a hardcoded fallback with the same structure using `.cv-years`, `.cv-company`, `.cv-role-title`, `.cv-desc`, `.cv-proj-list` classes. Update both the Notion page and the static fallback together when content changes.
+
+### Nav
+Nav has a single "About & Contact" link pointing to `about.html` — no separate Contact nav link.
 
 ---
 

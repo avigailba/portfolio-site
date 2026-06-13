@@ -88,6 +88,8 @@ nav a {
 }
 nav a:hover { background: #0a0a0a; color: #fff; }
 nav a.active { color: #0a0a0a; font-weight: 500; }
+.hdr-mail { display: flex; align-items: center; color: #555; transition: color 0.13s; margin-left: 4px; }
+.hdr-mail:hover { color: #0a0a0a; }
 
 /* ── Homepage wrapper ────────────────────────────────────── */
 .home-band {
@@ -445,6 +447,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 
 /* Body paragraphs */
 .about-notion p { font-size: 16px; color: #555; line-height: 1.7; margin-bottom: 4px; }
+/* First paragraph = bio — larger and darker */
+.about-notion > p:first-child { font-size: 18px; font-weight: 500; color: #555; line-height: 1.5; letter-spacing: -0.01em; margin-bottom: 40px; max-width: 560px; }
 /* Year labels */
 .about-notion .notion-years { font-size: 14px; color: #555; margin-top: 24px; margin-bottom: 0; }
 /* Entry wrapper — consistent spacing regardless of content */
@@ -463,8 +467,11 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .about-notion hr + h2 { border-top: none; padding-top: 0; }
 .about-notion hr:has(+ h2) { display: none; }
 
-/* Links */
+/* Links — plain links get underline; standalone link paragraphs (contact links) get blue no-underline */
 .about-notion a { color: #0a0a0a; text-decoration: underline; text-underline-offset: 3px; }
+.about-notion p:has(> a:only-child) { margin-bottom: 0; }
+.about-notion p:has(> a:only-child) a { font-size: 14px; font-weight: 500; color: #2b6cff; text-decoration: none; }
+.about-notion p:has(> a:only-child) a:hover { opacity: 0.75; }
 .about-notion strong { font-weight: 600; color: #0a0a0a; }
 .about-notion em { font-style: italic; }
 
@@ -727,6 +734,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .proj-side-nav { display: none; }
   /* Desktop nav → hamburger */
   #site-header nav { display: none; }
+  .hdr-mail { display: none; }
   .mob-burger {
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
     width: 40px; height: 40px; border-radius: 11px; border: 0.5px solid #ebebeb;

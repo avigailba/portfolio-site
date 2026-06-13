@@ -301,6 +301,9 @@ function hdr(prefix) {
       <a href="${prefix}index.html#home-allwork">Work</a>
       <a href="${prefix}about.html">About & Contact</a>
     </nav>
+    <a href="mailto:avigailba@gmail.com" class="hdr-mail" aria-label="Email">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+    </a>
     <button class="mob-burger" id="open-menu" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
@@ -628,35 +631,14 @@ var CURRENT_SLUG = '${proj.slug}';
 function aboutPage(notionHtml) {
   // If Notion content fetched, use it; otherwise use hardcoded fallback
   if (notionHtml && notionHtml.trim()) {
-    const firstParaMatch = notionHtml.match(/^<p>([\s\S]*?)<\/p>/);
-    const bioText = firstParaMatch ? firstParaMatch[1] : '';
-    let withoutBio = notionHtml.replace(/^<p>[\s\S]*?<\/p>\s*/, '');
-    // Strip contact section (managed by template)
-    withoutBio = withoutBio.replace(/<h2>Contact<\/h2>[\s\S]*?(?=<h2>|$)/, '');
-    // Combine year + company + role into one bold line: "2025→2026 · Wix · Senior UX Designer"
-    withoutBio = withoutBio.replace(
-      /<p>(\d{4}[→–]\d{4})<\/p>\s*<p><strong>([^<]+)<\/strong><\/p>\s*<p>([^<]*)<\/p>/g,
-      '<p class="cv-entry-title"><strong>$1 · $2 · $3</strong></p>'
-    );
-    // Add class to any remaining standalone year-range paragraphs
-    withoutBio = withoutBio.replace(/<p>(\d{4}[→–]\d{4})<\/p>/g, '<p class="notion-years">$1</p>');
-    // Wrap each entry in a div for consistent spacing
-    withoutBio = withoutBio.replace(
-      /(<p class="cv-entry-title">[\s\S]*?)(?=<p class="cv-entry-title">|<h2>|<hr>|$)/g,
-      '<div class="cv-entry">$1</div>'
-    );
+    // Add class to year-range paragraphs so CSS can style them
+    let content = notionHtml.replace(/<p>(\d{4}[→–]\d{4})<\/p>/g, '<p class="notion-years">$1</p>');
     return wrap('', 'About — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content">
       <h1>About</h1>
-      ${bioText ? `<p class="about-bio">${bioText}</p>` : ''}
-      <div class="about-contact-row">
-        <a href="mailto:avigailba@gmail.com" class="about-contact-inline">avigailba@gmail.com ↗</a>
-        <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer" class="about-contact-inline">LinkedIn ↗</a>
-        <a href="https://docs.google.com/document/d/1f0pEtgv_I89h16hgUF0ncW52EBcFwVPrjrJFzW3teI4/export?format=pdf" target="_blank" rel="noreferrer" class="about-contact-inline">CV ↓</a>
-      </div>
       <div class="about-notion">
-        ${withoutBio}
+        ${content}
       </div>
     </div>
   </main>`);
@@ -669,6 +651,7 @@ function aboutPage(notionHtml) {
       <h1>About</h1>
       <p class="about-bio">Senior UX Designer. I've spent my career building tools - for developers, for internal teams, and for end users.</p>
 
+      <p class="section-label">Contact</p>
       <div class="about-contact-row">
         <a href="mailto:avigailba@gmail.com" class="about-contact-inline">avigailba@gmail.com ↗</a>
         <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer" class="about-contact-inline">LinkedIn ↗</a>
@@ -755,7 +738,18 @@ function aboutPage(notionHtml) {
   </main>`);
 }
 
-function contactPage() {
+function contactPage(notionHtml) {
+  if (notionHtml && notionHtml.trim()) {
+    return wrap('', 'Contact — Avigail Bahat', `
+  <main class="inner-main">
+    <div class="inner-content">
+      <h1>Contact</h1>
+      <div class="about-notion">
+        ${notionHtml}
+      </div>
+    </div>
+  </main>`);
+  }
   return wrap('', 'Contact — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content">
@@ -1168,6 +1162,7 @@ async function build() {
   let projects = [];
   let tagline = "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
   let aboutHtml = '';
+  let contactHtml = '';
 
   try {
     console.log('Fetching project pages from Notion...');
@@ -1206,6 +1201,11 @@ async function build() {
       aboutHtml = await toHtml(aboutBlocks, '');
     } catch (e) { console.log('Could not fetch About page from Notion, using fallback'); }
 
+    try {
+      const contactBlocks = await fetchBlocks(CONTACT_PAGE_ID);
+      contactHtml = await toHtml(contactBlocks, '');
+    } catch (e) { console.log('Could not fetch Contact page from Notion, using fallback'); }
+
   } catch (e) {
     console.error('Notion fetch failed:', e.code || e.status, e.message);
     console.error('Full error:', JSON.stringify(e.body || e, null, 2));
@@ -1232,7 +1232,7 @@ async function build() {
   for (const [file, html] of [
     ['index.html',          indexPage(projects, tagline)],
     ['about.html',          aboutPage(aboutHtml)],
-    ['contact.html',        contactPage()],
+    ['contact.html',        contactPage(contactHtml)],
     ['design-system.html',  designSystemPage(projects.length > 0)],
   ]) {
     fs.writeFileSync(path.join(DIST, file), html);
