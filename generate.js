@@ -656,15 +656,17 @@ function aboutPage(notionHtml) {
         return `${h2}\n<div class="about-contact-row">\n${bare}\n</div>`;
       }
     );
-    // Wrap each experience entry in cv-row: year left col, content right col
-    content = content.replace(
-      /(<p class="notion-years">[^<]*<\/p>)([\s\S]*?)(?=<p class="notion-years">|<hr>|<h2>|$)/g,
-      (match, yearP, rest) => {
-        const contentHtml = rest.trim();
-        if (!contentHtml) return `<div class="cv-row"><div class="cv-col-year">${yearP}</div><div class="cv-col-content"></div></div>\n`;
-        return `<div class="cv-row"><div class="cv-col-year">${yearP}</div><div class="cv-col-content">${contentHtml}</div></div>\n`;
-      }
-    );
+    // Wrap plain year paragraphs in cv-row — only if col-layout regex didn't already create them
+    if (!content.includes('class="cv-row"')) {
+      content = content.replace(
+        /(<p class="notion-years">[^<]*<\/p>)([\s\S]*?)(?=<p class="notion-years">|<hr>|<h2>|$)/g,
+        (match, yearP, rest) => {
+          const contentHtml = rest.trim();
+          if (!contentHtml) return `<div class="cv-row"><div class="cv-col-year">${yearP}</div><div class="cv-col-content"></div></div>\n`;
+          return `<div class="cv-row"><div class="cv-col-year">${yearP}</div><div class="cv-col-content">${contentHtml}</div></div>\n`;
+        }
+      );
+    }
     return wrap('', 'About — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content">
