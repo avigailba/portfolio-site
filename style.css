@@ -387,7 +387,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .footer-link:first-child { border-top: 0.5px solid rgba(255,255,255,0.1); }
 .footer-link:hover { color: #fff; }
 .footer-arr { opacity: 0.5; font-size: 14px; }
-.footer-bottom { margin: 48px 0 0; font-size: 14px; color: rgba(255,255,255,0.3); }
+.footer-bottom { margin: 48px 0 0; font-size: 14px; color: #fff; }
 
 /* ── Inner pages ─────────────────────────────────────────── */
 .inner-main { padding: 0 clamp(40px, 20%, 240px); }

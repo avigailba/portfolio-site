@@ -57,6 +57,14 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
     document.querySelectorAll('#all-list .row-wrap:not(.hidden) .num').forEach(function(n) {
       n.textContent = String(i++).padStart(2, '0');
     });
+    var CAT_LABELS = { developer: 'Developer tools', monetisation: 'Monetisation', internal: 'Internal tools', cms: 'CMS' };
+    document.querySelectorAll('#all-list .row-wrap:not(.hidden) .cat-tag[data-cats]').forEach(function(tag) {
+      if (f === 'all') {
+        tag.textContent = tag.dataset.display || tag.textContent;
+      } else {
+        tag.textContent = CAT_LABELS[f] || f;
+      }
+    });
   });
 });
 

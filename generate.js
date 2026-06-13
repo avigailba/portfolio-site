@@ -438,7 +438,7 @@ function indexPage(projects, tagline) {
       ${summary ? `<span class="rsub">${summary}</span>` : ''}
     </div>
     ${featured ? `<span class="feat-tag" title="Featured">★</span>` : ''}
-    ${display ? `<span class="cat-tag">${display}</span>` : ''}
+    ${display ? `<span class="cat-tag" data-cats="${cats}" data-display="${display}">${display}</span>` : ''}
     <span class="row-year">${year}</span>
     <span class="row-arr">View ↗</span>
     <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
@@ -659,37 +659,30 @@ function aboutPage(notionHtml) {
       <p class="section-label">Experience</p>
 
       <div class="cv-role">
-        <span class="cv-title">UX Designer · Wix.com · 2014–2026</span>
-        <div class="cv-sub-roles">
+        <span class="cv-title">Wix - OS Company Senior UX Designer · 2025→2026</span>
+        <p class="cv-desc">Designed platform-level AI and developer-facing products. Led UX for the AI Credits system across Business Manager and Wixel, and redesigned the app installation data experience for developers.</p>
+        <p class="cv-proj-list">AI Credits Wallet, App Installation View</p>
+      </div>
 
-          <div class="cv-sub-role">
-            <span class="cv-years">2025→2026 · OS Company</span>
-            <p class="cv-desc">Designed platform-level AI and developer-facing products. Led UX for the AI Credits system across Business Manager and Wixel, and redesigned the app installation data experience for developers.</p>
-            <p class="cv-proj-list">AI Credits Wallet, App Installation View</p>
-          </div>
+      <div class="cv-role">
+        <span class="cv-title">Wix - App Market's Developer Center Senior UX Designer · 2020→2025</span>
+        <p class="cv-desc">Owned design across Wix's Developer Center: monetisation infrastructure, platform tooling, and internal operations. Worked end-to-end on developer onboarding, payout systems, pricing, and marketplace tooling.</p>
+        <p class="cv-proj-list">App Pricing, Payouts, Refund Flow, Developer Sale, App Coupons, App Collections, App Reviews, Internal Review System, Submit &amp; Publish, API Keys, Development Site Creation</p>
+      </div>
 
-          <div class="cv-sub-role">
-            <span class="cv-years">2020→2025 · App Market's Developer Center</span>
-            <p class="cv-desc">Owned design across Wix's Developer Center: monetisation infrastructure, platform tooling, and internal operations. Worked end-to-end on developer onboarding, payout systems, pricing, and marketplace tooling.</p>
-            <p class="cv-proj-list">App Pricing, Payouts, Refund Flow, Developer Sale, App Coupons, App Collections, App Reviews, Internal Review System, Submit &amp; Publish, API Keys, Development Site Creation</p>
-          </div>
+      <div class="cv-role">
+        <span class="cv-title">Wix - Labs Company UX Designer · 2019→2020</span>
+        <p class="cv-desc">Designed experimental product initiatives within Wix Labs, including a comments app and early-stage features.</p>
+      </div>
 
-          <div class="cv-sub-role">
-            <span class="cv-years">2019→2020 · Labs Company</span>
-            <p class="cv-desc">Designed experimental product initiatives within Wix Labs, including a comments app and early-stage features.</p>
-          </div>
+      <div class="cv-role">
+        <span class="cv-title">Wix - Media UX Designer · 2018→2019</span>
+        <p class="cv-desc">Designed Wix Video's management experience, covering layouts, settings, and live video creation and broadcasting.</p>
+      </div>
 
-          <div class="cv-sub-role">
-            <span class="cv-years">2018→2019 · Media</span>
-            <p class="cv-desc">Designed Wix Video's management experience, covering layouts, settings, and live video creation and broadcasting.</p>
-          </div>
-
-          <div class="cv-sub-role">
-            <span class="cv-years">2014→2018 · ADI Founding</span>
-            <p class="cv-desc">One of the founding UX designers on Wix ADI, an AI-powered website builder. Helped shape the product from concept through launch.</p>
-          </div>
-
-        </div>
+      <div class="cv-role">
+        <span class="cv-title">Wix - ADI Founding UX Designer · 2014→2018</span>
+        <p class="cv-desc">One of the founding UX designers on Wix ADI, an AI-powered website builder. Helped shape the product from concept through launch.</p>
       </div>
 
       <div class="cv-role">
