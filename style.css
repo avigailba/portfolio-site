@@ -474,6 +474,9 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 
 /* Links */
 .about-notion a { color: #0a0a0a; text-decoration: underline; text-underline-offset: 3px; }
+/* Contact inline links — higher specificity than .about-notion a */
+.about-notion .about-contact-inline { color: #2b6cff; text-decoration: none; font-weight: 500; }
+.about-notion .about-contact-inline:hover { opacity: 0.75; text-decoration: none; }
 .about-notion strong { font-weight: 600; color: #0a0a0a; }
 .about-notion em { font-style: italic; }
 
@@ -525,7 +528,11 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   color: #2563eb;
   line-height: 1.5;
   display: inline-block;
+  transition: transform 0.2s ease;
+  transform-origin: center bottom;
 }
+.proj-nav-prev:hover .proj-nav-name { transform: rotate(-3deg); }
+.proj-nav-next:hover .proj-nav-name { transform: rotate(3deg); }
 .proj-nav-name .ti { font-size: 14px; vertical-align: -1px; }
 /* Prev/next project arrows: fixed, spanning each gutter */
 .proj-side-nav .proj-nav-btn { position: fixed; top: 50%; transform: translateY(-50%); z-index: 8; display: flex; align-items: center; justify-content: center; }
