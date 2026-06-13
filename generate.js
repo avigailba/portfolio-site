@@ -640,6 +640,11 @@ function aboutPage(notionHtml) {
     );
     // Add class to any remaining standalone year-range paragraphs
     withoutBio = withoutBio.replace(/<p>(\d{4}[→–]\d{4})<\/p>/g, '<p class="notion-years">$1</p>');
+    // Wrap each entry in a div for consistent spacing
+    withoutBio = withoutBio.replace(
+      /(<p class="cv-entry-title">[\s\S]*?)(?=<p class="cv-entry-title">|<h2>|<hr>|$)/g,
+      '<div class="cv-entry">$1</div>'
+    );
     return wrap('', 'About — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content">
@@ -668,6 +673,13 @@ function aboutPage(notionHtml) {
         <a href="mailto:avigailba@gmail.com" class="about-contact-inline">avigailba@gmail.com ↗</a>
         <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer" class="about-contact-inline">LinkedIn ↗</a>
         <a href="https://docs.google.com/document/d/1f0pEtgv_I89h16hgUF0ncW52EBcFwVPrjrJFzW3teI4/export?format=pdf" target="_blank" rel="noreferrer" class="about-contact-inline">CV ↓</a>
+      </div>
+
+      <p class="section-label">Education</p>
+
+      <div class="cv-role">
+        <div class="cv-role-header"><span class="cv-years">2006–2010 · Shenkar College of Engineering &amp; Design</span></div>
+        <p class="cv-desc">B.Des. in Graphic Design</p>
       </div>
 
       <p class="section-label">Experience</p>
@@ -736,22 +748,8 @@ function aboutPage(notionHtml) {
         <span class="cv-role-title">Trainer, Armored Corps</span>
       </div>
 
-      <p class="section-label">Education</p>
-
-      <div class="cv-role">
-        <div class="cv-role-header"><span class="cv-years">2006–2010 · Shenkar College of Engineering &amp; Design</span></div>
-        <p class="cv-desc">B.Des. in Graphic Design</p>
-      </div>
-
       <p class="section-label">Skills</p>
       <p class="cv-skills">Figma · Google Suite · Cursor · Claude Code · Hebrew (native) · English</p>
-
-      <p class="section-label">Contact</p>
-      <div class="about-contact">
-        <a href="mailto:avigailba@gmail.com" class="about-contact-link">avigailba@gmail.com <span class="about-arr">↗</span></a>
-        <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer" class="about-contact-link">LinkedIn <span class="about-arr">↗</span></a>
-        <a href="https://docs.google.com/document/d/1f0pEtgv_I89h16hgUF0ncW52EBcFwVPrjrJFzW3teI4/export?format=pdf" target="_blank" rel="noreferrer" class="about-contact-link">CV <span class="about-arr">↗</span></a>
-      </div>
 
     </div>
   </main>`);
