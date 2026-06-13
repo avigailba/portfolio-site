@@ -915,6 +915,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   /* Condensed: arrows appear, title shrinks, meta collapses */
   .proj-title-sticky.condensed .proj-title-m { font-size: 22px; }
   .proj-title-sticky.condensed .proj-title-row { display: flex; align-items: center; gap: 10px; }
+  .proj-title-sticky.condensed .proj-nav-next { margin-left: auto; }
   .proj-title-sticky.condensed .proj-nav-arr { display: flex; }
   .proj-title-sticky.condensed .proj-meta-m { max-height: 0; opacity: 0; margin: 0; padding: 0; border-color: transparent; }
   .proj-title-sticky.condensed .proj-subtitle-m { max-height: 0; opacity: 0; margin: 0; }
