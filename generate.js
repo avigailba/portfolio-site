@@ -298,7 +298,7 @@ function hdr(prefix) {
     </a>
     <nav>
       <a href="${prefix}index.html">Home</a>
-      <a href="${prefix}index.html#home-allwork">Work</a>
+      <a href="${prefix}index.html#home-work">Work</a>
       <a href="${prefix}about.html">About & Contact</a>
     </nav>
     <button class="mob-burger" id="open-menu" aria-label="Open menu">
@@ -314,7 +314,7 @@ function hdr(prefix) {
   </div>
   <nav class="mob-panel-nav">
     <a href="${prefix}index.html" class="mob-panel-link">Home</a>
-    <a href="${prefix}index.html#home-allwork" class="mob-panel-link mob-work-link">Work</a>
+    <a href="${prefix}index.html#home-work" class="mob-panel-link mob-work-link">Work</a>
     <a href="${prefix}about.html" class="mob-panel-link">About & Contact</a>
   </nav>
   <div class="mob-panel-foot">
@@ -447,7 +447,7 @@ function indexPage(projects, tagline) {
   }).join('\n  ');
 
   return wrap('', 'Avigail Bahat — Senior UX Designer', `
-  <main class="home-band">
+  <main class="home-band" id="home-work">
     <p class="lede">${tagline}</p>
     <div class="feat-grid">
       ${featHtml}
@@ -654,6 +654,15 @@ function aboutPage(notionHtml) {
       (match, h2, links) => {
         const bare = links.replace(/<p>(<a [^>]+>[^<]*<\/a>)<\/p>/g, '$1\n').trim();
         return `${h2}\n<div class="about-contact-row">\n${bare}\n</div>`;
+      }
+    );
+    // Wrap each experience entry in cv-row: year left col, content right col
+    content = content.replace(
+      /(<p class="notion-years">[^<]*<\/p>)([\s\S]*?)(?=<p class="notion-years">|<hr>|<h2>|$)/g,
+      (match, yearP, rest) => {
+        const contentHtml = rest.trim();
+        if (!contentHtml) return `<div class="cv-row"><div class="cv-col-year">${yearP}</div><div class="cv-col-content"></div></div>\n`;
+        return `<div class="cv-row"><div class="cv-col-year">${yearP}</div><div class="cv-col-content">${contentHtml}</div></div>\n`;
       }
     );
     return wrap('', 'About — Avigail Bahat', `
