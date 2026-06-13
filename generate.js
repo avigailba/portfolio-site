@@ -651,6 +651,14 @@ function aboutPage(notionHtml) {
       const icon = href.includes('docs.google.com') ? ' ↓' : ' ↗';
       return `<p><a href="${href}"${attrs} class="about-contact-inline">${text}${icon}</a></p>`;
     });
+    // Wrap Contact section links in a flex row
+    content = content.replace(
+      /(<h2>Contact<\/h2>)((?:\s*<p><a [^>]+>[^<]*<\/a><\/p>)+)/,
+      (match, h2, links) => {
+        const bare = links.replace(/<p>(<a [^>]+>[^<]*<\/a>)<\/p>/g, '$1\n').trim();
+        return `${h2}\n<div class="about-contact-row">\n${bare}\n</div>`;
+      }
+    );
     return wrap('', 'About — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content">
