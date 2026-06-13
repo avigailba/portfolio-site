@@ -205,7 +205,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 }
 
 /* ── Work header + filters ───────────────────────────────── */
-.home-allwork { }
+.home-allwork { scroll-margin-top: 80px; }
 .work-header {
   display: flex;
   align-items: baseline;
@@ -453,6 +453,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 
 /* Dividers */
 .about-notion hr { border: none; border-top: 0.5px solid #ebebeb; margin: 32px 0; }
+.about-notion hr + h2 { border-top: none; padding-top: 0; }
+.about-notion hr:has(+ h2) { display: none; }
 
 /* Links */
 .about-notion a { color: #0a0a0a; text-decoration: underline; text-underline-offset: 3px; }
