@@ -434,7 +434,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .about-notion h2 {
   font-size: 14px;
   font-weight: 400;
-  color: #888;
+  color: #555;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin: 48px 0 20px;
@@ -446,13 +446,13 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 /* Body paragraphs */
 .about-notion p { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 4px; }
 /* Year labels */
-.about-notion .notion-years { font-size: 12px; color: #555; margin-top: 24px; margin-bottom: 0; }
+.about-notion .notion-years { font-size: 14px; color: #555; margin-top: 24px; margin-bottom: 0; }
 /* Company name: bold-only paragraphs */
 .about-notion p:has(> strong:only-child) { font-size: 16px; color: #0a0a0a; font-weight: 600; margin-top: 0; margin-bottom: 2px; }
 /* Role title: plain paragraph immediately after company */
-.about-notion p:has(> strong:only-child) + p:not(:has(> em:only-child)) { font-size: 13px; color: #888; margin-bottom: 6px; }
+.about-notion p:has(> strong:only-child) + p:not(:has(> em:only-child)) { font-size: 16px; font-weight: 600; color: #0a0a0a; margin-bottom: 6px; }
 /* Project lists: italic-only paragraphs */
-.about-notion p:has(> em:only-child) { font-size: 14px; color: #888; margin-bottom: 16px; }
+.about-notion p:has(> em:only-child) { font-size: 14px; color: #555; margin-bottom: 16px; }
 
 /* Dividers */
 .about-notion hr { border: none; border-top: 0.5px solid #ebebeb; margin: 32px 0; }
