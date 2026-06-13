@@ -754,7 +754,6 @@ function contactPage() {
         </a>
       </div>
 
-      <p class="contact-location">Based in Tel Aviv. Open to remote and hybrid opportunities.</p>
     </div>
   </main>`);
 }
