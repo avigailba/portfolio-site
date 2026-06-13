@@ -738,42 +738,6 @@ function aboutPage(notionHtml) {
   </main>`);
 }
 
-function contactPage(notionHtml) {
-  if (notionHtml && notionHtml.trim()) {
-    return wrap('', 'Contact — Avigail Bahat', `
-  <main class="inner-main">
-    <div class="inner-content">
-      <h1>Contact</h1>
-      <div class="about-notion">
-        ${notionHtml}
-      </div>
-    </div>
-  </main>`);
-  }
-  return wrap('', 'Contact — Avigail Bahat', `
-  <main class="inner-main">
-    <div class="inner-content">
-      <h1>Contact</h1>
-      <p class="page-sub">Let's talk.</p>
-
-      <p class="contact-intro">
-        I'm currently looking for my next role. If you're working on something interesting - developer tools, AI products, complex B2B systems - I'd love to hear about it.
-      </p>
-
-      <div class="contact-links">
-        <a href="mailto:avigailba@gmail.com" class="contact-link">
-          <span class="contact-link-label">Email</span>
-          <span class="contact-link-val">avigailba@gmail.com <span class="contact-arr">↗</span></span>
-        </a>
-        <a href="https://www.linkedin.com/in/avigailbahat/" class="contact-link">
-          <span class="contact-link-label">LinkedIn</span>
-          <span class="contact-link-val">avigailbahat <span class="contact-arr">↗</span></span>
-        </a>
-      </div>
-
-    </div>
-  </main>`);
-}
 
 function designSystemPage(notionConnected) {
   const swatches = [
@@ -1162,7 +1126,6 @@ async function build() {
   let projects = [];
   let tagline = "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
   let aboutHtml = '';
-  let contactHtml = '';
 
   try {
     console.log('Fetching project pages from Notion...');
@@ -1201,10 +1164,6 @@ async function build() {
       aboutHtml = await toHtml(aboutBlocks, '');
     } catch (e) { console.log('Could not fetch About page from Notion, using fallback'); }
 
-    try {
-      const contactBlocks = await fetchBlocks(CONTACT_PAGE_ID);
-      contactHtml = await toHtml(contactBlocks, '');
-    } catch (e) { console.log('Could not fetch Contact page from Notion, using fallback'); }
 
   } catch (e) {
     console.error('Notion fetch failed:', e.code || e.status, e.message);
@@ -1232,7 +1191,7 @@ async function build() {
   for (const [file, html] of [
     ['index.html',          indexPage(projects, tagline)],
     ['about.html',          aboutPage(aboutHtml)],
-    ['contact.html',        contactPage(contactHtml)],
+    ['contact.html',        '<meta http-equiv="refresh" content="0;url=about.html">'],
     ['design-system.html',  designSystemPage(projects.length > 0)],
   ]) {
     fs.writeFileSync(path.join(DIST, file), html);
