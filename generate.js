@@ -637,7 +637,6 @@ function aboutPage(notionHtml) {
   <main class="inner-main">
     <div class="inner-content">
       <h1>About</h1>
-      <p class="page-sub">Senior UX Designer · Tel Aviv</p>
       ${bioText ? `<p class="about-bio">${bioText}</p>` : ''}
       <div class="about-notion">
         ${withoutBio}
@@ -646,7 +645,7 @@ function aboutPage(notionHtml) {
       <div class="about-contact">
         <a href="mailto:avigailba@gmail.com" class="about-contact-link">avigailba@gmail.com <span class="about-arr">↗</span></a>
         <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer" class="about-contact-link">LinkedIn <span class="about-arr">↗</span></a>
-        <a href="https://docs.google.com/document/d/1f0pEtgv_I89h16hgUF0ncW52EBcFwVPrjrJFzW3teI4/edit?usp=sharing" target="_blank" rel="noreferrer" class="about-contact-link">CV <span class="about-arr">↗</span></a>
+        <a href="https://docs.google.com/document/d/1f0pEtgv_I89h16hgUF0ncW52EBcFwVPrjrJFzW3teI4/export?format=pdf" target="_blank" rel="noreferrer" class="about-contact-link">CV <span class="about-arr">↗</span></a>
       </div>
     </div>
   </main>`);
@@ -657,8 +656,7 @@ function aboutPage(notionHtml) {
     <div class="inner-content">
 
       <h1>About</h1>
-      <p class="page-sub">Senior UX Designer · Tel Aviv</p>
-      <p class="about-bio">I design tools for the people who build things: developers, internal teams, and the end users who never see the plumbing.</p>
+      <p class="about-bio">Senior UX Designer. I've spent my career building tools - for developers, for internal teams, and for end users.</p>
 
       <p class="section-label">Experience</p>
 
@@ -667,54 +665,57 @@ function aboutPage(notionHtml) {
         <div class="cv-sub-roles">
 
           <div class="cv-sub-role">
-            <span class="cv-years">2025–2026 · OS company</span>
+            <span class="cv-years">2025→2026 · OS Company</span>
             <p class="cv-desc">Designed platform-level AI and developer-facing products. Led UX for the AI Credits system across Business Manager and Wixel, and redesigned the app installation data experience for developers.</p>
             <p class="cv-proj-list">AI Credits Wallet, App Installation View</p>
           </div>
 
           <div class="cv-sub-role">
-            <span class="cv-years">2020–2025 · App Market</span>
-            <p class="cv-desc">Owned design across Wix's developer marketplace: monetisation infrastructure, platform tooling, and internal operations. Worked end-to-end across developer onboarding, payout systems, and marketplace tooling.</p>
+            <span class="cv-years">2020→2025 · App Market's Developer Center</span>
+            <p class="cv-desc">Owned design across Wix's Developer Center: monetisation infrastructure, platform tooling, and internal operations. Worked end-to-end on developer onboarding, payout systems, pricing, and marketplace tooling.</p>
             <p class="cv-proj-list">App Pricing, Payouts, Refund Flow, Developer Sale, App Coupons, App Collections, App Reviews, Internal Review System, Submit &amp; Publish, API Keys, Development Site Creation</p>
           </div>
 
           <div class="cv-sub-role">
-            <span class="cv-years">2019–2020 · Labs</span>
-            <p class="cv-desc">Worked on experimental product initiatives within Wix, including a comments app and various early-stage features.</p>
+            <span class="cv-years">2019→2020 · Labs Company</span>
+            <p class="cv-desc">Designed experimental product initiatives within Wix Labs, including a comments app and early-stage features.</p>
           </div>
 
           <div class="cv-sub-role">
-            <span class="cv-years">2018–2019 · Media</span>
-            <p class="cv-desc">Designed the core video creation and management experience as part of the Wix Video product team.</p>
+            <span class="cv-years">2018→2019 · Media</span>
+            <p class="cv-desc">Designed Wix Video's management experience, covering layouts, settings, and live video creation and broadcasting.</p>
           </div>
 
           <div class="cv-sub-role">
-            <span class="cv-years">2014–2018 · Wix ADI</span>
-            <p class="cv-desc">One of the founding UX designers on Wix ADI, an AI-powered website builder. Helped define and design the product from the ground up.</p>
+            <span class="cv-years">2014→2018 · ADI Founding</span>
+            <p class="cv-desc">One of the founding UX designers on Wix ADI, an AI-powered website builder. Helped shape the product from concept through launch.</p>
           </div>
 
         </div>
       </div>
 
-      <div class="cv-role"><span class="cv-title">Marketing Designer &amp; Lead · Wix · 2012–2013</span></div>
-      <div class="cv-role"><span class="cv-title">Graphic Designer · McCann Erickson Israel · 2010–2012</span></div>
-      <div class="cv-role"><span class="cv-title">Graphics · Walla.co.il · 2008–2010</span></div>
+      <div class="cv-role">
+        <span class="cv-title">Marketing Designer &amp; Lead · Wix · 2012→2013</span>
+        <p class="cv-desc">Designed campaigns, landing pages, and banners. Led A/B tests on pricing and paywall pages.</p>
+      </div>
+      <div class="cv-role">
+        <span class="cv-title">Graphic Designer · McCann Erickson · 2010→2012</span>
+        <p class="cv-desc">Designed campaigns, print ads, and commercial storyboards as part of a small creative team.</p>
+      </div>
+      <div class="cv-role">
+        <span class="cv-title">Graphic Designer · Walla News · 2008→2010</span>
+        <p class="cv-desc">Created visual assets and retouched images for the news site.</p>
+      </div>
+      <div class="cv-role">
+        <span class="cv-title">Trainer · Military Service · 2002→2004</span>
+        <p class="cv-desc">Trainer in Armored Corps.</p>
+      </div>
 
       <p class="section-label">Education</p>
 
       <div class="cv-role">
         <div class="cv-role-header"><span class="cv-years">2006–2010 · Shenkar College of Engineering &amp; Design</span></div>
         <p class="cv-desc">B.Des. in Graphic Design</p>
-      </div>
-
-      <div class="cv-role">
-        <div class="cv-role-header"><span class="cv-years">2012 · Netcraft Academy</span></div>
-        <p class="cv-desc">UX course</p>
-      </div>
-
-      <div class="cv-role">
-        <div class="cv-role-header"><span class="cv-years">2004–2005 · Tel Aviv University</span></div>
-        <p class="cv-desc">Studies towards BA in Economics &amp; Philosophy</p>
       </div>
 
       <p class="section-label">Skills</p>
@@ -724,7 +725,7 @@ function aboutPage(notionHtml) {
       <div class="about-contact">
         <a href="mailto:avigailba@gmail.com" class="about-contact-link">avigailba@gmail.com <span class="about-arr">↗</span></a>
         <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer" class="about-contact-link">LinkedIn <span class="about-arr">↗</span></a>
-        <a href="https://docs.google.com/document/d/1f0pEtgv_I89h16hgUF0ncW52EBcFwVPrjrJFzW3teI4/edit?usp=sharing" target="_blank" rel="noreferrer" class="about-contact-link">CV <span class="about-arr">↗</span></a>
+        <a href="https://docs.google.com/document/d/1f0pEtgv_I89h16hgUF0ncW52EBcFwVPrjrJFzW3teI4/export?format=pdf" target="_blank" rel="noreferrer" class="about-contact-link">CV <span class="about-arr">↗</span></a>
       </div>
 
     </div>
