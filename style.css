@@ -518,7 +518,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .proj-nav-btn {
   display: block;
   text-decoration: none;
-  opacity: 0.55;
+  opacity: 1;
   transition: opacity 0.2s;
 }
 .proj-nav-btn:hover { opacity: 1; }
