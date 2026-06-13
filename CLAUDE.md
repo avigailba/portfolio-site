@@ -22,9 +22,7 @@ This fetches all Notion pages and rebuilds `dist/`. To regenerate a single page,
 ### Colors
 - `--ac: #0a0a0a` — primary/accent (text, hover backgrounds)
 - `--border: #ebebeb` — all borders
-- `#555` — **single gray token** for all muted/secondary text: labels, numbers, subtitles, nav links, badges, years, arrows, captions. Do not use #bbb, #999, #767676, or #888 for text.
-- Body text (prose paragraphs): `#444`
-- Dark body copy (CV, project content): `#222`
+- `#555` — **single gray token** for all muted/secondary text: labels, numbers, subtitles, nav links, badges, years, arrows, captions, body copy. Do not use #444, #222, #bbb, #999, #767676, or #888 for text.
 - White: `#fff`
 
 ### Typography
@@ -43,8 +41,8 @@ This fetches all Notion pages and rebuilds `dist/`. To regenerate a single page,
 ```
 dist/
   index.html              — homepage
-  about.html              — about + CV (merged, no separate cv.html)
-  contact.html            — contact page
+  about.html              — about + CV + contact (single page, all content from Notion)
+  contact.html            — redirect to about.html only
   projects/
     ai-credits-wallet.html
     app-installation-view.html
@@ -168,36 +166,42 @@ Mobile interaction (in script.js):
 
 ## About page — CV layout
 
-The about page (`aboutPage()` in generate.js) **fetches all content from Notion** (page ID: `36e35a9ccf7a81f6953dcab2aebb27fc`). The generator passes the Notion HTML through directly, with one transformation: year-range paragraphs (`2025→2026`) get a `notion-years` class added.
+The about page (`aboutPage()` in generate.js) **fetches all content from Notion** (page ID: `36e35a9ccf7a81f6953dcab2aebb27fc`). No separate contact page — `contact.html` is just a redirect.
 
-Structure in Notion (in order): bio intro → Contact → Education → Experience → Skills
+Structure in Notion (in order): bio → Contact → Education → Experience → Skills
 
 ### Notion content format
 
-Each experience entry in Notion is structured as separate paragraphs:
+Experience entries use Notion's **column layout** (4 columns: year in col 1, content in cols 2–4):
 ```
-2025→2026
-**Wix - OS Company**
-Senior UX Designer
-Description text here.
-*Project A, Project B*
+[col 1: 2025→2026]  [col 2: **Wix - OS Company - Senior UX Designer**
+                             Description text here.
+                             *Project A, Project B*            ]
 ```
 
-Year paragraphs matching `\d{4}[→–]\d{4}` are transformed to `<p class="notion-years">`.
+The generator post-processes the Notion HTML:
+1. Year paragraphs (`\d{4}[→–]\d{4}`) → `<p class="notion-years">`
+2. `<p><strong>Company</strong></p><p>Short Role</p>` → `<p><strong>Company · Role</strong></p>` (≤80 chars, no period)
+3. Notion `col-layout col-N` divs → `.cv-row` / `.cv-col-year` / `.cv-col-content` grid
+4. Standalone link `<p><a href="...">text</a></p>` → adds `class="about-contact-inline"` + icon (↗ external, ↓ for docs.google.com)
 
 ### About page CSS classes
 ```css
-.about-notion { /* wraps all Notion-rendered content */ }
-.about-notion h2 { /* section headings: Contact, Education, Experience, Skills */ }
-.about-notion .notion-years { font-size: 12px; color: #555; margin-top: 24px; margin-bottom: 2px; }
-.about-notion p:has(> strong:only-child) { /* company name line */ font-size: 16px; font-weight: 600; color: #0a0a0a; }
+.about-notion { max-width: 720px; padding: 56px 0 80px; }
+.about-notion h2 { /* section labels: uppercase, #555 */ }
+.about-notion > p:first-child { /* bio: 18px/500 */ }
+.about-notion .notion-years { font-size: 14px; color: #555; }
+.about-notion p:has(> strong:only-child) { /* company·role line: 16px/600/#0a0a0a */ }
+.about-notion p:has(> em:only-child) { /* project list: 14px/#555 */ }
+/* CV columns */
+.about-notion .cv-row { display: grid; grid-template-columns: 100px 1fr; gap: 0 32px; margin-bottom: 32px; }
+.about-notion .cv-col-year { padding-top: 3px; }
+/* Contact links */
+.about-contact-inline { font-size: 14px; font-weight: 500; color: #2b6cff; text-decoration: none; border: none; padding: 0; }
 ```
 
-### Static fallback
-If Notion is unreachable, `aboutPage()` renders a hardcoded fallback with the same structure using `.cv-years`, `.cv-company`, `.cv-role-title`, `.cv-desc`, `.cv-proj-list` classes. Update both the Notion page and the static fallback together when content changes.
-
 ### Nav
-Nav has a single "About & Contact" link pointing to `about.html` — no separate Contact nav link.
+Single "About & Contact" link → `about.html`. No separate contact page. `SKIP_SLUGS` includes `about-contact` to prevent Notion's "About & Contact" page from being generated as a project.
 
 ---
 
