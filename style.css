@@ -411,9 +411,9 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .inner-content .page-sub { font-size: 14px; color: #555; margin-bottom: 48px; }
 
 /* ── About ───────────────────────────────────────────────── */
-.about-contact-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 4px; }
-.about-contact-inline { font-size: 14px; color: #0a0a0a; text-decoration: none; border: 0.5px solid #0a0a0a; border-radius: 4px; padding: 8px 16px; transition: background 0.15s, color 0.15s; }
-.about-contact-inline:hover { background: #0a0a0a; color: #fff; }
+.about-contact-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 4px; }
+.about-contact-inline { font-size: 14px; color: #555; text-decoration: none; border: 0.5px solid #e0e0e0; border-radius: 3px; padding: 6px 12px; transition: border-color 0.15s, color 0.15s; }
+.about-contact-inline:hover { color: #0a0a0a; border-color: #0a0a0a; }
 .about-arr { color: #555; }
 
 .about-bio {
@@ -447,10 +447,11 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .about-notion p { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 4px; }
 /* Year labels */
 .about-notion .notion-years { font-size: 14px; color: #555; margin-top: 24px; margin-bottom: 0; }
-/* Company name: bold-only paragraphs */
-.about-notion p:has(> strong:only-child) { font-size: 16px; color: #0a0a0a; font-weight: 600; margin-top: 0; margin-bottom: 2px; }
-/* Role title: plain paragraph immediately after company */
-.about-notion p:has(> strong:only-child) + p:not(:has(> em:only-child)) { font-size: 16px; font-weight: 600; color: #0a0a0a; margin-bottom: 6px; }
+/* Combined year · company · role line */
+.about-notion .cv-entry-title { font-size: 16px; color: #0a0a0a; font-weight: 600; margin-top: 24px; margin-bottom: 4px; }
+.about-notion .cv-entry-title:first-of-type { margin-top: 0; }
+/* Fallback: bold-only paragraphs (education, standalone entries) */
+.about-notion p:has(> strong:only-child) { font-size: 16px; color: #0a0a0a; font-weight: 600; margin-top: 0; margin-bottom: 4px; }
 /* Project lists: italic-only paragraphs */
 .about-notion p:has(> em:only-child) { font-size: 14px; color: #555; margin-bottom: 16px; }
 

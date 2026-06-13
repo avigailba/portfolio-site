@@ -633,7 +633,12 @@ function aboutPage(notionHtml) {
     let withoutBio = notionHtml.replace(/^<p>[\s\S]*?<\/p>\s*/, '');
     // Strip contact section (managed by template)
     withoutBio = withoutBio.replace(/<h2>Contact<\/h2>[\s\S]*?(?=<h2>|$)/, '');
-    // Add class to year-range paragraphs so CSS can style them
+    // Combine year + company + role into one bold line: "2025→2026 · Wix · Senior UX Designer"
+    withoutBio = withoutBio.replace(
+      /<p>(\d{4}[→–]\d{4})<\/p>\s*<p><strong>([^<]+)<\/strong><\/p>\s*<p>([^<]*)<\/p>/g,
+      '<p class="cv-entry-title"><strong>$1 · $2 · $3</strong></p>'
+    );
+    // Add class to any remaining standalone year-range paragraphs
     withoutBio = withoutBio.replace(/<p>(\d{4}[→–]\d{4})<\/p>/g, '<p class="notion-years">$1</p>');
     return wrap('', 'About — Avigail Bahat', `
   <main class="inner-main">
