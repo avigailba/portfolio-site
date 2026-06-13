@@ -643,7 +643,7 @@ function aboutPage(notionHtml) {
       <div class="about-contact-row">
         <a href="mailto:avigailba@gmail.com" class="about-contact-inline">avigailba@gmail.com ↗</a>
         <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer" class="about-contact-inline">LinkedIn ↗</a>
-        <a href="https://docs.google.com/document/d/1f0pEtgv_I89h16hgUF0ncW52EBcFwVPrjrJFzW3teI4/edit?usp=sharing" target="_blank" rel="noreferrer" class="about-contact-inline">CV ↓</a>
+        <a href="https://docs.google.com/document/d/1f0pEtgv_I89h16hgUF0ncW52EBcFwVPrjrJFzW3teI4/export?format=pdf" target="_blank" rel="noreferrer" class="about-contact-inline">CV ↓</a>
       </div>
       <div class="about-notion">
         ${withoutBio}
@@ -662,7 +662,7 @@ function aboutPage(notionHtml) {
       <div class="about-contact-row">
         <a href="mailto:avigailba@gmail.com" class="about-contact-inline">avigailba@gmail.com ↗</a>
         <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer" class="about-contact-inline">LinkedIn ↗</a>
-        <a href="https://docs.google.com/document/d/1f0pEtgv_I89h16hgUF0ncW52EBcFwVPrjrJFzW3teI4/edit?usp=sharing" target="_blank" rel="noreferrer" class="about-contact-inline">CV ↓</a>
+        <a href="https://docs.google.com/document/d/1f0pEtgv_I89h16hgUF0ncW52EBcFwVPrjrJFzW3teI4/export?format=pdf" target="_blank" rel="noreferrer" class="about-contact-inline">CV ↓</a>
       </div>
 
       <p class="section-label">Experience</p>
