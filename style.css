@@ -454,7 +454,9 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 /* Fallback: bold-only paragraphs (education, standalone entries) */
 .about-notion p:has(> strong:only-child) { font-size: 16px; color: #0a0a0a; font-weight: 600; margin-top: 0; margin-bottom: 4px; }
 /* Project lists: italic-only paragraphs */
-.about-notion p:has(> em:only-child) { font-size: 14px; color: #555; margin-bottom: 16px; }
+.about-notion p:has(> em:only-child) { font-size: 14px; color: #555; margin-bottom: 0; }
+/* Zero out last child margin so cv-entry margin-bottom is the only gap */
+.about-notion .cv-entry > p:last-child { margin-bottom: 0; }
 
 /* Dividers */
 .about-notion hr { border: none; border-top: 0.5px solid #ebebeb; margin: 32px 0; }

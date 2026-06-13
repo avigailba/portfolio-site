@@ -1240,10 +1240,6 @@ async function build() {
     console.log(`  ✓ ${file}`);
   }
 
-  // Copy shared assets to dist
-  fs.copyFileSync('style.css',  path.join(DIST, 'style.css'));
-  fs.copyFileSync('script.js',  path.join(DIST, 'script.js'));
-
   console.log(`\n✓ Done — ${stats.pages} pages, ${stats.images} images downloaded, ${stats.cached || 0} cached`);
   if (stats.errors.length) {
     console.log(`  ${stats.errors.length} error(s):`);
