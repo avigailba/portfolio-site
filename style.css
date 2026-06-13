@@ -326,7 +326,9 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   white-space: nowrap;
   flex-shrink: 0;
 }
-.feat-tag { font-size: 13px; color: #ccc; padding: 0 4px; white-space: nowrap; flex-shrink: 0; }
+.feat-tag { font-size: 13px; color: #ccc; padding: 0 4px; white-space: nowrap; flex-shrink: 0; position: relative; cursor: default; }
+.feat-tag::after { content: attr(title); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #0a0a0a; color: #fff; font-size: 12px; font-weight: 400; padding: 4px 8px; border-radius: 4px; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.15s; }
+.feat-tag:hover::after { opacity: 1; }
 
 /* ── Footer ──────────────────────────────────────────────── */
 .site-footer {

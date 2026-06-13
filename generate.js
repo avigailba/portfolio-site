@@ -437,7 +437,7 @@ function indexPage(projects, tagline) {
       <span class="row-title">${title}</span>
       ${summary ? `<span class="rsub">${summary}</span>` : ''}
     </div>
-    ${featured ? `<span class="feat-tag" title="Featured">★</span>` : ''}
+    ${featured ? `<span class="feat-tag" title="Featured project">★</span>` : ''}
     ${display ? `<span class="cat-tag" data-cats="${cats}" data-display="${display}">${display}</span>` : ''}
     <span class="row-year">${year}</span>
     <span class="row-arr">View ↗</span>
@@ -520,7 +520,7 @@ var CURRENT_SLUG = '${proj.slug}';
           '<span class="row-title">' + p.title + '</span>' +
           '<span class="rsub">' + p.sub + '</span>' +
         '</div>' +
-        (p.featured ? '<span class="feat-tag" title="Featured">★</span>' : '') +
+        (p.featured ? '<span class="feat-tag" title="Featured project">★</span>' : '') +
         '<span class="cat-tag">' + p.cat + '</span>' +
         '<span class="row-year">' + p.year + '</span>' +
         '<span class="row-arr">View ↗</span>' +
