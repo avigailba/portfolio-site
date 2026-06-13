@@ -467,11 +467,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .about-notion hr + h2 { border-top: none; padding-top: 0; }
 .about-notion hr:has(+ h2) { display: none; }
 
-/* Links — plain links get underline; standalone link paragraphs (contact links) get blue no-underline */
+/* Links */
 .about-notion a { color: #0a0a0a; text-decoration: underline; text-underline-offset: 3px; }
-.about-notion p:has(> a:only-child) { margin-bottom: 0; }
-.about-notion p:has(> a:only-child) a { font-size: 14px; font-weight: 500; color: #2b6cff; text-decoration: none; }
-.about-notion p:has(> a:only-child) a:hover { opacity: 0.75; }
 .about-notion strong { font-weight: 600; color: #0a0a0a; }
 .about-notion em { font-style: italic; }
 

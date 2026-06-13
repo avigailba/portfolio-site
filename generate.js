@@ -26,7 +26,7 @@ const CONTACT_PAGE_ID   = '36e35a9ccf7a8188a447fd3e36ee88cd';
 const HOMEPAGE_PAGE_ID  = '37135a9ccf7a81b2a7a7c0a2702d8c98';
 
 const SKIP_IDS   = new Set([ABOUT_PAGE_ID, CONTACT_PAGE_ID, HOMEPAGE_PAGE_ID]);
-const SKIP_SLUGS = new Set(['about', 'contact', 'cv', 'resume', 'homepage']);
+const SKIP_SLUGS = new Set(['about', 'contact', 'about-contact', 'cv', 'resume', 'homepage']);
 
 // Stable slug overrides by Notion page ID — prevents slug changes when Notion titles change
 const NOTION_ID_TO_SLUG = {
@@ -631,8 +631,14 @@ var CURRENT_SLUG = '${proj.slug}';
 function aboutPage(notionHtml) {
   // If Notion content fetched, use it; otherwise use hardcoded fallback
   if (notionHtml && notionHtml.trim()) {
-    // Add class to year-range paragraphs so CSS can style them
-    let content = notionHtml.replace(/<p>(\d{4}[→–]\d{4})<\/p>/g, '<p class="notion-years">$1</p>');
+    let content = notionHtml;
+    // Year-range paragraphs
+    content = content.replace(/<p>(\d{4}[→–]\d{4})<\/p>/g, '<p class="notion-years">$1</p>');
+    // Merge <p><strong>Company</strong></p><p>Role</p> → <p><strong>Company · Role</strong></p>
+    // Only matches short role-title lines (no period, ≤80 chars) to avoid absorbing description paragraphs
+    content = content.replace(/<p><strong>([^<]+)<\/strong><\/p>\s*<p>([^<.]{1,80}?)<\/p>/g, '<p><strong>$1 · $2</strong></p>');
+    // Contact links: add class to standalone link paragraphs
+    content = content.replace(/<p><a href="([^"]+)"([^>]*)>([^<]+)<\/a><\/p>/g, '<p><a href="$1"$2 class="about-contact-inline">$3</a></p>');
     return wrap('', 'About — Avigail Bahat', `
   <main class="inner-main">
     <div class="inner-content">
