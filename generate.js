@@ -447,9 +447,9 @@ function indexPage(projects, tagline) {
   }).join('\n  ');
 
   return wrap('', 'Avigail Bahat — Senior UX Designer', `
-  <main class="home-band" id="home-work">
+  <main class="home-band">
     <p class="lede">${tagline}</p>
-    <div class="feat-grid">
+    <div id="home-work" class="feat-grid">
       ${featHtml}
     </div>
     <div class="home-allwork" id="home-allwork">
