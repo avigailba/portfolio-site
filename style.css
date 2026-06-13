@@ -121,6 +121,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 
 /* ── Featured grid ───────────────────────────────────────── */
 .feat-grid {
+  scroll-margin-top: 100px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border-top: 0.5px solid #ebebeb;
