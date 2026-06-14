@@ -643,19 +643,17 @@ function aboutPage(notionHtml) {
       if (cols.length < 2) return match;
       return `<div class="cv-row"><div class="cv-col-year">${cols[0]}</div><div class="cv-col-content">${cols[1]}</div></div>`;
     });
+    // Strip Contact h2 and any hr immediately following it
+    content = content.replace(/<h2>Contact<\/h2>\s*(<hr>)?/g, '');
     // Contact links: blue text + icon (↗ for external/email, ↓ for CV/download)
-    content = content.replace(/<p><a href="([^"]+)"([^>]*)>([^<]+)<\/a><\/p>/g, (match, href, attrs, text) => {
+    content = content.replace(/<p><a href="([^"]+)"([^>]*)>([^<\n]+)<\/a><\/p>/g, (match, href, attrs, text) => {
       const icon = href.includes('docs.google.com') ? ' ↓' : ' ↗';
-      return `<p><a href="${href}"${attrs} class="about-contact-inline">${text}${icon}</a></p>`;
+      return `<span class="about-contact-link"><a href="${href}"${attrs} class="about-contact-inline">${text}${icon}</a></span>`;
     });
-    // Wrap Contact section links in a flex row
-    content = content.replace(
-      /(<h2>Contact<\/h2>)((?:\s*<p><a [^>]+>[^<]*<\/a><\/p>)+)/,
-      (match, h2, links) => {
-        const bare = links.replace(/<p>(<a [^>]+>[^<]*<\/a>)<\/p>/g, '$1\n').trim();
-        return `${h2}\n<div class="about-contact-row">\n${bare}\n</div>`;
-      }
-    );
+    // Wrap consecutive contact link spans in a flex row
+    content = content.replace(/((?:<span class="about-contact-link">[\s\S]*?<\/span>\s*){2,})/g, (match) => {
+      return `<div class="about-contact-row">${match.trim()}</div>`;
+    });
     // Wrap plain year paragraphs in cv-row — only if col-layout regex didn't already create them
     if (!content.includes('class="cv-row"')) {
       content = content.replace(
