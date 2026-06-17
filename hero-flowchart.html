@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avigail Bahat — Senior UX Designer</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    background: #fff;
+    color: #111;
+  }
+
+  /* ── Nav (matching site) ── */
+  nav {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 2rem 2.5rem;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .nav-logo { font-size: 0.9rem; line-height: 1.4; }
+  .nav-logo span { display: block; color: #888; font-size: 0.85rem; }
+
+  .nav-links { display: flex; gap: 2rem; font-size: 0.9rem; padding-top: 2px; }
+  .nav-links a { color: #111; text-decoration: none; }
+  .nav-links a:hover { opacity: 0.5; }
+
+  /* ── Hero wrapper ── */
+  .hero-wrapper {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 2rem 2.5rem 4rem;
+  }
+
+  /* ── Play frame ── */
+  .play-frame {
+    position: relative;
+    width: 100%;
+    height: clamp(280px, 38vw, 480px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background: #fff;
+    cursor: crosshair;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.03), 0 1px 4px rgba(0,0,0,0.05);
+  }
+
+  .play-frame canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  /* ── Hero text — inside the frame, top-left ── */
+  .hero-text {
+    position: absolute;
+    top: 2.25rem;
+    left: 2.5rem;
+    max-width: 600px;
+    z-index: 10;
+    pointer-events: none;
+    user-select: none;
+    transition: opacity 0.5s ease;
+  }
+
+  .hero-text p {
+    font-size: clamp(1.15rem, 2.2vw, 1.75rem);
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: #111;
+  }
+
+  /* ── HUD — bottom right of frame ── */
+  .hud {
+    position: absolute;
+    bottom: 12px;
+    right: 14px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+    z-index: 20;
+  }
+  .hud.visible { opacity: 1; pointer-events: auto; }
+
+  .hud-pill {
+    font-size: 0.68rem;
+    color: rgba(0,0,0,0.35);
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 100px;
+    padding: 0.28rem 0.65rem;
+    letter-spacing: 0.01em;
+  }
+  .hud-pill strong { color: #333; }
+
+  .reset-btn {
+    font-size: 0.68rem;
+    color: rgba(0,0,0,0.3);
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 100px;
+    padding: 0.28rem 0.65rem;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: color 0.15s;
+  }
+  .reset-btn:hover { color: #111; }
+
+  /* ── hint label ── */
+  .frame-hint {
+    position: absolute;
+    bottom: 14px;
+    left: 18px;
+    font-size: 0.68rem;
+    color: rgba(0,0,0,0.22);
+    letter-spacing: 0.04em;
+    pointer-events: none;
+    user-select: none;
+    transition: opacity 0.4s;
+    z-index: 20;
+  }
+  .frame-hint.hidden { opacity: 0; }
+
+  /* ── Below (stub) ── */
+  .below {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem;
+    color: #ccc;
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">
+    Avigail Bahat
+    <span>Senior UX Designer</span>
+  </div>
+  <div class="nav-links">
+    <a href="#">Home</a>
+    <a href="#">Work</a>
+    <a href="#">About &amp; Contact</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero-wrapper">
+  <div class="play-frame" id="playFrame">
+    <canvas id="canvas"></canvas>
+
+    <div class="hero-text" id="heroText">
+      <p>Senior UX designer. I like the problems that need a whiteboard and finding surprising solutions. I've spent my career building tools — for developers, for internal teams, and for end users.</p>
+    </div>
+
+    <div class="frame-hint" id="frameHint">move to draw · click to place</div>
+
+    <div class="hud" id="hud">
+      <div class="hud-pill">Next: <strong id="nextLabel">Process</strong></div>
+      <button class="reset-btn" id="resetBtn">Clear ✕</button>
+    </div>
+  </div>
+</div>
+
+<!-- Stub content below -->
+<div class="below">↓ projects</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  Config
+// ─────────────────────────────────────────────
+const SHAPES = [
+  { type: 'rect',          label: 'Process',   color: '#a0aec0' },
+  { type: 'diamond',       label: 'Decision',  color: '#b0a89a' },
+  { type: 'circle',        label: 'Start/End', color: '#9ab5a8' },
+  { type: 'parallelogram', label: 'I / O',     color: '#a99ab5' },
+  { type: 'rounded',       label: 'Action',    color: '#b5a09a' },
+];
+
+const TRAIL_LEN    = 90;
+const TRAIL_TTL    = 650;
+const POP_DURATION = 360;
+
+// ─────────────────────────────────────────────
+//  DOM
+// ─────────────────────────────────────────────
+const playFrame = document.getElementById('playFrame');
+const canvas    = document.getElementById('canvas');
+const ctx       = canvas.getContext('2d');
+const heroText  = document.getElementById('heroText');
+const hud       = document.getElementById('hud');
+const frameHint = document.getElementById('frameHint');
+const nextLabel = document.getElementById('nextLabel');
+const resetBtn  = document.getElementById('resetBtn');
+
+// ─────────────────────────────────────────────
+//  State
+// ─────────────────────────────────────────────
+let shapes     = [];
+let trail      = [];
+let mouse      = { x: -999, y: -999 };
+let shapeIdx   = 0;
+let interacted = false;
+
+// ─────────────────────────────────────────────
+//  Resize
+// ─────────────────────────────────────────────
+function resize() {
+  canvas.width  = playFrame.clientWidth;
+  canvas.height = playFrame.clientHeight;
+}
+resize();
+new ResizeObserver(resize).observe(playFrame);
+
+// ─────────────────────────────────────────────
+//  Input
+// ─────────────────────────────────────────────
+playFrame.addEventListener('mousemove', e => {
+  const r = playFrame.getBoundingClientRect();
+  mouse.x = e.clientX - r.left;
+  mouse.y = e.clientY - r.top;
+  trail.push({ x: mouse.x, y: mouse.y, t: performance.now() });
+  if (trail.length > TRAIL_LEN) trail.shift();
+
+  if (!interacted) {
+    interacted = true;
+    heroText.style.opacity = '0.1';
+    frameHint.classList.add('hidden');
+    hud.classList.add('visible');
+  }
+});
+
+playFrame.addEventListener('mouseleave', () => {
+  mouse.x = -999;
+  mouse.y = -999;
+  trail   = [];
+});
+
+playFrame.addEventListener('click', e => {
+  if (e.target === resetBtn) return;
+  const r = playFrame.getBoundingClientRect();
+  placeShape(e.clientX - r.left, e.clientY - r.top);
+});
+
+resetBtn.addEventListener('click', () => {
+  shapes     = [];
+  trail      = [];
+  shapeIdx   = 0;
+  interacted = false;
+  heroText.style.opacity = '1';
+  frameHint.classList.remove('hidden');
+  hud.classList.remove('visible');
+  updateHUD();
+});
+
+// ─────────────────────────────────────────────
+//  Logic
+// ─────────────────────────────────────────────
+function placeShape(x, y) {
+  const def = SHAPES[shapeIdx % SHAPES.length];
+  shapes.push({ x, y, type: def.type, color: def.color, born: performance.now() });
+  shapeIdx++;
+  trail = [{ x, y, t: performance.now() }];
+  updateHUD();
+}
+
+function updateHUD() {
+  nextLabel.textContent = SHAPES[shapeIdx % SHAPES.length].label;
+}
+
+function easeOutBack(t) {
+  const c1 = 1.70158, c3 = c1 + 1;
+  return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+}
+
+// ─────────────────────────────────────────────
+//  Draw helpers
+// ─────────────────────────────────────────────
+function drawGrid() {
+  const gap = 26;
+  ctx.save();
+  ctx.fillStyle = 'rgba(0,0,0,0.06)';
+  for (let x = gap; x < canvas.width; x += gap) {
+    for (let y = gap; y < canvas.height; y += gap) {
+      ctx.beginPath();
+      ctx.arc(x, y, 1, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  ctx.restore();
+}
+
+function drawArrowhead(x, y, angle, color, alpha) {
+  const sz = 8;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(angle);
+  ctx.fillStyle = color;
+  ctx.globalAlpha = alpha;
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.lineTo(-sz, -sz * 0.45);
+  ctx.lineTo(-sz * 0.6, 0);
+  ctx.lineTo(-sz, sz * 0.45);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawConnector(x1, y1, x2, y2, color, dashed) {
+  const alpha = dashed ? 0.18 : 0.42;
+
+  // Smooth bezier: control points pull horizontally outward from each end
+  const cx1 = x1 + (x2 - x1) * 0.5;
+  const cy1 = y1;
+  const cx2 = x1 + (x2 - x1) * 0.5;
+  const cy2 = y2;
+
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth   = dashed ? 1 : 1.5;
+  ctx.lineCap     = 'round';
+  ctx.lineJoin    = 'round';
+  ctx.globalAlpha = alpha;
+
+  if (dashed) {
+    ctx.setLineDash([6, 5]);
+    ctx.lineDashOffset = -(performance.now() / 40);
+  }
+
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.bezierCurveTo(cx1, cy1, cx2, cy2, x2, y2);
+  ctx.stroke();
+
+  if (!dashed) {
+    ctx.setLineDash([]);
+    // Arrowhead tangent from last control point to end
+    const angle = Math.atan2(y2 - cy2, x2 - cx2);
+    drawArrowhead(x2, y2, angle, color, 0.42);
+  }
+  ctx.restore();
+}
+
+function drawShape(s, scale, alpha) {
+  const { x, y, type, color } = s;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(scale, scale);
+  ctx.globalAlpha = alpha;
+  ctx.strokeStyle = color;
+  ctx.lineWidth   = 0.75;
+  ctx.fillStyle   = hexToRgba(color, 0.07);
+
+  ctx.beginPath();
+  switch (type) {
+    case 'rect':
+      ctx.rect(-40, -22, 80, 44);
+      break;
+    case 'diamond':
+      ctx.moveTo(0, -30);
+      ctx.lineTo(46, 0);
+      ctx.lineTo(0, 30);
+      ctx.lineTo(-46, 0);
+      ctx.closePath();
+      break;
+    case 'circle':
+      ctx.arc(0, 0, 28, 0, Math.PI * 2);
+      break;
+    case 'parallelogram':
+      ctx.moveTo(-28, -22);
+      ctx.lineTo(46, -22);
+      ctx.lineTo(28, 22);
+      ctx.lineTo(-46, 22);
+      ctx.closePath();
+      break;
+    case 'rounded':
+      roundRect(ctx, -40, -22, 80, 44, 22);
+      break;
+  }
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.arcTo(x + w, y, x + w, y + r, r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+  ctx.lineTo(x + r, y + h);
+  ctx.arcTo(x, y + h, x, y + h - r, r);
+  ctx.lineTo(x, y + r);
+  ctx.arcTo(x, y, x + r, y, r);
+  ctx.closePath();
+}
+
+function drawTrail(now) {
+  const live = trail.filter(p => now - p.t < TRAIL_TTL);
+  if (live.length < 3) return;
+
+  // Catmull-rom spline through trail points, drawn as one fading path
+  ctx.save();
+  ctx.strokeStyle = '#555';
+  ctx.lineWidth   = 1;
+  ctx.lineCap     = 'round';
+  ctx.lineJoin    = 'round';
+  ctx.setLineDash([5, 4]);
+  ctx.lineDashOffset = -(now / 40);
+
+  // Draw in segments so we can vary alpha along the trail
+  for (let i = 1; i < live.length - 1; i++) {
+    const p0 = live[Math.max(0, i - 1)];
+    const p1 = live[i];
+    const p2 = live[i + 1];
+    const p3 = live[Math.min(live.length - 1, i + 2)];
+
+    const cp1x = p1.x + (p2.x - p0.x) / 6;
+    const cp1y = p1.y + (p2.y - p0.y) / 6;
+    const cp2x = p2.x - (p3.x - p1.x) / 6;
+    const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+    const progress = i / live.length;
+    const ageFade  = 1 - (now - p1.t) / TRAIL_TTL;
+    ctx.globalAlpha = progress * ageFade * 0.28;
+
+    ctx.beginPath();
+    ctx.moveTo(p1.x, p1.y);
+    ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+    ctx.stroke();
+  }
+
+  // Arrowhead at tip
+  const a   = live[live.length - 2];
+  const b   = live[live.length - 1];
+  ctx.setLineDash([]);
+  ctx.globalAlpha = 0.18;
+  drawArrowhead(b.x, b.y, Math.atan2(b.y - a.y, b.x - a.x), '#555', 0.18);
+
+  ctx.restore();
+}
+
+function drawCursor(now) {
+  if (mouse.x < 0) return;
+  const def   = SHAPES[shapeIdx % SHAPES.length];
+  const pulse = 0.5 + 0.5 * Math.sin(now / 300);
+
+  drawShape({ x: mouse.x, y: mouse.y, type: def.type, color: def.color }, 0.55, 0.13);
+
+  ctx.save();
+  ctx.strokeStyle = '#aaa';
+  ctx.lineWidth   = 1;
+  ctx.globalAlpha = 0.15 + 0.08 * pulse;
+  ctx.beginPath();
+  ctx.arc(mouse.x, mouse.y, 18 + pulse * 4, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function hexToRgba(hex, a) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+// ─────────────────────────────────────────────
+//  Render loop
+// ─────────────────────────────────────────────
+function frame(now) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawGrid();
+
+  for (let i = 1; i < shapes.length; i++) {
+    const a = shapes[i - 1], b = shapes[i];
+    drawConnector(a.x, a.y, b.x, b.y, a.color, false);
+  }
+
+  if (shapes.length > 0 && mouse.x > 0) {
+    const last = shapes[shapes.length - 1];
+    drawConnector(last.x, last.y, mouse.x, mouse.y, last.color, true);
+  }
+
+  drawTrail(now);
+
+  shapes.forEach(s => {
+    const age   = (now - s.born) / POP_DURATION;
+    const scale = age < 1 ? easeOutBack(Math.min(age, 1)) : 1;
+    drawShape(s, scale, Math.min(1, age * 2.5));
+  });
+
+  drawCursor(now);
+  requestAnimationFrame(frame);
+}
+
+updateHUD();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

@@ -1028,3 +1028,91 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 @media (max-width: 480px) {
   .proj-title-m { font-size: 28px; }
 }
+
+/* ── Hero flowchart canvas ───────────────────────────────── */
+.play-frame {
+  position: relative;
+  width: 100%;
+  height: clamp(280px, 38vw, 480px);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  background: #fff;
+  cursor: crosshair;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.03), 0 1px 4px rgba(0,0,0,0.05);
+  margin-top: 48px;
+  margin-bottom: 56px;
+}
+.play-frame canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.hero-text {
+  position: absolute;
+  top: 2.25rem;
+  left: 2.5rem;
+  max-width: 600px;
+  z-index: 10;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.5s ease;
+}
+.hero-text .lede {
+  padding: 0;
+  max-width: 600px;
+}
+.frame-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 18px;
+  font-size: 0.68rem;
+  color: rgba(0,0,0,0.22);
+  letter-spacing: 0.04em;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.4s;
+  z-index: 20;
+}
+.frame-hint.hidden { opacity: 0; }
+.hud {
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+  z-index: 20;
+}
+.hud.visible { opacity: 1; pointer-events: auto; }
+.hud-pill {
+  font-size: 0.68rem;
+  color: rgba(0,0,0,0.35);
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 100px;
+  padding: 0.28rem 0.65rem;
+  letter-spacing: 0.01em;
+}
+.hud-pill strong { color: #333; }
+.reset-btn {
+  font-size: 0.68rem;
+  color: rgba(0,0,0,0.3);
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 100px;
+  padding: 0.28rem 0.65rem;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: color 0.15s;
+}
+.reset-btn:hover { color: #111; }
+@media (max-width: 768px) {
+  .play-frame { margin-top: 28px; margin-bottom: 32px; }
+  .hero-text .lede { padding: 0; }
+}

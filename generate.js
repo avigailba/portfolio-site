@@ -448,7 +448,17 @@ function indexPage(projects, tagline) {
 
   return wrap('', 'Avigail Bahat — Senior UX Designer', `
   <main class="home-band">
-    <p class="lede">${tagline}</p>
+    <div class="play-frame" id="playFrame">
+      <canvas id="canvas"></canvas>
+      <div class="hero-text" id="heroText">
+        <p class="lede">${tagline}</p>
+      </div>
+      <div class="frame-hint" id="frameHint">move to draw · click to place</div>
+      <div class="hud" id="hud">
+        <div class="hud-pill">Next: <strong id="nextLabel">Process</strong></div>
+        <button class="reset-btn" id="resetBtn">Clear ✕</button>
+      </div>
+    </div>
     <div id="home-work" class="feat-grid">
       ${featHtml}
     </div>
