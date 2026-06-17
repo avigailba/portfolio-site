@@ -1144,5 +1144,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .mode-btn.active { background: #0a0a0a; color: #fff; }
 .mode-btn:not(.active):hover { color: #0a0a0a; }
 @media (max-width: 768px) {
-  .hero-wrap { display: none; }
+  .hero-wrap { cursor: default; margin-top: 0; }
+  .play-frame { display: none; }
+  .hero-wrap .lede { padding: 28px 0 24px; cursor: default; }
 }
