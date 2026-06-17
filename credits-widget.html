@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Credits Wallet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap" rel="stylesheet">
+<style>
+  /* ----- design tokens ----- */
+  :root {
+    --ink: #000624;
+    --secondary: #44485F;
+    --blue: #116DFF;
+    --purple: #9747FF;
+    --divider: #E8ECF0;
+    --note-bg: #FFF0D1;
+    --note-border: #FFD16E;
+    --note-text: #5C4A1A;
+    --tip-bg: #04060F;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #ECECEE;
+    background-image: radial-gradient(rgba(0,6,36,0.10) 1px, transparent 1px);
+    background-size: 18px 18px;
+    font-family: "Wix Madefor Text", -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    padding: 30px 24px 20px;
+  }
+  .material-symbols-outlined { font-family: "Material Symbols Outlined"; line-height: 1; user-select: none; }
+
+  /* ----- demo harness ----- */
+  .harness { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .tab { padding: 0; border: none; background: none; color: #555; font: 400 14px/1 "Wix Madefor Text", sans-serif; cursor: pointer; transition: color .15s; }
+  .tab:hover { color: #0a0a0a; }
+  .tab.is-active { color: #0a0a0a; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  .sep { width: 1px; height: 16px; background: #ccc; margin: 0 4px; }
+  .switch { position: relative; width: 40px; height: 24px; border: none; border-radius: 99px; background: #CED0D6; cursor: pointer; padding: 0; transition: background .2s ease; flex: none; }
+  .switch.is-on { background: #0a0a0a; }
+  .switch .knob { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.25); transition: left .2s ease; }
+  .switch.is-on .knob { left: 19px; }
+  .switch-label { font: 400 14px/1 "Wix Madefor Text", sans-serif; color: #555; }
+
+  /* ----- the component ----- */
+  .credits-card {
+    width: 315px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 18px rgba(0,6,36,.10), 0 6px 6px rgba(0,6,36,.05);
+    overflow: hidden;
+    padding: 10px 0 4px;
+  }
+  .cc-header { display: flex; align-items: center; gap: 12px; padding: 8px 24px 12px; }
+  .cc-avatar {
+    width: 60px; height: 60px; border-radius: 50%; flex: none;
+    background: #E2E4EA; display: flex; align-items: center; justify-content: center;
+    font: 700 22px "Wix Madefor Text", sans-serif; color: var(--secondary);
+    overflow: hidden;
+  }
+  .cc-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cc-name  { font: 700 16px/24px "Wix Madefor Text", sans-serif; color: #000; }
+  .cc-email { font: 400 14px/18px "Wix Madefor Text", sans-serif; color: var(--secondary); }
+  .cc-divider { height: 1px; background: var(--divider); }
+  .cc-divider--inset { max-width: 267px; margin: 0 auto; }
+  .cc-body { display: flex; flex-direction: column; gap: 18px; padding: 18px 24px; }
+
+  .cc-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .cc-row-title { font: 700 16px/24px "Wix Madefor Text", sans-serif; color: var(--ink); white-space: nowrap; }
+  .cc-row-sub   { font: 400 14px/18px "Wix Madefor Text", sans-serif; color: var(--secondary); white-space: pre-line; margin-top: 1px; }
+  .cc-amount    { font: 700 16px/24px "Wix Madefor Text", sans-serif; color: var(--ink); font-variant-numeric: tabular-nums; flex: none; }
+
+  .cc-note { background: var(--note-bg); border: 1px solid var(--note-border); border-radius: 8px; padding: 10px 12px; font: 400 14px/19px "Wix Madefor Text", sans-serif; color: var(--note-text); }
+
+  .cc-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .cc-plan { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .cc-plan-label { display: flex; align-items: center; gap: 6px; }
+  .cc-plan-name  { font: 700 16px/24px "Wix Madefor Text", sans-serif; color: var(--ink); }
+  .cc-plan-text  { font: 400 14px/18px "Wix Madefor Text", sans-serif; color: var(--secondary); }
+
+  .cc-link { font: 400 15px/18px "Wix Madefor Text", sans-serif; color: var(--ink); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; background: none; border: none; padding: 0; font-family: inherit; }
+
+  .btn-upgrade { border: none; cursor: pointer; padding: 8px 20px; border-radius: 20px; background: var(--purple); color: #fff; font: 600 14px/18px "Wix Madefor Text", sans-serif; flex: none; }
+  .btn-logout  { border: 1px solid #D6E4FF; background: #fff; cursor: pointer; padding: 7px 18px; border-radius: 20px; color: var(--blue); font: 600 14px/18px "Wix Madefor Text", sans-serif; }
+
+  .cc-error { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; padding: 4px 0 2px; }
+  .cc-error-msg     { font: 400 14px/19px "Wix Madefor Text", sans-serif; color: var(--secondary); }
+  .cc-error-actions { display: flex; align-items: center; gap: 8px; color: var(--blue); font: 600 14px/18px "Wix Madefor Text", sans-serif; cursor: pointer; }
+
+  .cc-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; }
+  .cc-settings { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .cc-settings span:last-child { font: 400 16px/24px "Wix Madefor Text", sans-serif; color: var(--ink); }
+
+  /* info icon + hover tooltip */
+  .cc-info { position: relative; display: inline-flex; align-items: center; }
+  .cc-info .material-symbols-outlined { font-size: 16px; color: var(--ink); cursor: help; }
+  .cc-tip {
+    position: absolute; bottom: calc(100% + 10px); left: -8px; width: 208px;
+    background: var(--tip-bg); color: #fff; border-radius: 9px; padding: 11px 13px;
+    box-shadow: 0 10px 26px rgba(0,6,36,.32); z-index: 50; text-align: left;
+    opacity: 0; pointer-events: none; transition: opacity .16s ease;
+  }
+  .cc-info:hover .cc-tip { opacity: 1; }
+  .cc-tip-text { display: block; font: 400 13px/1.4 "Wix Madefor Text", sans-serif; }
+  .cc-tip-link { display: inline-block; margin-top: 7px; font: 400 13px/1.35 "Wix Madefor Text", sans-serif; color: #fff; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+  .cc-tip-arrow { position: absolute; top: 100%; left: 10px; width: 12px; height: 12px; background: var(--tip-bg); transform: translateY(-50%) rotate(45deg); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- demo harness — lives above the card, not inside the component -->
+<div class="harness" id="harness">
+  <button class="tab is-active" data-state="free">Free</button>
+  <button class="tab" data-state="premium">Premium</button>
+  <button class="tab" data-state="topup">Top-up</button>
+  <div class="sep"></div>
+  <div style="display:flex;align-items:center;gap:8px;white-space:nowrap;">
+    <button class="switch" id="lowToggle" title="Toggle low-credit note"><span class="knob"></span></button>
+    <span class="switch-label">Low credits</span>
+  </div>
+</div>
+
+<!-- the component — always visible -->
+<div id="card"></div>
+
+<script>
+  var USER = { name: "Carol Sturka", email: "carols@gmail.com", avatarUrl: "credits-widget-assets/avatar.png" };
+
+  var LOW_NOTE = "You're almost out of daily credits. Upgrade to get more.";
+
+  var STATES = {
+    free: {
+      rows: [{ title: "Total AI credits left", amount: "20", sub: "Out of 30 daily credits" }],
+      footer: { kind: "plan", name: "Free", text: "Get more credits to keep using AI features.",
+                tip: "You have 20 AI credits left in your daily balance of 30. Renews every day at midnight." }
+    },
+    lowCredits: {
+      rows: [{ title: "Total AI credits left", amount: "5", sub: "Out of 30 daily credits" }],
+      note: LOW_NOTE, footer: { kind: "upgrade" }
+    },
+    outOfCredits: {
+      rows: [{ title: "Total AI credits left", amount: "0", sub: "Out of 30 daily credits" }],
+      note: "You're out of AI credits for today. Upgrade to keep creating.", footer: { kind: "upgrade" }
+    },
+    premium: {
+      rows: [{ title: "Total AI credits left", amount: "800", sub: "Out of 2,000 monthly credits.\nRenews on Jan 12, 2026" }],
+      footer: { kind: "upgrade" }
+    },
+    paid: {
+      rows: [{ title: "Total AI credits left", amount: "2,000", sub: "Out of 2,000 monthly credits.\nRenews on Jan 12, 2026" }],
+      footer: { kind: "upgrade" }
+    },
+    topup: {
+      rows: [
+        { title: "Total AI credits left", amount: "1,700" },
+        { title: "Monthly credits",       amount: "1,200", sub: "Out of 2,000 monthly credits.\nRenews on Jan 12, 2026" },
+        { title: "Top up credits",        amount: "500" }
+      ],
+      footer: { kind: "upgrade", cta: "Add Credits" }
+    },
+    error:        { rows: [], footer: { kind: "error" } },
+    noPermission: {
+      rows: [{ title: "Total AI credits left", amount: "", sub: "You don't have AI credit permission on this site." }],
+      footer: { kind: "none" }
+    }
+  };
+
+  // Handlers — override from outside or leave as no-ops
+  var handlers = {
+    onUpgrade:         function(){ console.log("[wallet] upgrade"); },
+    onAddCredits:      function(){ console.log("[wallet] add credits"); },
+    onLearnMore:       function(){ console.log("[wallet] learn more"); },
+    onAccountSettings: function(){ console.log("[wallet] account settings"); },
+    onLogOut:          function(){ console.log("[wallet] log out"); },
+    onRefresh:         function(){ console.log("[wallet] refresh"); }
+  };
+
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  function initials(name){ return name.split(" ").map(function(w){ return w[0]; }).join("").slice(0,2).toUpperCase(); }
+
+  function rowHtml(r){
+    return '<div class="cc-row"><div>'
+      + '<div class="cc-row-title">' + esc(r.title) + '</div>'
+      + (r.sub ? '<div class="cc-row-sub">' + esc(r.sub) + '</div>' : '')
+      + '</div>' + (r.amount !== "" ? '<div class="cc-amount">' + esc(r.amount) + '</div>' : '') + '</div>';
+  }
+
+  function footerHtml(f){
+    if (f.kind === "plan") {
+      return '<div class="cc-footer"><div class="cc-plan">'
+        + '<div class="cc-plan-label"><span class="cc-plan-name">' + esc(f.name) + '</span>'
+        + '<span class="cc-info"><span class="material-symbols-outlined">info</span>'
+        + '<span class="cc-tip"><span class="cc-tip-text">' + esc(f.tip) + '</span>'
+        + '<span class="cc-tip-link" data-action="learnMore">Learn More</span>'
+        + '<span class="cc-tip-arrow"></span></span></span></div>'
+        + '<div class="cc-plan-text">' + esc(f.text) + '</div></div>'
+        + '<button class="btn-upgrade" data-action="upgrade">Upgrade</button></div>';
+    }
+    if (f.kind === "upgrade") {
+      return '<div class="cc-footer"><button class="cc-link" data-action="learnMore">Learn More</button>'
+        + '<button class="btn-upgrade" data-action="upgrade">' + esc(f.cta || "Upgrade") + '</button></div>';
+    }
+    if (f.kind === "error") {
+      return '<div class="cc-error"><span class="cc-error-msg">Couldn\'t load credit balance due to a technical issue on our end.</span>'
+        + '<div class="cc-error-actions" data-action="refresh">'
+        + '<span class="material-symbols-outlined" style="font-size:18px">sync</span>'
+        + '<span>Refresh</span></div></div>';
+    }
+    return "";
+  }
+
+  function render(stateKey, low){
+    var d    = STATES[stateKey] || STATES.free;
+    var note = d.note || (low ? LOW_NOTE : null);
+    var isAddCredits = d.footer && d.footer.cta === "Add Credits";
+
+    var avatarInner = USER.avatarUrl
+      ? '<img src="' + esc(USER.avatarUrl) + '" alt="">'
+      : initials(USER.name);
+
+    var html = '<div class="credits-card">'
+      + '<div class="cc-header"><div class="cc-avatar">' + avatarInner + '</div>'
+      + '<div><div class="cc-name">'  + esc(USER.name)  + '</div>'
+      +      '<div class="cc-email">' + esc(USER.email) + '</div></div></div>'
+      + '<div class="cc-divider"></div>'
+      + '<div class="cc-body">'
+      +   d.rows.map(rowHtml).join("")
+      +   (note ? '<div class="cc-note">' + esc(note) + '</div>' : '')
+      +   footerHtml(d.footer)
+      + '</div>'
+      + '<div class="cc-divider cc-divider--inset"></div>'
+      + '<div class="cc-bar">'
+      +   '<div class="cc-settings" data-action="settings">'
+      +     '<img src="credits-widget-assets/icon.png" style="width:20px;height:20px;object-fit:contain;display:block;" alt="">'
+      +     '<span>Account settings</span></div>'
+      +   '<button class="btn-logout" data-action="logout">Log Out</button>'
+      + '</div></div>';
+
+    var el = document.getElementById("card");
+    el.innerHTML = html;
+
+    el.querySelectorAll("[data-action]").forEach(function(btn){
+      btn.addEventListener("click", function(e){
+        e.preventDefault();
+        var a = btn.dataset.action;
+        if (a === "upgrade")   (isAddCredits ? handlers.onAddCredits : handlers.onUpgrade)();
+        if (a === "learnMore") handlers.onLearnMore();
+        if (a === "logout")    handlers.onLogOut();
+        if (a === "settings")  handlers.onAccountSettings();
+        if (a === "refresh")   handlers.onRefresh();
+      });
+    });
+  }
+
+  // harness wiring
+  var currentState = "free", low = false;
+  function refresh(){ render(currentState, low); }
+
+  document.querySelectorAll(".tab").forEach(function(t){
+    t.addEventListener("click", function(){
+      document.querySelectorAll(".tab").forEach(function(x){ x.classList.remove("is-active"); });
+      t.classList.add("is-active");
+      currentState = t.dataset.state;
+      refresh();
+    });
+  });
+
+  document.getElementById("lowToggle").addEventListener("click", function(){
+    low = !low;
+    this.classList.toggle("is-on", low);
+    refresh();
+  });
+
+  refresh();
+</script>
+</body>
+</html>

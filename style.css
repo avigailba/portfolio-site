@@ -34,7 +34,6 @@ button { font-family: inherit; }
   transition: border-color 0.25s;
   padding: 0 clamp(40px, 20%, 240px);
 }
-#site-header.scrolled { border-color: #ebebeb; }
 body.proj-page #site-header.scrolled { border-color: transparent; }
 .hdr-row {
   display: flex;

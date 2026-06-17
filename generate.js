@@ -448,16 +448,20 @@ function indexPage(projects, tagline) {
 
   return wrap('', 'Avigail Bahat — Senior UX Designer', `
   <main class="home-band">
-    <div class="play-frame" id="playFrame">
-      <canvas id="canvas"></canvas>
-      <div class="hero-text" id="heroText">
-        <p class="lede">${tagline}</p>
+    <div class="hero-wrap" id="heroWrap">
+      <div class="play-frame" id="playFrame">
+        <canvas id="canvas"></canvas>
+        <div class="mode-select" id="modeSelect">
+          <button class="mode-btn active" id="modeShapes">Shapes</button>
+          <button class="mode-btn" id="modeEmojis">Emojis</button>
+        </div>
+        <div class="frame-hint" id="frameHint">move to draw · click to place</div>
+        <div class="hud" id="hud">
+          <div class="hud-pill">Next: <strong id="nextLabel">Process</strong></div>
+          <button class="reset-btn" id="resetBtn">Clear ✕</button>
+        </div>
       </div>
-      <div class="frame-hint" id="frameHint">move to draw · click to place</div>
-      <div class="hud" id="hud">
-        <div class="hud-pill">Next: <strong id="nextLabel">Process</strong></div>
-        <button class="reset-btn" id="resetBtn">Clear ✕</button>
-      </div>
+      <p class="lede">${tagline}</p>
     </div>
     <div id="home-work" class="feat-grid">
       ${featHtml}
@@ -492,6 +496,23 @@ function indexPage(projects, tagline) {
 function projectPage(proj, prevProj, nextProj) {
   const prefix = '../';
   const meta  = PROJECT_META[proj.slug] || {};
+
+  // Per-slug content post-processing
+  let contentHtml = proj.contentHtml;
+  if (proj.slug === 'ai-credits-wallet' && contentHtml) {
+    contentHtml = contentHtml.replace(
+      /(<h2>What I Did<\/h2>[\s\S]*?)(<h2>Impact<\/h2>)/,
+      `<style>@media(max-width:768px){.cw-widget-col{display:none!important;}}</style>` +
+      `<div style="display:grid;grid-template-columns:1fr auto;gap:48px;align-items:start;margin:32px 0;">` +
+      `<div>$1</div>` +
+      `<figure class="cw-widget-col" style="margin:0;padding-top:48px;">` +
+      `<iframe src="credits-widget.html" title="Business Manager widget states" style="width:420px;height:580px;border:none;display:block;border-radius:8px;background:#ECECEE;" scrolling="no">` +
+      `Interactive demo showing the AI Credits wallet component across Free, Premium, and Top-up states in Business Manager.` +
+      `</iframe>` +
+      `<figcaption style="font-size:13px;color:#555;margin-top:8px;text-align:center;">Business Manager widget states</figcaption>` +
+      `</figure></div>$2`
+    );
+  }
   const title = proj.title || meta.title;
   const year  = meta.year  || proj.year;
   const CAT_LABELS = { developer: 'Developer tools', monetisation: 'Monetisation', cms: 'CMS', internal: 'Internal tools' };
@@ -565,7 +586,7 @@ var CURRENT_SLUG = '${proj.slug}';
         </div>
       </div>
       <div class="proj-content">
-        ${proj.contentHtml}
+        ${contentHtml}
       </div>
     </main>
     <div class="proj-gutter proj-gutter-right"></div>
@@ -1239,6 +1260,22 @@ async function build() {
     fs.writeFileSync(path.join(DIST, file), html);
     stats.pages++;
     console.log(`  ✓ ${file}`);
+  }
+
+  // Copy static widget files to dist/projects/
+  const widgetSrc = path.join(__dirname, 'credits-widget.html');
+  if (fs.existsSync(widgetSrc)) {
+    fs.copyFileSync(widgetSrc, path.join(PROJECTS_DIR, 'credits-widget.html'));
+    console.log('  ✓ projects/credits-widget.html');
+  }
+  const widgetAssetsSrc = path.join(__dirname, 'credits-widget-assets');
+  if (fs.existsSync(widgetAssetsSrc)) {
+    const widgetAssetsDst = path.join(PROJECTS_DIR, 'credits-widget-assets');
+    if (!fs.existsSync(widgetAssetsDst)) fs.mkdirSync(widgetAssetsDst, { recursive: true });
+    fs.readdirSync(widgetAssetsSrc).forEach(f => {
+      fs.copyFileSync(path.join(widgetAssetsSrc, f), path.join(widgetAssetsDst, f));
+    });
+    console.log('  ✓ projects/credits-widget-assets/');
   }
 
   console.log(`\n✓ Done — ${stats.pages} pages, ${stats.images} images downloaded, ${stats.cached || 0} cached`);
