@@ -159,24 +159,32 @@ if (document.getElementById('playFrame')) {
     { type: 'parallelogram', label: 'I / O',     color: '#a99ab5' },
     { type: 'rounded',       label: 'Action',    color: '#b5a09a' },
   ];
+  var EMOJIS = ['✨','💡','🎯','🔥','⚡','🌀','🎲','🌊'];
   var TRAIL_LEN    = 90;
   var TRAIL_TTL    = 650;
   var POP_DURATION = 360;
 
-  var playFrame = document.getElementById('playFrame');
-  var canvas    = document.getElementById('canvas');
-  var ctx       = canvas.getContext('2d');
-  var heroText  = document.getElementById('heroText');
-  var hud       = document.getElementById('hud');
-  var frameHint = document.getElementById('frameHint');
-  var nextLabel = document.getElementById('nextLabel');
-  var resetBtn  = document.getElementById('resetBtn');
+  var playFrame      = document.getElementById('playFrame');
+  var heroWrap       = document.getElementById('heroWrap');
+  var canvas         = document.getElementById('canvas');
+  var ctx            = canvas.getContext('2d');
+  var hud            = document.getElementById('hud');
+  var frameHint      = document.getElementById('frameHint');
+  var nextLabel      = document.getElementById('nextLabel');
+  var resetBtn       = document.getElementById('resetBtn');
+  var modeShapesBtn  = document.getElementById('modeShapes');
+  var modeEmojisBtn  = document.getElementById('modeEmojis');
 
-  var shapes     = [];
-  var trail      = [];
-  var mouse      = { x: -999, y: -999 };
-  var shapeIdx   = 0;
-  var interacted = false;
+  var shapes        = [];
+  var edges         = [];
+  var trail         = [];
+  var mouse         = { x: -999, y: -999 };
+  var shapeIdx      = 0;
+  var emojiIdx      = 0;
+  var mode          = 'shapes';
+  var interacted    = false;
+  var selectedShape = -1;
+  var hoveredShape  = -1;
 
   function resize() {
     canvas.width  = playFrame.clientWidth;
@@ -185,7 +193,7 @@ if (document.getElementById('playFrame')) {
   resize();
   new ResizeObserver(resize).observe(playFrame);
 
-  playFrame.addEventListener('mousemove', function(e) {
+  heroWrap.addEventListener('mousemove', function(e) {
     var r = playFrame.getBoundingClientRect();
     mouse.x = e.clientX - r.left;
     mouse.y = e.clientY - r.top;
@@ -193,45 +201,96 @@ if (document.getElementById('playFrame')) {
     if (trail.length > TRAIL_LEN) trail.shift();
     if (!interacted) {
       interacted = true;
-      heroText.style.opacity = '0.1';
       frameHint.classList.add('hidden');
       hud.classList.add('visible');
     }
   });
 
-  playFrame.addEventListener('mouseleave', function() {
+  heroWrap.addEventListener('mouseleave', function() {
     mouse.x = -999;
     mouse.y = -999;
     trail   = [];
   });
 
-  playFrame.addEventListener('click', function(e) {
+  heroWrap.addEventListener('click', function(e) {
     if (e.target === resetBtn) return;
     var r = playFrame.getBoundingClientRect();
-    placeShape(e.clientX - r.left, e.clientY - r.top);
+    var cx = e.clientX - r.left;
+    var cy = e.clientY - r.top;
+    var hit = shapeAt(cx, cy);
+    if (hit >= 0) {
+      // Clicking an existing shape: if one is already selected, draw an edge to this one
+      if (selectedShape >= 0 && hit !== selectedShape) {
+        edges.push({ from: selectedShape, to: hit });
+        trail = [{ x: shapes[hit].x, y: shapes[hit].y, t: performance.now() }];
+      }
+      selectedShape = hit;
+    } else {
+      placeShape(cx, cy);
+    }
+    if (!playFrame.classList.contains('active')) playFrame.classList.add('active');
   });
 
   resetBtn.addEventListener('click', function() {
-    shapes     = [];
-    trail      = [];
-    shapeIdx   = 0;
-    interacted = false;
-    heroText.style.opacity = '1';
+    shapes        = [];
+    edges         = [];
+    trail         = [];
+    shapeIdx      = 0;
+    emojiIdx      = 0;
+    interacted    = false;
+    selectedShape = -1;
+    hoveredShape  = -1;
+    playFrame.classList.remove('active');
     frameHint.classList.remove('hidden');
     hud.classList.remove('visible');
     updateHUD();
   });
 
+  modeShapesBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    mode = 'shapes';
+    modeShapesBtn.classList.add('active');
+    modeEmojisBtn.classList.remove('active');
+    updateHUD();
+  });
+
+  modeEmojisBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    mode = 'emojis';
+    modeEmojisBtn.classList.add('active');
+    modeShapesBtn.classList.remove('active');
+    updateHUD();
+  });
+
+  function shapeAt(cx, cy) {
+    var HIT = 52;
+    for (var i = shapes.length - 1; i >= 0; i--) {
+      if (Math.abs(cx - shapes[i].x) < HIT && Math.abs(cy - shapes[i].y) < HIT) return i;
+    }
+    return -1;
+  }
+
   function placeShape(x, y) {
-    var def = SHAPES[shapeIdx % SHAPES.length];
-    shapes.push({ x: x, y: y, type: def.type, color: def.color, born: performance.now() });
-    shapeIdx++;
-    trail = [{ x: x, y: y, t: performance.now() }];
+    var newIdx = shapes.length;
+    var now    = performance.now();
+    if (mode === 'emojis') {
+      shapes.push({ x: x, y: y, type: 'emoji', emoji: EMOJIS[emojiIdx % EMOJIS.length], color: '#888', born: now });
+      emojiIdx++;
+    } else {
+      var def = SHAPES[shapeIdx % SHAPES.length];
+      shapes.push({ x: x, y: y, type: def.type, color: def.color, born: now });
+      shapeIdx++;
+    }
+    if (selectedShape >= 0) edges.push({ from: selectedShape, to: newIdx });
+    selectedShape = newIdx;
+    trail = [{ x: x, y: y, t: now }];
     updateHUD();
   }
 
   function updateHUD() {
-    nextLabel.textContent = SHAPES[shapeIdx % SHAPES.length].label;
+    nextLabel.textContent = mode === 'emojis'
+      ? EMOJIS[emojiIdx % EMOJIS.length]
+      : SHAPES[shapeIdx % SHAPES.length].label;
   }
 
   function easeOutBack(t) {
@@ -268,6 +327,31 @@ if (document.getElementById('playFrame')) {
     ctx.closePath();
     ctx.fill();
     ctx.restore();
+  }
+
+  function edgePoint(s, tx, ty) {
+    var dx = tx - s.x, dy = ty - s.y;
+    if (dx === 0 && dy === 0) return { x: s.x, y: s.y };
+    var t;
+    switch (s.type) {
+      case 'emoji':
+        t = 16 / Math.sqrt(dx * dx + dy * dy);
+        break;
+      case 'circle':
+        t = 28 / Math.sqrt(dx * dx + dy * dy);
+        break;
+      case 'diamond':
+        t = 1 / (Math.abs(dx) / 46 + Math.abs(dy) / 30);
+        break;
+      case 'parallelogram':
+        t = Math.abs(dx) * 22 > Math.abs(dy) * 46
+          ? 46 / Math.abs(dx) : 22 / Math.abs(dy);
+        break;
+      default: // rect, rounded
+        t = Math.abs(dx) * 22 > Math.abs(dy) * 40
+          ? 40 / Math.abs(dx) : 22 / Math.abs(dy);
+    }
+    return { x: s.x + dx * t, y: s.y + dy * t };
   }
 
   function drawConnector(x1, y1, x2, y2, color, dashed) {
@@ -318,15 +402,28 @@ if (document.getElementById('playFrame')) {
     ctx.closePath();
   }
 
-  function drawShape(s, scale, alpha) {
+  function drawShape(s, scale, alpha, opts) {
     var x = s.x, y = s.y, type = s.type, color = s.color;
+    opts = opts || {};
+    if (type === 'emoji') {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(scale, scale);
+      ctx.globalAlpha = alpha;
+      ctx.font = '28px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(s.emoji, 0, 0);
+      ctx.restore();
+      return;
+    }
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(scale, scale);
     ctx.globalAlpha = alpha;
     ctx.strokeStyle = color;
-    ctx.lineWidth   = 0.75;
-    ctx.fillStyle   = hexToRgba(color, 0.07);
+    ctx.lineWidth   = opts.lineWidth  || 0.75;
+    ctx.fillStyle   = hexToRgba(color, opts.fillAlpha || 0.07);
     ctx.beginPath();
     switch (type) {
       case 'rect':
@@ -393,37 +490,94 @@ if (document.getElementById('playFrame')) {
     ctx.restore();
   }
 
+  function drawHighlight(s, hlMode) {
+    if (hlMode === 'hover') {
+      if (s.type === 'emoji') {
+        ctx.save();
+        ctx.translate(s.x, s.y);
+        ctx.globalAlpha = 0.9;
+        ctx.font = '36px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(s.emoji, 0, 0);
+        ctx.restore();
+      } else {
+        drawShape(s, 1, 0.85, { lineWidth: 1.5, fillAlpha: 0.22 });
+      }
+    } else {
+      ctx.save();
+      ctx.strokeStyle = s.color;
+      ctx.lineWidth   = 2;
+      ctx.globalAlpha = 0.75;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, 38, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+
   function drawCursor(now) {
     if (mouse.x < 0) return;
-    var def   = SHAPES[shapeIdx % SHAPES.length];
     var pulse = 0.5 + 0.5 * Math.sin(now / 300);
-    drawShape({ x: mouse.x, y: mouse.y, type: def.type, color: def.color }, 0.55, 0.13);
-    ctx.save();
-    ctx.strokeStyle = '#aaa';
-    ctx.lineWidth   = 1;
-    ctx.globalAlpha = 0.15 + 0.08 * pulse;
-    ctx.beginPath();
-    ctx.arc(mouse.x, mouse.y, 18 + pulse * 4, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.restore();
+    if (hoveredShape < 0) {
+      if (mode === 'emojis') {
+        ctx.save();
+        ctx.globalAlpha = 0.25 + 0.1 * pulse;
+        ctx.font = '20px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(EMOJIS[emojiIdx % EMOJIS.length], mouse.x, mouse.y);
+        ctx.restore();
+      } else {
+        var def = SHAPES[shapeIdx % SHAPES.length];
+        drawShape({ x: mouse.x, y: mouse.y, type: def.type, color: def.color }, 0.55, 0.13);
+      }
+      ctx.save();
+      ctx.strokeStyle = '#aaa';
+      ctx.lineWidth   = 1;
+      ctx.globalAlpha = 0.15 + 0.08 * pulse;
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, 18 + pulse * 4, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+    if (shapes.length === 0) {
+      ctx.save();
+      ctx.font = '500 11px Inter, -apple-system, sans-serif';
+      ctx.fillStyle = 'rgba(0,0,0,0.45)';
+      ctx.globalAlpha = 0.7 + 0.3 * pulse;
+      ctx.fillText('Click to start', mouse.x + 24, mouse.y + 5);
+      ctx.restore();
+    }
   }
 
   function frame(now) {
+    hoveredShape = (mouse.x < 0) ? -1 : shapeAt(mouse.x, mouse.y);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGrid();
-    for (var i = 1; i < shapes.length; i++) {
-      var a = shapes[i - 1], b = shapes[i];
-      drawConnector(a.x, a.y, b.x, b.y, a.color, false);
-    }
-    if (shapes.length > 0 && mouse.x > 0) {
-      var last = shapes[shapes.length - 1];
-      drawConnector(last.x, last.y, mouse.x, mouse.y, last.color, true);
+    // Draw all edges (border to border)
+    edges.forEach(function(edge) {
+      var a = shapes[edge.from], b = shapes[edge.to];
+      if (a && b) {
+        var ep1 = edgePoint(a, b.x, b.y);
+        var ep2 = edgePoint(b, a.x, a.y);
+        drawConnector(ep1.x, ep1.y, ep2.x, ep2.y, a.color, false);
+      }
+    });
+    // Dashed preview from selected shape border to cursor
+    if (selectedShape >= 0 && mouse.x > 0 && hoveredShape < 0) {
+      var sel = shapes[selectedShape];
+      var ep  = edgePoint(sel, mouse.x, mouse.y);
+      drawConnector(ep.x, ep.y, mouse.x, mouse.y, sel.color, true);
     }
     drawTrail(now);
-    shapes.forEach(function(s) {
+    shapes.forEach(function(s, i) {
       var age   = (now - s.born) / POP_DURATION;
       var scale = age < 1 ? easeOutBack(Math.min(age, 1)) : 1;
-      drawShape(s, scale, Math.min(1, age * 2.5));
+      var baseAlpha = (i === selectedShape) ? Math.min(0.45, age * 1.2) : Math.min(1, age * 2.5);
+      drawShape(s, scale, baseAlpha);
+      if (i === hoveredShape && i !== selectedShape) drawHighlight(s, 'hover');
     });
     drawCursor(now);
     requestAnimationFrame(frame);
