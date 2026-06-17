@@ -187,14 +187,14 @@ if (document.getElementById('playFrame')) {
   var hoveredShape  = -1;
 
   function resize() {
-    canvas.width  = playFrame.clientWidth;
-    canvas.height = playFrame.clientHeight;
+    canvas.width  = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
   }
   resize();
   new ResizeObserver(resize).observe(playFrame);
 
   heroWrap.addEventListener('mousemove', function(e) {
-    var r = playFrame.getBoundingClientRect();
+    var r = canvas.getBoundingClientRect();
     mouse.x = e.clientX - r.left;
     mouse.y = e.clientY - r.top;
     trail.push({ x: mouse.x, y: mouse.y, t: performance.now() });
@@ -214,7 +214,7 @@ if (document.getElementById('playFrame')) {
 
   heroWrap.addEventListener('click', function(e) {
     if (e.target === resetBtn) return;
-    var r = playFrame.getBoundingClientRect();
+    var r = canvas.getBoundingClientRect();
     var cx = e.clientX - r.left;
     var cy = e.clientY - r.top;
     var hit = shapeAt(cx, cy);
