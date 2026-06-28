@@ -1045,8 +1045,8 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   position: absolute;
   top: 0;
   bottom: 0;
-  left: calc(-1 * clamp(40px, 20%, 240px));
-  right: calc(-1 * clamp(40px, 20%, 240px));
+  left: 0;
+  right: 0;
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: 10px;
   background: transparent;
