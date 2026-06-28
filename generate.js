@@ -26,7 +26,7 @@ const CONTACT_PAGE_ID   = '36e35a9ccf7a8188a447fd3e36ee88cd';
 const HOMEPAGE_PAGE_ID  = '37135a9ccf7a81b2a7a7c0a2702d8c98';
 
 const SKIP_IDS   = new Set([ABOUT_PAGE_ID, CONTACT_PAGE_ID, HOMEPAGE_PAGE_ID]);
-const SKIP_SLUGS = new Set(['about', 'contact', 'about-contact', 'cv', 'resume', 'homepage', 'development-site-creation']);
+const SKIP_SLUGS = new Set(['about', 'contact', 'about-contact', 'cv', 'resume', 'homepage', 'development-site-creation', 'tooltip-glossary']);
 
 // Stable slug overrides by Notion page ID — prevents slug changes when Notion titles change
 const NOTION_ID_TO_SLUG = {
