@@ -532,8 +532,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   transition: transform 0.2s ease;
   transform-origin: center bottom;
 }
-.proj-nav-prev:hover .proj-nav-name { transform: rotate(-3deg); }
-.proj-nav-next:hover .proj-nav-name { transform: rotate(3deg); }
 .proj-nav-name .ti { font-size: 14px; vertical-align: -1px; }
 /* Prev/next project arrows: fixed, spanning each gutter */
 .proj-side-nav .proj-nav-btn { position: fixed; top: 50%; transform: translateY(-50%); z-index: 8; display: flex; align-items: center; justify-content: center; }
