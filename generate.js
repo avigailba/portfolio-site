@@ -155,7 +155,18 @@ function rt(richText) {
       if (t.annotations.bold) s = `<strong>${s}</strong>`;
       if (t.annotations.italic) s = `<em>${s}</em>`;
       if (t.annotations.code) s = `<code>${s}</code>`;
-      if (t.href) s = `<a href="${t.href}" target="_blank" rel="noopener">${s}</a>`;
+      if (t.href) {
+        // Rewrite Notion internal page links (/p/<id> or notion.so URLs) to local project URLs
+        let href = t.href;
+        const notionIdMatch = href.match(/(?:\/p\/|notion\.so\/(?:[^/]+-)?|notion\.so\/)([a-f0-9]{32})/);
+        if (notionIdMatch) {
+          const rawId = notionIdMatch[1].replace(/-/g, '');
+          const slug = NOTION_ID_TO_SLUG[rawId];
+          href = slug ? `${slug}.html` : href;
+        }
+        const isExternal = href.startsWith('http') || href.startsWith('mailto');
+        s = `<a href="${href}"${isExternal ? ' target="_blank" rel="noopener"' : ''}>${s}</a>`;
+      }
       return s;
     }).join('');
 }
