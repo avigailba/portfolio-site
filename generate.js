@@ -212,9 +212,7 @@ async function toHtml(blocks, imgPrefix = '') {
         break;
       }
       case 'callout': {
-        const icon = b.callout.icon?.emoji ? `${b.callout.icon.emoji} ` : '';
-        const t = rt(b.callout.rich_text);
-        if (t) html += `<div class="callout"><p>${icon}${t}</p></div>\n`;
+        // Callout text is surfaced as inline tooltips via injectTooltips() — not rendered as a block
         break;
       }
       case 'column_list': {
