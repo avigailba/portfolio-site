@@ -212,9 +212,7 @@ async function toHtml(blocks, imgPrefix = '') {
         break;
       }
       case 'callout': {
-        const icon = b.callout.icon?.emoji ? `${b.callout.icon.emoji} ` : '';
-        const t = rt(b.callout.rich_text);
-        if (t) html += `<div class="callout"><p>${icon}${t}</p></div>\n`;
+        // Callout text is surfaced as inline tooltips via injectTooltips() — not rendered as a block
         break;
       }
       case 'column_list': {
@@ -282,8 +280,37 @@ function firstSubtitle(blocks) {
 function firstCallout(blocks) {
   const c = blocks.find(b => b.type === 'callout' && b.callout.rich_text.length);
   if (!c) return '';
-  const icon = c.callout.icon?.emoji ? `${c.callout.icon.emoji} ` : '';
-  return icon + c.callout.rich_text.map(t => t.plain_text).join('');
+  return c.callout.rich_text.map(t => t.plain_text).join('');
+}
+
+// Term-level tooltips: each key term gets its own explanatory popup
+const TERM_TIPS = {
+  'Wix App Market':   'Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.',
+  'Business Manager': 'Business Manager is the dashboard where Wix business owners manage their site and services.',
+  'Wixel':            "Wixel is Wix’s AI-native product for creating and managing digital presence.",
+  'Wix':              'Wix is a website builder and development platform used by millions of businesses and creators worldwide.',
+};
+
+function injectTooltips(html) {
+  // Only process content before the first section heading
+  const h2idx = html.indexOf('<h2>');
+  const intro = h2idx > 0 ? html.slice(0, h2idx) : html;
+  const rest  = h2idx > 0 ? html.slice(h2idx) : '';
+
+  // Longest terms first so "Wix App Market" matches before "Wix"
+  const terms   = Object.keys(TERM_TIPS).sort((a, b) => b.length - a.length);
+  const pattern = terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+  const re      = new RegExp(`\\b(${pattern})\\b`, 'g');
+
+  const seen = new Set();
+  const processed = intro.replace(re, (match) => {
+    if (seen.has(match)) return match; // only first occurrence of each term
+    seen.add(match);
+    const tipText = TERM_TIPS[match].replace(/"/g, '&quot;');
+    return `<span class="ctx-tip" data-tip="${tipText}">${match}</span>`;
+  });
+
+  return processed + rest;
 }
 
 function plainText(richText) {
@@ -523,6 +550,7 @@ function projectPage(proj, prevProj, nextProj) {
       `</figure></div>$2`
     );
   }
+  if (contentHtml) contentHtml = injectTooltips(contentHtml);
   const title = proj.title || meta.title;
   const year  = meta.year  || proj.year;
   const CAT_LABELS = { developer: 'Developer tools', monetisation: 'Monetisation', cms: 'CMS', internal: 'Internal tools' };
