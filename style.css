@@ -506,7 +506,6 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 .proj-page-grid {
   display: grid;
   grid-template-columns: 0 1fr 0;
-  overflow-x: clip;
 }
 .proj-gutter {
   align-self: start;
@@ -623,7 +622,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 /* ── Inline term tooltips ────────────────────────────────── */
 .ctx-tip {
   position: relative;
-  display: inline;
+  display: inline-block;
   cursor: default;
   color: #0a0a0a;
   border-bottom: 1px dashed #0a0a0a;
