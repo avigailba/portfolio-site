@@ -26,7 +26,7 @@ const CONTACT_PAGE_ID   = '36e35a9ccf7a8188a447fd3e36ee88cd';
 const HOMEPAGE_PAGE_ID  = '37135a9ccf7a81b2a7a7c0a2702d8c98';
 
 const SKIP_IDS   = new Set([ABOUT_PAGE_ID, CONTACT_PAGE_ID, HOMEPAGE_PAGE_ID]);
-const SKIP_SLUGS = new Set(['about', 'contact', 'about-contact', 'cv', 'resume', 'homepage']);
+const SKIP_SLUGS = new Set(['about', 'contact', 'about-contact', 'cv', 'resume', 'homepage', 'development-site-creation']);
 
 // Stable slug overrides by Notion page ID — prevents slug changes when Notion titles change
 const NOTION_ID_TO_SLUG = {
@@ -181,8 +181,16 @@ async function toHtml(blocks, imgPrefix = '') {
         if (t) html += `<p>${t}</p>\n`;
         break;
       }
-      case 'heading_2': html += `<h2>${rt(b.heading_2.rich_text)}</h2>\n`; break;
-      case 'heading_3': html += `<h3>${rt(b.heading_3.rich_text)}</h3>\n`; break;
+      case 'heading_2': {
+        html += `<h2>${rt(b.heading_2.rich_text)}</h2>\n`;
+        if (b.has_children) { const ch = await fetchBlocks(b.id); html += await toHtml(ch, imgPrefix); }
+        break;
+      }
+      case 'heading_3': {
+        html += `<h3>${rt(b.heading_3.rich_text)}</h3>\n`;
+        if (b.has_children) { const ch = await fetchBlocks(b.id); html += await toHtml(ch, imgPrefix); }
+        break;
+      }
       case 'bulleted_list_item': {
         if (!uList) { html += '<ul>\n'; uList = true; }
         let bliHtml = rt(b.bulleted_list_item.rich_text);
@@ -237,7 +245,7 @@ async function toHtml(blocks, imgPrefix = '') {
             } catch (e) { stats.errors.push(`img-${imgIdx}: ${e.message}`); }
           }
         }
-        html += `<figure class="proj-img">\n  <img src="${url}" alt="${cap}" loading="lazy">\n${cap ? `  <figcaption>${cap}</figcaption>\n` : ''}</figure>\n`;
+        html += `${cap ? `<figcaption class="proj-caption">${cap}</figcaption>\n` : ''}<figure class="proj-img">\n  <img src="${url}" alt="${cap}" loading="lazy">\n</figure>\n`;
         break;
       }
     }
@@ -248,7 +256,9 @@ async function toHtml(blocks, imgPrefix = '') {
 }
 
 function isDateString(s) {
-  return /^\d{4}-\d{2}-\d{2}$/.test(s.trim());
+  const t = s.trim();
+  return /^\d{4}-\d{2}-\d{2}$/.test(t) ||
+    /^(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}$/i.test(t);
 }
 
 function excerpt(blocks) {
@@ -503,10 +513,10 @@ function projectPage(proj, prevProj, nextProj) {
     contentHtml = contentHtml.replace(
       /(<h2>What I Did<\/h2>[\s\S]*?)(<h2>Impact<\/h2>)/,
       `<style>@media(max-width:768px){.cw-widget-col{display:none!important;}}</style>` +
-      `<div style="display:grid;grid-template-columns:1fr auto;gap:48px;align-items:start;margin:32px 0;">` +
+      `<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin:32px 0;">` +
       `<div>$1</div>` +
       `<figure class="cw-widget-col" style="margin:0;padding-top:48px;">` +
-      `<iframe src="credits-widget.html" title="Business Manager widget states" style="width:420px;height:580px;border:none;display:block;border-radius:8px;background:#ECECEE;" scrolling="no">` +
+      `<iframe src="credits-widget.html" title="Business Manager widget states" style="width:100%;height:580px;border:none;display:block;border-radius:8px;background:#ECECEE;" scrolling="no">` +
       `Interactive demo showing the AI Credits wallet component across Free, Premium, and Top-up states in Business Manager.` +
       `</iframe>` +
       `<figcaption style="font-size:13px;color:#555;margin-top:8px;text-align:center;">Business Manager widget states</figcaption>` +
@@ -1236,7 +1246,7 @@ async function build() {
   // Generate fallback pages for any META slugs not fetched from Notion
   const generatedSlugs = new Set(projects.map(p => p.slug));
   for (const [slug, meta] of Object.entries(PROJECT_META)) {
-    if (generatedSlugs.has(slug)) continue;
+    if (generatedSlugs.has(slug) || SKIP_SLUGS.has(slug)) continue;
     const summary = PROJECT_SUMMARIES[slug] || '';
     const fallbackProj = {
       slug,

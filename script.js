@@ -246,19 +246,19 @@ if (document.getElementById('playFrame')) {
     updateHUD();
   });
 
-  modeShapesBtn.addEventListener('click', function(e) {
+  if (modeShapesBtn) modeShapesBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     mode = 'shapes';
     modeShapesBtn.classList.add('active');
-    modeEmojisBtn.classList.remove('active');
+    if (modeEmojisBtn) modeEmojisBtn.classList.remove('active');
     updateHUD();
   });
 
-  modeEmojisBtn.addEventListener('click', function(e) {
+  if (modeEmojisBtn) modeEmojisBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     mode = 'emojis';
     modeEmojisBtn.classList.add('active');
-    modeShapesBtn.classList.remove('active');
+    if (modeShapesBtn) modeShapesBtn.classList.remove('active');
     updateHUD();
   });
 
