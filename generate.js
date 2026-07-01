@@ -554,10 +554,10 @@ function projectPage(proj, prevProj, nextProj) {
       `<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin:32px 0;">` +
       `<div>$1</div>` +
       `<figure class="cw-widget-col" style="margin:0;padding-top:48px;">` +
+      `<figcaption style="font-size:13px;color:#555;margin-bottom:8px;text-align:center;">Business Manager widget states</figcaption>` +
       `<iframe src="credits-widget.html" title="Business Manager widget states" style="width:100%;height:580px;border:none;display:block;border-radius:8px;background:#ECECEE;" scrolling="no">` +
       `Interactive demo showing the AI Credits wallet component across Free, Premium, and Top-up states in Business Manager.` +
       `</iframe>` +
-      `<figcaption style="font-size:13px;color:#555;margin-top:8px;text-align:center;">Business Manager widget states</figcaption>` +
       `</figure></div>$2`
     );
   }
