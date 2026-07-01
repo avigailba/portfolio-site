@@ -303,10 +303,11 @@ const TERM_TIPS = {
 };
 
 function injectTooltips(html) {
-  // Only process content before the first section heading
-  const h2idx = html.indexOf('<h2>');
-  const intro = h2idx > 0 ? html.slice(0, h2idx) : html;
-  const rest  = h2idx > 0 ? html.slice(h2idx) : '';
+  // Process all text content up to the first image block (excludes captions/image HTML)
+  const stopRe = /<figcaption class="proj-caption"|<figure class="proj-img"|<div class="col-layout/;
+  const stopIdx = html.search(stopRe);
+  const intro = stopIdx > 0 ? html.slice(0, stopIdx) : html;
+  const rest  = stopIdx > 0 ? html.slice(stopIdx) : '';
 
   // Longest terms first so "Wix App Market" matches before "Wix"
   const terms   = Object.keys(TERM_TIPS).sort((a, b) => b.length - a.length);
@@ -417,7 +418,7 @@ function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass =
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap">
   <link rel="icon" type="image/png" sizes="32x32" href="${prefix}favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="${prefix}favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="${prefix}apple-touch-icon.png">
@@ -447,7 +448,6 @@ function indexPage(projects, tagline) {
     const summary = PROJECT_SUMMARIES[slug] || '';
     return `<div class="feat-card" onclick="location.href='projects/${slug}.html'">
   <div class="feat-title">${meta.featTitle || meta.title}</div>
-  ${summary ? `<div class="feat-sub">${summary}</div>` : ''}
   <div class="feat-arr">↗</div>
   <div class="feat-foot">
     <a class="mob-view-btn" href="projects/${slug}.html" onclick="event.stopPropagation()">View project <span>↗</span></a>
@@ -548,18 +548,21 @@ function projectPage(proj, prevProj, nextProj) {
   // Per-slug content post-processing
   let contentHtml = proj.contentHtml;
   if (proj.slug === 'ai-credits-wallet' && contentHtml) {
-    contentHtml = contentHtml.replace(
-      /(<h2>What I Did<\/h2>[\s\S]*?)(<h2>Impact<\/h2>)/,
-      `<style>@media(max-width:768px){.cw-widget-col{display:none!important;}}</style>` +
-      `<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin:32px 0;">` +
-      `<div>$1</div>` +
-      `<figure class="cw-widget-col" style="margin:0;padding-top:48px;">` +
-      `<figcaption style="font-size:13px;color:#555;margin-bottom:8px;text-align:center;">Business Manager widget states</figcaption>` +
-      `<iframe src="credits-widget.html" title="Business Manager widget states" style="width:100%;height:580px;border:none;display:block;border-radius:8px;background:#ECECEE;" scrolling="no">` +
-      `Interactive demo showing the AI Credits wallet component across Free, Premium, and Top-up states in Business Manager.` +
-      `</iframe>` +
-      `</figure></div>$2`
-    );
+    const splitIdx = contentHtml.search(/<figcaption class="proj-caption"|<figure class="proj-img"|<div class="col-layout/);
+    if (splitIdx !== -1) {
+      const before = contentHtml.slice(0, splitIdx);
+      const after  = contentHtml.slice(splitIdx);
+      contentHtml =
+        `<style>@media(max-width:768px){.cw-widget-col{display:none!important;}}.cw-grid>div>p:first-child{margin-top:0;}</style>` +
+        `<div class="cw-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin:32px 0;">` +
+        `<div>${before}</div>` +
+        `<figure class="cw-widget-col" style="margin:0;">` +
+                `<iframe src="credits-widget.html" title="Business Manager widget states" style="width:100%;height:580px;border:none;display:block;border-radius:8px;background:#ECECEE;" scrolling="no">` +
+        `Interactive demo showing the AI Credits wallet component across Free, Premium, and Top-up states in Business Manager.` +
+        `</iframe>` +
+        `</figure></div>` +
+        after;
+    }
   }
   if (contentHtml) contentHtml = injectTooltips(contentHtml);
   const title = proj.title || meta.title;
@@ -837,13 +840,7 @@ function aboutPage(notionHtml) {
         <p class="cv-desc">Created visual assets and retouched images for the news site.</p>
       </div>
 
-      <div class="cv-role">
-        <span class="cv-years">2002→2004</span>
-        <span class="cv-company">Military Service</span>
-        <span class="cv-role-title">Trainer, Armored Corps</span>
-      </div>
-
-      <p class="section-label">Skills</p>
+<p class="section-label">Skills</p>
       <p class="cv-skills">Figma · Google Suite · Cursor · Claude Code · Hebrew (native) · English</p>
 
     </div>
@@ -861,12 +858,12 @@ function designSystemPage(notionConnected) {
   ];
   const typeRows = [
     { sample: 'AI Credits',                  spec: '54px / 700 / −0.03em / Plus Jakarta Sans', where: 'Project page title, featured cards (.proj-title, .feat-title)',        style: 'font-size:54px;font-weight:700;letter-spacing:-0.03em;color:#0a0a0a;line-height:1.1;font-family:"Plus Jakarta Sans",sans-serif' },
-    { sample: 'Design system',               spec: '32px / 700 / −0.02em / Inter',             where: 'Inner page h1, footer statement, project section headings (.inner-content h1, .footer-statement, .proj-content h2)', style: 'font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a' },
+    { sample: 'Design system',               spec: '32px / 700 / −0.02em / Roboto',             where: 'Inner page h1, footer statement, project section headings (.inner-content h1, .footer-statement, .proj-content h2)', style: 'font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a' },
     { sample: 'Senior UX designer.',         spec: '28px / 500 / −0.01em / Plus Jakarta Sans', where: 'Homepage lede (.lede)',                                               style: 'font-size:28px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;font-family:"Plus Jakarta Sans",sans-serif' },
-    { sample: 'Transparent AI usage billing across the platform.', spec: '20px / 500 / Inter', where: 'Project subtitle, content sub-headings, CV role titles (.proj-subtitle, .proj-content h3, .cv-title)', style: 'font-size:20px;font-weight:500;color:#0a0a0a;line-height:1.4' },
-    { sample: 'Body copy — project content, about, contact, work rows.', spec: '16px / 400 / Inter / lh 1.7 / #555', where: 'All body and secondary text (.proj-intro, .proj-content p, .proj-body, .row-title, .cv-desc, .cv-years, .contact-intro)', style: 'font-size:16px;color:#555;line-height:1.7' },
+    { sample: 'Transparent AI usage billing across the platform.', spec: '20px / 500 / Roboto', where: 'Project subtitle, content sub-headings, CV role titles (.proj-subtitle, .proj-content h3, .cv-title)', style: 'font-size:20px;font-weight:500;color:#0a0a0a;line-height:1.4' },
+    { sample: 'Body copy — project content, about, contact, work rows.', spec: '16px / 400 / Roboto / lh 1.7 / #555', where: 'All body and secondary text (.proj-intro, .proj-content p, .proj-body, .row-title, .cv-desc, .cv-years, .contact-intro)', style: 'font-size:16px;color:#555;line-height:1.7' },
     { sample: 'FEATURED WORK · EXPERIENCE',  spec: '14px / 400 / uppercase / 0.07–0.08em',   where: 'Section labels, about page section labels (.section-label, .more-label, .about-notion h2)', style: 'font-size:14px;letter-spacing:0.07em;text-transform:uppercase;color:#555' },
-    { sample: 'Nav links, years, tags, meta', spec: '14px / 400 / Inter',                    where: 'Nav links, row meta, tag labels, footer text',                          style: 'font-size:14px;color:#555' },
+    { sample: 'Nav links, years, tags, meta', spec: '14px / 400 / Roboto',                    where: 'Nav links, row meta, tag labels, footer text',                          style: 'font-size:14px;color:#555' },
   ];
   const spacings = [
     { token: '--sp-1', val: '4px',  usage: 'Tight gaps' },
@@ -928,7 +925,7 @@ function designSystemPage(notionConnected) {
     { date: '1 Jun 2026', change: 'Design system: colour swatches in 6-column grid; type scale shows where each style appears' },
     { date: '1 Jun 2026', change: 'feat-title bumped to 42px / weight 800 (Plus Jakarta Sans)' },
     { date: '1 Jun 2026', change: 'All body and secondary text unified to #555 — removed #444 and #121212' },
-    { date: '1 Jun 2026', change: 'Type scale consolidated: footer-statement 36px → 32px / Inter; row-title 20px/500 → 18px/400; CV text 15px → 16px; proj-subtitle weight 400 → 500, color #555 → #0a0a0a' },
+    { date: '1 Jun 2026', change: 'Type scale consolidated: footer-statement 36px → 32px / Roboto; row-title 20px/500 → 18px/400; CV text 15px → 16px; proj-subtitle weight 400 → 500, color #555 → #0a0a0a' },
     { date: '1 Jun 2026', change: 'Design system type scale rows show inline color swatch and hex value' },
     { date: '1 Jun 2026', change: 'Design system swatches and type scale updated to match actual site tokens' },
     { date: '1 Jun 2026', change: 'Removed Wix from project page metadata' },

@@ -40,6 +40,19 @@
 })();
 
 // ── Filter buttons (homepage) ────────────────────────────────
+function markFirstVisible() {
+  var wraps = document.querySelectorAll('#all-list .row-wrap');
+  var marked = false;
+  wraps.forEach(function(wrap) {
+    wrap.classList.remove('first-visible');
+    if (!marked && !wrap.classList.contains('hidden')) {
+      wrap.classList.add('first-visible');
+      marked = true;
+    }
+  });
+}
+markFirstVisible();
+
 document.querySelectorAll('.filter-btn').forEach(function(btn) {
   btn.addEventListener('click', function() {
     document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
@@ -53,6 +66,7 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
         wrap.classList.add('hidden');
       }
     });
+    markFirstVisible();
     var i = 1;
     document.querySelectorAll('#all-list .row-wrap:not(.hidden) .num').forEach(function(n) {
       n.textContent = String(i++).padStart(2, '0');
