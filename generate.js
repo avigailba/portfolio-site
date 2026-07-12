@@ -49,7 +49,6 @@ const DIST        = 'dist';
 const PROJECTS_DIR = path.join(DIST, 'projects');
 const IMAGES      = path.join(DIST, 'images');
 
-let imgIdx = 0;
 const stats = { pages: 0, images: 0, errors: [] };
 
 // Project metadata: categories, display title overrides, years, featured status
@@ -62,7 +61,7 @@ const PROJECT_META = {
   'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',       display: 'Monetisation',    year: 2023, featured: false },
   'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
   'app-pricing-page-projects':           { title: 'App Pricing Page Projects',    cats: 'developer monetisation', display: 'Monetisation',    year: 2023, featured: false },
-  'internal-app-review-system':          { title: 'Review System',                cats: 'internal cms',           display: 'Internal tools',  year: 2022, featured: true },
+  'internal-app-review-system':          { title: 'Internal Review System',       cats: 'internal cms',           display: 'Internal tools',  year: 2022, featured: true },
   'submit-publish-widget':               { title: 'Submit & Publish Widget',      cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
   'custom-element-component-settings':   { title: 'Custom Element Component Settings', cats: 'developer',          display: 'Developer tools', year: 2022, featured: false },
   'api-keys-page':                       { title: 'API Keys Page',                cats: 'developer cms',          display: 'Developer tools', year: 2022, featured: false },
@@ -240,8 +239,8 @@ async function toHtml(blocks, imgPrefix = '') {
         let url = b.image.type === 'external' ? b.image.external.url : b.image.file.url;
         const cap = b.image.caption?.length ? rt(b.image.caption) : '';
         if (url.includes('amazonaws.com') || url.includes('prod-files-secure')) {
-          imgIdx++;
-          const fname = `img-${imgIdx}.jpg`;
+          const blockId = b.id.replace(/-/g, '');
+          const fname = `img-${blockId}.jpg`;
           const dest = path.join(IMAGES, fname);
           if (fs.existsSync(dest)) {
             url = `${imgPrefix}images/${fname}`;
@@ -251,7 +250,7 @@ async function toHtml(blocks, imgPrefix = '') {
               await dlFile(url, dest);
               url = `${imgPrefix}images/${fname}`;
               stats.images++;
-            } catch (e) { stats.errors.push(`img-${imgIdx}: ${e.message}`); }
+            } catch (e) { stats.errors.push(`${fname}: ${e.message}`); }
           }
         }
         html += `${cap ? `<figcaption class="proj-caption">${cap}</figcaption>\n` : ''}<figure class="proj-img">\n  <img src="${url}" alt="${cap}" loading="lazy">\n</figure>\n`;
