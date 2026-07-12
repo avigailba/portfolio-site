@@ -52,21 +52,23 @@
     <main class="proj-main">
       <div class="proj-side-nav">
         <a class="proj-nav-btn proj-nav-prev" href="developer-sale.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> Developer Sale</span></a>
-        <a class="proj-nav-btn proj-nav-next" href="internal-app-review-system.html" aria-label="Next project"><span class="proj-nav-name">Review System <i class="ti ti-arrow-right"></i></span></a>
+        <a class="proj-nav-btn proj-nav-next" href="payouts-page.html" aria-label="Next project"><span class="proj-nav-name">Payouts Page <i class="ti ti-arrow-right"></i></span></a>
       </div>
       <div class="proj-title-sticky" id="proj-title-sticky">
         <div class="proj-title-row">
           <button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='developer-sale.html'">←</button>
           <h1 class="proj-title-m">Collections Manager</h1>
-          <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='internal-app-review-system.html'">→</button>
+          <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='payouts-page.html'">→</button>
         </div>
         <p class="proj-subtitle-m">Internal curation tools for managing App Market collections</p>
-        <div class="proj-meta-m">
-          <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='developer-sale.html'">← Previous</button>
+        <div class="proj-tags-m">
           <span class="pm">2024</span>
           <span class="psep">·</span>
           <span class="pm">Developer tools</span><span class="psep">·</span><span class="pm">Internal tools</span><span class="psep">·</span><span class="pm">CMS</span>
-          <button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='internal-app-review-system.html'">Next →</button>
+        </div>
+        <div class="proj-meta-m">
+          <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='developer-sale.html'">← Previous</button>
+          <button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='payouts-page.html'">Next →</button>
         </div>
       </div>
       <div class="proj-content">
@@ -75,11 +77,11 @@
 <h2>Before</h2>
 <div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Before state — the legacy collections manager with limited discoverability and a basic category editing form</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-36.jpg" alt="Before state — the legacy collections manager with limited discoverability and a basic category editing form" loading="lazy">
+  <img src="../images/img-37.jpg" alt="Before state — the legacy collections manager with limited discoverability and a basic category editing form" loading="lazy">
 </figure>
 </div><div class="col"><figcaption class="proj-caption">Information architecture mapping the full system — categories, subcategories, and app lists with their creation, editing, and navigation flows</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-35.jpg" alt="Information architecture mapping the full system — categories, subcategories, and app lists with their creation, editing, and navigation flows" loading="lazy">
+  <img src="../images/img-36.jpg" alt="Information architecture mapping the full system — categories, subcategories, and app lists with their creation, editing, and navigation flows" loading="lazy">
 </figure>
 </div></div>
 <p>Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Before an app goes live, it goes through an internal review process managed by Wix's Developer Relations team.</p>
@@ -94,22 +96,24 @@
 </ul>
 <h2>Impact</h2>
 <p>The tool has been in active use by vertical teams across Wix since September 2022, replacing a manual process that required App Market team intervention for every collection operation.</p>
+<h3>Structure &amp; scope</h3>
 <div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Project scope map — all pages and flows covered: collections list, creation flow, detail view, and contributors</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-38.jpg" alt="Project scope map — all pages and flows covered: collections list, creation flow, detail view, and contributors" loading="lazy">
+  <img src="../images/img-39.jpg" alt="Project scope map — all pages and flows covered: collections list, creation flow, detail view, and contributors" loading="lazy">
 </figure>
 </div><div class="col"><figcaption class="proj-caption">Information architecture mapping the full system — categories, subcategories, and app lists with their creation, editing, and navigation flows</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-37.jpg" alt="Information architecture mapping the full system — categories, subcategories, and app lists with their creation, editing, and navigation flows" loading="lazy">
+  <img src="../images/img-38.jpg" alt="Information architecture mapping the full system — categories, subcategories, and app lists with their creation, editing, and navigation flows" loading="lazy">
 </figure>
 </div></div>
+<h3>Collections list &amp; creation</h3>
 <figcaption class="proj-caption">Collections list — all collections with app count, generation type (manual or component), last changed date, and creator</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-39.jpg" alt="Collections list — all collections with app count, generation type (manual or component), last changed date, and creator" loading="lazy">
+  <img src="../images/img-40.jpg" alt="Collections list — all collections with app count, generation type (manual or component), last changed date, and creator" loading="lazy">
 </figure>
 <div class="col-layout col-3"><div class="col"><figcaption class="proj-caption">Collection creation step 1 — enter a collection name and auto-generated slug before proceeding</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-40.jpg" alt="Collection creation step 1 — enter a collection name and auto-generated slug before proceeding" loading="lazy">
+  <img src="../images/img-43.jpg" alt="Collection creation step 1 — enter a collection name and auto-generated slug before proceeding" loading="lazy">
 </figure>
 </div><div class="col"><figcaption class="proj-caption">Collection creation step 2 — choose generation mode: manually curated or automatically by component type</figcaption>
 <figure class="proj-img">
@@ -120,35 +124,37 @@
   <img src="../images/img-41.jpg" alt="Collection creation success state — confirmation modal with link to view the new collection and implementation instructions" loading="lazy">
 </figure>
 </div></div>
+<h3>Collection detail</h3>
 <div class="col-layout col-4"><div class="col"><figcaption class="proj-caption">Collection detail — apps tab empty state with tabs for Apps, Collection Details, and Contributors visible in sidebar</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-45.jpg" alt="Collection detail — apps tab empty state with tabs for Apps, Collection Details, and Contributors visible in sidebar" loading="lazy">
+  <img src="../images/img-44.jpg" alt="Collection detail — apps tab empty state with tabs for Apps, Collection Details, and Contributors visible in sidebar" loading="lazy">
 </figure>
 </div><div class="col"><figcaption class="proj-caption">Add apps modal — search by name to find and select apps for the collection</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-43.jpg" alt="Add apps modal — search by name to find and select apps for the collection" loading="lazy">
+  <img src="../images/img-45.jpg" alt="Add apps modal — search by name to find and select apps for the collection" loading="lazy">
 </figure>
 </div><div class="col"><figcaption class="proj-caption">Apps tab with apps added — numbered list with drag handles for reordering and app ID shown per entry</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-44.jpg" alt="Apps tab with apps added — numbered list with drag handles for reordering and app ID shown per entry" loading="lazy">
+  <img src="../images/img-46.jpg" alt="Apps tab with apps added — numbered list with drag handles for reordering and app ID shown per entry" loading="lazy">
 </figure>
 </div><div class="col"><figcaption class="proj-caption">Collection Details tab — edit name, slug, teaser, and description, with the collection ID available to copy for implementation</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-46.jpg" alt="Collection Details tab — edit name, slug, teaser, and description, with the collection ID available to copy for implementation" loading="lazy">
+  <img src="../images/img-47.jpg" alt="Collection Details tab — edit name, slug, teaser, and description, with the collection ID available to copy for implementation" loading="lazy">
 </figure>
 </div></div>
 <div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Contributors tab — manage who can edit the collection, showing name, email, and creator role</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-47.jpg" alt="Contributors tab — manage who can edit the collection, showing name, email, and creator role" loading="lazy">
+  <img src="../images/img-49.jpg" alt="Contributors tab — manage who can edit the collection, showing name, email, and creator role" loading="lazy">
 </figure>
 </div><div class="col"><figcaption class="proj-caption">View-only mode — non-contributors see collection content with a banner explaining they can’t make edits</figcaption>
 <figure class="proj-img">
   <img src="../images/img-48.jpg" alt="View-only mode — non-contributors see collection content with a banner explaining they can’t make edits" loading="lazy">
 </figure>
 </div></div>
+<h3>Concept</h3>
 <figcaption class="proj-caption">Statistics tab concept — collection performance overview with impressions, installs, and per-app breakdowns</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-49.jpg" alt="Statistics tab concept — collection performance overview with impressions, installs, and per-app breakdowns" loading="lazy">
+  <img src="../images/img-50.jpg" alt="Statistics tab concept — collection performance overview with impressions, installs, and per-app breakdowns" loading="lazy">
 </figure>
 <h2>Bottom line</h2>
 <p>Designing internal tools has a specific kind of satisfaction: you have real users with real complaints, a clear before state, and a concrete problem to solve. </p>

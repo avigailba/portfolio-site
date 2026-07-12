@@ -52,21 +52,23 @@
     <main class="proj-main">
       <div class="proj-side-nav">
         <a class="proj-nav-btn proj-nav-prev" href="custom-element-component-settings.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> Custom Element Component Settings</span></a>
-        <a class="proj-nav-btn proj-nav-next" href="ai-credits-wallet.html" aria-label="Next project"><span class="proj-nav-name">AI Credits <i class="ti ti-arrow-right"></i></span></a>
+        <a class="proj-nav-btn proj-nav-next" href="app-coupons.html" aria-label="Next project"><span class="proj-nav-name">App Coupons <i class="ti ti-arrow-right"></i></span></a>
       </div>
       <div class="proj-title-sticky" id="proj-title-sticky">
         <div class="proj-title-row">
           <button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='custom-element-component-settings.html'">←</button>
           <h1 class="proj-title-m">API Keys page</h1>
-          <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='ai-credits-wallet.html'">→</button>
+          <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='app-coupons.html'">→</button>
         </div>
         <p class="proj-subtitle-m">Credential management system for third-party developers</p>
-        <div class="proj-meta-m">
-          <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='custom-element-component-settings.html'">← Previous</button>
+        <div class="proj-tags-m">
           <span class="pm">2022</span>
           <span class="psep">·</span>
           <span class="pm">Developer tools</span><span class="psep">·</span><span class="pm">CMS</span>
-          <button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='ai-credits-wallet.html'">Next →</button>
+        </div>
+        <div class="proj-meta-m">
+          <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='custom-element-component-settings.html'">← Previous</button>
+          <button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='app-coupons.html'">Next →</button>
         </div>
       </div>
       <div class="proj-content">
@@ -82,37 +84,39 @@
 <ul>
   <li>The API Keys page became the primary credential management surface for developers building on the Wix platform. It removed the need to manage keys outside of Wix and gave enterprise and agency developers a reliable, in-product way to authenticate integrations.</li>
 </ul>
+<h3>Generation flow</h3>
 <figcaption class="proj-caption">Empty state shown to first-time users before any API keys have been generated</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-130.jpg" alt="Empty state shown to first-time users before any API keys have been generated" loading="lazy">
+  <img src="../images/img-126.jpg" alt="Empty state shown to first-time users before any API keys have been generated" loading="lazy">
 </figure>
 <figcaption class="proj-caption">Permissions selection step during key generation — choosing what data the key can access</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-131.jpg" alt="Permissions selection step during key generation — choosing what data the key can access" loading="lazy">
+  <img src="../images/img-127.jpg" alt="Permissions selection step during key generation — choosing what data the key can access" loading="lazy">
 </figure>
 <figcaption class="proj-caption">Expanding a permission category to configure granular sub-permissions for the key</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-132.jpg" alt="Expanding a permission category to configure granular sub-permissions for the key" loading="lazy">
+  <img src="../images/img-128.jpg" alt="Expanding a permission category to configure granular sub-permissions for the key" loading="lazy">
 </figure>
 <figcaption class="proj-caption">Account verification prompt — a 6-digit code is sent to the user’s email before the key can be generated</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-133.jpg" alt="Account verification prompt — a 6-digit code is sent to the user’s email before the key can be generated" loading="lazy">
+  <img src="../images/img-129.jpg" alt="Account verification prompt — a 6-digit code is sent to the user’s email before the key can be generated" loading="lazy">
 </figure>
 <figcaption class="proj-caption">Code entry step — user enters the emailed verification code to confirm their identity</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-134.jpg" alt="Code entry step — user enters the emailed verification code to confirm their identity" loading="lazy">
+  <img src="../images/img-130.jpg" alt="Code entry step — user enters the emailed verification code to confirm their identity" loading="lazy">
 </figure>
 <figcaption class="proj-caption">One-time key reveal — the token is only visible at this moment and must be copied before closing</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-135.jpg" alt="One-time key reveal — the token is only visible at this moment and must be copied before closing" loading="lazy">
+  <img src="../images/img-131.jpg" alt="One-time key reveal — the token is only visible at this moment and must be copied before closing" loading="lazy">
 </figure>
+<h3>Management</h3>
 <figcaption class="proj-caption">Keys management table showing a generated key with its token, permissions breakdown, and the Account ID panel</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-136.jpg" alt="Keys management table showing a generated key with its token, permissions breakdown, and the Account ID panel" loading="lazy">
+  <img src="../images/img-132.jpg" alt="Keys management table showing a generated key with its token, permissions breakdown, and the Account ID panel" loading="lazy">
 </figure>
 <figcaption class="proj-caption">Expanded permissions view for an existing key, showing the assigned basic and account-level permissions</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-137.jpg" alt="Expanded permissions view for an existing key, showing the assigned basic and account-level permissions" loading="lazy">
+  <img src="../images/img-133.jpg" alt="Expanded permissions view for an existing key, showing the assigned basic and account-level permissions" loading="lazy">
 </figure>
 <h2>Bottom line</h2>
 <p>The one-time visibility constraint was the design problem that mattered most here. A key that cannot be retrieved after generation is a security property, not a limitation, but it puts the entire burden of not losing it on a single moment in the flow. Getting the reveal screen right, with the right prompts and the right sense of weight, was the part that required the most iteration.</p>

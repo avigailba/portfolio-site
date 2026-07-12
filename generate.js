@@ -630,11 +630,13 @@ var CURRENT_SLUG = '${proj.slug}';
           ${nextProj ? `<button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">→</button>` : ''}
         </div>
         ${proj.subtitle ? `<p class="proj-subtitle-m">${proj.subtitle}</p>` : ''}
-        <div class="proj-meta-m">
-          ${prevProj ? `<button class="proj-nav-text" aria-label="Previous project" onclick="location.href='${prevProj.slug}.html'">← Previous</button>` : ''}
+        <div class="proj-tags-m">
           <span class="pm">${year}</span>
           <span class="psep">·</span>
           ${catHtml}
+        </div>
+        <div class="proj-meta-m">
+          ${prevProj ? `<button class="proj-nav-text" aria-label="Previous project" onclick="location.href='${prevProj.slug}.html'">← Previous</button>` : ''}
           ${nextProj ? `<button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">Next →</button>` : ''}
         </div>
       </div>

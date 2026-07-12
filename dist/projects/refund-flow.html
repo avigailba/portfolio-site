@@ -61,23 +61,29 @@
           <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='app-pricing-page-projects.html'">→</button>
         </div>
         <p class="proj-subtitle-m">Self-serve refund flow replacing manual support intervention</p>
-        <div class="proj-meta-m">
-          <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='payouts-page.html'">← Previous</button>
+        <div class="proj-tags-m">
           <span class="pm">2023</span>
           <span class="psep">·</span>
           <span class="pm">Monetisation</span>
+        </div>
+        <div class="proj-meta-m">
+          <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='payouts-page.html'">← Previous</button>
           <button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='app-pricing-page-projects.html'">Next →</button>
         </div>
       </div>
       <div class="proj-content">
         <p>I designed the refund flow embedded within the payouts transaction table, covering the full lifecycle: inline initiation, confirmation dialog, processing state, and success/error states. I collaborated with finance and engineering to align the design with backend refund logic and constraints.</p>
 <h2>What I Did</h2>
+<h3>Mapping the flow</h3>
 <ul>
-  <li>Mapped the end-to-end refund journey and identified key decision points and edge cases</li>
-  <li>Designed the refund initiation UI within the transactions table (inline action)</li>
-  <li>Designed the confirmation dialog, processing state, and success/error states</li>
-  <li>Created wireframes covering the full flow from trigger to completion</li>
-  <li>Collaborated with finance and engineering to ensure design matched backend refund logic and constraints</li>
+  <li>The existing process required Dev Relations to intervene manually for every refund. I mapped the end-to-end journey to find where self-serve could take over</li>
+  <li>Identified key decision points and edge cases: subscription state, what the developer needs to confirm, and how to handle in-progress and error states</li>
+</ul>
+<h3>Designing it</h3>
+<ul>
+  <li>Designed the initiation point inline within the transactions table, so developers wouldn't have to leave their current context</li>
+  <li>Designed the confirmation dialog, processing state, and success and error states</li>
+  <li>Collaborated with finance and engineering to align the design with backend refund logic and constraints</li>
 </ul>
 <h2>Impact</h2>
 <ul>
@@ -85,25 +91,27 @@
   <li>Refund volume grew significantly year over year as the platform scaled, reinforcing the importance of in-product financial control</li>
   <li>A significant volume of financial activity previously invisible to developers is now self-serve accessible</li>
 </ul>
+<h3>The flow, step by step</h3>
+<figcaption class="proj-caption"><strong>Entry point</strong> — the transactions table where a refund is initiated.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-81.jpg" alt="" loading="lazy">
+  <img src="../images/img-59.jpg" alt="<strong>Entry point</strong> — the transactions table where a refund is initiated." loading="lazy">
 </figure>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Entry point - Request refund action in the transactions table row menu</figcaption>
+<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption"><strong>Request refund</strong> — the Request refund action in the transaction row menu.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-83.jpg" alt="Entry point - Request refund action in the transactions table row menu" loading="lazy">
+  <img src="../images/img-60.jpg" alt="<strong>Request refund</strong> — the Request refund action in the transaction row menu." loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Confirm refund details (instance ID, amount, plan status) before submitting</figcaption>
+</div><div class="col"><figcaption class="proj-caption"><strong>Confirm</strong> — review instance ID, amount, and plan status before submitting.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-82.jpg" alt="Confirm refund details (instance ID, amount, plan status) before submitting" loading="lazy">
+  <img src="../images/img-61.jpg" alt="<strong>Confirm</strong> — review instance ID, amount, and plan status before submitting." loading="lazy">
 </figure>
 </div></div>
-<figcaption class="proj-caption">Post-submission - transaction row updates to Refund requested status with a link to the refund ticket</figcaption>
+<figcaption class="proj-caption"><strong>Submitted</strong> — row updates to "Refund requested" with a link to the ticket.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-84.jpg" alt="Post-submission - transaction row updates to Refund requested status with a link to the refund ticket" loading="lazy">
+  <img src="../images/img-62.jpg" alt="<strong>Submitted</strong> — row updates to "Refund requested" with a link to the ticket." loading="lazy">
 </figure>
-<figcaption class="proj-caption">Completed - refund appears as a negative line item in transaction history once processed</figcaption>
+<figcaption class="proj-caption"><strong>Completed</strong> — refund posts as a negative line item once processed.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-85.jpg" alt="Completed - refund appears as a negative line item in transaction history once processed" loading="lazy">
+  <img src="../images/img-63.jpg" alt="<strong>Completed</strong> — refund posts as a negative line item once processed." loading="lazy">
 </figure>
 <h2>Bottom line</h2>
 <p>A refund flow sounds simple, but the hard part is the edge cases: what state is the subscription in, what does the developer actually need to confirm, and how do you make a consequential financial action feel safe without adding so much friction that it becomes a deterrent. Designing for the error and in-progress states was at least as important as the happy path.</p>

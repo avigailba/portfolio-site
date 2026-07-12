@@ -962,11 +962,13 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .proj-title-sticky.condensed .proj-title-row { display: flex; align-items: center; gap: 10px; }
   .proj-title-sticky.condensed .proj-nav-next { margin-left: auto; }
   .proj-title-sticky.condensed .proj-nav-arr { display: flex; }
+  .proj-title-sticky.condensed .proj-tags-m { max-height: 0; opacity: 0; margin: 0; }
   .proj-title-sticky.condensed .proj-meta-m { max-height: 0; opacity: 0; margin: 0; padding: 0; border-color: transparent; }
   .proj-title-sticky.condensed .proj-subtitle-m { max-height: 0; opacity: 0; margin: 0; }
   /* At-bottom: morph to "More work", hide arrows and meta */
   .proj-title-sticky.at-bottom .proj-nav-arr { display: none; }
   .proj-title-sticky.at-bottom .proj-title-row { display: block; }
+  .proj-title-sticky.at-bottom .proj-tags-m { max-height: 0; opacity: 0; margin: 0; }
   .proj-title-sticky.at-bottom .proj-meta-m { max-height: 0; opacity: 0; margin: 0; padding: 0; }
 
   /* Title row — block in expanded so title is full-width, no border */
@@ -1003,27 +1005,41 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .proj-nav-text {
     display: block;
     font-size: 14px;
-    color: #2563eb;
+    font-weight: 500;
+    color: #555;
     background: none;
-    border: none;
-    padding: 0;
+    border: 0.5px solid #ebebeb;
+    border-radius: 8px;
+    padding: 6px 14px;
     cursor: pointer;
     white-space: nowrap;
     flex-shrink: 0;
   }
-  .proj-nav-text:active { color: #0a0a0a; }
-  .proj-meta-m .proj-nav-text:last-child { margin-left: auto; }
+  .proj-nav-text:active { background: #f5f5f5; color: #0a0a0a; }
+  .proj-meta-m .proj-nav-text:last-child { margin-left: 0; }
 
-  /* Meta row */
+  /* Tags row (year + category) */
+  .proj-tags-m {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    margin-bottom: 0;
+    max-height: 30px;
+    overflow: hidden;
+    opacity: 1;
+    transition: max-height 0.2s, opacity 0.2s, margin 0.2s;
+  }
+  /* Nav row (prev/next arrows) */
   .proj-meta-m {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding-top: 8px;
+    gap: 12px;
+    padding-top: 0;
     padding-bottom: 0;
     border-top: none;
     border-bottom: none;
-    margin-top: 8px;
+    margin-top: 14px;
     margin-bottom: 20px;
     max-height: 40px;
     overflow: hidden;
