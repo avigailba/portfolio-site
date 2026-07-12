@@ -553,10 +553,14 @@ function projectPage(proj, prevProj, nextProj) {
     if (splitIdx !== -1) {
       const before = contentHtml.slice(0, splitIdx);
       const after  = contentHtml.slice(splitIdx);
+      const h2Idx = before.search(/<h2/);
+      const intro = h2Idx !== -1 ? before.slice(0, h2Idx) : '';
+      const gridLeft = h2Idx !== -1 ? before.slice(h2Idx) : before;
       contentHtml =
-        `<style>@media(max-width:768px){.cw-widget-col{display:none!important;}}.cw-grid>div>p:first-child{margin-top:0;}</style>` +
+        `<style>@media(max-width:768px){.cw-widget-col{display:none!important;}}</style>` +
+        intro +
         `<div class="cw-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin:32px 0;">` +
-        `<div>${before}</div>` +
+        `<div>${gridLeft}</div>` +
         `<figure class="cw-widget-col" style="margin:0;">` +
                 `<iframe src="credits-widget.html" title="Business Manager widget states" style="width:100%;height:580px;border:none;display:block;border-radius:8px;background:#ECECEE;" scrolling="no">` +
         `Interactive demo showing the AI Credits wallet component across Free, Premium, and Top-up states in Business Manager.` +
