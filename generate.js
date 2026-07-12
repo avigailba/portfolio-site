@@ -557,7 +557,7 @@ function projectPage(proj, prevProj, nextProj) {
       const intro = h2Idx !== -1 ? before.slice(0, h2Idx) : '';
       const gridLeft = h2Idx !== -1 ? before.slice(h2Idx) : before;
       contentHtml =
-        `<style>@media(max-width:768px){.cw-widget-col{display:none!important;}}</style>` +
+        `<style>@media(max-width:768px){.cw-widget-col{display:none!important;}}.cw-grid>div>h2:first-child{margin-top:0;}</style>` +
         intro +
         `<div class="cw-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin:32px 0;">` +
         `<div>${gridLeft}</div>` +
