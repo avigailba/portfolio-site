@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Keys page — Avigail Bahat</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="proj-page">
+  <header id="site-header">
+  <div class="hdr-row">
+    <a href="../index.html" class="mob-logo">
+      <span class="mob-logo-name">Avigail Bahat</span>
+      <span class="mob-logo-role">Senior UX Designer</span>
+    </a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../index.html#home-work">Work</a>
+      <a href="../about.html">About & Contact</a>
+    </nav>
+    <button class="mob-burger" id="open-menu" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="mob-scrim" id="mob-scrim"></div>
+<aside class="mob-panel" id="mob-panel">
+  <div class="mob-panel-top">
+    <span class="mob-panel-title">Avigail Bahat</span>
+    <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
+  </div>
+  <nav class="mob-panel-nav">
+    <a href="../index.html" class="mob-panel-link">Home</a>
+    <a href="../index.html#home-work" class="mob-panel-link mob-work-link">Work</a>
+    <a href="../about.html" class="mob-panel-link">About & Contact</a>
+  </nav>
+  <div class="mob-panel-foot">
+    <div class="mob-panel-social">
+      <a href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span class="mob-arr">↗</span></a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span class="mob-arr">↗</span></a>
+    </div>
+  </div>
+</aside>
+  
+  <div class="proj-page-grid">
+    <div class="proj-gutter proj-gutter-left"></div>
+    <main class="proj-main">
+      <div class="proj-side-nav">
+        <a class="proj-nav-btn proj-nav-prev" href="custom-element-component-settings.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> Custom Element Component Settings</span></a>
+        <a class="proj-nav-btn proj-nav-next" href="ai-credits-wallet.html" aria-label="Next project"><span class="proj-nav-name">AI Credits <i class="ti ti-arrow-right"></i></span></a>
+      </div>
+      <div class="proj-title-sticky" id="proj-title-sticky">
+        <div class="proj-title-row">
+          <button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='custom-element-component-settings.html'">←</button>
+          <h1 class="proj-title-m">API Keys page</h1>
+          <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='ai-credits-wallet.html'">→</button>
+        </div>
+        <p class="proj-subtitle-m">Credential management system for third-party developers</p>
+        <div class="proj-meta-m">
+          <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='custom-element-component-settings.html'">← Previous</button>
+          <span class="pm">2022</span>
+          <span class="psep">·</span>
+          <span class="pm">Developer tools</span><span class="psep">·</span><span class="pm">CMS</span>
+          <button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='ai-credits-wallet.html'">Next →</button>
+        </div>
+      </div>
+      <div class="proj-content">
+        <p>API Keys are a critical part of <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span>’s platform strategy - enabling developers and third-party integrations to securely authenticate against Wix’s APIs. I designed the end-to-end UX for the API Keys management page, covering key generation, granular permission configuration, account verification, and ongoing key management. The core security constraint shaped the entire design: each key is visible only once at generation and can never be retrieved again.</p>
+<p>To handle the one-time visibility challenge, I designed a secure reveal flow that surfaces the key immediately after generation with clear copy prompts and confirmation messaging, so users understand they must save it before leaving. Beyond generation, the design included a full keys management table for viewing, editing, and revoking keys, with a granular permissions UI letting users define exactly what each key could access - giving teams precise security control over their Wix integrations.</p>
+<h2>What I Did</h2>
+<ul>
+  <li>Solved the one-time key visibility challenge by designing a clear, secure reveal flow that surfaces the key only at generation</li>
+  <li>Designed granular permission configuration to let users control what each API key can access</li>
+  <li>Added an account verification step prior to key generation to ensure security</li>
+</ul>
+<h2>Impact</h2>
+<ul>
+  <li>The API Keys page became the primary credential management surface for developers building on the Wix platform. It removed the need to manage keys outside of Wix and gave enterprise and agency developers a reliable, in-product way to authenticate integrations.</li>
+</ul>
+<figcaption class="proj-caption">Empty state shown to first-time users before any API keys have been generated</figcaption>
+<figure class="proj-img">
+  <img src="../images/img-126.jpg" alt="Empty state shown to first-time users before any API keys have been generated" loading="lazy">
+</figure>
+<figcaption class="proj-caption">Permissions selection step during key generation — choosing what data the key can access</figcaption>
+<figure class="proj-img">
+  <img src="../images/img-127.jpg" alt="Permissions selection step during key generation — choosing what data the key can access" loading="lazy">
+</figure>
+<figcaption class="proj-caption">Expanding a permission category to configure granular sub-permissions for the key</figcaption>
+<figure class="proj-img">
+  <img src="../images/img-128.jpg" alt="Expanding a permission category to configure granular sub-permissions for the key" loading="lazy">
+</figure>
+<figcaption class="proj-caption">Account verification prompt — a 6-digit code is sent to the user’s email before the key can be generated</figcaption>
+<figure class="proj-img">
+  <img src="../images/img-129.jpg" alt="Account verification prompt — a 6-digit code is sent to the user’s email before the key can be generated" loading="lazy">
+</figure>
+<figcaption class="proj-caption">Code entry step — user enters the emailed verification code to confirm their identity</figcaption>
+<figure class="proj-img">
+  <img src="../images/img-130.jpg" alt="Code entry step — user enters the emailed verification code to confirm their identity" loading="lazy">
+</figure>
+<figcaption class="proj-caption">One-time key reveal — the token is only visible at this moment and must be copied before closing</figcaption>
+<figure class="proj-img">
+  <img src="../images/img-131.jpg" alt="One-time key reveal — the token is only visible at this moment and must be copied before closing" loading="lazy">
+</figure>
+<figcaption class="proj-caption">Keys management table showing a generated key with its token, permissions breakdown, and the Account ID panel</figcaption>
+<figure class="proj-img">
+  <img src="../images/img-132.jpg" alt="Keys management table showing a generated key with its token, permissions breakdown, and the Account ID panel" loading="lazy">
+</figure>
+<figcaption class="proj-caption">Expanded permissions view for an existing key, showing the assigned basic and account-level permissions</figcaption>
+<figure class="proj-img">
+  <img src="../images/img-133.jpg" alt="Expanded permissions view for an existing key, showing the assigned basic and account-level permissions" loading="lazy">
+</figure>
+<h2>Bottom line</h2>
+<p>The one-time visibility constraint was the design problem that mattered most here. A key that cannot be retrieved after generation is a security property, not a limitation, but it puts the entire burden of not losing it on a single moment in the flow. Getting the reveal screen right, with the right prompts and the right sense of weight, was the part that required the most iteration.</p>
+
+      </div>
+    </main>
+    <div class="proj-gutter proj-gutter-right"></div>
+  </div>
+  <section class="more-section">
+    <div class="more-inner">
+      <p class="more-label">More work</p>
+      <div id="more-list"></div>
+      <div class="more-cta">
+        <a href="../index.html" class="more-cta-link">See all work →</a>
+      </div>
+    </div>
+  </section>
+  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true">
+    <button class="lb-close" aria-label="Close">✕</button>
+    <div class="lb-stage">
+      <button class="lb-handle lb-prev" aria-label="Previous">‹</button>
+      <div class="lb-content">
+        <img class="lb-img" src="" alt="">
+        <p class="lb-caption"></p>
+      </div>
+      <button class="lb-handle lb-next" aria-label="Next">›</button>
+    </div>
+  </div>
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <p class="footer-statement">Open to new work.</p>
+      <div class="footer-tags">
+        <span class="ftag">Developer tools</span>
+        <span class="ftag">AI products</span>
+        <span class="ftag">Complex systems</span>
+        <span class="ftag">B2B SaaS</span>
+        <span class="ftag">Platform design</span>
+        <span class="ftag">Marketplace</span>
+        <span class="ftag">Design systems</span>
+        <span class="ftag">Developer experience</span>
+        <span class="ftag">Monetisation</span>
+        <span class="ftag">Internal tools</span>
+      </div>
+      <p class="footer-tagline">Based in Tel Aviv · Open to opportunities</p>
+    </div>
+    <div class="footer-right">
+      <a href="mailto:avigailba@gmail.com" class="footer-link">
+        <span>avigailba@gmail.com</span><span class="footer-arr">↗</span>
+      </a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" class="footer-link">
+        <span>LinkedIn</span><span class="footer-arr">↗</span>
+      </a>
+      <a href="../design-system.html" class="footer-link">
+        <span>Design system</span><span class="footer-arr">↗</span>
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
+</footer>
+  <script src="../script.js"></script>
+  <script>
+var ALL_PROJECTS = [
+  { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'AI credits billing system across Business Manager and Wixel', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
+  { slug: 'app-installation-page-for-developers', title: 'App Installations Page', sub: 'Developer dashboard for installation data and user insights', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
+  { slug: 'app-reviews-revamp', title: 'App Reviews Revamp', sub: 'Redesigned reviews management experience for App Market developers', cat: 'Developer tools', cats: 'developer', year: 2024, featured: false },
+  { slug: 'developer-sale', title: 'Developer Sale', sub: 'Native sales infrastructure for app developers on the marketplace', cat: 'Monetisation', cats: 'developer monetisation cms', year: 2024, featured: true },
+  { slug: 'app-collections-internal-manager', title: 'App Collections Manager', sub: 'Curation tooling for App Market vertical collections', cat: 'Internal tools', cats: 'developer internal cms', year: 2024, featured: false },
+  { slug: 'payouts-page', title: 'Payouts Page', sub: 'In-product earnings visibility for App Market developers', cat: 'Monetisation', cats: 'monetisation cms', year: 2023, featured: false },
+  { slug: 'refund-flow', title: 'Refund Flow', sub: 'Self-serve refund flow replacing manual support intervention', cat: 'Monetisation', cats: 'monetisation', year: 2023, featured: false },
+  { slug: 'app-pricing-page-projects', title: 'App Pricing Page Projects', sub: 'Long-term UX evolution of App Market pricing infrastructure', cat: 'Monetisation', cats: 'developer monetisation', year: 2023, featured: false },
+  { slug: 'internal-app-review-system', title: 'App Review System', sub: 'Workflow tool for Account Managers to review marketplace apps', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
+  { slug: 'submit-publish-widget', title: 'Submit & Publish Widget', sub: 'Submission requirements surfaced in-context during the publishing flow', cat: 'Developer tools', cats: 'developer', year: 2022, featured: false },
+  { slug: 'custom-element-component-settings', title: 'Custom Element Component Settings', sub: 'Visual settings builder for Wix Custom Element apps', cat: 'Developer tools', cats: 'developer', year: 2022, featured: false },
+  { slug: 'api-keys-page', title: 'API Keys Page', sub: 'Secure key generation and management for Wix platform developers', cat: 'Developer tools', cats: 'developer cms', year: 2022, featured: false },
+  { slug: 'development-site-creation', title: 'Development Site Creation', sub: 'Self-serve provisioning of premium test sites for developers', cat: 'Developer tools', cats: 'developer', year: 2021, featured: false },
+  { slug: 'app-coupons', title: 'App Coupons', sub: 'Self-serve coupon creation for App Market developers', cat: 'Monetisation', cats: 'monetisation cms', year: 2021, featured: false }
+];
+var CURRENT_SLUG = 'api-keys-page';
+(function() {
+  var others = ALL_PROJECTS.filter(function(p) { return p.slug !== CURRENT_SLUG; });
+  var pick = others.slice().sort(function() { return Math.random() - 0.5; }).slice(0, 4);
+  var list = document.getElementById('more-list');
+  if (!list) return;
+  pick.forEach(function(p, i) {
+    var wrap = document.createElement('div');
+    wrap.className = 'row-wrap open';
+    wrap.setAttribute('data-cat', p.cats);
+    wrap.innerHTML =
+      '<a href="' + p.slug + '.html" class="row" data-cat="' + p.cats + '">' +
+        '<span class="num">' + String(i + 1).padStart(2, '0') + '</span>' +
+        '<div class="rmain">' +
+          '<span class="row-title">' + p.title + '</span>' +
+          '<span class="rsub">' + p.sub + '</span>' +
+        '</div>' +
+        (p.featured ? '<span class="feat-tag" title="Featured project">★</span>' : '') +
+        '<span class="cat-tag">' + p.cat + '</span>' +
+        '<span class="row-year">' + p.year + '</span>' +
+        '<span class="row-arr">View ↗</span>' +
+        '<div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>' +
+      '</a>';
+    list.appendChild(wrap);
+  });
+})();
+</script>
+<script>
+(function(){
+  var sticky = document.getElementById('proj-title-sticky');
+  if (!sticky) return;
+  var isMobile = window.innerWidth <= 768;
+  if (isMobile) {
+    window.addEventListener('scroll', function(){
+      sticky.classList.toggle('condensed', window.scrollY > 56);
+    }, { passive: true });
+    var titleEl2 = sticky.querySelector('.proj-title-m');
+    var origTitle = titleEl2 ? titleEl2.textContent : '';
+    var sentinel = document.querySelector('.more-section');
+    if (sentinel && titleEl2 && window.IntersectionObserver) {
+      new IntersectionObserver(function(entries){
+        if (entries[0].isIntersecting) {
+          titleEl2.textContent = 'More work';
+          sticky.classList.add('at-bottom');
+        } else {
+          titleEl2.textContent = origTitle;
+          sticky.classList.remove('at-bottom');
+        }
+      }, { threshold: 0.1 }).observe(sentinel);
+    }
+  } else {
+    var titleEl = sticky.querySelector('.proj-title-m');
+    var R = 110, TITLE_FROM = 54, TITLE_TO = 22, PAD_FROM = 28, PAD_TO = 14;
+    var ticking = false;
+    function lerp(a, b, t){ return a + (b - a) * t; }
+    function ease(t){ return 1 - Math.pow(1 - t, 3); }
+    function update(){
+      ticking = false;
+      var raw = Math.min(Math.max((window.scrollY - 60) / R, 0), 1);
+      var p = ease(raw);
+      if (titleEl) titleEl.style.fontSize = lerp(TITLE_FROM, TITLE_TO, p) + 'px';
+      sticky.style.paddingTop = lerp(PAD_FROM, PAD_TO, p) + 'px';
+      sticky.style.paddingBottom = lerp(PAD_FROM, PAD_TO, p) + 'px';
+      sticky.classList.toggle('condensed', raw > 0.4);
+    }
+    window.addEventListener('scroll', function(){ if (!ticking){ ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  }
+})();
+</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refund Flow — Avigail Bahat</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="proj-page">
+  <header id="site-header">
+  <div class="hdr-row">
+    <a href="../index.html" class="mob-logo">
+      <span class="mob-logo-name">Avigail Bahat</span>
+      <span class="mob-logo-role">Senior UX Designer</span>
+    </a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../index.html#home-work">Work</a>
+      <a href="../about.html">About & Contact</a>
+    </nav>
+    <button class="mob-burger" id="open-menu" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="mob-scrim" id="mob-scrim"></div>
+<aside class="mob-panel" id="mob-panel">
+  <div class="mob-panel-top">
+    <span class="mob-panel-title">Avigail Bahat</span>
+    <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
+  </div>
+  <nav class="mob-panel-nav">
+    <a href="../index.html" class="mob-panel-link">Home</a>
+    <a href="../index.html#home-work" class="mob-panel-link mob-work-link">Work</a>
+    <a href="../about.html" class="mob-panel-link">About & Contact</a>
+  </nav>
+  <div class="mob-panel-foot">
+    <div class="mob-panel-social">
+      <a href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span class="mob-arr">↗</span></a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span class="mob-arr">↗</span></a>
+    </div>
+  </div>
+</aside>
+  
+  <div class="proj-page-grid">
+    <div class="proj-gutter proj-gutter-left"></div>
+    <main class="proj-main">
+      <div class="proj-side-nav">
+        <a class="proj-nav-btn proj-nav-prev" href="payouts-page.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> Payouts Page</span></a>
+        <a class="proj-nav-btn proj-nav-next" href="app-pricing-page-projects.html" aria-label="Next project"><span class="proj-nav-name">App Pricing Page Projects <i class="ti ti-arrow-right"></i></span></a>
+      </div>
+      <div class="proj-title-sticky" id="proj-title-sticky">
+        <div class="proj-title-row">
+          <button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='payouts-page.html'">←</button>
+          <h1 class="proj-title-m">Refund Flow</h1>
+          <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='app-pricing-page-projects.html'">→</button>
+        </div>
+        <p class="proj-subtitle-m">Self-serve refund flow replacing manual support intervention</p>
+        <div class="proj-meta-m">
+          <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='payouts-page.html'">← Previous</button>
+          <span class="pm">2023</span>
+          <span class="psep">·</span>
+          <span class="pm">Monetisation</span>
+          <button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='app-pricing-page-projects.html'">Next →</button>
+        </div>
+      </div>
+      <div class="proj-content">
+        <p>I designed the refund flow embedded within the payouts transaction table, covering the full lifecycle: inline initiation, confirmation dialog, processing state, and success/error states. I collaborated with finance and engineering to align the design with backend refund logic and constraints.</p>
+<h2>What I Did</h2>
+<ul>
+  <li>Mapped the end-to-end refund journey and identified key decision points and edge cases</li>
+  <li>Designed the refund initiation UI within the transactions table (inline action)</li>
+  <li>Designed the confirmation dialog, processing state, and success/error states</li>
+  <li>Created wireframes covering the full flow from trigger to completion</li>
+  <li>Collaborated with finance and engineering to ensure design matched backend refund logic and constraints</li>
+</ul>
+<h2>Impact</h2>
+<ul>
+  <li>Eliminated manual Dev Relations team intervention for every refund - at the platform's scale, self-serve refund was operationally necessary</li>
+  <li>Refund volume grew significantly year over year as the platform scaled, reinforcing the importance of in-product financial control</li>
+  <li>A significant volume of financial activity previously invisible to developers is now self-serve accessible</li>
+</ul>
+<figure class="proj-img">
+  <img src="../images/img-77.jpg" alt="" loading="lazy">
+</figure>
+<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Entry point - Request refund action in the transactions table row menu</figcaption>
+<figure class="proj-img">
+  <img src="../images/img-78.jpg" alt="Entry point - Request refund action in the transactions table row menu" loading="lazy">
+</figure>
+</div><div class="col"><figcaption class="proj-caption">Confirm refund details (instance ID, amount, plan status) before submitting</figcaption>
+<figure class="proj-img">
+  <img src="../images/img-79.jpg" alt="Confirm refund details (instance ID, amount, plan status) before submitting" loading="lazy">
+</figure>
+</div></div>
+<figcaption class="proj-caption">Post-submission - transaction row updates to Refund requested status with a link to the refund ticket</figcaption>
+<figure class="proj-img">
+  <img src="../images/img-80.jpg" alt="Post-submission - transaction row updates to Refund requested status with a link to the refund ticket" loading="lazy">
+</figure>
+<figcaption class="proj-caption">Completed - refund appears as a negative line item in transaction history once processed</figcaption>
+<figure class="proj-img">
+  <img src="../images/img-81.jpg" alt="Completed - refund appears as a negative line item in transaction history once processed" loading="lazy">
+</figure>
+<h2>Bottom line</h2>
+<p>A refund flow sounds simple, but the hard part is the edge cases: what state is the subscription in, what does the developer actually need to confirm, and how do you make a consequential financial action feel safe without adding so much friction that it becomes a deterrent. Designing for the error and in-progress states was at least as important as the happy path.</p>
+
+      </div>
+    </main>
+    <div class="proj-gutter proj-gutter-right"></div>
+  </div>
+  <section class="more-section">
+    <div class="more-inner">
+      <p class="more-label">More work</p>
+      <div id="more-list"></div>
+      <div class="more-cta">
+        <a href="../index.html" class="more-cta-link">See all work →</a>
+      </div>
+    </div>
+  </section>
+  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true">
+    <button class="lb-close" aria-label="Close">✕</button>
+    <div class="lb-stage">
+      <button class="lb-handle lb-prev" aria-label="Previous">‹</button>
+      <div class="lb-content">
+        <img class="lb-img" src="" alt="">
+        <p class="lb-caption"></p>
+      </div>
+      <button class="lb-handle lb-next" aria-label="Next">›</button>
+    </div>
+  </div>
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <p class="footer-statement">Open to new work.</p>
+      <div class="footer-tags">
+        <span class="ftag">Developer tools</span>
+        <span class="ftag">AI products</span>
+        <span class="ftag">Complex systems</span>
+        <span class="ftag">B2B SaaS</span>
+        <span class="ftag">Platform design</span>
+        <span class="ftag">Marketplace</span>
+        <span class="ftag">Design systems</span>
+        <span class="ftag">Developer experience</span>
+        <span class="ftag">Monetisation</span>
+        <span class="ftag">Internal tools</span>
+      </div>
+      <p class="footer-tagline">Based in Tel Aviv · Open to opportunities</p>
+    </div>
+    <div class="footer-right">
+      <a href="mailto:avigailba@gmail.com" class="footer-link">
+        <span>avigailba@gmail.com</span><span class="footer-arr">↗</span>
+      </a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" class="footer-link">
+        <span>LinkedIn</span><span class="footer-arr">↗</span>
+      </a>
+      <a href="../design-system.html" class="footer-link">
+        <span>Design system</span><span class="footer-arr">↗</span>
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
+</footer>
+  <script src="../script.js"></script>
+  <script>
+var ALL_PROJECTS = [
+  { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'AI credits billing system across Business Manager and Wixel', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
+  { slug: 'app-installation-page-for-developers', title: 'App Installations Page', sub: 'Developer dashboard for installation data and user insights', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
+  { slug: 'app-reviews-revamp', title: 'App Reviews Revamp', sub: 'Redesigned reviews management experience for App Market developers', cat: 'Developer tools', cats: 'developer', year: 2024, featured: false },
+  { slug: 'developer-sale', title: 'Developer Sale', sub: 'Native sales infrastructure for app developers on the marketplace', cat: 'Monetisation', cats: 'developer monetisation cms', year: 2024, featured: true },
+  { slug: 'app-collections-internal-manager', title: 'App Collections Manager', sub: 'Curation tooling for App Market vertical collections', cat: 'Internal tools', cats: 'developer internal cms', year: 2024, featured: false },
+  { slug: 'payouts-page', title: 'Payouts Page', sub: 'In-product earnings visibility for App Market developers', cat: 'Monetisation', cats: 'monetisation cms', year: 2023, featured: false },
+  { slug: 'refund-flow', title: 'Refund Flow', sub: 'Self-serve refund flow replacing manual support intervention', cat: 'Monetisation', cats: 'monetisation', year: 2023, featured: false },
+  { slug: 'app-pricing-page-projects', title: 'App Pricing Page Projects', sub: 'Long-term UX evolution of App Market pricing infrastructure', cat: 'Monetisation', cats: 'developer monetisation', year: 2023, featured: false },
+  { slug: 'internal-app-review-system', title: 'App Review System', sub: 'Workflow tool for Account Managers to review marketplace apps', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
+  { slug: 'submit-publish-widget', title: 'Submit & Publish Widget', sub: 'Submission requirements surfaced in-context during the publishing flow', cat: 'Developer tools', cats: 'developer', year: 2022, featured: false },
+  { slug: 'custom-element-component-settings', title: 'Custom Element Component Settings', sub: 'Visual settings builder for Wix Custom Element apps', cat: 'Developer tools', cats: 'developer', year: 2022, featured: false },
+  { slug: 'api-keys-page', title: 'API Keys Page', sub: 'Secure key generation and management for Wix platform developers', cat: 'Developer tools', cats: 'developer cms', year: 2022, featured: false },
+  { slug: 'development-site-creation', title: 'Development Site Creation', sub: 'Self-serve provisioning of premium test sites for developers', cat: 'Developer tools', cats: 'developer', year: 2021, featured: false },
+  { slug: 'app-coupons', title: 'App Coupons', sub: 'Self-serve coupon creation for App Market developers', cat: 'Monetisation', cats: 'monetisation cms', year: 2021, featured: false }
+];
+var CURRENT_SLUG = 'refund-flow';
+(function() {
+  var others = ALL_PROJECTS.filter(function(p) { return p.slug !== CURRENT_SLUG; });
+  var pick = others.slice().sort(function() { return Math.random() - 0.5; }).slice(0, 4);
+  var list = document.getElementById('more-list');
+  if (!list) return;
+  pick.forEach(function(p, i) {
+    var wrap = document.createElement('div');
+    wrap.className = 'row-wrap open';
+    wrap.setAttribute('data-cat', p.cats);
+    wrap.innerHTML =
+      '<a href="' + p.slug + '.html" class="row" data-cat="' + p.cats + '">' +
+        '<span class="num">' + String(i + 1).padStart(2, '0') + '</span>' +
+        '<div class="rmain">' +
+          '<span class="row-title">' + p.title + '</span>' +
+          '<span class="rsub">' + p.sub + '</span>' +
+        '</div>' +
+        (p.featured ? '<span class="feat-tag" title="Featured project">★</span>' : '') +
+        '<span class="cat-tag">' + p.cat + '</span>' +
+        '<span class="row-year">' + p.year + '</span>' +
+        '<span class="row-arr">View ↗</span>' +
+        '<div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>' +
+      '</a>';
+    list.appendChild(wrap);
+  });
+})();
+</script>
+<script>
+(function(){
+  var sticky = document.getElementById('proj-title-sticky');
+  if (!sticky) return;
+  var isMobile = window.innerWidth <= 768;
+  if (isMobile) {
+    window.addEventListener('scroll', function(){
+      sticky.classList.toggle('condensed', window.scrollY > 56);
+    }, { passive: true });
+    var titleEl2 = sticky.querySelector('.proj-title-m');
+    var origTitle = titleEl2 ? titleEl2.textContent : '';
+    var sentinel = document.querySelector('.more-section');
+    if (sentinel && titleEl2 && window.IntersectionObserver) {
+      new IntersectionObserver(function(entries){
+        if (entries[0].isIntersecting) {
+          titleEl2.textContent = 'More work';
+          sticky.classList.add('at-bottom');
+        } else {
+          titleEl2.textContent = origTitle;
+          sticky.classList.remove('at-bottom');
+        }
+      }, { threshold: 0.1 }).observe(sentinel);
+    }
+  } else {
+    var titleEl = sticky.querySelector('.proj-title-m');
+    var R = 110, TITLE_FROM = 54, TITLE_TO = 22, PAD_FROM = 28, PAD_TO = 14;
+    var ticking = false;
+    function lerp(a, b, t){ return a + (b - a) * t; }
+    function ease(t){ return 1 - Math.pow(1 - t, 3); }
+    function update(){
+      ticking = false;
+      var raw = Math.min(Math.max((window.scrollY - 60) / R, 0), 1);
+      var p = ease(raw);
+      if (titleEl) titleEl.style.fontSize = lerp(TITLE_FROM, TITLE_TO, p) + 'px';
+      sticky.style.paddingTop = lerp(PAD_FROM, PAD_TO, p) + 'px';
+      sticky.style.paddingBottom = lerp(PAD_FROM, PAD_TO, p) + 'px';
+      sticky.classList.toggle('condensed', raw > 0.4);
+    }
+    window.addEventListener('scroll', function(){ if (!ticking){ ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  }
+})();
+</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

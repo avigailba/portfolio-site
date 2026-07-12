@@ -298,7 +298,8 @@ function firstCallout(blocks) {
 const TERM_TIPS = {
   'Wix App Market':   'Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.',
   'Business Manager': 'Business Manager is the dashboard where Wix business owners manage their site and services.',
-  'Wixel':            "Wixel is Wix’s AI-native product for creating and managing digital presence.",
+  'Wix Blocks':       'Wix Blocks was a visual development platform for building Wix apps, now retired.',
+  'Wixel':            "Wixel is Wix's AI-native product for creating and managing digital presence.",
   'Wix':              'Wix is a website builder and development platform used by millions of businesses and creators worldwide.',
 };
 

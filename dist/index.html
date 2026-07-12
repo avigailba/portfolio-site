@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avigail Bahat — Senior UX Designer</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="site-header">
+  <div class="hdr-row">
+    <a href="index.html" class="mob-logo">
+      <span class="mob-logo-name">Avigail Bahat</span>
+      <span class="mob-logo-role">Senior UX Designer</span>
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#home-work">Work</a>
+      <a href="about.html">About & Contact</a>
+    </nav>
+    <button class="mob-burger" id="open-menu" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="mob-scrim" id="mob-scrim"></div>
+<aside class="mob-panel" id="mob-panel">
+  <div class="mob-panel-top">
+    <span class="mob-panel-title">Avigail Bahat</span>
+    <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
+  </div>
+  <nav class="mob-panel-nav">
+    <a href="index.html" class="mob-panel-link">Home</a>
+    <a href="index.html#home-work" class="mob-panel-link mob-work-link">Work</a>
+    <a href="about.html" class="mob-panel-link">About & Contact</a>
+  </nav>
+  <div class="mob-panel-foot">
+    <div class="mob-panel-social">
+      <a href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span class="mob-arr">↗</span></a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span class="mob-arr">↗</span></a>
+    </div>
+  </div>
+</aside>
+  
+  <main class="home-band">
+    <div class="hero-wrap" id="heroWrap">
+      <div class="play-frame" id="playFrame">
+        <canvas id="canvas"></canvas>
+        <div class="mode-select" id="modeSelect">
+          <button class="mode-btn active" id="modeShapes">Shapes</button>
+          <button class="mode-btn" id="modeEmojis">Emojis</button>
+        </div>
+        <div class="frame-hint" id="frameHint">move to draw · click to place</div>
+        <div class="hud" id="hud">
+          <div class="hud-pill">Next: <strong id="nextLabel">Process</strong></div>
+          <button class="reset-btn" id="resetBtn">Clear ✕</button>
+        </div>
+      </div>
+      <p class="lede">Senior UX designer. I like the problems that need a whiteboard and finding surprising solutions. My career centers on building tools - for developers, for internal teams, and for end users.</p>
+    </div>
+    <div id="home-work" class="feat-grid">
+      <div class="feat-card" onclick="location.href='projects/ai-credits-wallet.html'">
+  <div class="feat-title">AI<br>Credits</div>
+  <div class="feat-arr">↗</div>
+  <div class="feat-foot">
+    <a class="mob-view-btn" href="projects/ai-credits-wallet.html" onclick="event.stopPropagation()">View project <span>↗</span></a>
+  </div>
+</div>
+  <div class="feat-card" onclick="location.href='projects/app-installation-page-for-developers.html'">
+  <div class="feat-title">App Installations Page</div>
+  <div class="feat-arr">↗</div>
+  <div class="feat-foot">
+    <a class="mob-view-btn" href="projects/app-installation-page-for-developers.html" onclick="event.stopPropagation()">View project <span>↗</span></a>
+  </div>
+</div>
+  <div class="feat-card" onclick="location.href='projects/internal-app-review-system.html'">
+  <div class="feat-title">App Review System</div>
+  <div class="feat-arr">↗</div>
+  <div class="feat-foot">
+    <a class="mob-view-btn" href="projects/internal-app-review-system.html" onclick="event.stopPropagation()">View project <span>↗</span></a>
+  </div>
+</div>
+  <div class="feat-card" onclick="location.href='projects/developer-sale.html'">
+  <div class="feat-title">Developer Sale</div>
+  <div class="feat-arr">↗</div>
+  <div class="feat-foot">
+    <a class="mob-view-btn" href="projects/developer-sale.html" onclick="event.stopPropagation()">View project <span>↗</span></a>
+  </div>
+</div>
+    </div>
+    <div class="home-allwork" id="home-allwork">
+      <div class="work-header">
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all">All projects</button>
+          <button class="filter-btn" data-filter="developer">Developer tools</button>
+          <button class="filter-btn" data-filter="monetisation">Monetisation</button>
+          <button class="filter-btn" data-filter="internal">Internal tools</button>
+          <button class="filter-btn" data-filter="cms">CMS</button>
+        </div>
+        <div class="mob-filter" id="mob-filter">
+          <button class="mob-filter-btn" id="mob-filter-btn">All projects <span class="mob-filter-caret">▼</span></button>
+          <div class="mob-filter-drop" id="mob-filter-drop">
+            <button class="mob-filter-opt active" data-filter="all">All projects</button>
+            <button class="mob-filter-opt" data-filter="developer">Developer tools</button>
+            <button class="mob-filter-opt" data-filter="monetisation">Monetisation</button>
+            <button class="mob-filter-opt" data-filter="internal">Internal tools</button>
+            <button class="mob-filter-opt" data-filter="cms">CMS</button>
+          </div>
+        </div>
+      </div>
+      <div id="all-list">
+        <div class="row-wrap" data-cat="monetisation">
+  <a href="projects/ai-credits-wallet.html" class="row" data-cat="monetisation">
+    <span class="num">01</span>
+    <div class="rmain">
+      <span class="row-title">AI Credits</span>
+      <span class="rsub">AI credits billing system across Business Manager and Wixel</span>
+    </div>
+    <span class="feat-tag" title="Featured project">★</span>
+    <span class="cat-tag" data-cats="monetisation" data-display="Monetisation">Monetisation</span>
+    <span class="row-year">2026</span>
+    <span class="row-arr">View ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+  </a>
+</div>
+  <div class="row-wrap" data-cat="developer cms">
+  <a href="projects/app-installation-page-for-developers.html" class="row" data-cat="developer cms">
+    <span class="num">02</span>
+    <div class="rmain">
+      <span class="row-title">Installations Page</span>
+      <span class="rsub">Developer dashboard for installation data and user insights</span>
+    </div>
+    <span class="feat-tag" title="Featured project">★</span>
+    <span class="cat-tag" data-cats="developer cms" data-display="Developer tools">Developer tools</span>
+    <span class="row-year">2025</span>
+    <span class="row-arr">View ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+  </a>
+</div>
+  <div class="row-wrap" data-cat="developer">
+  <a href="projects/app-reviews-revamp.html" class="row" data-cat="developer">
+    <span class="num">03</span>
+    <div class="rmain">
+      <span class="row-title">Reviews revamp</span>
+      <span class="rsub">Redesigned reviews management experience for App Market developers</span>
+    </div>
+    
+    <span class="cat-tag" data-cats="developer" data-display="Developer tools">Developer tools</span>
+    <span class="row-year">2024</span>
+    <span class="row-arr">View ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+  </a>
+</div>
+  <div class="row-wrap" data-cat="developer monetisation cms">
+  <a href="projects/developer-sale.html" class="row" data-cat="developer monetisation cms">
+    <span class="num">04</span>
+    <div class="rmain">
+      <span class="row-title">Developer Sale</span>
+      <span class="rsub">Native sales infrastructure for app developers on the marketplace</span>
+    </div>
+    <span class="feat-tag" title="Featured project">★</span>
+    <span class="cat-tag" data-cats="developer monetisation cms" data-display="Monetisation">Monetisation</span>
+    <span class="row-year">2024</span>
+    <span class="row-arr">View ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+  </a>
+</div>
+  <div class="row-wrap" data-cat="developer internal cms">
+  <a href="projects/app-collections-internal-manager.html" class="row" data-cat="developer internal cms">
+    <span class="num">05</span>
+    <div class="rmain">
+      <span class="row-title">Collections Manager</span>
+      <span class="rsub">Curation tooling for App Market vertical collections</span>
+    </div>
+    
+    <span class="cat-tag" data-cats="developer internal cms" data-display="Internal tools">Internal tools</span>
+    <span class="row-year">2024</span>
+    <span class="row-arr">View ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+  </a>
+</div>
+  <div class="row-wrap" data-cat="monetisation cms">
+  <a href="projects/payouts-page.html" class="row" data-cat="monetisation cms">
+    <span class="num">06</span>
+    <div class="rmain">
+      <span class="row-title">Payouts Page</span>
+      <span class="rsub">In-product earnings visibility for App Market developers</span>
+    </div>
+    
+    <span class="cat-tag" data-cats="monetisation cms" data-display="Monetisation">Monetisation</span>
+    <span class="row-year">2023</span>
+    <span class="row-arr">View ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+  </a>
+</div>
+  <div class="row-wrap" data-cat="monetisation">
+  <a href="projects/refund-flow.html" class="row" data-cat="monetisation">
+    <span class="num">07</span>
+    <div class="rmain">
+      <span class="row-title">Refund Flow</span>
+      <span class="rsub">Self-serve refund flow replacing manual support intervention</span>
+    </div>
+    
+    <span class="cat-tag" data-cats="monetisation" data-display="Monetisation">Monetisation</span>
+    <span class="row-year">2023</span>
+    <span class="row-arr">View ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+  </a>
+</div>
+  <div class="row-wrap" data-cat="developer monetisation">
+  <a href="projects/app-pricing-page-projects.html" class="row" data-cat="developer monetisation">
+    <span class="num">08</span>
+    <div class="rmain">
+      <span class="row-title">Pricing Page Projects</span>
+      <span class="rsub">Long-term UX evolution of App Market pricing infrastructure</span>
+    </div>
+    
+    <span class="cat-tag" data-cats="developer monetisation" data-display="Monetisation">Monetisation</span>
+    <span class="row-year">2023</span>
+    <span class="row-arr">View ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+  </a>
+</div>
+  <div class="row-wrap" data-cat="internal cms">
+  <a href="projects/internal-app-review-system.html" class="row" data-cat="internal cms">
+    <span class="num">09</span>
+    <div class="rmain">
+      <span class="row-title">App Review System</span>
+      <span class="rsub">Workflow tool for Account Managers to review marketplace apps</span>
+    </div>
+    <span class="feat-tag" title="Featured project">★</span>
+    <span class="cat-tag" data-cats="internal cms" data-display="Internal tools">Internal tools</span>
+    <span class="row-year">2022</span>
+    <span class="row-arr">View ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+  </a>
+</div>
+  <div class="row-wrap" data-cat="developer">
+  <a href="projects/submit-publish-widget.html" class="row" data-cat="developer">
+    <span class="num">10</span>
+    <div class="rmain">
+      <span class="row-title">Submit & Publish Widget</span>
+      <span class="rsub">Submission requirements surfaced in-context during the publishing flow</span>
+    </div>
+    
+    <span class="cat-tag" data-cats="developer" data-display="Developer tools">Developer tools</span>
+    <span class="row-year">2022</span>
+    <span class="row-arr">View ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+  </a>
+</div>
+  <div class="row-wrap" data-cat="developer">
+  <a href="projects/custom-element-component-settings.html" class="row" data-cat="developer">
+    <span class="num">11</span>
+    <div class="rmain">
+      <span class="row-title">Custom Element Component Settings</span>
+      <span class="rsub">Visual settings builder for Wix Custom Element apps</span>
+    </div>
+    
+    <span class="cat-tag" data-cats="developer" data-display="Developer tools">Developer tools</span>
+    <span class="row-year">2022</span>
+    <span class="row-arr">View ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+  </a>
+</div>
+  <div class="row-wrap" data-cat="developer cms">
+  <a href="projects/api-keys-page.html" class="row" data-cat="developer cms">
+    <span class="num">12</span>
+    <div class="rmain">
+      <span class="row-title">API Keys page</span>
+      <span class="rsub">Secure key generation and management for Wix platform developers</span>
+    </div>
+    
+    <span class="cat-tag" data-cats="developer cms" data-display="Developer tools">Developer tools</span>
+    <span class="row-year">2022</span>
+    <span class="row-arr">View ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+  </a>
+</div>
+  <div class="row-wrap" data-cat="monetisation cms">
+  <a href="projects/app-coupons.html" class="row" data-cat="monetisation cms">
+    <span class="num">13</span>
+    <div class="rmain">
+      <span class="row-title">Coupons Page</span>
+      <span class="rsub">Self-serve coupon creation for App Market developers</span>
+    </div>
+    
+    <span class="cat-tag" data-cats="monetisation cms" data-display="Monetisation">Monetisation</span>
+    <span class="row-year">2021</span>
+    <span class="row-arr">View ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+  </a>
+</div>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <p class="footer-statement">Open to new work.</p>
+      <div class="footer-tags">
+        <span class="ftag">Developer tools</span>
+        <span class="ftag">AI products</span>
+        <span class="ftag">Complex systems</span>
+        <span class="ftag">B2B SaaS</span>
+        <span class="ftag">Platform design</span>
+        <span class="ftag">Marketplace</span>
+        <span class="ftag">Design systems</span>
+        <span class="ftag">Developer experience</span>
+        <span class="ftag">Monetisation</span>
+        <span class="ftag">Internal tools</span>
+      </div>
+      <p class="footer-tagline">Based in Tel Aviv · Open to opportunities</p>
+    </div>
+    <div class="footer-right">
+      <a href="mailto:avigailba@gmail.com" class="footer-link">
+        <span>avigailba@gmail.com</span><span class="footer-arr">↗</span>
+      </a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" class="footer-link">
+        <span>LinkedIn</span><span class="footer-arr">↗</span>
+      </a>
+      <a href="design-system.html" class="footer-link">
+        <span>Design system</span><span class="footer-arr">↗</span>
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
+</footer>
+  <script src="script.js"></script>
+  
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design System — Avigail Bahat</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="site-header">
+  <div class="hdr-row">
+    <a href="index.html" class="mob-logo">
+      <span class="mob-logo-name">Avigail Bahat</span>
+      <span class="mob-logo-role">Senior UX Designer</span>
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#home-work">Work</a>
+      <a href="about.html">About & Contact</a>
+    </nav>
+    <button class="mob-burger" id="open-menu" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="mob-scrim" id="mob-scrim"></div>
+<aside class="mob-panel" id="mob-panel">
+  <div class="mob-panel-top">
+    <span class="mob-panel-title">Avigail Bahat</span>
+    <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
+  </div>
+  <nav class="mob-panel-nav">
+    <a href="index.html" class="mob-panel-link">Home</a>
+    <a href="index.html#home-work" class="mob-panel-link mob-work-link">Work</a>
+    <a href="about.html" class="mob-panel-link">About & Contact</a>
+  </nav>
+  <div class="mob-panel-foot">
+    <div class="mob-panel-social">
+      <a href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span class="mob-arr">↗</span></a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span class="mob-arr">↗</span></a>
+    </div>
+  </div>
+</aside>
+  
+  <div id="ds-gate" style="position:fixed;inset:0;z-index:999;background:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+    <div style="max-width:300px;width:100%;padding:0 24px;">
+      <p style="font-size:15px;color:#555;margin-bottom:20px;text-align:center;">Enter password</p>
+      <input id="ds-pw" type="password" placeholder="Password" autocomplete="current-password"
+        style="width:100%;font-size:15px;padding:10px 14px;border:0.5px solid #ebebeb;border-radius:6px;outline:none;font-family:inherit;box-sizing:border-box;margin-bottom:10px;display:block;">
+      <button onclick="dsAuth()"
+        style="width:100%;font-size:15px;padding:10px 14px;background:#0a0a0a;color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:inherit;">
+        Enter
+      </button>
+      <p id="ds-err" style="font-size:13px;color:#c00;margin-top:10px;display:none;text-align:center;">Incorrect password</p>
+    </div>
+  </div>
+  <main class="inner-main">
+    <div class="inner-content ds-content">
+      <h1>Design system</h1>
+      <p class="page-sub">Visual language reference for avigailbahat.com</p>
+      <p class="ds-notion-status ds-notion-connected"><span class="ds-notion-dot"></span>Live — content from Notion</p>
+
+      <div class="ds-section">
+        <span class="ds-section-title">Colours</span>
+        <div class="ds-swatches">
+          <div class="ds-swatch">
+      <div class="ds-swatch-box" style="background:#0a0a0a"></div>
+      <span class="ds-swatch-hex">#0a0a0a</span>
+      <span class="ds-swatch-name">Black</span>
+      <span style="font-size:14px;color:#555;display:block">Primary text, hover fill, footer bg</span>
+    </div>
+      <div class="ds-swatch">
+      <div class="ds-swatch-box" style="background:#555555"></div>
+      <span class="ds-swatch-hex">#555555</span>
+      <span class="ds-swatch-name">Gray</span>
+      <span style="font-size:14px;color:#555;display:block">All secondary text: nav, labels, years, body copy</span>
+    </div>
+      <div class="ds-swatch">
+      <div class="ds-swatch-box" style="background:#ffffff"></div>
+      <span class="ds-swatch-hex">#ffffff</span>
+      <span class="ds-swatch-name">White</span>
+      <span style="font-size:14px;color:#555;display:block">Page background, text on dark</span>
+    </div>
+      <div class="ds-swatch">
+      <div class="ds-swatch-box" style="background:#ebebeb"></div>
+      <span class="ds-swatch-hex">#ebebeb</span>
+      <span class="ds-swatch-name">Surface / Border</span>
+      <span style="font-size:14px;color:#555;display:block">Hairline borders, surface backgrounds (--border)</span>
+    </div>
+      <div class="ds-swatch">
+      <div class="ds-swatch-box" style="background:#22c55e"></div>
+      <span class="ds-swatch-hex">#22c55e</span>
+      <span class="ds-swatch-name">Available</span>
+      <span style="font-size:14px;color:#555;display:block">Availability dot only</span>
+    </div>
+        </div>
+      </div>
+
+      <div class="ds-section">
+        <span class="ds-section-title">Typography</span>
+        <div class="ds-type-row">
+      <span class="ds-type-num">1</span>
+      <div class="ds-type-sample" style="font-size:54px;font-weight:700;letter-spacing:-0.03em;color:#0a0a0a;line-height:1.1;font-family:"Plus Jakarta Sans",sans-serif">AI Credits</div>
+      <div class="ds-type-meta">
+        <span class="ds-type-spec">54px / 700 / −0.03em / Plus Jakarta Sans<span class="ds-type-color"><span class="ds-type-dot" style="background:#0a0a0a"></span>#0a0a0a</span></span>
+        <span class="ds-type-where">Project page title, featured cards (.proj-title, .feat-title)</span>
+      </div>
+    </div>
+    <div class="ds-type-row">
+      <span class="ds-type-num">2</span>
+      <div class="ds-type-sample" style="font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a">Design system</div>
+      <div class="ds-type-meta">
+        <span class="ds-type-spec">32px / 700 / −0.02em / Roboto<span class="ds-type-color"><span class="ds-type-dot" style="background:#0a0a0a"></span>#0a0a0a</span></span>
+        <span class="ds-type-where">Inner page h1, footer statement, project section headings (.inner-content h1, .footer-statement, .proj-content h2)</span>
+      </div>
+    </div>
+    <div class="ds-type-row">
+      <span class="ds-type-num">3</span>
+      <div class="ds-type-sample" style="font-size:28px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;font-family:"Plus Jakarta Sans",sans-serif">Senior UX designer.</div>
+      <div class="ds-type-meta">
+        <span class="ds-type-spec">28px / 500 / −0.01em / Plus Jakarta Sans<span class="ds-type-color"><span class="ds-type-dot" style="background:#0a0a0a"></span>#0a0a0a</span></span>
+        <span class="ds-type-where">Homepage lede (.lede)</span>
+      </div>
+    </div>
+    <div class="ds-type-row">
+      <span class="ds-type-num">4</span>
+      <div class="ds-type-sample" style="font-size:20px;font-weight:500;color:#0a0a0a;line-height:1.4">Transparent AI usage billing across the platform.</div>
+      <div class="ds-type-meta">
+        <span class="ds-type-spec">20px / 500 / Roboto<span class="ds-type-color"><span class="ds-type-dot" style="background:#0a0a0a"></span>#0a0a0a</span></span>
+        <span class="ds-type-where">Project subtitle, content sub-headings, CV role titles (.proj-subtitle, .proj-content h3, .cv-title)</span>
+      </div>
+    </div>
+    <div class="ds-type-row">
+      <span class="ds-type-num">5</span>
+      <div class="ds-type-sample" style="font-size:16px;color:#555;line-height:1.7">Body copy — project content, about, contact, work rows.</div>
+      <div class="ds-type-meta">
+        <span class="ds-type-spec">16px / 400 / Roboto / lh 1.7 / #555<span class="ds-type-color"><span class="ds-type-dot" style="background:#555"></span>#555</span></span>
+        <span class="ds-type-where">All body and secondary text (.proj-intro, .proj-content p, .proj-body, .row-title, .cv-desc, .cv-years, .contact-intro)</span>
+      </div>
+    </div>
+    <div class="ds-type-row">
+      <span class="ds-type-num">6</span>
+      <div class="ds-type-sample" style="font-size:14px;letter-spacing:0.07em;text-transform:uppercase;color:#555">FEATURED WORK · EXPERIENCE</div>
+      <div class="ds-type-meta">
+        <span class="ds-type-spec">14px / 400 / uppercase / 0.07–0.08em<span class="ds-type-color"><span class="ds-type-dot" style="background:#555"></span>#555</span></span>
+        <span class="ds-type-where">Section labels, about page section labels (.section-label, .more-label, .about-notion h2)</span>
+      </div>
+    </div>
+    <div class="ds-type-row">
+      <span class="ds-type-num">7</span>
+      <div class="ds-type-sample" style="font-size:14px;color:#555">Nav links, years, tags, meta</div>
+      <div class="ds-type-meta">
+        <span class="ds-type-spec">14px / 400 / Roboto<span class="ds-type-color"><span class="ds-type-dot" style="background:#555"></span>#555</span></span>
+        <span class="ds-type-where">Nav links, row meta, tag labels, footer text</span>
+      </div>
+    </div>
+      </div>
+
+      <div class="ds-section">
+        <span class="ds-section-title">Spacing</span>
+        <div class="ds-spacing">
+          <div class="ds-sp-row">
+      <span class="ds-sp-token">--sp-1</span>
+      <div class="ds-sp-bar" style="width:4px"></div>
+      <span class="ds-sp-val">4px</span>
+      <span style="font-size:14px;color:#555">Tight gaps</span>
+    </div>
+    <div class="ds-sp-row">
+      <span class="ds-sp-token">--sp-2</span>
+      <div class="ds-sp-bar" style="width:8px"></div>
+      <span class="ds-sp-val">8px</span>
+      <span style="font-size:14px;color:#555">Icon-text gaps</span>
+    </div>
+    <div class="ds-sp-row">
+      <span class="ds-sp-token">--sp-3</span>
+      <div class="ds-sp-bar" style="width:12px"></div>
+      <span class="ds-sp-val">12px</span>
+      <span style="font-size:14px;color:#555">List row padding</span>
+    </div>
+    <div class="ds-sp-row">
+      <span class="ds-sp-token">--sp-4</span>
+      <div class="ds-sp-bar" style="width:16px"></div>
+      <span class="ds-sp-val">16px</span>
+      <span style="font-size:14px;color:#555">Component internal</span>
+    </div>
+    <div class="ds-sp-row">
+      <span class="ds-sp-token">--sp-5</span>
+      <div class="ds-sp-bar" style="width:24px"></div>
+      <span class="ds-sp-val">24px</span>
+      <span style="font-size:14px;color:#555">Section gaps</span>
+    </div>
+    <div class="ds-sp-row">
+      <span class="ds-sp-token">--sp-6</span>
+      <div class="ds-sp-bar" style="width:32px"></div>
+      <span class="ds-sp-val">32px</span>
+      <span style="font-size:14px;color:#555">Page horizontal padding</span>
+    </div>
+    <div class="ds-sp-row">
+      <span class="ds-sp-token">--sp-7</span>
+      <div class="ds-sp-bar" style="width:48px"></div>
+      <span class="ds-sp-val">48px</span>
+      <span style="font-size:14px;color:#555">Section vertical spacing</span>
+    </div>
+    <div class="ds-sp-row">
+      <span class="ds-sp-token">--sp-8</span>
+      <div class="ds-sp-bar" style="width:64px"></div>
+      <span class="ds-sp-val">64px</span>
+      <span style="font-size:14px;color:#555">Footer padding, large gaps</span>
+    </div>
+        </div>
+      </div>
+
+      <div class="ds-section">
+        <span class="ds-section-title">Components</span>
+
+        <div class="ds-tabs">
+          <button class="ds-tab-btn active" onclick="dsTab(this,'desktop')">Desktop</button>
+          <button class="ds-tab-btn" onclick="dsTab(this,'mobile')">Mobile</button>
+        </div>
+
+        <!-- Desktop tab -->
+        <div class="ds-tab-panel active" id="ds-tab-desktop">
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Work item row</span>
+            <div class="ds-comp-demo" style="padding:0 24px;">
+              <div class="row-wrap open" style="max-height:none;">
+                <div class="row" data-cat="developer" style="border-top:0.5px solid #ebebeb;">
+                  <span class="num">01</span>
+                  <div class="rmain">
+                    <span class="row-title">AI Credits Wallet</span>
+                    <span class="rsub">End-to-end billing transparency for AI usage across the platform</span>
+                  </div>
+                  <span class="cat-tag">developer</span>
+                  <span class="row-year">2026</span>
+                  <span class="row-arr">View ↗</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Filter buttons</span>
+            <div class="ds-comp-demo" style="display:flex;gap:16px;align-items:center;">
+              <button class="filter-btn active">All projects</button>
+              <button class="filter-btn">Developer tools</button>
+              <button class="filter-btn">Monetisation</button>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Nav links</span>
+            <div class="ds-comp-demo">
+              <nav style="display:flex;gap:4px;">
+                <a href="#" style="font-size:14px;color:#555;padding:5px 10px;border-radius:5px;">Home</a>
+                <a href="#" style="font-size:14px;color:#555;padding:5px 10px;border-radius:5px;">Work</a>
+                <a href="#" style="font-size:14px;padding:5px 10px;border-radius:5px;background:#0a0a0a;color:#fff;">About (hover)</a>
+                <a href="#" style="font-size:14px;color:#0a0a0a;font-weight:500;padding:5px 10px;border-radius:5px;">Contact (active)</a>
+              </nav>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Project nav buttons (prev / next)</span>
+            <div class="ds-comp-demo" style="display:flex;gap:48px;align-items:center;">
+              <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> AI Credits</span></a>
+              <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><span class="proj-nav-name">App Reviews <i class="ti ti-arrow-right"></i></span></a>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">More work CTA</span>
+            <div class="ds-comp-demo">
+              <a href="#" class="more-cta-link">See all work →</a>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Lightbox controls</span>
+            <div class="ds-comp-demo ds-comp-demo-dark" style="display:flex;gap:12px;align-items:center;">
+              <button class="lb-handle" style="position:static;">‹</button>
+              <button class="lb-handle" style="position:static;">›</button>
+              <button class="lb-close" style="position:static;font-size:20px;background:none;border:none;color:rgba(255,255,255,0.6);cursor:pointer;padding:8px;line-height:1;">✕</button>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Footer tags</span>
+            <div class="ds-comp-demo ds-comp-demo-dark" style="padding:20px;">
+              <div class="footer-tags" style="margin:0">
+                <span class="ftag">Developer tools</span>
+                <span class="ftag">AI products</span>
+                <span class="ftag">Complex systems</span>
+                <span class="ftag">B2B SaaS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Section label</span>
+            <div class="ds-comp-demo">
+              <p class="section-label" style="margin:0">All projects</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Mobile tab -->
+        <div class="ds-tab-panel" id="ds-tab-mobile">
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Hamburger button</span>
+            <div class="ds-comp-demo">
+              <button class="mob-burger" style="display:flex;position:static;">
+                <span></span><span></span><span></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Slide-in menu panel</span>
+            <div class="ds-comp-demo" style="padding:0;overflow:hidden;">
+              <div style="max-width:300px;padding:20px 24px 24px;background:#fff;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+                  <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;color:#0a0a0a;">Avigail Bahat</span>
+                  <button style="width:30px;height:30px;border-radius:8px;border:0.5px solid #ebebeb;display:flex;align-items:center;justify-content:center;font-size:14px;color:#555;background:none;cursor:pointer;">✕</button>
+                </div>
+                <div>
+                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#0a0a0a;border-bottom:0.5px solid #ebebeb;">Home ↗</span>
+                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;border-bottom:0.5px solid #ebebeb;">Work</span>
+                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;border-bottom:0.5px solid #ebebeb;">About</span>
+                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;border-bottom:0.5px solid #ebebeb;">Contact</span>
+                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;">Design system</span>
+                </div>
+                <div style="margin-top:16px;padding-top:16px;border-top:0.5px solid #ebebeb;">
+                  <div style="display:flex;justify-content:space-between;font-size:14px;color:#555;padding:7px 0;">avigailba@gmail.com <span>↗</span></div>
+                  <div style="display:flex;justify-content:space-between;font-size:14px;color:#555;padding:7px 0;">LinkedIn <span>↗</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Work row (mobile)</span>
+            <div class="ds-comp-demo" style="padding:0 16px;">
+              <div style="display:flex;align-items:center;gap:10px;padding:14px 0;border-top:0.5px solid #ebebeb;border-bottom:0.5px solid #ebebeb;">
+                <span style="font-size:12px;font-weight:500;color:#555;min-width:22px;flex-shrink:0;">01</span>
+                <div style="flex:1;min-width:0;">
+                  <span style="display:block;font-size:16px;font-weight:400;color:#0a0a0a;line-height:1.3;">AI Credits Wallet</span>
+                  <span style="display:block;font-size:12px;color:#555;margin-top:3px;">AI credits billing system across Business Manager and Wixel</span>
+                </div>
+                <span style="font-size:13px;font-weight:500;color:#2b6cff;flex-shrink:0;">View ↗</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">View buttons</span>
+            <div class="ds-comp-demo" style="display:flex;gap:24px;align-items:center;">
+              <a href="#" style="font-size:14px;font-weight:500;color:#2b6cff;text-decoration:none;">View project ↗</a>
+              <a href="#" style="font-size:13px;font-weight:500;color:#2b6cff;text-decoration:none;">View ↗</a>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Filter pill + dropdown</span>
+            <div class="ds-comp-demo" style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+              <div>
+                <span style="display:block;font-size:11px;color:#555;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Closed</span>
+                <button style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#0a0a0a;padding:7px 13px;border:0.5px solid #ebebeb;border-radius:999px;background:none;cursor:pointer;font-family:inherit;">All projects <span style="font-size:10px;color:#555;">▾</span></button>
+              </div>
+              <div>
+                <span style="display:block;font-size:11px;color:#555;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Open</span>
+                <button style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#fff;padding:7px 13px;border:0.5px solid #0a0a0a;border-radius:999px;background:#0a0a0a;cursor:pointer;font-family:inherit;">All projects <span style="font-size:10px;color:rgba(255,255,255,0.6);">▴</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Featured card (mobile)</span>
+            <div class="ds-comp-demo" style="padding:20px 0;border-left:none;border-right:none;border-radius:0;">
+              <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:48px;font-weight:800;letter-spacing:-0.03em;line-height:1.05;color:#0a0a0a;margin-bottom:10px;">AI Credits</div>
+              <div style="font-size:15px;color:#555;margin-bottom:14px;">AI credits billing system across Business Manager and Wixel</div>
+              <a href="#" style="font-size:14px;font-weight:500;color:#2b6cff;text-decoration:none;">View project ↗</a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="ds-section">
+        <span class="ds-section-title">CSS variable reference</span>
+        <div class="ds-code">:root {
+  /* Accent */
+  --ac: #0a0a0a;
+
+  /* Borders */
+  --border: #ebebeb;
+
+  /* Spacing */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+}</div>
+      </div>
+
+      <div class="ds-section">
+        <span class="ds-section-title">Changelog</span>
+        <div class="ds-changelog">
+          <div class="ds-cl-row">
+      <span class="ds-cl-date">2 Jun 2026</span>
+      <span class="ds-cl-text">Project page images now use site padding (clamp(40px, 20%, 240px)) — content aligned with header</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">2 Jun 2026</span>
+      <span class="ds-cl-text">Prev/next project nav buttons changed to blue (#2563eb)</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">2 Jun 2026</span>
+      <span class="ds-cl-text">All work section label removed — filters shown directly. All filter renamed All projects</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">2 Jun 2026</span>
+      <span class="ds-cl-text">Work nav link added to desktop header</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">2 Jun 2026</span>
+      <span class="ds-cl-text">Featured grid no longer bleeds on mobile — negative margins reset to 0 at ≤960px</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">2 Jun 2026</span>
+      <span class="ds-cl-text">Type scale numbered (1–12) so styles can be referenced by number</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">2 Jun 2026</span>
+      <span class="ds-cl-text">feat-title merged with proj-title: 42px/800 → 64px/700/−0.03em/Plus Jakarta Sans</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">2 Jun 2026</span>
+      <span class="ds-cl-text">proj-content h2 merged with inner-content h1: 28px/600 → 32px/700/−0.02em/Inter — type scale consolidated from 14 to 12 steps</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">2 Jun 2026</span>
+      <span class="ds-cl-text">Featured card WordArt hover: brighter luminous gradients with 5-step coloured depth shadows — blue (card 1), amber (card 2), violet (card 3), emerald (card 4)</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">2 Jun 2026</span>
+      <span class="ds-cl-text">All-work rows: animated gradient title on hover ("Gradient Flow") — category-coloured accent pair flows across the title; number and arrow pick up flat accent; respects prefers-reduced-motion</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">2 Jun 2026</span>
+      <span class="ds-cl-text">Row accordion changed from max-height to opacity animation — prevents footer flash on page load</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">2 Jun 2026</span>
+      <span class="ds-cl-text">Homepage content padding unified to clamp(40px, 20%, 240px) — aligns header, content, and footer left edges</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">1 Jun 2026</span>
+      <span class="ds-cl-text">Design system: colour swatches in 6-column grid; type scale shows where each style appears</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">1 Jun 2026</span>
+      <span class="ds-cl-text">feat-title bumped to 42px / weight 800 (Plus Jakarta Sans)</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">1 Jun 2026</span>
+      <span class="ds-cl-text">All body and secondary text unified to #555 — removed #444 and #121212</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">1 Jun 2026</span>
+      <span class="ds-cl-text">Type scale consolidated: footer-statement 36px → 32px / Roboto; row-title 20px/500 → 18px/400; CV text 15px → 16px; proj-subtitle weight 400 → 500, color #555 → #0a0a0a</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">1 Jun 2026</span>
+      <span class="ds-cl-text">Design system type scale rows show inline color swatch and hex value</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">1 Jun 2026</span>
+      <span class="ds-cl-text">Design system swatches and type scale updated to match actual site tokens</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">1 Jun 2026</span>
+      <span class="ds-cl-text">Removed Wix from project page metadata</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">1 Jun 2026</span>
+      <span class="ds-cl-text">Project page layout: 3-column grid with sticky gutters for prev/next navigation</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">1 Jun 2026</span>
+      <span class="ds-cl-text">Sticky condensing title block on project pages (ptb-inner)</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">1 Jun 2026</span>
+      <span class="ds-cl-text">Tabler icons CDN moved to project pages only</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">1 Jun 2026</span>
+      <span class="ds-cl-text">Row hover: subtitle fades in, no title movement, overflow fixed</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">1 Jun 2026</span>
+      <span class="ds-cl-text">Typography: Plus Jakarta Sans for titles, Inter for all UI and body</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">1 Jun 2026</span>
+      <span class="ds-cl-text">Gray token consolidated to #555 (was #888, then #555)</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">1 Jun 2026</span>
+      <span class="ds-cl-text">Horizontal padding changed to clamp(40px, 20%, 240px) sitewide</span>
+    </div>
+        </div>
+      </div>
+
+      <p class="ds-updated">Last built: 12 July 2026</p>
+    </div>
+  </main>
+  <script>
+  function dsTab(btn, tab) {
+    document.querySelectorAll('.ds-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.ds-tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('ds-tab-' + tab).classList.add('active');
+  }
+  window.dsAuth = function() {
+    var val = (document.getElementById('ds-pw').value || '').trim();
+    if (val === '2108') {
+      sessionStorage.setItem('ds_auth', '1');
+      document.getElementById('ds-gate').style.display = 'none';
+    } else {
+      document.getElementById('ds-err').style.display = 'block';
+      document.getElementById('ds-pw').value = '';
+      document.getElementById('ds-pw').focus();
+    }
+  };
+  (function() {
+    var gate = document.getElementById('ds-gate');
+    if (sessionStorage.getItem('ds_auth') === '1') { gate.style.display = 'none'; return; }
+    document.getElementById('ds-pw').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') window.dsAuth();
+    });
+  })();
+  </script>
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <p class="footer-statement">Open to new work.</p>
+      <div class="footer-tags">
+        <span class="ftag">Developer tools</span>
+        <span class="ftag">AI products</span>
+        <span class="ftag">Complex systems</span>
+        <span class="ftag">B2B SaaS</span>
+        <span class="ftag">Platform design</span>
+        <span class="ftag">Marketplace</span>
+        <span class="ftag">Design systems</span>
+        <span class="ftag">Developer experience</span>
+        <span class="ftag">Monetisation</span>
+        <span class="ftag">Internal tools</span>
+      </div>
+      <p class="footer-tagline">Based in Tel Aviv · Open to opportunities</p>
+    </div>
+    <div class="footer-right">
+      <a href="mailto:avigailba@gmail.com" class="footer-link">
+        <span>avigailba@gmail.com</span><span class="footer-arr">↗</span>
+      </a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" class="footer-link">
+        <span>LinkedIn</span><span class="footer-arr">↗</span>
+      </a>
+      <a href="design-system.html" class="footer-link">
+        <span>Design system</span><span class="footer-arr">↗</span>
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
+</footer>
+  <script src="script.js"></script>
+  
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
