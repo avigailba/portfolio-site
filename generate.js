@@ -55,14 +55,14 @@ const stats = { pages: 0, images: 0, errors: [] };
 // Project metadata: categories, display title overrides, years, featured status
 const PROJECT_META = {
   'ai-credits-wallet':                          { title: 'AI Credits', featTitle: 'AI<br>Credits', cats: 'monetisation',          display: 'Monetisation',    year: 2026, featured: true },
-  'app-installation-page-for-developers': { title: 'App Installations Page',      cats: 'developer cms',          display: 'Developer tools', year: 2025, featured: true },
+  'app-installation-page-for-developers': { title: 'Installations Page',          cats: 'developer cms',          display: 'Developer tools', year: 2025, featured: true },
   'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer',              display: 'Developer tools', year: 2024, featured: false },
   'developer-sale':                      { title: 'Developer Sale',               cats: 'developer monetisation cms', display: 'Monetisation', year: 2024, featured: true },
   'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'developer internal cms', display: 'Internal tools',  year: 2024, featured: false },
   'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',       display: 'Monetisation',    year: 2023, featured: false },
   'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
   'app-pricing-page-projects':           { title: 'App Pricing Page Projects',    cats: 'developer monetisation', display: 'Monetisation',    year: 2023, featured: false },
-  'internal-app-review-system':          { title: 'App Review System',            cats: 'internal cms',           display: 'Internal tools',  year: 2022, featured: true },
+  'internal-app-review-system':          { title: 'Review System',                cats: 'internal cms',           display: 'Internal tools',  year: 2022, featured: true },
   'submit-publish-widget':               { title: 'Submit & Publish Widget',      cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
   'custom-element-component-settings':   { title: 'Custom Element Component Settings', cats: 'developer',          display: 'Developer tools', year: 2022, featured: false },
   'api-keys-page':                       { title: 'API Keys Page',                cats: 'developer cms',          display: 'Developer tools', year: 2022, featured: false },
