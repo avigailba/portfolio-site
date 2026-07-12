@@ -76,8 +76,9 @@
 <h2>What I Did</h2>
 <h3>Understanding the problem</h3>
 <ul>
-  <li>The PM and I started by mapping the gap: developers had no visibility into <strong>who was installing their apps</strong></li>
-  <li>User interviews confirmed it was a top pain point. Developers were cobbling together workarounds and emailing our support team just to get basic usage data</li>
+  <li>The PM and I started by mapping the gap: developers had no visibility into <strong>who was installing their apps. </strong></li>
+  <li>User interviews confirmed it was a top pain point. This came up at almost every developer interview! Developers were cobbling together workarounds and emailing our support team just to get basic usage data</li>
+  <li>Developers needed this data for user support, marketing (send emails and upsells), and trends (what geo are their users from)</li>
   <li>I looked at how Shopify and Apple's App Store Connect handle the same problem for their ecosystems</li>
 </ul>
 <h3>Navigating constraints</h3>
@@ -104,50 +105,54 @@
 <p>Developer feedback: <em>"We already had email sequences hooked on webhooks, but this lets us manually follow up with users - especially for the non-technical team members."</em> <em>"Very good feature overall - thank you!"</em></p>
 <p>The roadmap included expanding with cancellation reasons, deeper filtering, and eventually connecting the table to inbox and email marketing tools.</p>
 <h3>The table</h3>
-<figcaption class="proj-caption">Default table view showing app installation data per developer, with columns for business name, site URL, instance ID, email, app plan, version, install date, and rating</figcaption>
+<figcaption class="proj-caption"><strong>Default table</strong> — installation data per developer: business name, site URL, instance ID, email, plan, version, install date, rating. </figcaption>
 <figure class="proj-img">
-  <img src="../images/img-12.jpg" alt="Default table view showing app installation data per developer, with columns for business name, site URL, instance ID, email, app plan, version, install date, and rating" loading="lazy">
+  <img src="../images/img-12.jpg" alt="<strong>Default table</strong> — installation data per developer: business name, site URL, instance ID, email, plan, version, install date, rating. " loading="lazy">
 </figure>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Column customization panel - developers can show, hide, and reorder data columns to focus on what's most relevant to them</figcaption>
+<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption"><strong>Column customization</strong> — show, hide, and reorder columns. </figcaption>
 <figure class="proj-img">
-  <img src="../images/img-14.jpg" alt="Column customization panel - developers can show, hide, and reorder data columns to focus on what's most relevant to them" loading="lazy">
+  <img src="../images/img-13.jpg" alt="<strong>Column customization</strong> — show, hide, and reorder columns. " loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Full columns view — all available data fields visible at once, including business name, site URL, instance ID, site plan, business category, location, email, app plan, billing cycle, version, install date, and rating</figcaption>
+</div><div class="col"><figcaption class="proj-caption"><strong>Full columns</strong> — every available field visible at once.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-13.jpg" alt="Full columns view — all available data fields visible at once, including business name, site URL, instance ID, site plan, business category, location, email, app plan, billing cycle, version, install date, and rating" loading="lazy">
-</figure>
-</div></div>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Filtered table view with some filters open - developers can narrow results by time range, plan, or other parameters to segment their installation data</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-15.jpg" alt="Filtered table view with some filters open - developers can narrow results by time range, plan, or other parameters to segment their installation data" loading="lazy">
-</figure>
-</div><div class="col"><figcaption class="proj-caption">Empty columns view - I wanted the developer to know why some information was not showing</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-16.jpg" alt="Empty columns view - I wanted the developer to know why some information was not showing" loading="lazy">
+  <img src="../images/img-14.jpg" alt="<strong>Full columns</strong> — every available field visible at once." loading="lazy">
 </figure>
 </div></div>
-<figcaption class="proj-caption">Contextual tooltip surfacing data limitations inline, letting developers know which reviews are excluded and why, without interrupting the flow</figcaption>
+<figcaption class="proj-caption"><strong>Filtered view</strong> — narrow by time range, plan, or other parameters.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-17.jpg" alt="Contextual tooltip surfacing data limitations inline, letting developers know which reviews are excluded and why, without interrupting the flow" loading="lazy">
+  <img src="../images/img-15.jpg" alt="<strong>Filtered view</strong> — narrow by time range, plan, or other parameters." loading="lazy">
 </figure>
 <h3>Behind the scenes</h3>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Initial work done in Figma make</figcaption>
+<div class="col-layout col-3"><div class="col"><figcaption class="proj-caption"><strong>Figma Make</strong> — initial exploration.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-19.jpg" alt="Initial work done in Figma make" loading="lazy">
+  <img src="../images/img-18.jpg" alt="<strong>Figma Make</strong> — initial exploration." loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Added features and fixed bugs using Cursor</figcaption>
+</div><div class="col"><figcaption class="proj-caption"><strong>Cursor</strong> — features added and bugs fixed during implementation.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-18.jpg" alt="Added features and fixed bugs using Cursor" loading="lazy">
+  <img src="../images/img-16.jpg" alt="<strong>Cursor</strong> — features added and bugs fixed during implementation." loading="lazy">
+</figure>
+</div><div class="col"><figcaption class="proj-caption"><strong>Server</strong> — mapping out why some of the fields can return empty.</figcaption>
+<figure class="proj-img">
+  <img src="../images/img-17.jpg" alt="<strong>Server</strong> — mapping out why some of the fields can return empty." loading="lazy">
 </figure>
 </div></div>
 <h3>Edge &amp; empty states</h3>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Private (unpublished) apps show fewer columns since some fields, like pricing metrics, are not applicable until the app goes live.</figcaption>
+<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption"><strong>Private apps</strong> — fewer columns, since some fields don't apply before launch.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-20.jpg" alt="Private (unpublished) apps show fewer columns since some fields, like pricing metrics, are not applicable until the app goes live." loading="lazy">
+  <img src="../images/img-20.jpg" alt="<strong>Private apps</strong> — fewer columns, since some fields don't apply before launch." loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Empty state shown when a developer has no installations. Used consistently for both draft and published apps.</figcaption>
+</div><div class="col"><figcaption class="proj-caption"><strong>Empty state</strong> — shown when a developer has no installations. </figcaption>
 <figure class="proj-img">
-  <img src="../images/img-21.jpg" alt="Empty state shown when a developer has no installations. Used consistently for both draft and published apps." loading="lazy">
+  <img src="../images/img-19.jpg" alt="<strong>Empty state</strong> — shown when a developer has no installations. " loading="lazy">
+</figure>
+</div></div>
+<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption"><strong>Inline data-limit tooltip</strong> — flags which data is excluded and why, without breaking flow.</figcaption>
+<figure class="proj-img">
+  <img src="../images/img-21.jpg" alt="<strong>Inline data-limit tooltip</strong> — flags which data is excluded and why, without breaking flow." loading="lazy">
+</figure>
+</div><div class="col"><figcaption class="proj-caption"><strong>Empty columns</strong> — explains why some data isn't showing. </figcaption>
+<figure class="proj-img">
+  <img src="../images/img-22.jpg" alt="<strong>Empty columns</strong> — explains why some data isn't showing. " loading="lazy">
 </figure>
 </div></div>
 <h2>Bottom line</h2>
