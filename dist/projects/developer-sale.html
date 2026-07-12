@@ -51,14 +51,14 @@
     <div class="proj-gutter proj-gutter-left"></div>
     <main class="proj-main">
       <div class="proj-side-nav">
-        <a class="proj-nav-btn proj-nav-prev" href="app-reviews-revamp.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> App Reviews Revamp</span></a>
-        <a class="proj-nav-btn proj-nav-next" href="app-collections-internal-manager.html" aria-label="Next project"><span class="proj-nav-name">App Collections Manager <i class="ti ti-arrow-right"></i></span></a>
+        <a class="proj-nav-btn proj-nav-prev" href="internal-app-review-system.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> Review System</span></a>
+        <a class="proj-nav-btn proj-nav-next" href="app-reviews-revamp.html" aria-label="Next project"><span class="proj-nav-name">App Reviews Revamp <i class="ti ti-arrow-right"></i></span></a>
       </div>
       <div class="proj-title-sticky" id="proj-title-sticky">
         <div class="proj-title-row">
-          <button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='app-reviews-revamp.html'">←</button>
+          <button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='internal-app-review-system.html'">←</button>
           <h1 class="proj-title-m">Developer Sale</h1>
-          <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='app-collections-internal-manager.html'">→</button>
+          <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='app-reviews-revamp.html'">→</button>
         </div>
         <p class="proj-subtitle-m">Native sales infrastructure for app developers on the marketplace</p>
         <div class="proj-tags-m">
@@ -67,18 +67,25 @@
           <span class="pm">Developer tools</span><span class="psep">·</span><span class="pm">Monetisation</span><span class="psep">·</span><span class="pm">CMS</span>
         </div>
         <div class="proj-meta-m">
-          <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='app-reviews-revamp.html'">← Previous</button>
-          <button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='app-collections-internal-manager.html'">Next →</button>
+          <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='internal-app-review-system.html'">← Previous</button>
+          <button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='app-reviews-revamp.html'">Next →</button>
         </div>
       </div>
       <div class="proj-content">
         <p>I led the end-to-end UX for a new sales framework covering different offer types: <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span>-run market events, developer-initiated sales, and existing coupon-based discounts. The <span class="ctx-tip" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.">Wix App Market</span> had no native sales infrastructure - developers couldn't run their own promotions, and Wix had no mechanism for market-wide sales events. My scope included the sale-creation flow, the management interface, and the eligibility rules for each offer type.</p>
 <h2>What I Did</h2>
+<h3>Mapping the system</h3>
 <ul>
-  <li>Designed the end-to-end sale creation flow enabling developers to set up promotional sales on the Wix App Market</li>
-  <li>Designed the sale management interface with clear differentiation between developer-initiated and Wix-hosted sale events</li>
-  <li>Defined offer types, discount structures (10-95%), and eligibility rules across coupons, dev sales, and Wix-wide events</li>
-  <li>Designed the UX for participating in Wix-wide sale events, including the app-facing plan and cycle selectors</li>
+  <li>Three offer types — Coupon Sales, Dev Sales, and Wix Sales — each had different eligibility rules, discount structures, and management states</li>
+  <li>Mapped all valid configurations and the conditions under which they could coexist on a single app</li>
+</ul>
+<h3>Designing it</h3>
+<ul>
+  <li>Designed the end-to-end sale creation flow and management interface for coupon and developer sale types</li>
+  <li>Designed the plan and cycle selectors for Wix-wide sale events, where developers set discounts within market-level constraints</li>
+</ul>
+<h3>Cross-functional</h3>
+<ul>
   <li>Owned content for the project, briefing UX writers and approving final copy</li>
 </ul>
 <h2>Impact</h2>
@@ -88,28 +95,28 @@
 <h3>Process</h3>
 <figcaption class="proj-caption"><strong>Offer-type comparison</strong> — how Coupons, Dev Sales, and Wix Sales differ in behavior, limits, and eligibility.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-31.jpg" alt="<strong>Offer-type comparison</strong> — how Coupons, Dev Sales, and Wix Sales differ in behavior, limits, and eligibility." loading="lazy">
+  <img src="../images/img-47.jpg" alt="<strong>Offer-type comparison</strong> — how Coupons, Dev Sales, and Wix Sales differ in behavior, limits, and eligibility." loading="lazy">
 </figure>
 <figcaption class="proj-caption"><strong>Lifecycle map</strong> — each offer type from creation to expiry.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-32.jpg" alt="<strong>Lifecycle map</strong> — each offer type from creation to expiry." loading="lazy">
+  <img src="../images/img-48.jpg" alt="<strong>Lifecycle map</strong> — each offer type from creation to expiry." loading="lazy">
 </figure>
 <h2>Screens</h2>
 <figcaption class="proj-caption"><strong>Sales tab</strong> — active sales plus entry points to join a Wix Sale or create a dev sale.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-33.jpg" alt="<strong>Sales tab</strong> — active sales plus entry points to join a Wix Sale or create a dev sale." loading="lazy">
+  <img src="../images/img-49.jpg" alt="<strong>Sales tab</strong> — active sales plus entry points to join a Wix Sale or create a dev sale." loading="lazy">
 </figure>
 <figcaption class="proj-caption"><strong>Create a dev sale</strong> — name, discount, applicable plans and cycles, date range.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-34.jpg" alt="<strong>Create a dev sale</strong> — name, discount, applicable plans and cycles, date range." loading="lazy">
+  <img src="../images/img-50.jpg" alt="<strong>Create a dev sale</strong> — name, discount, applicable plans and cycles, date range." loading="lazy">
 </figure>
 <figcaption class="proj-caption"><strong>Join a Wix Sale</strong> — set discount and conditions within market-wide event rules. </figcaption>
 <figure class="proj-img">
-  <img src="../images/img-35.jpg" alt="<strong>Join a Wix Sale</strong> — set discount and conditions within market-wide event rules. " loading="lazy">
+  <img src="../images/img-51.jpg" alt="<strong>Join a Wix Sale</strong> — set discount and conditions within market-wide event rules. " loading="lazy">
 </figure>
 <figcaption class="proj-caption"><strong>Management dashboard</strong> — Active, Scheduled, and ended states, with edit and delete.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-36.jpg" alt="<strong>Management dashboard</strong> — Active, Scheduled, and ended states, with edit and delete." loading="lazy">
+  <img src="../images/img-52.jpg" alt="<strong>Management dashboard</strong> — Active, Scheduled, and ended states, with edit and delete." loading="lazy">
 </figure>
 <h2>Bottom line</h2>
 <p>The real design challenge was not the sale creation form, it was making three structurally different offer types feel like a coherent system to developers who just want to run a discount.</p>

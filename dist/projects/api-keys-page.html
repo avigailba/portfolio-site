@@ -75,10 +75,14 @@
         <p>API Keys are a critical part of <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span>’s platform strategy - enabling developers and third-party integrations to securely authenticate against Wix’s APIs. I designed the end-to-end UX for the API Keys management page, covering key generation, granular permission configuration, account verification, and ongoing key management. The core security constraint shaped the entire design: each key is visible only once at generation and can never be retrieved again.</p>
 <p>To handle the one-time visibility challenge, I designed a secure reveal flow that surfaces the key immediately after generation with clear copy prompts and confirmation messaging, so users understand they must save it before leaving. Beyond generation, the design included a full keys management table for viewing, editing, and revoking keys, with a granular permissions UI letting users define exactly what each key could access - giving teams precise security control over their Wix integrations.</p>
 <h2>What I Did</h2>
+<h3>The core constraint</h3>
 <ul>
-  <li>Solved the one-time key visibility challenge by designing a clear, secure reveal flow that surfaces the key only at generation</li>
-  <li>Designed granular permission configuration to let users control what each API key can access</li>
-  <li>Added an account verification step prior to key generation to ensure security</li>
+  <li>One-time key visibility — a key can never be retrieved after generation — shaped the entire reveal flow</li>
+</ul>
+<h3>Designing it</h3>
+<ul>
+  <li>Designed the secure reveal screen, granular permission selection, and account verification step</li>
+  <li>Designed the key management table: view, edit, revoke, and update permissions for existing keys</li>
 </ul>
 <h2>Impact</h2>
 <ul>
@@ -87,36 +91,36 @@
 <h3>Generation flow</h3>
 <figcaption class="proj-caption">Empty state shown to first-time users before any API keys have been generated</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-127.jpg" alt="Empty state shown to first-time users before any API keys have been generated" loading="lazy">
+  <img src="../images/img-128.jpg" alt="Empty state shown to first-time users before any API keys have been generated" loading="lazy">
 </figure>
 <figcaption class="proj-caption">Permissions selection step during key generation — choosing what data the key can access</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-128.jpg" alt="Permissions selection step during key generation — choosing what data the key can access" loading="lazy">
+  <img src="../images/img-129.jpg" alt="Permissions selection step during key generation — choosing what data the key can access" loading="lazy">
 </figure>
 <figcaption class="proj-caption">Expanding a permission category to configure granular sub-permissions for the key</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-129.jpg" alt="Expanding a permission category to configure granular sub-permissions for the key" loading="lazy">
+  <img src="../images/img-130.jpg" alt="Expanding a permission category to configure granular sub-permissions for the key" loading="lazy">
 </figure>
 <figcaption class="proj-caption">Account verification prompt — a 6-digit code is sent to the user’s email before the key can be generated</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-130.jpg" alt="Account verification prompt — a 6-digit code is sent to the user’s email before the key can be generated" loading="lazy">
+  <img src="../images/img-131.jpg" alt="Account verification prompt — a 6-digit code is sent to the user’s email before the key can be generated" loading="lazy">
 </figure>
 <figcaption class="proj-caption">Code entry step — user enters the emailed verification code to confirm their identity</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-131.jpg" alt="Code entry step — user enters the emailed verification code to confirm their identity" loading="lazy">
+  <img src="../images/img-132.jpg" alt="Code entry step — user enters the emailed verification code to confirm their identity" loading="lazy">
 </figure>
 <figcaption class="proj-caption">One-time key reveal — the token is only visible at this moment and must be copied before closing</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-132.jpg" alt="One-time key reveal — the token is only visible at this moment and must be copied before closing" loading="lazy">
+  <img src="../images/img-133.jpg" alt="One-time key reveal — the token is only visible at this moment and must be copied before closing" loading="lazy">
 </figure>
 <h3>Management</h3>
 <figcaption class="proj-caption">Keys management table showing a generated key with its token, permissions breakdown, and the Account ID panel</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-133.jpg" alt="Keys management table showing a generated key with its token, permissions breakdown, and the Account ID panel" loading="lazy">
+  <img src="../images/img-134.jpg" alt="Keys management table showing a generated key with its token, permissions breakdown, and the Account ID panel" loading="lazy">
 </figure>
 <figcaption class="proj-caption">Expanded permissions view for an existing key, showing the assigned basic and account-level permissions</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-134.jpg" alt="Expanded permissions view for an existing key, showing the assigned basic and account-level permissions" loading="lazy">
+  <img src="../images/img-135.jpg" alt="Expanded permissions view for an existing key, showing the assigned basic and account-level permissions" loading="lazy">
 </figure>
 <h2>Bottom line</h2>
 <p>The one-time visibility constraint was the design problem that mattered most here. A key that cannot be retrieved after generation is a security property, not a limitation, but it puts the entire burden of not losing it on a single moment in the flow. Getting the reveal screen right, with the right prompts and the right sense of weight, was the part that required the most iteration.</p>
