@@ -1022,7 +1022,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .proj-tags-m {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 14px;
     margin-top: 12px;
     margin-bottom: 0;
     max-height: 30px;
