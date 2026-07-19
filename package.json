@@ -6,7 +6,7 @@
     "build": "node generate.js"
   },
   "dependencies": {
-    "@notionhq/client": "^2.2.15",
+    "@notionhq/client": "^5.23.2",
     "@vercel/analytics": "^2.0.1",
     "dotenv": "^16.4.5"
   }
