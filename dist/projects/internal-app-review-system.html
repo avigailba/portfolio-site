@@ -72,31 +72,24 @@
         </div>
       </div>
       <div class="proj-content">
-        <p><span class="ctx-tip" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.">Wix App Market</span>’s internal review platform is the tool Account Managers use to evaluate and approve apps submitted to the marketplace. As the team scaled, Account Managers began bypassing the old tool in favor of Google Docs and Slides for their actual review work, a clear signal that the platform wasn't meeting their needs. Each Account Manager kept their own Google Doc per app, which caused confusion whenever ownership changed. On a second review, you had to dig through old docs to see what changed since the last submission. Features the team used daily were missing: revenue share settings, quick links, and common actions. And the UI needed updating to <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span>'s current design system. </p>
+        <h3>The problem</h3>
+<p><span class="ctx-tip" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.">Wix App Market</span>’s internal review platform is the tool Account Managers use to evaluate and approve apps submitted to the marketplace. As the team scaled, Account Managers began bypassing the old tool in favor of Google Docs and Slides for their actual review work, a clear signal that the platform wasn't meeting their needs. Each Account Manager kept their own Google Doc per app, which caused confusion whenever ownership changed. On a second review, you had to dig through old docs to see what changed since the last submission. Features the team used daily were missing: revenue share settings, quick links, and common actions. And the UI needed updating to <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span>'s current design system. </p>
 <figure class="proj-img">
   <img src="../images/img-3a235a9ccf7a808a82aaf025348b4085.jpg" alt="" loading="lazy">
 </figure>
-<h3>Research first</h3>
+<h3>Research </h3>
 <ul>
   <li>Conducted discovery research to identify why Account Managers were doing review work in external tools instead of the platform</li>
-  <li>Pain points pointed to the UI, the information architecture, and the lack of an integrated workflow</li>
+  <li>Pain points pointed to the UI, difficulties in writing a consistent review, the information architecture, and the lack of an integrated workflow</li>
 </ul>
-<h3>Redesigning the platform</h3>
-<ul>
-  <li>Designed all four product areas: the app queue, per-app activity and team views, the review workflow, and team management</li>
-  <li>Updated the UI to Wix Style React guidelines and restructured the information architecture for scale</li>
-  <li>Designed the integrated review workflow: in-platform commenting, path-linked issues, and report submission</li>
-  <li>Two decisions worth noting: when to auto-start a review (we landed on both an explicit button and triggering on the first comment), and how to show diffs between submissions (a before/after column, no new pattern to learn).</li>
-</ul>
-<h3>Validation</h3>
-<ul>
-  <li>Facilitated a bug hunt session with Account Managers before launch to validate the redesign and surface edge cases</li>
-</ul>
-<p>Two decisions worth noting: when to auto-start a review (we landed on both an explicit button and triggering on the first comment), and how to show diffs between submissions (a before/after column, no new pattern to learn).</p>
-<h3>Impact</h3>
-<p>The tool is still actively used by Wix's Developer Relations team. It reduced account manager workload, shortened the review cycle, and made app evaluations faster and more consistent across the team.</p>
-<h3>At a glance: the four areas of the App Review System and what you can do in each</h3>
+<h3>Deciding on the product areas</h3>
 <p>Before designing the screens, I mapped the product into four areas to define scope and structure.</p>
+<ul>
+  <li>App directory</li>
+  <li>App page with activity page and development team page</li>
+  <li>The  review workspace</li>
+  <li>Account managers team management</li>
+</ul>
 <div class="col-layout col-4"><div class="col"><figcaption class="proj-caption">All apps - Browse, filter, and assign every app</figcaption>
 <figure class="proj-img">
   <img src="../images/img-39b35a9ccf7a80639d30e7dab00429f6.jpg" alt="All apps - Browse, filter, and assign every app" loading="lazy">
@@ -114,6 +107,18 @@
   <img src="../images/img-39b35a9ccf7a8059af6bd4b420b393ae.jpg" alt="Account managers team - Manage members, roles, and access" loading="lazy">
 </figure>
 </div></div>
+<h3>Redesigning the platform</h3>
+<ul>
+  <li>Updated the UI to Wix Style React guidelines and restructured the information architecture for scale</li>
+  <li>Designed the integrated review workflow: in-platform commenting, <strong>path-linked issues</strong>, clear view of past reports and submission</li>
+  <li>Two decisions worth noting: when to auto-start a review (we landed on both an explicit button and triggering on the first comment), and how to show diffs between submissions (a before/after column, no new pattern to learn).</li>
+</ul>
+<h3>Validation</h3>
+<ul>
+  <li>Facilitated a bug hunt session with Account Managers before launch to validate the redesign and surface edge cases</li>
+</ul>
+<h3>Impact</h3>
+<p>The tool is still actively used by Wix's Developer Relations team. It reduced account manager workload, shortened the review cycle, and made app evaluations faster and more consistent across the team.</p>
 <h3>Review queue &amp; workflow</h3>
 <div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Apps dashboard - full list of apps under review, with status, last change date, market status, app ID, and reviewer</figcaption>
 <figure class="proj-img">
