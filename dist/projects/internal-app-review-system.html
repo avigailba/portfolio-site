@@ -72,25 +72,23 @@
         </div>
       </div>
       <div class="proj-content">
-        <h3>The problem</h3>
-<p><span class="ctx-tip" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.">Wix App Market</span>'s internal review platform is the tool Account Managers use to evaluate and approve apps before they go live. </p>
-<p>When I joined the project, the team had stopped using it and the process was not platformized. Review work happened in personal Google Docs, which meant no shared history, no visibility into what changed between submissions, and no consistent way to hand off between reviewers.</p>
-<figure class="proj-img">
+        <figure class="proj-img">
   <img src="../images/img-3a235a9ccf7a808a82aaf025348b4085.jpg" alt="" loading="lazy">
 </figure>
+<h3>The problem</h3>
+<p><span class="ctx-tip" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.">Wix App Market</span>'s internal review platform is the tool Account Managers use to evaluate and approve apps before they go live. </p>
+<p>When I joined the project, the team had stopped using it and the process was not <strong>platformized</strong>. Review work happened in personal Google Docs, which meant no shared history, no visibility into what changed between submissions, and no consistent way to hand off between reviewers. That wasn't sustainable and the volume of app submissions was only increasing.</p>
 <h3>Research </h3>
-<ul>
-  <li>Conducted discovery research to identify why Account Managers were doing review work in external tools instead of the platform</li>
-  <li>Pain points pointed to the UI, difficulties in writing a consistent review, the information architecture, and the lack of an integrated workflow</li>
-</ul>
+<p>Conducted discovery research to identify why Account Managers were doing review work in external tools instead of the platform.
+Pain points pointed to the UI, difficulties in writing a consistent review, the information architecture, and the lack of an integrated workflow</p>
 <h3>Deciding on the product areas</h3>
 <p>Before designing the screens, I mapped the product into four areas to define scope and structure.</p>
-<ul>
+<ol>
   <li>App directory</li>
   <li>App page with activity page and development team page</li>
-  <li>The  review workspace</li>
+  <li>The  review workspace - <em>this was entirely new</em></li>
   <li>Account managers team management</li>
-</ul>
+</ol>
 <div class="col-layout col-4"><div class="col"><figcaption class="proj-caption">All apps - Browse, filter, and assign every app</figcaption>
 <figure class="proj-img">
   <img src="../images/img-39b35a9ccf7a80639d30e7dab00429f6.jpg" alt="All apps - Browse, filter, and assign every app" loading="lazy">
@@ -99,9 +97,9 @@
 <figure class="proj-img">
   <img src="../images/img-39b35a9ccf7a8035852af27e1bc2f0e2.jpg" alt="App page - One app's details, activity, and team" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Review app - Comment, report, then publish or decline</figcaption>
+</div><div class="col"><figcaption class="proj-caption">New review workspace - Comment, report, then publish or decline</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-39b35a9ccf7a80c799b3f07bc0270576.jpg" alt="Review app - Comment, report, then publish or decline" loading="lazy">
+  <img src="../images/img-39b35a9ccf7a80c799b3f07bc0270576.jpg" alt="New review workspace - Comment, report, then publish or decline" loading="lazy">
 </figure>
 </div><div class="col"><figcaption class="proj-caption">Account managers team - Manage members, roles, and access</figcaption>
 <figure class="proj-img">
@@ -110,8 +108,9 @@
 </div></div>
 <h3>Redesigning the platform</h3>
 <ul>
-  <li>Updated the UI to Wix Style React guidelines and restructured the information architecture for scale</li>
-  <li>Designed the integrated review workflow: in-platform commenting, <strong>path-linked issues</strong>, clear view of past reports and submission</li>
+  <li>Designed a whole new integrated review workflow: in-platform commenting, <strong>path-linked issues</strong>, clear view of past reports and submission</li>
+  <li>Updated the UI to <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span> Style React guidelines and restructured the information architecture for scale</li>
+  <li>Added new features to the App page and App directory (more filters, useful links, additional information per app such as its revenue share and more)</li>
   <li>Two decisions worth noting: when to auto-start a review (we landed on both an explicit button and triggering on the first comment), and how to show diffs between submissions (a before/after column, no new pattern to learn).</li>
 </ul>
 <h3>Delivery</h3>
@@ -345,7 +344,7 @@ var CURRENT_SLUG = 'internal-app-review-system';
     }
   } else {
     var titleEl = sticky.querySelector('.proj-title-m');
-    var R = 110, TITLE_FROM = 54, TITLE_TO = 22, PAD_FROM = 28, PAD_TO = 14;
+    var R = 110, TITLE_FROM = 54, TITLE_TO = 22, PAD_FROM = 16, PAD_TO = 8;
     var ticking = false;
     function lerp(a, b, t){ return a + (b - a) * t; }
     function ease(t){ return 1 - Math.pow(1 - t, 3); }
