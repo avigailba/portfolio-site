@@ -73,7 +73,8 @@
       </div>
       <div class="proj-content">
         <h3>The problem</h3>
-<p><span class="ctx-tip" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.">Wix App Market</span>’s internal review platform is the tool Account Managers use to evaluate and approve apps submitted to the marketplace. As the team scaled, Account Managers began bypassing the old tool in favor of Google Docs and Slides for their actual review work, a clear signal that the platform wasn't meeting their needs. Each Account Manager kept their own Google Doc per app, which caused confusion whenever ownership changed. On a second review, you had to dig through old docs to see what changed since the last submission. Features the team used daily were missing: revenue share settings, quick links, and common actions. And the UI needed updating to <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span>'s current design system. </p>
+<p><span class="ctx-tip" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.">Wix App Market</span>'s internal review platform is the tool Account Managers use to evaluate and approve apps before they go live. </p>
+<p>When I joined the project, the team had stopped using it and the process was not platformized. Review work happened in personal Google Docs, which meant no shared history, no visibility into what changed between submissions, and no consistent way to hand off between reviewers.</p>
 <figure class="proj-img">
   <img src="../images/img-3a235a9ccf7a808a82aaf025348b4085.jpg" alt="" loading="lazy">
 </figure>
@@ -113,13 +114,15 @@
   <li>Designed the integrated review workflow: in-platform commenting, <strong>path-linked issues</strong>, clear view of past reports and submission</li>
   <li>Two decisions worth noting: when to auto-start a review (we landed on both an explicit button and triggering on the first comment), and how to show diffs between submissions (a before/after column, no new pattern to learn).</li>
 </ul>
-<h3>Validation</h3>
+<h3>Delivery</h3>
 <ul>
+  <li>Ran weekly syncs with the Account Management team to align on scope and surface edge cases early</li>
   <li>Facilitated a bug hunt session with Account Managers before launch to validate the redesign and surface edge cases</li>
 </ul>
 <h3>Impact</h3>
 <p>The tool is still actively used by Wix's Developer Relations team. It reduced account manager workload, shortened the review cycle, and made app evaluations faster and more consistent across the team.</p>
-<h3>Review queue &amp; workflow</h3>
+<h3>Apps directory and review queue </h3>
+<p>The full marketplace directory, across all stages</p>
 <div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Apps dashboard - full list of apps under review, with status, last change date, market status, app ID, and reviewer</figcaption>
 <figure class="proj-img">
   <img src="../images/img-3b050a27424045049837f37c0dbcbb0b.jpg" alt="Apps dashboard - full list of apps under review, with status, last change date, market status, app ID, and reviewer" loading="lazy">
@@ -129,6 +132,8 @@
   <img src="../images/img-bbcd50dd77864ad2be7e03d4f1a45204.jpg" alt="Filtering the app queue by status and market listing to find specific apps quickly - more filters were added later on" loading="lazy">
 </figure>
 </div></div>
+<h3>App page</h3>
+<p>Submission history, team notes, and current status</p>
 <div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Per-app activity log - every status change, reviewer, and internal note tracked chronologically. </figcaption>
 <figure class="proj-img">
   <img src="../images/img-6414b62696c949a69686d280fef78e32.jpg" alt="Per-app activity log - every status change, reviewer, and internal note tracked chronologically. " loading="lazy">
@@ -142,6 +147,8 @@
   <img src="../images/img-38435a9ccf7a803ca35ec7a3df5b0825.jpg" alt="Per-app activity log - app team view" loading="lazy">
 </figure>
 </div></div>
+<h3>Review workflow </h3>
+<p>Commenting, flagging issues, and submitting the review in one place</p>
 <div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Review report - comments organized by path, flagging issues by type and location within the app</figcaption>
 <figure class="proj-img">
   <img src="../images/img-38435a9ccf7a8002924dd981363b1c8f.jpg" alt="Review report - comments organized by path, flagging issues by type and location within the app" loading="lazy">
@@ -165,6 +172,7 @@
 </figure>
 </div></div>
 <h3>Publish flow</h3>
+<p>The last step before publishing to the marketplace</p>
 <div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Opening the publish action from the app's more actions menu</figcaption>
 <figure class="proj-img">
   <img src="../images/img-38435a9ccf7a800d9b68e067bc4b719e.jpg" alt="Opening the publish action from the app's more actions menu" loading="lazy">
@@ -193,6 +201,7 @@
 </figure>
 </div></div>
 <h3>Team management and roles</h3>
+<p>Role-based access for the review team</p>
 <div class="col-layout col-3"><div class="col"><figcaption class="proj-caption">Team management - all Cactus users, their roles and emails, with options to add or remove members</figcaption>
 <figure class="proj-img">
   <img src="../images/img-77849552a9324b4580d314b3bfc6e966.jpg" alt="Team management - all Cactus users, their roles and emails, with options to add or remove members" loading="lazy">
@@ -206,7 +215,7 @@
   <img src="../images/img-38435a9ccf7a806c83b8c68f5295bd4d.jpg" alt="Viewer role can preview the report but not make any changes" loading="lazy">
 </figure>
 </div></div>
-<h2>Bottom line</h2>
+<h3>Bottom line</h3>
 <p>The most telling signal was that the team had already voted with their feet, doing the actual work outside the platform. </p>
 <p>That meant success was not about launching a redesign; it was about building something good enough that they would stop reaching for Google Docs. The pre-launch bug hunt session was one of the more useful things I did on this project.</p>
 
