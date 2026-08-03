@@ -26,7 +26,7 @@ const CONTACT_PAGE_ID   = '36e35a9ccf7a8188a447fd3e36ee88cd';
 const HOMEPAGE_PAGE_ID  = '37135a9ccf7a81b2a7a7c0a2702d8c98';
 
 const SKIP_IDS   = new Set([ABOUT_PAGE_ID, CONTACT_PAGE_ID, HOMEPAGE_PAGE_ID]);
-const SKIP_SLUGS = new Set(['about', 'contact', 'about-contact', 'cv', 'resume', 'homepage', 'development-site-creation', 'tooltip-glossary']);
+const SKIP_SLUGS = new Set(['about', 'contact', 'about-contact', 'cv', 'resume', 'homepage', 'development-site-creation', 'tooltip-glossary', 'custom-element-component-settings']);
 
 // Stable slug overrides by Notion page ID — prevents slug changes when Notion titles change
 const NOTION_ID_TO_SLUG = {
@@ -63,7 +63,6 @@ const PROJECT_META = {
   'app-pricing-page-projects':           { title: 'App Pricing Page Projects',    cats: 'developer monetisation', display: 'Monetisation',    year: 2023, featured: false },
   'internal-app-review-system':          { title: 'Internal Review System',       cats: 'internal cms',           display: 'Internal tools',  year: 2022, featured: true },
   'submit-publish-widget':               { title: 'Submit & Publish Widget',      cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
-  'custom-element-component-settings':   { title: 'Custom Element Component Settings', cats: 'developer',          display: 'Developer tools', year: 2022, featured: false },
   'api-keys-page':                       { title: 'API Keys Page',                cats: 'developer cms',          display: 'Developer tools', year: 2022, featured: false },
   'development-site-creation':           { title: 'Development Site Creation',    cats: 'developer',              display: 'Developer tools', year: 2021, featured: false },
   'app-coupons':                         { title: 'App Coupons',                  cats: 'monetisation cms',       display: 'Monetisation',    year: 2021, featured: false },
@@ -89,7 +88,6 @@ const PROJECT_SUMMARIES = {
   'app-pricing-page-projects':           'Long-term UX evolution of App Market pricing infrastructure',
   'internal-app-review-system':          'Workflow tool for Account Managers to review marketplace apps',
   'submit-publish-widget':               'Submission requirements surfaced in-context during the publishing flow',
-  'custom-element-component-settings':   'Visual settings builder for Wix Custom Element apps',
   'api-keys-page':                       'Secure key generation and management for Wix platform developers',
   'development-site-creation':           'Self-serve provisioning of premium test sites for developers',
   'app-coupons':                         'Self-serve coupon creation for App Market developers',
