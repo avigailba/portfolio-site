@@ -101,6 +101,10 @@ function stripEmoji(s) {
   return s.replace(/(\p{Emoji_Presentation}|\p{Extended_Pictographic})\s*/gu, '').trim();
 }
 
+function titleCase(s) {
+  return s.replace(/\b([a-z])([a-z]*)/gi, (word, first, rest) => first.toUpperCase() + rest);
+}
+
 async function fetchBlocks(pageId) {
   const all = [];
   let cursor;
@@ -567,14 +571,14 @@ function projectPage(proj, prevProj, nextProj) {
     }
   }
   if (contentHtml) contentHtml = injectTooltips(contentHtml);
-  const title = proj.title || meta.title;
+  const title = titleCase(proj.title || meta.title || 'Project');
   const year  = meta.year  || proj.year;
   const CAT_LABELS = { developer: 'Developer tools', monetisation: 'Monetisation', cms: 'CMS', internal: 'Internal tools' };
   const catHtml = (meta.cats || '').split(' ').filter(Boolean)
     .map(c => `<span class="pm">${CAT_LABELS[c] || c}</span>`).join('<span class="psep">·</span>')
     || `<span class="pm">${meta.display || 'Product design'}</span>`;
-  const prevTitle = prevProj ? (PROJECT_META[prevProj.slug]?.title || prevProj.title) : null;
-  const nextTitle = nextProj ? (PROJECT_META[nextProj.slug]?.title || nextProj.title) : null;
+  const prevTitle = prevProj ? titleCase(prevProj.title || PROJECT_META[prevProj.slug]?.title || 'Project') : null;
+  const nextTitle = nextProj ? titleCase(nextProj.title || PROJECT_META[nextProj.slug]?.title || 'Project') : null;
 
   const allProjectsJs = Object.entries(PROJECT_META)
     .map(([slug, m]) => {
@@ -625,17 +629,17 @@ var CURRENT_SLUG = '${proj.slug}';
         ${nextProj ? `<a class="proj-nav-btn proj-nav-next" href="${nextProj.slug}.html" aria-label="Next project"><span class="proj-nav-name">${nextTitle} <i class="ti ti-arrow-right"></i></span></a>` : '<span></span>'}
       </div>
       <div class="proj-title-sticky" id="proj-title-sticky">
+        <div class="proj-tags-m">
+          <span class="pm">${year}</span>
+          <span class="psep">·</span>
+          ${catHtml}
+        </div>
         <div class="proj-title-row">
           ${prevProj ? `<button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='${prevProj.slug}.html'">←</button>` : ''}
           <h1 class="proj-title-m">${title}</h1>
           ${nextProj ? `<button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">→</button>` : ''}
         </div>
         ${proj.subtitle ? `<p class="proj-subtitle-m">${proj.subtitle}</p>` : ''}
-        <div class="proj-tags-m">
-          <span class="pm">${year}</span>
-          <span class="psep">·</span>
-          ${catHtml}
-        </div>
         <div class="proj-meta-m">
           ${prevProj ? `<button class="proj-nav-text" aria-label="Previous project" onclick="location.href='${prevProj.slug}.html'">← Previous</button>` : ''}
           ${nextProj ? `<button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">Next →</button>` : ''}
