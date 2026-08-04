@@ -52,22 +52,16 @@
     <main class="proj-main">
       <div class="proj-side-nav">
         <a class="proj-nav-btn proj-nav-prev" href="submit-publish-widget.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> Submit & Publish Widget</span></a>
-        <a class="proj-nav-btn proj-nav-next" href="app-coupons.html" aria-label="Next project"><span class="proj-nav-name">App Coupons <i class="ti ti-arrow-right"></i></span></a>
+        <a class="proj-nav-btn proj-nav-next" href="app-coupons.html" aria-label="Next project"><span class="proj-nav-name">Coupons Page <i class="ti ti-arrow-right"></i></span></a>
       </div>
       <div class="proj-title-sticky" id="proj-title-sticky">
-        <div class="proj-title-row">
-          <button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='submit-publish-widget.html'">←</button>
-          <h1 class="proj-title-m">API Keys page</h1>
-          <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='app-coupons.html'">→</button>
-        </div>
-        <p class="proj-subtitle-m">Credential management system for third-party developers</p>
         <div class="proj-tags-m">
           <span class="pm">2022</span>
           <span class="psep">·</span>
           <span class="pm">Developer tools</span><span class="psep">·</span><span class="pm">CMS</span>
         </div>
         <div class="proj-title-row">
-          <button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='custom-element-component-settings.html'">←</button>
+          <button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='submit-publish-widget.html'">←</button>
           <h1 class="proj-title-m">API Keys Page</h1>
           <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='app-coupons.html'">→</button>
         </div>
@@ -209,7 +203,7 @@ var ALL_PROJECTS = [
 var CURRENT_SLUG = 'api-keys-page';
 (function() {
   var others = ALL_PROJECTS.filter(function(p) { return p.slug !== CURRENT_SLUG; });
-  var pick = others.slice().sort(function() { return Math.random() - 0.5; }).slice(0, 4);
+  var pick = others.slice(0, 4);
   var list = document.getElementById('more-list');
   if (!list) return;
   pick.forEach(function(p, i) {

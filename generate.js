@@ -595,7 +595,7 @@ ${allProjectsJs}
 var CURRENT_SLUG = '${proj.slug}';
 (function() {
   var others = ALL_PROJECTS.filter(function(p) { return p.slug !== CURRENT_SLUG; });
-  var pick = others.slice().sort(function() { return Math.random() - 0.5; }).slice(0, 4);
+  var pick = others.slice(0, 4);
   var list = document.getElementById('more-list');
   if (!list) return;
   pick.forEach(function(p, i) {

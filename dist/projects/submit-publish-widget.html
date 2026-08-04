@@ -51,7 +51,7 @@
     <div class="proj-gutter proj-gutter-left"></div>
     <main class="proj-main">
       <div class="proj-side-nav">
-        <a class="proj-nav-btn proj-nav-prev" href="app-pricing-page-projects.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> App Pricing Page Projects</span></a>
+        <a class="proj-nav-btn proj-nav-prev" href="app-pricing-page-projects.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> Pricing Page Projects</span></a>
         <a class="proj-nav-btn proj-nav-next" href="api-keys-page.html" aria-label="Next project"><span class="proj-nav-name">API Keys Page <i class="ti ti-arrow-right"></i></span></a>
       </div>
       <div class="proj-title-sticky" id="proj-title-sticky">
@@ -239,7 +239,7 @@ var ALL_PROJECTS = [
 var CURRENT_SLUG = 'submit-publish-widget';
 (function() {
   var others = ALL_PROJECTS.filter(function(p) { return p.slug !== CURRENT_SLUG; });
-  var pick = others.slice().sort(function() { return Math.random() - 0.5; }).slice(0, 4);
+  var pick = others.slice(0, 4);
   var list = document.getElementById('more-list');
   if (!list) return;
   pick.forEach(function(p, i) {
