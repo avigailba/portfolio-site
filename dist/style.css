@@ -87,6 +87,10 @@ nav a {
 }
 nav a:hover { background: #0a0a0a; color: #fff; }
 nav a.active { color: #0a0a0a; font-weight: 500; }
+nav a.active:hover { color: #fff; }
+.hdr-links { display: flex; align-items: center; gap: 2px; margin-left: 12px; padding-left: 12px; border-left: 0.5px solid #ebebeb; }
+.hdr-link { font-size: 14px; color: #555; text-decoration: none; padding: 5px 10px; border-radius: 5px; transition: background 0.13s, color 0.13s; white-space: nowrap; }
+.hdr-link:hover { background: #0a0a0a; color: #fff; }
 .hdr-mail { display: flex; align-items: center; color: #555; transition: color 0.13s; margin-left: 4px; }
 .hdr-mail:hover { color: #0a0a0a; }
 
@@ -457,7 +461,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
 
 /* CV row: year column + content column */
 .about-notion .cv-row { display: grid; grid-template-columns: max-content 1fr; gap: 0 32px; margin-bottom: 32px; }
-.about-notion .cv-col-year { padding-top: 3px; white-space: nowrap; }
+.about-notion .cv-col-year { padding-top: 0; white-space: nowrap; }
 .about-notion .cv-col-content p:last-child { margin-bottom: 0; }
 /* Entry wrapper — consistent spacing regardless of content */
 .about-notion .cv-entry { margin-bottom: 24px; }
@@ -789,6 +793,7 @@ nav a.active { color: #0a0a0a; font-weight: 500; }
   .proj-side-nav { display: none; }
   /* Desktop nav → hamburger */
   #site-header nav { display: none; }
+  .hdr-links { display: none; }
   .hdr-mail { display: none; }
   .mob-burger {
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
