@@ -76,9 +76,9 @@
   <img src="../images/img-3b135a9ccf7a80ea9f57cfaa4494fb64.jpg" alt="" loading="lazy">
 </figure>
 <h3>The problem</h3>
-<p><span class="ctx-tip" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.">Wix App Market</span>'s internal review platform is the tool Account Managers use to evaluate and approve apps before they go live. </p>
+<p><span class="ctx-tip" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.">Wix App Market</span>'s internal review platform is the tool Account Managers use to evaluate and approve apps before they go live. It spans four interconnected product areas: the app directory and queue, per-app activity and team views, the review workspace, and team management.</p>
 <p>When I joined the project, the team had stopped using it and the process was not <strong>platformized</strong>. Review work happened in personal Google Docs, which meant no shared history, no visibility into what changed between submissions, and no consistent way to hand off between reviewers. That wasn't sustainable and the volume of app submissions was only increasing.</p>
-<h3>Research </h3>
+<h3>Research</h3>
 <p>Conducted discovery research to identify why Account Managers were doing review work in external tools instead of the platform.
 Pain points pointed to the UI, difficulties in writing a consistent review, the information architecture, and the lack of an integrated workflow</p>
 <h3>Deciding on the product areas</h3>
@@ -108,11 +108,11 @@ Pain points pointed to the UI, difficulties in writing a consistent review, the 
 </div></div>
 <h3>Redesigning the platform</h3>
 <ul>
-  <li>Designed a whole new integrated review workflow: in-platform commenting, <strong>path-linked issues</strong>, clear view of past reports and submission</li>
-  <li>Updated the UI to <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span> Style React guidelines and restructured the information architecture for scale</li>
-  <li>Added new features to the App page and App directory (more filters, useful links, additional information per app such as its revenue share and more)</li>
-  <li>Added a new App Market listing status to apps - Listed, Never Listed and Removed</li>
-  <li>Two decisions worth noting: when to auto-start a review (we landed on both an explicit button and triggering on the first comment), and how to show diffs between submissions (a before/after column, no new pattern to learn).</li>
+  <li>Mapped the product into four areas before designing any screens: app directory and queue, per-app view, review workspace, and team management. The review workspace was built from scratch; the others required significant rethinking.</li>
+  <li>Restructured the information architecture to handle scale: one view for all apps at every stage, with filters and status logic designed to hold up as submission volume grew</li>
+  <li>Designed the review workflow around how reviewers actually worked: comments organized by app path, blocker flags inline, and previous submission history always visible alongside the current one</li>
+  <li>Made two key structural decisions: auto-start a review on first comment as well as via an explicit button, and show diffs as a side-by-side column rather than introduce a new pattern reviewers had to learn</li>
+  <li>Added a three-state listing status (Listed, Never Listed, Removed) to give reviewers a clearer picture of each app's history at a glance</li>
 </ul>
 <h3>Delivery</h3>
 <ul>
@@ -120,8 +120,8 @@ Pain points pointed to the UI, difficulties in writing a consistent review, the 
   <li>Facilitated a bug hunt session with Account Managers before launch to validate the redesign and surface edge cases</li>
 </ul>
 <h3>Impact</h3>
-<p>The tool is still actively used by Wix's Developer Relations team. It reduced account manager workload, shortened the review cycle, and made app evaluations faster and more consistent across the team.</p>
-<h3>Apps directory and review queue </h3>
+<p>The tool is still actively used by <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span>'s Developer Relations team. It reduced account manager workload, shortened the review cycle, and made app evaluations faster and more consistent across the team.</p>
+<h3>Apps directory and review queue</h3>
 <p>The full marketplace directory, across all stages</p>
 <div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Apps dashboard - list of all apps with status, last change date, market status, app ID, and reviewer</figcaption>
 <figure class="proj-img">
@@ -134,9 +134,9 @@ Pain points pointed to the UI, difficulties in writing a consistent review, the 
 </div></div>
 <h3>App page</h3>
 <p>Submission history, team notes, and current status</p>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Per-app activity log - every status change, reviewer, and internal note tracked chronologically. </figcaption>
+<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Per-app activity log - every status change, reviewer, and internal note tracked chronologically.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-6414b62696c949a69686d280fef78e32.jpg" alt="Per-app activity log - every status change, reviewer, and internal note tracked chronologically. " loading="lazy">
+  <img src="../images/img-6414b62696c949a69686d280fef78e32.jpg" alt="Per-app activity log - every status change, reviewer, and internal note tracked chronologically." loading="lazy">
 </figure>
 <figcaption class="proj-caption">All statuses and their actions and badges</figcaption>
 <figure class="proj-img">
@@ -147,7 +147,7 @@ Pain points pointed to the UI, difficulties in writing a consistent review, the 
   <img src="../images/img-38435a9ccf7a803ca35ec7a3df5b0825.jpg" alt="Per-app activity log - app team view" loading="lazy">
 </figure>
 </div></div>
-<h3>Review workflow </h3>
+<h3>Review workflow</h3>
 <p>Commenting, flagging issues, and submitting the review in one place</p>
 <div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Review report - comments organized by path, flagging issues by type and location within the app</figcaption>
 <figure class="proj-img">

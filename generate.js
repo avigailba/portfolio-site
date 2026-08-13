@@ -70,9 +70,9 @@ const PROJECT_META = {
 
 // Featured rows shown on homepage (in order)
 const FEAT_ORDER = [
+  'internal-app-review-system',
   'ai-credits-wallet',
   'app-installation-page-for-developers',
-  'internal-app-review-system',
   'developer-sale',
 ];
 
