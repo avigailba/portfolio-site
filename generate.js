@@ -348,7 +348,7 @@ function hdr(prefix) {
       <span class="mob-logo-role">Senior UX Designer</span>
     </a>
     <nav>
-      <a href="${prefix}index.html">Home</a>
+      <a href="${prefix}index.html">Projects</a>
       <a href="${prefix}index.html#home-work">Work</a>
       <a href="${prefix}about.html">About & Contact</a>
     </nav>
@@ -364,7 +364,7 @@ function hdr(prefix) {
     <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
   </div>
   <nav class="mob-panel-nav">
-    <a href="${prefix}index.html" class="mob-panel-link">Home</a>
+    <a href="${prefix}index.html" class="mob-panel-link">Projects</a>
     <a href="${prefix}index.html#home-work" class="mob-panel-link mob-work-link">Work</a>
     <a href="${prefix}about.html" class="mob-panel-link">About & Contact</a>
   </nav>
