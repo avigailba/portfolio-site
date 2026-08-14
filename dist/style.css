@@ -32,7 +32,7 @@ button { font-family: inherit; }
   background: #fff;
   border-bottom: 0.5px solid transparent;
   transition: border-color 0.25s;
-  padding: 0 clamp(40px, 20%, 240px);
+  padding: 0 clamp(32px, 10%, 160px);
 }
 body.proj-page #site-header.scrolled { border-color: transparent; }
 .hdr-row {
@@ -93,7 +93,7 @@ nav a.active:hover { color: #fff; }
 
 /* ── Homepage wrapper ────────────────────────────────────── */
 .home-band {
-  padding: 0 clamp(40px, 20%, 240px) 80px;
+  padding: 0 clamp(32px, 10%, 160px) 80px;
 }
 
 /* ── Lede ────────────────────────────────────────────────── */
@@ -333,7 +333,7 @@ nav a.active:hover { color: #fff; }
 /* ── Footer ──────────────────────────────────────────────── */
 .site-footer {
   background: #0a0a0a;
-  padding: 64px clamp(40px, 20%, 240px) 48px;
+  padding: 64px clamp(32px, 10%, 160px) 48px;
 }
 .footer-inner {
   display: flex;
@@ -394,7 +394,7 @@ nav a.active:hover { color: #fff; }
 .footer-bottom { margin: 48px 0 0; font-size: 14px; color: #fff; }
 
 /* ── Inner pages ─────────────────────────────────────────── */
-.inner-main { padding: 0 clamp(40px, 20%, 240px); }
+.inner-main { padding: 0 clamp(32px, 10%, 160px); }
 .inner-content { padding: 56px 0 80px; max-width: 720px; }
 .ds-content { max-width: none; }
 .ds-content .page-sub { margin-bottom: 0; }
@@ -543,12 +543,12 @@ nav a.active:hover { color: #fff; }
   top: 56px;
   background: #fff;
   z-index: 5;
-  margin-left: calc(-1 * clamp(40px, 20%, 240px));
-  margin-right: calc(-1 * clamp(40px, 20%, 240px));
+  margin-left: calc(-1 * clamp(32px, 10%, 160px));
+  margin-right: calc(-1 * clamp(32px, 10%, 160px));
   padding-top: 28px;
   padding-bottom: 28px;
-  padding-left: clamp(40px, 20%, 240px);
-  padding-right: clamp(40px, 20%, 240px);
+  padding-left: clamp(32px, 10%, 160px);
+  padding-right: clamp(32px, 10%, 160px);
   transition: border-color 0.2s ease, padding 0.2s;
 }
 .proj-title-sticky.condensed { border-bottom: 0.5px solid #ebebeb; }
@@ -575,7 +575,7 @@ nav a.active:hover { color: #fff; }
 .pm { font-size: 14px; color: #555; }
 .psep { font-size: 14px; color: #ccc; }
 .proj-nav-text { display: none; }
-.proj-main { padding: 0 clamp(40px, 20%, 240px); position: relative; }
+.proj-main { padding: 0 clamp(32px, 10%, 160px); position: relative; }
 .proj-content { padding: 8px 0 80px; }
 .proj-intro {
   font-size: 16px;
@@ -664,7 +664,7 @@ nav a.active:hover { color: #fff; }
 .ctx-tip:hover::before { opacity: 1; }
 
 /* ── More work (project pages) ───────────────────────────── */
-.more-section { padding: 0 clamp(40px, 20%, 240px); }
+.more-section { padding: 0 clamp(32px, 10%, 160px); }
 .more-inner {
   padding-top: 64px;
   border-top: 0.5px solid #ebebeb;
