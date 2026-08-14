@@ -126,8 +126,6 @@ nav a.active:hover { color: #fff; }
   grid-template-columns: repeat(4, 1fr);
   border-top: 0.5px solid #ebebeb;
   border-bottom: 0.5px solid #ebebeb;
-  margin-left: calc(-1 * clamp(40px, 20%, 240px));
-  margin-right: calc(-1 * clamp(40px, 20%, 240px));
   margin-bottom: 56px;
 }
 .feat-card {
@@ -765,7 +763,7 @@ nav a.active:hover { color: #fff; }
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 960px) {
-  .feat-grid { grid-template-columns: 1fr 1fr; height: auto; margin-left: 0; margin-right: 0; }
+  .feat-grid { grid-template-columns: 1fr 1fr; height: auto; }
   .feat-card:nth-child(n+3) { border-top: 0.5px solid #ebebeb; }
 }
 @media (max-width: 768px) {
