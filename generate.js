@@ -349,7 +349,6 @@ function hdr(prefix) {
     </a>
     <nav>
       <a href="${prefix}index.html">Projects</a>
-      <a href="${prefix}index.html#home-work">Work</a>
       <a href="${prefix}about.html">About & Contact</a>
     </nav>
     <button class="mob-burger" id="open-menu" aria-label="Open menu">
@@ -365,7 +364,6 @@ function hdr(prefix) {
   </div>
   <nav class="mob-panel-nav">
     <a href="${prefix}index.html" class="mob-panel-link">Projects</a>
-    <a href="${prefix}index.html#home-work" class="mob-panel-link mob-work-link">Work</a>
     <a href="${prefix}about.html" class="mob-panel-link">About & Contact</a>
   </nav>
   <div class="mob-panel-foot">
