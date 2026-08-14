@@ -32,7 +32,7 @@ button { font-family: inherit; }
   background: #fff;
   border-bottom: 0.5px solid transparent;
   transition: border-color 0.25s;
-  padding: 0 clamp(32px, 10%, 160px);
+  padding: 0 clamp(40px, 20%, 240px);
 }
 body.proj-page #site-header.scrolled { border-color: transparent; }
 .hdr-row {
@@ -87,13 +87,12 @@ nav a {
 }
 nav a:hover { background: #0a0a0a; color: #fff; }
 nav a.active { color: #0a0a0a; font-weight: 500; }
-nav a.active:hover { color: #fff; }
 .hdr-mail { display: flex; align-items: center; color: #555; transition: color 0.13s; margin-left: 4px; }
 .hdr-mail:hover { color: #0a0a0a; }
 
 /* ── Homepage wrapper ────────────────────────────────────── */
 .home-band {
-  padding: 0 clamp(32px, 10%, 160px) 80px;
+  padding: 0 clamp(40px, 20%, 240px) 80px;
 }
 
 /* ── Lede ────────────────────────────────────────────────── */
@@ -126,6 +125,8 @@ nav a.active:hover { color: #fff; }
   grid-template-columns: repeat(4, 1fr);
   border-top: 0.5px solid #ebebeb;
   border-bottom: 0.5px solid #ebebeb;
+  margin-left: calc(-1 * clamp(40px, 20%, 240px));
+  margin-right: calc(-1 * clamp(40px, 20%, 240px));
   margin-bottom: 56px;
 }
 .feat-card {
@@ -333,7 +334,7 @@ nav a.active:hover { color: #fff; }
 /* ── Footer ──────────────────────────────────────────────── */
 .site-footer {
   background: #0a0a0a;
-  padding: 64px clamp(32px, 10%, 160px) 48px;
+  padding: 64px clamp(40px, 20%, 240px) 48px;
 }
 .footer-inner {
   display: flex;
@@ -394,7 +395,7 @@ nav a.active:hover { color: #fff; }
 .footer-bottom { margin: 48px 0 0; font-size: 14px; color: #fff; }
 
 /* ── Inner pages ─────────────────────────────────────────── */
-.inner-main { padding: 0 clamp(32px, 10%, 160px); }
+.inner-main { padding: 0 clamp(40px, 20%, 240px); }
 .inner-content { padding: 56px 0 80px; max-width: 720px; }
 .ds-content { max-width: none; }
 .ds-content .page-sub { margin-bottom: 0; }
@@ -456,7 +457,7 @@ nav a.active:hover { color: #fff; }
 
 /* CV row: year column + content column */
 .about-notion .cv-row { display: grid; grid-template-columns: max-content 1fr; gap: 0 32px; margin-bottom: 32px; }
-.about-notion .cv-col-year { padding-top: 0; white-space: nowrap; }
+.about-notion .cv-col-year { padding-top: 3px; white-space: nowrap; }
 .about-notion .cv-col-content p:last-child { margin-bottom: 0; }
 /* Entry wrapper — consistent spacing regardless of content */
 .about-notion .cv-entry { margin-bottom: 24px; }
@@ -543,12 +544,12 @@ nav a.active:hover { color: #fff; }
   top: 56px;
   background: #fff;
   z-index: 5;
-  margin-left: calc(-1 * clamp(32px, 10%, 160px));
-  margin-right: calc(-1 * clamp(32px, 10%, 160px));
+  margin-left: calc(-1 * clamp(40px, 20%, 240px));
+  margin-right: calc(-1 * clamp(40px, 20%, 240px));
   padding-top: 28px;
   padding-bottom: 28px;
-  padding-left: clamp(32px, 10%, 160px);
-  padding-right: clamp(32px, 10%, 160px);
+  padding-left: clamp(40px, 20%, 240px);
+  padding-right: clamp(40px, 20%, 240px);
   transition: border-color 0.2s ease, padding 0.2s;
 }
 .proj-title-sticky.condensed { border-bottom: 0.5px solid #ebebeb; }
@@ -575,7 +576,7 @@ nav a.active:hover { color: #fff; }
 .pm { font-size: 14px; color: #555; }
 .psep { font-size: 14px; color: #ccc; }
 .proj-nav-text { display: none; }
-.proj-main { padding: 0 clamp(32px, 10%, 160px); position: relative; }
+.proj-main { padding: 0 clamp(40px, 20%, 240px); position: relative; }
 .proj-content { padding: 8px 0 80px; }
 .proj-intro {
   font-size: 16px;
@@ -664,7 +665,7 @@ nav a.active:hover { color: #fff; }
 .ctx-tip:hover::before { opacity: 1; }
 
 /* ── More work (project pages) ───────────────────────────── */
-.more-section { padding: 0 clamp(32px, 10%, 160px); }
+.more-section { padding: 0 clamp(40px, 20%, 240px); }
 .more-inner {
   padding-top: 64px;
   border-top: 0.5px solid #ebebeb;
@@ -763,7 +764,7 @@ nav a.active:hover { color: #fff; }
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 960px) {
-  .feat-grid { grid-template-columns: 1fr 1fr; height: auto; }
+  .feat-grid { grid-template-columns: 1fr 1fr; height: auto; margin-left: 0; margin-right: 0; }
   .feat-card:nth-child(n+3) { border-top: 0.5px solid #ebebeb; }
 }
 @media (max-width: 768px) {
