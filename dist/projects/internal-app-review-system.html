@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Internal Review System — Avigail Bahat</title>
+  <title>Internal Reviews — Avigail Bahat</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -60,10 +60,10 @@
         </div>
         <div class="proj-title-row">
           <button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='app-installation-page-for-developers.html'">←</button>
-          <h1 class="proj-title-m">Internal Review System</h1>
+          <h1 class="proj-title-m">Internal Reviews</h1>
           <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='developer-sale.html'">→</button>
         </div>
-        <p class="proj-subtitle-m">Workflow system for reviewing apps before marketplace listing</p>
+        <p class="proj-subtitle-m">Internal review platform that replaced spreadsheet workarounds and became the team's primary tool for app approvals</p>
         <div class="proj-meta-m">
           <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='app-installation-page-for-developers.html'">← Previous</button>
           <button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='developer-sale.html'">Next →</button>
@@ -216,8 +216,7 @@ Pain points pointed to the UI, difficulties in writing a consistent review, the 
 </figure>
 </div></div>
 <h2>Bottom line</h2>
-<p>The most telling signal was that the team had already voted with their feet, doing the actual work outside the platform. </p>
-<p>That meant success was not about launching a redesign; it was about building something good enough that they would stop reaching for Google Docs. The pre-launch bug hunt session was one of the more useful things I did on this project.</p>
+<p>The team had already voted with their feet, doing the actual review work in spreadsheets outside the platform. Success wasn't launching a redesign; it was building something good enough that they'd stop reaching for Google Docs. The tool became their primary review surface, which is the only metric that actually mattered.</p>
 
       </div>
     </main>
@@ -278,19 +277,19 @@ Pain points pointed to the UI, difficulties in writing a consistent review, the 
   <script src="../script.js"></script>
   <script>
 var ALL_PROJECTS = [
-  { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'AI credits billing system across Business Manager and Wixel', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
-  { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Developer dashboard for installation data and user insights', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
-  { slug: 'app-reviews-revamp', title: 'App Reviews Revamp', sub: 'Redesigned reviews management experience for App Market developers', cat: 'Developer tools', cats: 'developer', year: 2024, featured: false },
-  { slug: 'developer-sale', title: 'Developer Sale', sub: 'Native sales infrastructure for app developers on the marketplace', cat: 'Monetisation', cats: 'developer monetisation cms', year: 2024, featured: true },
-  { slug: 'app-collections-internal-manager', title: 'App Collections Manager', sub: 'Curation tooling for App Market vertical collections', cat: 'Internal tools', cats: 'internal cms', year: 2024, featured: false },
-  { slug: 'payouts-page', title: 'Payouts Page', sub: 'In-product earnings visibility for App Market developers', cat: 'Monetisation', cats: 'monetisation cms', year: 2023, featured: false },
-  { slug: 'refund-flow', title: 'Refund Flow', sub: 'Self-serve refund flow replacing manual support intervention', cat: 'Monetisation', cats: 'monetisation', year: 2023, featured: false },
-  { slug: 'app-pricing-page-projects', title: 'App Pricing Page Projects', sub: 'Long-term UX evolution of App Market pricing infrastructure', cat: 'Monetisation', cats: 'developer monetisation', year: 2023, featured: false },
-  { slug: 'internal-app-review-system', title: 'Internal Review System', sub: 'Workflow tool for Account Managers to review marketplace apps', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
-  { slug: 'submit-publish-widget', title: 'Submit & Publish Widget', sub: 'Submission requirements surfaced in-context during the publishing flow', cat: 'Developer tools', cats: 'developer', year: 2022, featured: false },
-  { slug: 'api-keys-page', title: 'API Keys Page', sub: 'Secure key generation and management for Wix platform developers', cat: 'Developer tools', cats: 'developer cms', year: 2022, featured: false },
-  { slug: 'development-site-creation', title: 'Development Site Creation', sub: 'Self-serve provisioning of premium test sites for developers', cat: 'Developer tools', cats: 'developer', year: 2021, featured: false },
-  { slug: 'app-coupons', title: 'App Coupons', sub: 'Self-serve coupon creation for App Market developers', cat: 'Monetisation', cats: 'monetisation cms', year: 2021, featured: false }
+  { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'Cross-surface AI credits billing that made a new monetization model legible across three surfaces and two user types', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
+  { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Installation analytics that gave developers site-level visibility into how their apps were actually being used', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
+  { slug: 'app-reviews-revamp', title: 'App Reviews Revamp', sub: 'Cross-app review management system designed to give developers with many apps unified control over their feedback', cat: 'Developer tools', cats: 'developer cms', year: 2024, featured: false },
+  { slug: 'developer-sale', title: 'Developer Sale', sub: 'Sales infrastructure that made market-wide promotions possible and drove strong growth in subscriptions and upgrade revenue', cat: 'Monetisation', cats: 'developer monetisation cms', year: 2024, featured: true },
+  { slug: 'app-collections-internal-manager', title: 'App Collections Manager', sub: 'Internal curation tool that replaced manual workflows and scaled App Market collection management across two generation modes', cat: 'Internal tools', cats: 'internal cms', year: 2024, featured: false },
+  { slug: 'payouts-page', title: 'Payouts Page', sub: 'Redesigning the payout experience for App Market developers', cat: 'Monetisation', cats: 'monetisation cms', year: 2023, featured: false },
+  { slug: 'refund-flow', title: 'Refund Flow', sub: 'Self-serve refund flow that eliminated manual Dev Relations intervention and scaled with the platform', cat: 'Monetisation', cats: 'monetisation', year: 2023, featured: false },
+  { slug: 'app-pricing-page-projects', title: 'App Pricing Page Projects', sub: 'Pricing page redesigns across three shipping cycles, including a free trial migration that drove a measurable lift in conversion', cat: 'Monetisation', cats: 'developer monetisation', year: 2023, featured: false },
+  { slug: 'internal-app-review-system', title: 'Internal Review System', sub: 'Internal review platform that replaced spreadsheet workarounds and became the team\'s primary tool for app approvals', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
+  { slug: 'submit-publish-widget', title: 'Submit & Publish Widget', sub: 'Submission widget that surfaced blockers earlier, reduced rejections, and later enabled auto-publishing for live apps', cat: 'Developer tools', cats: 'developer', year: 2022, featured: false },
+  { slug: 'api-keys-page', title: 'API Keys Page', sub: 'API key management that became the primary credential surface for developers building on Wix', cat: 'Developer tools', cats: 'developer cms', year: 2022, featured: false },
+  { slug: 'development-site-creation', title: 'Development Site Creation', sub: '', cat: 'Developer tools', cats: 'developer', year: 2021, featured: false },
+  { slug: 'app-coupons', title: 'App Coupons', sub: 'Self-serve coupon platform that shifted promotions from employee-gated to fully developer-controlled', cat: 'Monetisation', cats: 'monetisation cms', year: 2021, featured: false }
 ];
 var CURRENT_SLUG = 'internal-app-review-system';
 (function() {

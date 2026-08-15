@@ -55,7 +55,7 @@ const stats = { pages: 0, images: 0, errors: [] };
 const PROJECT_META = {
   'ai-credits-wallet':                          { title: 'AI Credits', featTitle: 'AI<br>Credits', cats: 'monetisation',          display: 'Monetisation',    year: 2026, featured: true },
   'app-installation-page-for-developers': { title: 'Installations Page',          cats: 'developer cms',          display: 'Developer tools', year: 2025, featured: true },
-  'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer',              display: 'Developer tools', year: 2024, featured: false },
+  'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer cms',          display: 'Developer tools', year: 2024, featured: false },
   'developer-sale':                      { title: 'Developer Sale',               cats: 'developer monetisation cms', display: 'Monetisation', year: 2024, featured: true },
   'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'internal cms',           display: 'Internal tools',  year: 2024, featured: false },
   'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',       display: 'Monetisation',    year: 2023, featured: false },
@@ -76,22 +76,6 @@ const FEAT_ORDER = [
   'developer-sale',
 ];
 
-// One-line summaries shown on hover in the project list
-const PROJECT_SUMMARIES = {
-  'ai-credits-wallet':                          'AI credits billing system across Business Manager and Wixel',
-  'app-installation-page-for-developers': 'Developer dashboard for installation data and user insights',
-  'app-reviews-revamp':                  'Redesigned reviews management experience for App Market developers',
-  'developer-sale':                      'Native sales infrastructure for app developers on the marketplace',
-  'app-collections-internal-manager':    'Curation tooling for App Market vertical collections',
-  'payouts-page':                        'In-product earnings visibility for App Market developers',
-  'refund-flow':                         'Self-serve refund flow replacing manual support intervention',
-  'app-pricing-page-projects':           'Long-term UX evolution of App Market pricing infrastructure',
-  'internal-app-review-system':          'Workflow tool for Account Managers to review marketplace apps',
-  'submit-publish-widget':               'Submission requirements surfaced in-context during the publishing flow',
-  'api-keys-page':                       'Secure key generation and management for Wix platform developers',
-  'development-site-creation':           'Self-serve provisioning of premium test sites for developers',
-  'app-coupons':                         'Self-serve coupon creation for App Market developers',
-};
 
 function slugify(s) {
   return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -445,7 +429,6 @@ function indexPage(projects, tagline) {
   // Featured grid: 4 cards
   const featHtml = FEAT_ORDER.map((slug) => {
     const meta = PROJECT_META[slug];
-    const summary = PROJECT_SUMMARIES[slug] || '';
     return `<div class="feat-card" onclick="location.href='projects/${slug}.html'">
   <div class="feat-title">${meta.featTitle || meta.title}</div>
   <div class="feat-arr">↗</div>
@@ -476,7 +459,7 @@ function indexPage(projects, tagline) {
     const cats    = meta?.cats    || '';
     const display = meta?.display || '';
     const year    = meta?.year    || proj?.year    || '';
-    const summary = proj?.summary || PROJECT_SUMMARIES[slug] || '';
+    const summary = proj?.subtitle || proj?.summary || '';
     const featured = meta?.featured || false;
     return `<div class="row-wrap" data-cat="${cats}">
   <a href="projects/${slug}.html" class="row" data-cat="${cats}">
@@ -541,7 +524,7 @@ function indexPage(projects, tagline) {
   </main>`);
 }
 
-function projectPage(proj, prevProj, nextProj) {
+function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
   const prefix = '../';
   const meta  = PROJECT_META[proj.slug] || {};
 
@@ -596,7 +579,7 @@ function projectPage(proj, prevProj, nextProj) {
 
   const allProjectsJs = Object.entries(PROJECT_META)
     .map(([slug, m]) => {
-      const sub = (PROJECT_SUMMARIES[slug] || '').replace(/'/g, "\\'");
+      const sub = (subtitleMap[slug] || '').replace(/'/g, "\\'");
       return `  { slug: '${slug}', title: '${m.title.replace(/'/g, "\\'")}', sub: '${sub}', cat: '${m.display}', cats: '${m.cats}', year: ${m.year}, featured: ${m.featured} }`;
     })
     .join(',\n');
@@ -1262,6 +1245,7 @@ async function build() {
   });
 
   let projects = [];
+  let subtitleMap = {};
   let tagline = "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
   let aboutHtml = '';
 
@@ -1279,14 +1263,16 @@ async function build() {
       const contentHtml = await toHtml(p.blocks, '../');
       const title = stripEmoji(p.title);
       const slug = NOTION_ID_TO_SLUG[p.id.replace(/-/g, '')] || slugify(title);
-      const subtitle = firstSubtitle(p.blocks) || summary || PROJECT_SUMMARIES[slug] || '';
+      const subtitle = firstSubtitle(p.blocks) || summary || '';
       projects.push({ ...p, title, icon, year, slug, summary, subtitle, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
     }
+
+    for (const p of projects) subtitleMap[p.slug] = p.subtitle;
 
     for (let i = 0; i < projects.length; i++) {
       const prev = projects[(i - 1 + projects.length) % projects.length];
       const next = projects[(i + 1) % projects.length];
-      fs.writeFileSync(path.join(PROJECTS_DIR, `${projects[i].slug}.html`), projectPage(projects[i], prev, next));
+      fs.writeFileSync(path.join(PROJECTS_DIR, `${projects[i].slug}.html`), projectPage(projects[i], prev, next, subtitleMap));
       stats.pages++;
       console.log(`  ✓ projects/${projects[i].slug}.html`);
     }
@@ -1312,16 +1298,15 @@ async function build() {
   const generatedSlugs = new Set(projects.map(p => p.slug));
   for (const [slug, meta] of Object.entries(PROJECT_META)) {
     if (generatedSlugs.has(slug) || SKIP_SLUGS.has(slug)) continue;
-    const summary = PROJECT_SUMMARIES[slug] || '';
     const fallbackProj = {
       slug,
       title: meta.title,
       year: String(meta.year),
-      summary,
-      subtitle: summary,
+      summary: '',
+      subtitle: '',
       contentHtml: '',
     };
-    fs.writeFileSync(path.join(PROJECTS_DIR, `${slug}.html`), projectPage(fallbackProj, null, null));
+    fs.writeFileSync(path.join(PROJECTS_DIR, `${slug}.html`), projectPage(fallbackProj, null, null, subtitleMap));
     stats.pages++;
     console.log(`  ✓ projects/${slug}.html (static fallback)`);
   }
