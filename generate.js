@@ -57,7 +57,7 @@ const PROJECT_META = {
   'app-installation-page-for-developers': { title: 'Installations Page',          cats: 'developer cms',          display: 'Developer tools', year: 2025, featured: true },
   'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer',              display: 'Developer tools', year: 2024, featured: false },
   'developer-sale':                      { title: 'Developer Sale',               cats: 'developer monetisation cms', display: 'Monetisation', year: 2024, featured: true },
-  'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'developer internal cms', display: 'Internal tools',  year: 2024, featured: false },
+  'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'internal cms',           display: 'Internal tools',  year: 2024, featured: false },
   'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',       display: 'Monetisation',    year: 2023, featured: false },
   'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
   'app-pricing-page-projects':           { title: 'App Pricing Page Projects',    cats: 'developer monetisation', display: 'Monetisation',    year: 2023, featured: false },
@@ -569,6 +569,22 @@ function projectPage(proj, prevProj, nextProj) {
     }
   }
   if (contentHtml) contentHtml = injectTooltips(contentHtml);
+
+  // Inject "Screens" h2 before the first screen-section h3 (the first h3 immediately
+  // followed by a figcaption or proj-img, which marks the transition from process text to screens).
+  // Skip pages that already have a Screens heading, have a custom layout, or are numbered-feature pages.
+  const SKIP_SCREENS = new Set(['ai-credits-wallet', 'app-pricing-page-projects']);
+  if (contentHtml && !SKIP_SCREENS.has(proj.slug) && !/>\s*Screens\s*</.test(contentHtml)) {
+    if (contentHtml.includes('<h2><strong>Solution</strong></h2>')) {
+      contentHtml = contentHtml.replace('<h2><strong>Solution</strong></h2>', '<h2>Screens</h2>');
+    } else {
+      contentHtml = contentHtml.replace(
+        /(<h3>[^<]*<\/h3>\n)(?=<figcaption|<figure class="proj-img")/,
+        '<h2>Screens</h2>\n$1'
+      );
+    }
+  }
+
   const title = titleCase(proj.title || meta.title || 'Project');
   const year  = meta.year  || proj.year;
   const CAT_LABELS = { developer: 'Developer tools', monetisation: 'Monetisation', cms: 'CMS', internal: 'Internal tools' };
@@ -675,9 +691,14 @@ var CURRENT_SLUG = '${proj.slug}';
   if (!sticky) return;
   var isMobile = window.innerWidth <= 768;
   if (isMobile) {
+    var hdrElM = document.getElementById('site-header');
+    function syncTopM(){ if (hdrElM) sticky.style.top = hdrElM.offsetHeight + 'px'; }
+    syncTopM();
     window.addEventListener('scroll', function(){
+      syncTopM();
       sticky.classList.toggle('condensed', window.scrollY > 56);
     }, { passive: true });
+    window.addEventListener('resize', syncTopM, { passive: true });
     var titleEl2 = sticky.querySelector('.proj-title-m');
     var origTitle = titleEl2 ? titleEl2.textContent : '';
     var sentinel = document.querySelector('.more-section');
@@ -694,12 +715,14 @@ var CURRENT_SLUG = '${proj.slug}';
     }
   } else {
     var titleEl = sticky.querySelector('.proj-title-m');
+    var hdrEl = document.getElementById('site-header');
     var R = 110, TITLE_FROM = 54, TITLE_TO = 22, PAD_FROM = 16, PAD_TO = 8;
     var ticking = false;
     function lerp(a, b, t){ return a + (b - a) * t; }
     function ease(t){ return 1 - Math.pow(1 - t, 3); }
     function update(){
       ticking = false;
+      if (hdrEl) sticky.style.top = hdrEl.offsetHeight + 'px';
       var raw = Math.min(Math.max((window.scrollY - 60) / R, 0), 1);
       var p = ease(raw);
       if (titleEl) titleEl.style.fontSize = lerp(TITLE_FROM, TITLE_TO, p) + 'px';

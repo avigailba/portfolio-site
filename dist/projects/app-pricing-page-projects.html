@@ -76,6 +76,7 @@
 <p>The <span class="ctx-tip" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.">Wix App Market</span> pricing infrastructure is the foundation for how developers monetize their apps. I owned the long-term UX evolution across multiple shipping cycles - introducing flexible billing models, transforming plan creation from a modal to a full page, redesigning the pricing comparison interface, and leading the platform-wide migration to <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span>-managed free trials.</p>
 <hr>
 <hr>
+<h2>Screens</h2>
 <h3>1. Wix-managed Free Trial</h3>
 <p>App developers on the Wix App Market had to implement free trials themselves. Checkout occurred only after the trial ended, resulting in notable conversion drop-off. I led the end-to-end UX for a new Wix-managed Free Trial: $0 upfront checkout with auto-billing at trial end. Scope covered the full journey: package picker, checkout, manage-apps states, email notifications, and a migration plan for apps already on self-managed trials. The result was strong trial-to-paid conversion and significant subscription growth in the first year.</p>
 <div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Migration notice shown to developers already running self-managed trials, prompting them to switch to the new Wix-managed system</figcaption>
@@ -269,9 +270,14 @@ var CURRENT_SLUG = 'app-pricing-page-projects';
   if (!sticky) return;
   var isMobile = window.innerWidth <= 768;
   if (isMobile) {
+    var hdrElM = document.getElementById('site-header');
+    function syncTopM(){ if (hdrElM) sticky.style.top = hdrElM.offsetHeight + 'px'; }
+    syncTopM();
     window.addEventListener('scroll', function(){
+      syncTopM();
       sticky.classList.toggle('condensed', window.scrollY > 56);
     }, { passive: true });
+    window.addEventListener('resize', syncTopM, { passive: true });
     var titleEl2 = sticky.querySelector('.proj-title-m');
     var origTitle = titleEl2 ? titleEl2.textContent : '';
     var sentinel = document.querySelector('.more-section');
@@ -288,12 +294,14 @@ var CURRENT_SLUG = 'app-pricing-page-projects';
     }
   } else {
     var titleEl = sticky.querySelector('.proj-title-m');
+    var hdrEl = document.getElementById('site-header');
     var R = 110, TITLE_FROM = 54, TITLE_TO = 22, PAD_FROM = 16, PAD_TO = 8;
     var ticking = false;
     function lerp(a, b, t){ return a + (b - a) * t; }
     function ease(t){ return 1 - Math.pow(1 - t, 3); }
     function update(){
       ticking = false;
+      if (hdrEl) sticky.style.top = hdrEl.offsetHeight + 'px';
       var raw = Math.min(Math.max((window.scrollY - 60) / R, 0), 1);
       var p = ease(raw);
       if (titleEl) titleEl.style.fontSize = lerp(TITLE_FROM, TITLE_TO, p) + 'px';
