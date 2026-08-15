@@ -34,7 +34,7 @@ button { font-family: inherit; }
   transition: border-color 0.25s;
   padding: 0 clamp(40px, 20%, 240px);
 }
-body.proj-page #site-header.scrolled { border-color: transparent; }
+body.proj-page #site-header { border-bottom: none; }
 .hdr-row {
   display: flex;
   justify-content: space-between;
@@ -780,7 +780,6 @@ nav a.active:hover { color: #fff; text-decoration: none; }
     transition: border-color 0.25s, padding 0.25s;
   }
   #site-header.scrolled { padding: 10px 20px; border-color: #ebebeb; }
-  body.proj-page #site-header.scrolled { border-color: transparent; }
   .hdr-row { padding: 0; transition: none; }
   #site-header.scrolled .hdr-row { padding: 0; }
   .mob-logo-role { font-size: 13px; }
