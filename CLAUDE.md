@@ -16,7 +16,7 @@ This fetches all Notion pages and rebuilds `dist/`. To regenerate a single page,
 ### Layout
 - **Horizontal padding: `clamp(40px, 20%, 240px)`** on header, footer, inner pages, project pages, more-work section.
 - Homepage uses `.home-band`: `width: 80vw; max-width: 80vw; margin: 0 auto` — contains lede, feat-grid, work-header, and list. At ≤960px resets to `width: 100%` with clamp padding.
-- `.feat-grid` also has `width: 80vw; max-width: 80vw; margin: 0 auto; overflow: hidden` — both the band and grid are 80vw so they share the same left edge.
+- `.feat-grid` also has `width: 80vw; max-width: 80vw; margin: 0 auto; overflow: hidden` — both the band and grid are 80vw so they share the same left edge. Featured cards are one-column horizontal rows, with the subtitle directly below the title.
 - Inner pages (about, contact): `.inner-content` has `max-width: 720px`. Project pages: `.proj-content` has no max-width (wide layout is intentional).
 
 ### Colors
@@ -64,7 +64,7 @@ Row tokens are shared between the homepage list and all project page "More work"
 - Logo name: `16px`
 - Nav links: `14px`
 - Section labels: `15px`, uppercase, `color: #555`
-- Featured card title (`.feat-title`): `clamp(18px, 2.2vw, 28px)`, `font-weight: 700`
+- Featured card title (`.feat-title`): `clamp(24px, 2.5vw, 40px)`, `font-weight: 700`
 - Featured card subtitle (`.feat-sub`): `15px`
 - Row title (`.row-title`): `20px`, `font-weight: 500`
 - Row number (`.num`): `14px`
@@ -73,9 +73,9 @@ Row tokens are shared between the homepage list and all project page "More work"
 - Minimum font size anywhere: `14px`
 
 ### Featured cards grid
-- `.feat-grid`: `width: 80vw; height: 30vh; margin: 0 auto;` — viewport-relative sizing on desktop
-- `.feat-card`: `height: 100%; min-height: 300px; padding: 36px 32px`
-- Grid: 4 columns (>960px), 2 columns (≤960px — `width: 100%; height: auto`)
+- `.feat-grid`: one column, `width: 80vw; margin: 0 auto;`
+- `.feat-card`: full-width row with the subtitle below the title and an arrow on the right; `padding: 48px clamp(40px, 20vw, 240px)` so its content aligns with the site gutter
+- Mobile: title and subtitle stack vertically
 
 ### All work rows
 - `.row`: `padding: 28px 0`
