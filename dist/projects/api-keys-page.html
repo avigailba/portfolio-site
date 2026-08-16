@@ -22,13 +22,13 @@
       <a href="../index.html">Projects</a>
       <a href="../about.html">About & Contact</a>
     </nav>
-    <button class="mob-burger" id="open-menu" aria-label="Open menu">
+    <button class="mob-burger" id="open-menu" aria-label="Open menu" aria-controls="mob-panel" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
-<div class="mob-scrim" id="mob-scrim"></div>
-<aside class="mob-panel" id="mob-panel">
+<div class="mob-scrim" id="mob-scrim" aria-hidden="true"></div>
+<aside class="mob-panel" id="mob-panel" aria-hidden="true" inert>
   <div class="mob-panel-top">
     <span class="mob-panel-title">Avigail Bahat</span>
     <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
@@ -73,7 +73,7 @@
         <figure class="proj-img">
   <img src="../images/img-3b135a9ccf7a80e19e89ebf7fe30519b.jpg" alt="" loading="lazy">
 </figure>
-<p>API Keys are a critical part of <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span>’s platform strategy - enabling developers and third-party integrations to securely authenticate against Wix’s APIs. I designed the end-to-end UX for the API Keys management page, covering key generation, granular permission configuration, account verification, and ongoing key management. The core security constraint shaped the entire design: each key is visible only once at generation and can never be retrieved again.</p>
+<p>API Keys are a critical part of <button type="button" class="ctx-tip" aria-label="Wix" aria-describedby="term-tip-1" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-1" role="tooltip">Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></button>’s platform strategy - enabling developers and third-party integrations to securely authenticate against Wix’s APIs. I designed the end-to-end UX for the API Keys management page, covering key generation, granular permission configuration, account verification, and ongoing key management. The core security constraint shaped the entire design: each key is visible only once at generation and can never be retrieved again.</p>
 <p>To handle the one-time visibility challenge, I designed a secure reveal flow that surfaces the key immediately after generation with clear copy prompts and confirmation messaging, so users understand they must save it before leaving. Beyond generation, the design included a full keys management table for viewing, editing, and revoking keys, with a granular permissions UI letting users define exactly what each key could access - giving teams precise security control over their Wix integrations.</p>
 <h2>The core constraint</h2>
 <ul>
@@ -90,37 +90,37 @@
 </ul>
 <h2>Screens</h2>
 <h3>Generation flow</h3>
-<figcaption class="proj-caption">Empty state shown to first-time users before any API keys have been generated</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Empty state shown to first-time users before any API keys have been generated</figcaption>
   <img src="../images/img-587ec52537f640108497a50519ec8e8f.jpg" alt="Empty state shown to first-time users before any API keys have been generated" loading="lazy">
 </figure>
-<figcaption class="proj-caption">Permissions selection step during key generation — choosing what data the key can access</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Permissions selection step during key generation — choosing what data the key can access</figcaption>
   <img src="../images/img-0274b94ba0634fb5a9bad0bbffbfe842.jpg" alt="Permissions selection step during key generation — choosing what data the key can access" loading="lazy">
 </figure>
-<figcaption class="proj-caption">Expanding a permission category to configure granular sub-permissions for the key</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Expanding a permission category to configure granular sub-permissions for the key</figcaption>
   <img src="../images/img-0e86c4a649cf496d981bdb248108c076.jpg" alt="Expanding a permission category to configure granular sub-permissions for the key" loading="lazy">
 </figure>
-<figcaption class="proj-caption">Account verification prompt — a 6-digit code is sent to the user’s email before the key can be generated</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Account verification prompt — a 6-digit code is sent to the user’s email before the key can be generated</figcaption>
   <img src="../images/img-ae36ec13c1df4a4ca07641ca1a5b4474.jpg" alt="Account verification prompt — a 6-digit code is sent to the user’s email before the key can be generated" loading="lazy">
 </figure>
-<figcaption class="proj-caption">Code entry step — user enters the emailed verification code to confirm their identity</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Code entry step — user enters the emailed verification code to confirm their identity</figcaption>
   <img src="../images/img-90d05b031530441fb5a8eb4c8bdf9c4d.jpg" alt="Code entry step — user enters the emailed verification code to confirm their identity" loading="lazy">
 </figure>
-<figcaption class="proj-caption">One-time key reveal — the token is only visible at this moment and must be copied before closing</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">One-time key reveal — the token is only visible at this moment and must be copied before closing</figcaption>
   <img src="../images/img-c36b28b91384462c878dd0d7a0031c03.jpg" alt="One-time key reveal — the token is only visible at this moment and must be copied before closing" loading="lazy">
 </figure>
 <h3>Management</h3>
-<figcaption class="proj-caption">Keys management table showing a generated key with its token, permissions breakdown, and the Account ID panel</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Keys management table showing a generated key with its token, permissions breakdown, and the Account ID panel</figcaption>
   <img src="../images/img-e93554eda2e14d029c9c01b32988dc08.jpg" alt="Keys management table showing a generated key with its token, permissions breakdown, and the Account ID panel" loading="lazy">
 </figure>
-<figcaption class="proj-caption">Expanded permissions view for an existing key, showing the assigned basic and account-level permissions</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Expanded permissions view for an existing key, showing the assigned basic and account-level permissions</figcaption>
   <img src="../images/img-3ba60d36e8ba467887248b2f3ad3d0ad.jpg" alt="Expanded permissions view for an existing key, showing the assigned basic and account-level permissions" loading="lazy">
 </figure>
 <h2>Bottom line</h2>
@@ -139,12 +139,12 @@
       </div>
     </div>
   </section>
-  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true">
+  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true" aria-label="Project image viewer" aria-hidden="true" inert>
     <button class="lb-close" aria-label="Close">✕</button>
     <div class="lb-stage">
       <button class="lb-handle lb-prev" aria-label="Previous">‹</button>
       <div class="lb-content">
-        <img class="lb-img" src="" alt="">
+        <img class="lb-img" alt="">
         <p class="lb-caption"></p>
       </div>
       <button class="lb-handle lb-next" aria-label="Next">›</button>
@@ -183,7 +183,7 @@
   <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
 </footer>
   <script src="../script.js"></script>
-  <script>
+<script>
 var ALL_PROJECTS = [
   { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'Cross-surface AI credits billing that made a new monetization model legible across three surfaces and two user types', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
   { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Installation analytics that gave developers site-level visibility into how their apps were actually being used', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
@@ -196,7 +196,6 @@ var ALL_PROJECTS = [
   { slug: 'internal-app-review-system', title: 'Internal Review System', sub: 'Internal review platform that replaced spreadsheet workarounds and became the team\'s primary tool for app approvals', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
   { slug: 'submit-publish-widget', title: 'Submit & Publish Widget', sub: 'Submission widget that surfaced blockers earlier, reduced rejections, and later enabled auto-publishing for live apps', cat: 'Developer tools', cats: 'developer', year: 2022, featured: false },
   { slug: 'api-keys-page', title: 'API Keys Page', sub: 'API key management that became the primary credential surface for developers building on Wix', cat: 'Developer tools', cats: 'developer cms', year: 2022, featured: false },
-  { slug: 'development-site-creation', title: 'Development Site Creation', sub: '', cat: 'Developer tools', cats: 'developer', year: 2021, featured: false },
   { slug: 'app-coupons', title: 'App Coupons', sub: 'Self-serve coupon platform that shifted promotions from employee-gated to fully developer-controlled', cat: 'Monetisation', cats: 'monetisation cms', year: 2021, featured: false }
 ];
 var CURRENT_SLUG = 'api-keys-page';
@@ -276,6 +275,5 @@ var CURRENT_SLUG = 'api-keys-page';
   }
 })();
 </script>
-  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

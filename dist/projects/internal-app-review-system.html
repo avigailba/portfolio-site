@@ -22,13 +22,13 @@
       <a href="../index.html">Projects</a>
       <a href="../about.html">About & Contact</a>
     </nav>
-    <button class="mob-burger" id="open-menu" aria-label="Open menu">
+    <button class="mob-burger" id="open-menu" aria-label="Open menu" aria-controls="mob-panel" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
-<div class="mob-scrim" id="mob-scrim"></div>
-<aside class="mob-panel" id="mob-panel">
+<div class="mob-scrim" id="mob-scrim" aria-hidden="true"></div>
+<aside class="mob-panel" id="mob-panel" aria-hidden="true" inert>
   <div class="mob-panel-top">
     <span class="mob-panel-title">Avigail Bahat</span>
     <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
@@ -74,7 +74,7 @@
   <img src="../images/img-3b135a9ccf7a80ea9f57cfaa4494fb64.jpg" alt="" loading="lazy">
 </figure>
 <h2>The problem</h2>
-<p><span class="ctx-tip" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.">Wix App Market</span>'s internal review platform is the tool Account Managers use to evaluate and approve apps before they go live. It spans four interconnected product areas: the app directory and queue, per-app activity and team views, the review workspace, and team management.</p>
+<p><button type="button" class="ctx-tip" aria-label="Wix App Market" aria-describedby="term-tip-1" aria-expanded="false">Wix App Market<span class="ctx-tip-pop" id="term-tip-1" role="tooltip">Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.</span></button>'s internal review platform is the tool Account Managers use to evaluate and approve apps before they go live. It spans four interconnected product areas: the app directory and queue, per-app activity and team views, the review workspace, and team management.</p>
 <p>When I joined the project, the team had stopped using it and the process was not <strong>platformized</strong>. Review work happened in personal Google Docs, which meant no shared history, no visibility into what changed between submissions, and no consistent way to hand off between reviewers. That wasn't sustainable and the volume of app submissions was only increasing.</p>
 <h2>Process</h2>
 <h3>Research</h3>
@@ -88,20 +88,20 @@ Pain points pointed to the UI, difficulties in writing a consistent review, the 
   <li>The  review workspace - <em>this was entirely new</em></li>
   <li>Account managers team management</li>
 </ol>
-<div class="col-layout col-4"><div class="col"><figcaption class="proj-caption">All apps - Browse, filter, and assign every app</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-4"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">All apps - Browse, filter, and assign every app</figcaption>
   <img src="../images/img-39b35a9ccf7a80639d30e7dab00429f6.jpg" alt="All apps - Browse, filter, and assign every app" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">App page - One app's details, activity, and team</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-39b35a9ccf7a8035852af27e1bc2f0e2.jpg" alt="App page - One app's details, activity, and team" loading="lazy">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">App page - One app's details, activity, and team</figcaption>
+  <img src="../images/img-39b35a9ccf7a8035852af27e1bc2f0e2.jpg" alt="App page - One app&#39;s details, activity, and team" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">New review workspace - Comment, report, then publish or decline</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">New review workspace - Comment, report, then publish or decline</figcaption>
   <img src="../images/img-39b35a9ccf7a80c799b3f07bc0270576.jpg" alt="New review workspace - Comment, report, then publish or decline" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Account managers team - Manage members, roles, and access</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Account managers team - Manage members, roles, and access</figcaption>
   <img src="../images/img-39b35a9ccf7a8059af6bd4b420b393ae.jpg" alt="Account managers team - Manage members, roles, and access" loading="lazy">
 </figure>
 </div></div>
@@ -119,99 +119,99 @@ Pain points pointed to the UI, difficulties in writing a consistent review, the 
   <li>Facilitated a bug hunt session with Account Managers before launch to validate the redesign and surface edge cases</li>
 </ul>
 <h2>Impact</h2>
-<p>The tool is still actively used by <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span>'s Developer Relations team. It reduced account manager workload, shortened the review cycle, and made app evaluations faster and more consistent across the team.</p>
+<p>The tool is still actively used by <button type="button" class="ctx-tip" aria-label="Wix" aria-describedby="term-tip-2" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-2" role="tooltip">Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></button>'s Developer Relations team. It reduced account manager workload, shortened the review cycle, and made app evaluations faster and more consistent across the team.</p>
 <h2>Screens</h2>
 <h3>Apps directory and review queue</h3>
 <p>The full marketplace directory, across all stages</p>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Apps dashboard - list of all apps with status, last change date, market status, app ID, and reviewer</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Apps dashboard - list of all apps with status, last change date, market status, app ID, and reviewer</figcaption>
   <img src="../images/img-3b050a27424045049837f37c0dbcbb0b.jpg" alt="Apps dashboard - list of all apps with status, last change date, market status, app ID, and reviewer" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Filtering the app queue by status and market listing to find specific apps quickly - more filters were added later on</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Filtering the app queue by status and market listing to find specific apps quickly - more filters were added later on</figcaption>
   <img src="../images/img-bbcd50dd77864ad2be7e03d4f1a45204.jpg" alt="Filtering the app queue by status and market listing to find specific apps quickly - more filters were added later on" loading="lazy">
 </figure>
 </div></div>
 <h3>App page</h3>
 <p>Submission history, team notes, and current status</p>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Per-app activity log - every status change, reviewer, and internal note tracked chronologically.</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Per-app activity log - every status change, reviewer, and internal note tracked chronologically.</figcaption>
   <img src="../images/img-6414b62696c949a69686d280fef78e32.jpg" alt="Per-app activity log - every status change, reviewer, and internal note tracked chronologically." loading="lazy">
 </figure>
-<figcaption class="proj-caption">All statuses and their actions and badges</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">All statuses and their actions and badges</figcaption>
   <img src="../images/img-39b35a9ccf7a804b8217cb08bc0b6874.jpg" alt="All statuses and their actions and badges" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Per-app activity log - app team view</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Per-app activity log - app team view</figcaption>
   <img src="../images/img-38435a9ccf7a803ca35ec7a3df5b0825.jpg" alt="Per-app activity log - app team view" loading="lazy">
 </figure>
 </div></div>
 <h3>Review workflow</h3>
 <p>Commenting, flagging issues, and submitting the review in one place</p>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Review report - comments organized by path, flagging issues by type and location within the app</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Review report - comments organized by path, flagging issues by type and location within the app</figcaption>
   <img src="../images/img-3a335a9ccf7a80439b98d3025148c52b.jpg" alt="Review report - comments organized by path, flagging issues by type and location within the app" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Previous activity tab - all changes and comments from the app's last review, surfaced for context</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-3a335a9ccf7a809bbb3fc6600510972e.jpg" alt="Previous activity tab - all changes and comments from the app's last review, surfaced for context" loading="lazy">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Previous activity tab - all changes and comments from the app's last review, surfaced for context</figcaption>
+  <img src="../images/img-3a335a9ccf7a809bbb3fc6600510972e.jpg" alt="Previous activity tab - all changes and comments from the app&#39;s last review, surfaced for context" loading="lazy">
 </figure>
 </div></div>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Adding a new comment to the report -the  reviewer selects the path and describes the issue before sending it to the developer and can mark it as a blocker to disable publishing</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Adding a new comment to the report -the  reviewer selects the path and describes the issue before sending it to the developer and can mark it as a blocker to disable publishing</figcaption>
   <img src="../images/img-38435a9ccf7a8086a5fcf9625e03c729.jpg" alt="Adding a new comment to the report -the  reviewer selects the path and describes the issue before sending it to the developer and can mark it as a blocker to disable publishing" loading="lazy">
 </figure>
-<figcaption class="proj-caption">All comment types</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">All comment types</figcaption>
   <img src="../images/img-39b35a9ccf7a80c8ac0ccd2a5f566729.jpg" alt="All comment types" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Adding an existing comment to the report - the reviewer can move a comment that wasn’t handled by the developer</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Adding an existing comment to the report - the reviewer can move a comment that wasn’t handled by the developer</figcaption>
   <img src="../images/img-38435a9ccf7a803fbbebe389d7ce23e4.jpg" alt="Adding an existing comment to the report - the reviewer can move a comment that wasn’t handled by the developer" loading="lazy">
 </figure>
 </div></div>
 <h3>Publish flow</h3>
 <p>The last step before publishing to the marketplace</p>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Opening the publish action from the app's more actions menu</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-3a335a9ccf7a800395b1eafb4c5fb66d.jpg" alt="Opening the publish action from the app's more actions menu" loading="lazy">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Opening the publish action from the app's more actions menu</figcaption>
+  <img src="../images/img-3a335a9ccf7a800395b1eafb4c5fb66d.jpg" alt="Opening the publish action from the app&#39;s more actions menu" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">First publish — revenue share agreement shown before confirming</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">First publish — revenue share agreement shown before confirming</figcaption>
   <img src="../images/img-38435a9ccf7a80eeb2a8f65463952fd5.jpg" alt="First publish — revenue share agreement shown before confirming" loading="lazy">
 </figure>
 </div></div>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Review report attached to the publish action</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Review report attached to the publish action</figcaption>
   <img src="../images/img-38435a9ccf7a80738a68efc0d5282683.jpg" alt="Review report attached to the publish action" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Adding an internal note before publishing</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Adding an internal note before publishing</figcaption>
   <img src="../images/img-38435a9ccf7a80ea9288f772303c0370.jpg" alt="Adding an internal note before publishing" loading="lazy">
 </figure>
 </div></div>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Publishing in progress — loading state as the app goes live</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Publishing in progress — loading state as the app goes live</figcaption>
   <img src="../images/img-38435a9ccf7a80cb893dd89508d7c2d3.jpg" alt="Publishing in progress — loading state as the app goes live" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">App successfully published to the marketplace and marked as “listed”</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">App successfully published to the marketplace and marked as “listed”</figcaption>
   <img src="../images/img-38435a9ccf7a802ba183ca8517f87af7.jpg" alt="App successfully published to the marketplace and marked as “listed”" loading="lazy">
 </figure>
 </div></div>
 <h3>Team management and roles</h3>
 <p>Role-based access for the review team</p>
-<div class="col-layout col-3"><div class="col"><figcaption class="proj-caption">Team management - all Cactus users, their roles and emails, with options to add or remove members</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-3"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Team management - all Cactus users, their roles and emails, with options to add or remove members</figcaption>
   <img src="../images/img-77849552a9324b4580d314b3bfc6e966.jpg" alt="Team management - all Cactus users, their roles and emails, with options to add or remove members" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Role assignment - four role types (Admin, Account Manager, Integration Manager, Viewer) control what each member can do</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Role assignment - four role types (Admin, Account Manager, Integration Manager, Viewer) control what each member can do</figcaption>
   <img src="../images/img-12c77f84c928436397cc7844a5773dc9.jpg" alt="Role assignment - four role types (Admin, Account Manager, Integration Manager, Viewer) control what each member can do" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Viewer role can preview the report but not make any changes</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Viewer role can preview the report but not make any changes</figcaption>
   <img src="../images/img-38435a9ccf7a806c83b8c68f5295bd4d.jpg" alt="Viewer role can preview the report but not make any changes" loading="lazy">
 </figure>
 </div></div>
@@ -231,12 +231,12 @@ Pain points pointed to the UI, difficulties in writing a consistent review, the 
       </div>
     </div>
   </section>
-  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true">
+  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true" aria-label="Project image viewer" aria-hidden="true" inert>
     <button class="lb-close" aria-label="Close">✕</button>
     <div class="lb-stage">
       <button class="lb-handle lb-prev" aria-label="Previous">‹</button>
       <div class="lb-content">
-        <img class="lb-img" src="" alt="">
+        <img class="lb-img" alt="">
         <p class="lb-caption"></p>
       </div>
       <button class="lb-handle lb-next" aria-label="Next">›</button>
@@ -275,7 +275,7 @@ Pain points pointed to the UI, difficulties in writing a consistent review, the 
   <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
 </footer>
   <script src="../script.js"></script>
-  <script>
+<script>
 var ALL_PROJECTS = [
   { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'Cross-surface AI credits billing that made a new monetization model legible across three surfaces and two user types', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
   { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Installation analytics that gave developers site-level visibility into how their apps were actually being used', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
@@ -288,7 +288,6 @@ var ALL_PROJECTS = [
   { slug: 'internal-app-review-system', title: 'Internal Review System', sub: 'Internal review platform that replaced spreadsheet workarounds and became the team\'s primary tool for app approvals', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
   { slug: 'submit-publish-widget', title: 'Submit & Publish Widget', sub: 'Submission widget that surfaced blockers earlier, reduced rejections, and later enabled auto-publishing for live apps', cat: 'Developer tools', cats: 'developer', year: 2022, featured: false },
   { slug: 'api-keys-page', title: 'API Keys Page', sub: 'API key management that became the primary credential surface for developers building on Wix', cat: 'Developer tools', cats: 'developer cms', year: 2022, featured: false },
-  { slug: 'development-site-creation', title: 'Development Site Creation', sub: '', cat: 'Developer tools', cats: 'developer', year: 2021, featured: false },
   { slug: 'app-coupons', title: 'App Coupons', sub: 'Self-serve coupon platform that shifted promotions from employee-gated to fully developer-controlled', cat: 'Monetisation', cats: 'monetisation cms', year: 2021, featured: false }
 ];
 var CURRENT_SLUG = 'internal-app-review-system';
@@ -368,6 +367,5 @@ var CURRENT_SLUG = 'internal-app-review-system';
   }
 })();
 </script>
-  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

@@ -22,13 +22,13 @@
       <a href="../index.html">Projects</a>
       <a href="../about.html">About & Contact</a>
     </nav>
-    <button class="mob-burger" id="open-menu" aria-label="Open menu">
+    <button class="mob-burger" id="open-menu" aria-label="Open menu" aria-controls="mob-panel" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
-<div class="mob-scrim" id="mob-scrim"></div>
-<aside class="mob-panel" id="mob-panel">
+<div class="mob-scrim" id="mob-scrim" aria-hidden="true"></div>
+<aside class="mob-panel" id="mob-panel" aria-hidden="true" inert>
   <div class="mob-panel-top">
     <span class="mob-panel-title">Avigail Bahat</span>
     <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
@@ -70,12 +70,12 @@
         </div>
       </div>
       <div class="proj-content">
-        <style>@media(max-width:768px){.cw-widget-col{display:none!important;}.cw-grid{grid-template-columns:1fr!important;}}.cw-grid>div>h2:first-child{margin-top:0;}</style><p><span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span> was rolling out AI features across the platform. Those features consumed credits. The design problem sounds simple: show users their balance, but it isn't: a billing concept that lives across three surfaces, two user tiers, and multiple plan states, with real consequences if someone misunderstands mid-task.</p>
+        <style>@media(max-width:768px){.cw-widget-col{display:none!important;}.cw-grid{grid-template-columns:1fr!important;}}.cw-grid>div>h2:first-child{margin-top:0;}</style><p><button type="button" class="ctx-tip" aria-label="Wix" aria-describedby="term-tip-1" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-1" role="tooltip">Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></button> was rolling out AI features across the platform. Those features consumed credits. The design problem sounds simple: show users their balance, but it isn't: a billing concept that lives across three surfaces, two user tiers, and multiple plan states, with real consequences if someone misunderstands mid-task.</p>
 <div class="cw-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin:32px 0;"><div><h2>Process</h2>
 <h3>Mapping the model</h3>
 <ul>
   <li>The tricky part was that free and premium users had completely different mental models: free users think "how much do I have today?" and premium users think "what did I pay for?"</li>
-  <li>The component also had to work consistently across three surfaces: <span class="ctx-tip" data-tip="Business Manager is the dashboard where Wix business owners manage their site and services.">Business Manager</span>, <span class="ctx-tip" data-tip="Wixel is Wix's AI-native product for creating and managing digital presence.">Wixel</span> (desktop and mobile), and AI vertical pages</li>
+  <li>The component also had to work consistently across three surfaces: <button type="button" class="ctx-tip" aria-label="Business Manager" aria-describedby="term-tip-2" aria-expanded="false">Business Manager<span class="ctx-tip-pop" id="term-tip-2" role="tooltip">Business Manager is the dashboard where Wix business owners manage their site and services.</span></button>, <button type="button" class="ctx-tip" aria-label="Wixel" aria-describedby="term-tip-3" aria-expanded="false">Wixel<span class="ctx-tip-pop" id="term-tip-3" role="tooltip">Wixel is Wix&#39;s AI-native product for creating and managing digital presence.</span></button> (desktop and mobile), and AI vertical pages</li>
 </ul>
 <h3>Designing the system</h3>
 <ul>
@@ -92,54 +92,54 @@
 <h2>Impact</h2>
 <p>Credits consumption grew significantly post-launch. The signal I was actually tracking was quieter, no support escalations, no confusion around the billing model. For infrastructure design, invisibility is the goal.</p>
 <h3>Balance component in context</h3>
-</div><figure class="cw-widget-col" style="margin:0;"><iframe src="credits-widget.html" title="Business Manager widget states" style="width:100%;height:580px;border:none;display:block;border-radius:8px;background:#ECECEE;" scrolling="no">Interactive demo showing the AI Credits wallet component across Free, Premium, and Top-up states in Business Manager.</iframe></figure></div><figcaption class="proj-caption"><strong>Free wallet, Business Manager</strong> — the credits balance at site level.</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-31135a9ccf7a80bb9dc7e85d3e3d7c20.jpg" alt="<strong>Free wallet, Business Manager</strong> — the credits balance at site level." loading="lazy">
+</div><figure class="cw-widget-col" style="margin:0;"><iframe src="credits-widget.html" title="Business Manager widget states" style="width:100%;height:580px;border:none;display:block;border-radius:8px;background:#ECECEE;" scrolling="no">Interactive demo showing the AI Credits wallet component across Free, Premium, and Top-up states in Business Manager.</iframe></figure></div><figure class="proj-img">
+  <figcaption class="proj-caption"><strong>Free wallet, Business Manager</strong> — the credits balance at site level.</figcaption>
+  <img src="../images/img-31135a9ccf7a80bb9dc7e85d3e3d7c20.jpg" alt="Free wallet, Business Manager — the credits balance at site level." loading="lazy">
 </figure>
-<figcaption class="proj-caption"><strong>Subscription wallet, Business Manager</strong> — the Premium wallet tied to a site plan.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-31135a9ccf7a806381bdd9ec728ec53a.jpg" alt="<strong>Subscription wallet, Business Manager</strong> — the Premium wallet tied to a site plan." loading="lazy">
+  <figcaption class="proj-caption"><strong>Subscription wallet, Business Manager</strong> — the Premium wallet tied to a site plan.</figcaption>
+  <img src="../images/img-31135a9ccf7a806381bdd9ec728ec53a.jpg" alt="Subscription wallet, Business Manager — the Premium wallet tied to a site plan." loading="lazy">
 </figure>
-<figcaption class="proj-caption"><strong>Free wallet, Wixel</strong> — the same component inside the Wixel editor.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-31135a9ccf7a80698805e1bf8fd35886.jpg" alt="<strong>Free wallet, Wixel</strong> — the same component inside the Wixel editor." loading="lazy">
+  <figcaption class="proj-caption"><strong>Free wallet, Wixel</strong> — the same component inside the Wixel editor.</figcaption>
+  <img src="../images/img-31135a9ccf7a80698805e1bf8fd35886.jpg" alt="Free wallet, Wixel — the same component inside the Wixel editor." loading="lazy">
 </figure>
 <h3>Wallet states across surfaces</h3>
-<div class="col-layout col-4"><div class="col"><figcaption class="proj-caption"><strong>Free wallet — all surfaces</strong> — states across Business Manager, Wixel, and Wixel mobile.</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-37135a9ccf7a8077a4a6c0775c6e8f7c.jpg" alt="<strong>Free wallet — all surfaces</strong> — states across Business Manager, Wixel, and Wixel mobile." loading="lazy">
+<div class="col-layout col-4"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption"><strong>Free wallet — all surfaces</strong> — states across Business Manager, Wixel, and Wixel mobile.</figcaption>
+  <img src="../images/img-37135a9ccf7a8077a4a6c0775c6e8f7c.jpg" alt="Free wallet — all surfaces — states across Business Manager, Wixel, and Wixel mobile." loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption"><strong>Paid wallet — all surfaces</strong> — paid states across the three surfaces.</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-37135a9ccf7a80a68a66e50411798ea1.jpg" alt="<strong>Paid wallet — all surfaces</strong> — paid states across the three surfaces." loading="lazy">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption"><strong>Paid wallet — all surfaces</strong> — paid states across the three surfaces.</figcaption>
+  <img src="../images/img-37135a9ccf7a80a68a66e50411798ea1.jpg" alt="Paid wallet — all surfaces — paid states across the three surfaces." loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption"><strong>Paid + top-up — all surfaces</strong> — top-up states across the three surfaces.</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-37135a9ccf7a8074b07bdad739f1d906.jpg" alt="<strong>Paid + top-up — all surfaces</strong> — top-up states across the three surfaces." loading="lazy">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption"><strong>Paid + top-up — all surfaces</strong> — top-up states across the three surfaces.</figcaption>
+  <img src="../images/img-37135a9ccf7a8074b07bdad739f1d906.jpg" alt="Paid + top-up — all surfaces — top-up states across the three surfaces." loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption"><strong>Edge cases</strong> — skeleton, error, and permission states.</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-37135a9ccf7a8002a6f2fe2827c27c16.jpg" alt="<strong>Edge cases</strong> — skeleton, error, and permission states." loading="lazy">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption"><strong>Edge cases</strong> — skeleton, error, and permission states.</figcaption>
+  <img src="../images/img-37135a9ccf7a8002a6f2fe2827c27c16.jpg" alt="Edge cases — skeleton, error, and permission states." loading="lazy">
 </figure>
 </div></div>
 <h3>Paywall &amp; notifications</h3>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption"><strong>Paywall modal</strong> — shown to free users; product-specific intro, generic body, vertical image slot.</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-37135a9ccf7a80d890c4ed0c5dcb308f.jpg" alt="<strong>Paywall modal</strong> — shown to free users; product-specific intro, generic body, vertical image slot." loading="lazy">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption"><strong>Paywall modal</strong> — shown to free users; product-specific intro, generic body, vertical image slot.</figcaption>
+  <img src="../images/img-37135a9ccf7a80d890c4ed0c5dcb308f.jpg" alt="Paywall modal — shown to free users; product-specific intro, generic body, vertical image slot." loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption"><strong>Out-of-credits notification</strong> — alert when a user runs out of credits.</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-37135a9ccf7a8016bd6ccb704d030c8a.jpg" alt="<strong>Out-of-credits notification</strong> — alert when a user runs out of credits." loading="lazy">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption"><strong>Out-of-credits notification</strong> — alert when a user runs out of credits.</figcaption>
+  <img src="../images/img-37135a9ccf7a8016bd6ccb704d030c8a.jpg" alt="Out-of-credits notification — alert when a user runs out of credits." loading="lazy">
 </figure>
 </div></div>
 <h3>Behind the scenes</h3>
-<figcaption class="proj-caption"><strong>Implementation</strong> — bug and design fixes shipped with Claude Code &amp; Superset.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-36e35a9ccf7a803ba89ef77190d91b47.jpg" alt="<strong>Implementation</strong> — bug and design fixes shipped with Claude Code &amp; Superset." loading="lazy">
+  <figcaption class="proj-caption"><strong>Implementation</strong> — bug and design fixes shipped with Claude Code &amp; Superset.</figcaption>
+  <img src="../images/img-36e35a9ccf7a803ba89ef77190d91b47.jpg" alt="Implementation — bug and design fixes shipped with Claude Code &amp; Superset." loading="lazy">
 </figure>
-<figcaption class="proj-caption"><strong>Credit-flow mapping</strong> — how credits move across workspace roles.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-37135a9ccf7a80529bf0d6ee9cadbd85.jpg" alt="<strong>Credit-flow mapping</strong> — how credits move across workspace roles." loading="lazy">
+  <figcaption class="proj-caption"><strong>Credit-flow mapping</strong> — how credits move across workspace roles.</figcaption>
+  <img src="../images/img-37135a9ccf7a80529bf0d6ee9cadbd85.jpg" alt="Credit-flow mapping — how credits move across workspace roles." loading="lazy">
 </figure>
 <h2>Bottom line</h2>
 <p>The measure of success here was silence: no support tickets, no confusion about what the numbers mean or what to do when they run out. Making the billing model legible to free and paid users without two completely separate experiences was the actual problem. The mental model work took longer than the interface. Credits consumption grew significantly after launch, but the signal I was actually tracking was quieter than that.</p>
@@ -157,12 +157,12 @@
       </div>
     </div>
   </section>
-  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true">
+  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true" aria-label="Project image viewer" aria-hidden="true" inert>
     <button class="lb-close" aria-label="Close">✕</button>
     <div class="lb-stage">
       <button class="lb-handle lb-prev" aria-label="Previous">‹</button>
       <div class="lb-content">
-        <img class="lb-img" src="" alt="">
+        <img class="lb-img" alt="">
         <p class="lb-caption"></p>
       </div>
       <button class="lb-handle lb-next" aria-label="Next">›</button>
@@ -201,7 +201,7 @@
   <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
 </footer>
   <script src="../script.js"></script>
-  <script>
+<script>
 var ALL_PROJECTS = [
   { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'Cross-surface AI credits billing that made a new monetization model legible across three surfaces and two user types', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
   { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Installation analytics that gave developers site-level visibility into how their apps were actually being used', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
@@ -214,7 +214,6 @@ var ALL_PROJECTS = [
   { slug: 'internal-app-review-system', title: 'Internal Review System', sub: 'Internal review platform that replaced spreadsheet workarounds and became the team\'s primary tool for app approvals', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
   { slug: 'submit-publish-widget', title: 'Submit & Publish Widget', sub: 'Submission widget that surfaced blockers earlier, reduced rejections, and later enabled auto-publishing for live apps', cat: 'Developer tools', cats: 'developer', year: 2022, featured: false },
   { slug: 'api-keys-page', title: 'API Keys Page', sub: 'API key management that became the primary credential surface for developers building on Wix', cat: 'Developer tools', cats: 'developer cms', year: 2022, featured: false },
-  { slug: 'development-site-creation', title: 'Development Site Creation', sub: '', cat: 'Developer tools', cats: 'developer', year: 2021, featured: false },
   { slug: 'app-coupons', title: 'App Coupons', sub: 'Self-serve coupon platform that shifted promotions from employee-gated to fully developer-controlled', cat: 'Monetisation', cats: 'monetisation cms', year: 2021, featured: false }
 ];
 var CURRENT_SLUG = 'ai-credits-wallet';
@@ -294,6 +293,5 @@ var CURRENT_SLUG = 'ai-credits-wallet';
   }
 })();
 </script>
-  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

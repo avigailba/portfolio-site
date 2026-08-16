@@ -21,13 +21,13 @@
       <a href="index.html">Projects</a>
       <a href="about.html">About & Contact</a>
     </nav>
-    <button class="mob-burger" id="open-menu" aria-label="Open menu">
+    <button class="mob-burger" id="open-menu" aria-label="Open menu" aria-controls="mob-panel" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
-<div class="mob-scrim" id="mob-scrim"></div>
-<aside class="mob-panel" id="mob-panel">
+<div class="mob-scrim" id="mob-scrim" aria-hidden="true"></div>
+<aside class="mob-panel" id="mob-panel" aria-hidden="true" inert>
   <div class="mob-panel-top">
     <span class="mob-panel-title">Avigail Bahat</span>
     <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
@@ -45,40 +45,40 @@
 </aside>
   
   <main class="home-band">
-    <p class="lede">I've spent 10+ years at Wix designing platform products: systems that serve multiple user types, span multiple surfaces, and have to hold up at scale.</p>
+    <p class="lede">I'm a senior product designer with 10+ years at Wix, working across a large B2B platform - App Market, developer tools, monetization flows like pricing, coupons, payouts, and refunds. Most of my work sits at the intersection of complex systems and everyday usability.</p>
     <div id="home-work" class="feat-grid">
-      <div class="feat-card" onclick="location.href='projects/internal-app-review-system.html'">
+      <a class="feat-card" href="projects/internal-app-review-system.html">
   <div class="feat-title">Internal Review System</div>
   <div class="feat-sub">Internal review platform that replaced spreadsheet workarounds and became the team's primary tool for app approvals</div>
   <div class="feat-arr">↗</div>
   <div class="feat-foot">
-    <a class="mob-view-btn" href="projects/internal-app-review-system.html" onclick="event.stopPropagation()">View project <span>↗</span></a>
+    <span class="mob-view-btn">View project <span>↗</span></span>
   </div>
-</div>
-  <div class="feat-card" onclick="location.href='projects/ai-credits-wallet.html'">
+</a>
+  <a class="feat-card" href="projects/ai-credits-wallet.html">
   <div class="feat-title">AI Credits</div>
   <div class="feat-sub">Cross-surface AI credits billing that made a new monetization model legible across three surfaces and two user types</div>
   <div class="feat-arr">↗</div>
   <div class="feat-foot">
-    <a class="mob-view-btn" href="projects/ai-credits-wallet.html" onclick="event.stopPropagation()">View project <span>↗</span></a>
+    <span class="mob-view-btn">View project <span>↗</span></span>
   </div>
-</div>
-  <div class="feat-card" onclick="location.href='projects/app-installation-page-for-developers.html'">
+</a>
+  <a class="feat-card" href="projects/app-installation-page-for-developers.html">
   <div class="feat-title">Installations Page</div>
   <div class="feat-sub">Installation analytics that gave developers site-level visibility into how their apps were actually being used</div>
   <div class="feat-arr">↗</div>
   <div class="feat-foot">
-    <a class="mob-view-btn" href="projects/app-installation-page-for-developers.html" onclick="event.stopPropagation()">View project <span>↗</span></a>
+    <span class="mob-view-btn">View project <span>↗</span></span>
   </div>
-</div>
-  <div class="feat-card" onclick="location.href='projects/developer-sale.html'">
+</a>
+  <a class="feat-card" href="projects/developer-sale.html">
   <div class="feat-title">Developer Sale</div>
   <div class="feat-sub">Sales infrastructure that made market-wide promotions possible and drove strong growth in subscriptions and upgrade revenue</div>
   <div class="feat-arr">↗</div>
   <div class="feat-foot">
-    <a class="mob-view-btn" href="projects/developer-sale.html" onclick="event.stopPropagation()">View project <span>↗</span></a>
+    <span class="mob-view-btn">View project <span>↗</span></span>
   </div>
-</div>
+</a>
     </div>
     <div class="home-allwork" id="home-allwork">
       <div class="work-header">
@@ -305,7 +305,6 @@
   <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
 </footer>
   <script src="script.js"></script>
-  
-  <script defer src="/_vercel/insights/script.js"></script>
+
 </body>
 </html>

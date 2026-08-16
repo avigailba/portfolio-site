@@ -22,13 +22,13 @@
       <a href="../index.html">Projects</a>
       <a href="../about.html">About & Contact</a>
     </nav>
-    <button class="mob-burger" id="open-menu" aria-label="Open menu">
+    <button class="mob-burger" id="open-menu" aria-label="Open menu" aria-controls="mob-panel" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
-<div class="mob-scrim" id="mob-scrim"></div>
-<aside class="mob-panel" id="mob-panel">
+<div class="mob-scrim" id="mob-scrim" aria-hidden="true"></div>
+<aside class="mob-panel" id="mob-panel" aria-hidden="true" inert>
   <div class="mob-panel-top">
     <span class="mob-panel-title">Avigail Bahat</span>
     <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
@@ -83,7 +83,7 @@
 <h3>Designing it</h3>
 <ul>
   <li>Designed the dashboard, transactions tab with filtering and search, and the data export modal</li>
-  <li>Designed the graph component, which was later contributed to the <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span> Design System</li>
+  <li>Designed the graph component, which was later contributed to the <button type="button" class="ctx-tip" aria-label="Wix" aria-describedby="term-tip-1" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-1" role="tooltip">Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></button> Design System</li>
 </ul>
 <h3>Edge cases</h3>
 <ul>
@@ -98,40 +98,40 @@
 </ul>
 <h2>Screens</h2>
 <h3>Dashboard &amp; transactions</h3>
-<figcaption class="proj-caption">Payouts dashboard - full view of the earnings summary and transactions tab</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Payouts dashboard - full view of the earnings summary and transactions tab</figcaption>
   <img src="../images/img-35d35a9ccf7a8073b385d213e1713332.jpg" alt="Payouts dashboard - full view of the earnings summary and transactions tab" loading="lazy">
 </figure>
-<figcaption class="proj-caption">Transactions tab - history with filtering, search, and inline refund actions</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Transactions tab - history with filtering, search, and inline refund actions</figcaption>
   <img src="../images/img-35d35a9ccf7a805a8cd2ec0d6079e77b.jpg" alt="Transactions tab - history with filtering, search, and inline refund actions" loading="lazy">
 </figure>
-<figcaption class="proj-caption">Export modal - download transaction history as a CSV</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Export modal - download transaction history as a CSV</figcaption>
   <img src="../images/img-35d35a9ccf7a8096abcbc281a0c7072a.jpg" alt="Export modal - download transaction history as a CSV" loading="lazy">
 </figure>
 <h3>Empty states</h3>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Empty state - user has no permission to view payouts</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Empty state - user has no permission to view payouts</figcaption>
   <img src="../images/img-38d35a9ccf7a8029a722ee7cba2625fb.jpg" alt="Empty state - user has no permission to view payouts" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Empty state - app uses external billing so can’t see its payout information</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Empty state - app uses external billing so can’t see its payout information</figcaption>
   <img src="../images/img-38d35a9ccf7a80b7b72cc6126f44290b.jpg" alt="Empty state - app uses external billing so can’t see its payout information" loading="lazy">
 </figure>
 </div></div>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Empty state - draft app</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Empty state - draft app</figcaption>
   <img src="../images/img-38d35a9ccf7a80b59922e8ed6b0e72a8.jpg" alt="Empty state - draft app" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Empty state - user has no purchases yet</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Empty state - user has no purchases yet</figcaption>
   <img src="../images/img-38d35a9ccf7a807aaa8ccb7d629baac1.jpg" alt="Empty state - user has no purchases yet" loading="lazy">
 </figure>
 </div></div>
 <h3>Export data</h3>
-<figcaption class="proj-caption">Download data modal - user can choose the desired date range</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Download data modal - user can choose the desired date range</figcaption>
   <img src="../images/img-38d35a9ccf7a800daac8f6320247a717.jpg" alt="Download data modal - user can choose the desired date range" loading="lazy">
 </figure>
 <h2>Bottom line</h2>
@@ -151,12 +151,12 @@
       </div>
     </div>
   </section>
-  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true">
+  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true" aria-label="Project image viewer" aria-hidden="true" inert>
     <button class="lb-close" aria-label="Close">✕</button>
     <div class="lb-stage">
       <button class="lb-handle lb-prev" aria-label="Previous">‹</button>
       <div class="lb-content">
-        <img class="lb-img" src="" alt="">
+        <img class="lb-img" alt="">
         <p class="lb-caption"></p>
       </div>
       <button class="lb-handle lb-next" aria-label="Next">›</button>
@@ -195,7 +195,7 @@
   <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
 </footer>
   <script src="../script.js"></script>
-  <script>
+<script>
 var ALL_PROJECTS = [
   { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'Cross-surface AI credits billing that made a new monetization model legible across three surfaces and two user types', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
   { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Installation analytics that gave developers site-level visibility into how their apps were actually being used', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
@@ -208,7 +208,6 @@ var ALL_PROJECTS = [
   { slug: 'internal-app-review-system', title: 'Internal Review System', sub: 'Internal review platform that replaced spreadsheet workarounds and became the team\'s primary tool for app approvals', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
   { slug: 'submit-publish-widget', title: 'Submit & Publish Widget', sub: 'Submission widget that surfaced blockers earlier, reduced rejections, and later enabled auto-publishing for live apps', cat: 'Developer tools', cats: 'developer', year: 2022, featured: false },
   { slug: 'api-keys-page', title: 'API Keys Page', sub: 'API key management that became the primary credential surface for developers building on Wix', cat: 'Developer tools', cats: 'developer cms', year: 2022, featured: false },
-  { slug: 'development-site-creation', title: 'Development Site Creation', sub: '', cat: 'Developer tools', cats: 'developer', year: 2021, featured: false },
   { slug: 'app-coupons', title: 'App Coupons', sub: 'Self-serve coupon platform that shifted promotions from employee-gated to fully developer-controlled', cat: 'Monetisation', cats: 'monetisation cms', year: 2021, featured: false }
 ];
 var CURRENT_SLUG = 'payouts-page';
@@ -288,6 +287,5 @@ var CURRENT_SLUG = 'payouts-page';
   }
 })();
 </script>
-  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

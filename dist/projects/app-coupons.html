@@ -22,13 +22,13 @@
       <a href="../index.html">Projects</a>
       <a href="../about.html">About & Contact</a>
     </nav>
-    <button class="mob-burger" id="open-menu" aria-label="Open menu">
+    <button class="mob-burger" id="open-menu" aria-label="Open menu" aria-controls="mob-panel" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
-<div class="mob-scrim" id="mob-scrim"></div>
-<aside class="mob-panel" id="mob-panel">
+<div class="mob-scrim" id="mob-scrim" aria-hidden="true"></div>
+<aside class="mob-panel" id="mob-panel" aria-hidden="true" inert>
   <div class="mob-panel-top">
     <span class="mob-panel-title">Avigail Bahat</span>
     <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
@@ -74,7 +74,7 @@
   <img src="../images/img-3b135a9ccf7a8045937fde7d0b3faef1.jpg" alt="" loading="lazy">
 </figure>
 <p>I designed and built the self-serve coupons management page in the Developer Center, enabling app developers to create and manage their own promotional coupons independently. </p>
-<p>Before May 2021, coupon creation was a manual process handled exclusively by <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span> employees - a bottleneck that kept the total coupon count minimal over the platform's entire history. </p>
+<p>Before May 2021, coupon creation was a manual process handled exclusively by <button type="button" class="ctx-tip" aria-label="Wix" aria-describedby="term-tip-1" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-1" role="tooltip">Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></button> employees - a bottleneck that kept the total coupon count minimal over the platform's entire history. </p>
 <h3>Designing it</h3>
 <ul>
   <li>Designed the coupon creation flow, eligibility rules, and active/inactive management views</li>
@@ -90,21 +90,21 @@
 <p>By 2025, the number of apps actively using coupons had increased more than 10x, and coupons now drive 27% of all app upgrades.</p>
 <h2>Screens</h2>
 <h3>Creating a coupon</h3>
-<figcaption class="proj-caption">Coupons empty state — first-time view prompting developers to add their first coupon</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Coupons empty state — first-time view prompting developers to add their first coupon</figcaption>
   <img src="../images/img-f6b2efb77c8741d7840f09ad0974e9aa.jpg" alt="Coupons empty state — first-time view prompting developers to add their first coupon" loading="lazy">
 </figure>
-<figcaption class="proj-caption">Coupon creation modal — fields for name, code, discount type, plan eligibility, date range, and usage limits</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Coupon creation modal — fields for name, code, discount type, plan eligibility, date range, and usage limits</figcaption>
   <img src="../images/img-da4b3ce6422447188054a13bf34a3563.jpg" alt="Coupon creation modal — fields for name, code, discount type, plan eligibility, date range, and usage limits" loading="lazy">
 </figure>
 <h3>Managing coupons</h3>
-<figcaption class="proj-caption">Active coupons list — each coupon’s code, discount, plan scope, date range, usage count, and live status</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Active coupons list — each coupon’s code, discount, plan scope, date range, usage count, and live status</figcaption>
   <img src="../images/img-2249a147571f408a8f47281b92c2bf89.jpg" alt="Active coupons list — each coupon’s code, discount, plan scope, date range, usage count, and live status" loading="lazy">
 </figure>
-<figcaption class="proj-caption">Inactive coupons tab — expired and limit-reached coupons with status flags like Expired, Limit Reached, and Plan Deleted</figcaption>
 <figure class="proj-img">
+  <figcaption class="proj-caption">Inactive coupons tab — expired and limit-reached coupons with status flags like Expired, Limit Reached, and Plan Deleted</figcaption>
   <img src="../images/img-26f9d07f9be74806800ac2940c81683a.jpg" alt="Inactive coupons tab — expired and limit-reached coupons with status flags like Expired, Limit Reached, and Plan Deleted" loading="lazy">
 </figure>
 <h2>Bottom line</h2>
@@ -123,12 +123,12 @@
       </div>
     </div>
   </section>
-  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true">
+  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true" aria-label="Project image viewer" aria-hidden="true" inert>
     <button class="lb-close" aria-label="Close">✕</button>
     <div class="lb-stage">
       <button class="lb-handle lb-prev" aria-label="Previous">‹</button>
       <div class="lb-content">
-        <img class="lb-img" src="" alt="">
+        <img class="lb-img" alt="">
         <p class="lb-caption"></p>
       </div>
       <button class="lb-handle lb-next" aria-label="Next">›</button>
@@ -167,7 +167,7 @@
   <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
 </footer>
   <script src="../script.js"></script>
-  <script>
+<script>
 var ALL_PROJECTS = [
   { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'Cross-surface AI credits billing that made a new monetization model legible across three surfaces and two user types', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
   { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Installation analytics that gave developers site-level visibility into how their apps were actually being used', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
@@ -180,7 +180,6 @@ var ALL_PROJECTS = [
   { slug: 'internal-app-review-system', title: 'Internal Review System', sub: 'Internal review platform that replaced spreadsheet workarounds and became the team\'s primary tool for app approvals', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
   { slug: 'submit-publish-widget', title: 'Submit & Publish Widget', sub: 'Submission widget that surfaced blockers earlier, reduced rejections, and later enabled auto-publishing for live apps', cat: 'Developer tools', cats: 'developer', year: 2022, featured: false },
   { slug: 'api-keys-page', title: 'API Keys Page', sub: 'API key management that became the primary credential surface for developers building on Wix', cat: 'Developer tools', cats: 'developer cms', year: 2022, featured: false },
-  { slug: 'development-site-creation', title: 'Development Site Creation', sub: '', cat: 'Developer tools', cats: 'developer', year: 2021, featured: false },
   { slug: 'app-coupons', title: 'App Coupons', sub: 'Self-serve coupon platform that shifted promotions from employee-gated to fully developer-controlled', cat: 'Monetisation', cats: 'monetisation cms', year: 2021, featured: false }
 ];
 var CURRENT_SLUG = 'app-coupons';
@@ -260,6 +259,5 @@ var CURRENT_SLUG = 'app-coupons';
   }
 })();
 </script>
-  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
