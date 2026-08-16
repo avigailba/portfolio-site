@@ -8,10 +8,11 @@ if (!process.env.NOTION_API_KEY) {
   } catch (e) {}
 }
 process.env.NOTION_API_KEY = process.env.NOTION_API_KEY || process.env.NOTION_TOKEN;
+const STRICT_BUILD = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true' || process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
 if (!process.env.NOTION_API_KEY) {
-  console.error('ERROR: NOTION_API_KEY is not set — building static fallback only');
+  console.warn('NOTION_API_KEY is not set, building a local static fallback');
 } else {
-  console.log('NOTION_API_KEY found:', process.env.NOTION_API_KEY.slice(0, 8) + '...');
+  console.log('Notion credentials found');
 }
 const { Client } = require('@notionhq/client');
 const fs = require('fs');
@@ -156,6 +157,15 @@ function rt(richText) {
     }).join('');
 }
 
+function escapeAttr(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 async function toHtml(blocks, imgPrefix = '') {
   let html = '', uList = false, oList = false, firstParaSeen = false;
   for (const b of blocks) {
@@ -223,7 +233,9 @@ async function toHtml(blocks, imgPrefix = '') {
       case 'divider': html += '<hr>\n'; break;
       case 'image': {
         let url = b.image.type === 'external' ? b.image.external.url : b.image.file.url;
-        const cap = b.image.caption?.length ? rt(b.image.caption) : '';
+        const caption = b.image.caption || [];
+        const capHtml = caption.length ? rt(caption) : '';
+        const capText = caption.length ? plainText(caption).trim() : '';
         if (url.includes('amazonaws.com') || url.includes('prod-files-secure')) {
           const blockId = b.id.replace(/-/g, '');
           const fname = `img-${blockId}.jpg`;
@@ -239,7 +251,7 @@ async function toHtml(blocks, imgPrefix = '') {
             } catch (e) { stats.errors.push(`${fname}: ${e.message}`); }
           }
         }
-        html += `${cap ? `<figcaption class="proj-caption">${cap}</figcaption>\n` : ''}<figure class="proj-img">\n  <img src="${url}" alt="${cap}" loading="lazy">\n</figure>\n`;
+        html += `<figure class="proj-img">\n${capHtml ? `  <figcaption class="proj-caption">${capHtml}</figcaption>\n` : ''}  <img src="${escapeAttr(url)}" alt="${escapeAttr(capText)}" loading="lazy">\n</figure>\n`;
         break;
       }
     }
@@ -301,11 +313,13 @@ function injectTooltips(html) {
   const re      = new RegExp(`\\b(${pattern})\\b`, 'g');
 
   const seen = new Set();
+  let tipIndex = 0;
   const processed = intro.replace(re, (match) => {
     if (seen.has(match)) return match; // only first occurrence of each term
     seen.add(match);
-    const tipText = TERM_TIPS[match].replace(/"/g, '&quot;');
-    return `<span class="ctx-tip" data-tip="${tipText}">${match}</span>`;
+    const tipText = TERM_TIPS[match];
+    const tipId = `term-tip-${++tipIndex}`;
+    return `<button type="button" class="ctx-tip" aria-label="${escapeAttr(match)}" aria-describedby="${tipId}" aria-expanded="false">${match}<span class="ctx-tip-pop" id="${tipId}" role="tooltip">${escapeAttr(tipText)}</span></button>`;
   });
 
   return processed + rest;
@@ -335,13 +349,13 @@ function hdr(prefix) {
       <a href="${prefix}index.html">Projects</a>
       <a href="${prefix}about.html">About & Contact</a>
     </nav>
-    <button class="mob-burger" id="open-menu" aria-label="Open menu">
+    <button class="mob-burger" id="open-menu" aria-label="Open menu" aria-controls="mob-panel" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
-<div class="mob-scrim" id="mob-scrim"></div>
-<aside class="mob-panel" id="mob-panel">
+<div class="mob-scrim" id="mob-scrim" aria-hidden="true"></div>
+<aside class="mob-panel" id="mob-panel" aria-hidden="true" inert>
   <div class="mob-panel-top">
     <span class="mob-panel-title">Avigail Bahat</span>
     <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
@@ -396,6 +410,9 @@ function ftr(prefix = '') {
 
 // prefix: '' for root pages, '../' for project pages
 function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass = '') {
+  const analyticsScript = process.env.VERCEL === '1'
+    ? '\n<script defer src="/_vercel/insights/script.js"></script>'
+    : '';
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -413,8 +430,7 @@ function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass =
   ${body}
   ${ftr(prefix)}
   <script src="${prefix}script.js"></script>
-  ${extraScript}
-  <script defer src="/_vercel/insights/script.js"></script>
+${extraScript}${analyticsScript}
 </body>
 </html>`;
 }
@@ -430,20 +446,22 @@ function indexPage(projects, tagline) {
   const featHtml = FEAT_ORDER.map((slug) => {
     const meta = PROJECT_META[slug];
     const subtitle = bySlug[slug]?.subtitle || bySlug[slug]?.summary || meta.subtitle || '';
-    return `<div class="feat-card" onclick="location.href='projects/${slug}.html'">
+    return `<a class="feat-card" href="projects/${slug}.html">
   <div class="feat-title">${meta.title}</div>
   ${subtitle ? `<div class="feat-sub">${subtitle}</div>` : ''}
   <div class="feat-arr">↗</div>
   <div class="feat-foot">
-    <a class="mob-view-btn" href="projects/${slug}.html" onclick="event.stopPropagation()">View project <span>↗</span></a>
+    <span class="mob-view-btn">View project <span>↗</span></span>
   </div>
-</div>`;
+</a>`;
   }).join('\n  ');
 
   // Full list: sort by year desc, then by PROJECT_META insertion order
   const metaSlugs = Object.keys(PROJECT_META);
   // When Notion is unavailable projects is empty — fall back to all known slugs
-  const allSlugs = projects.length > 0 ? metaSlugs.filter(s => bySlug[s]) : [...metaSlugs];
+  const allSlugs = projects.length > 0
+    ? metaSlugs.filter(s => bySlug[s] && !SKIP_SLUGS.has(s))
+    : metaSlugs.filter(s => !SKIP_SLUGS.has(s));
   for (const p of projects) {
     if (!PROJECT_META[p.slug] && !allSlugs.includes(p.slug)) allSlugs.push(p.slug);
   }
@@ -566,6 +584,7 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
   const nextTitle = nextProj ? titleCase(nextProj.title || PROJECT_META[nextProj.slug]?.title || 'Project') : null;
 
   const allProjectsJs = Object.entries(PROJECT_META)
+    .filter(([slug]) => !SKIP_SLUGS.has(slug))
     .map(([slug, m]) => {
       const sub = (subtitleMap[slug] || '').replace(/'/g, "\\'");
       return `  { slug: '${slug}', title: '${m.title.replace(/'/g, "\\'")}', sub: '${sub}', cat: '${m.display}', cats: '${m.cats}', year: ${m.year}, featured: ${m.featured} }`;
@@ -645,12 +664,12 @@ var CURRENT_SLUG = '${proj.slug}';
       </div>
     </div>
   </section>
-  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true">
+  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true" aria-label="Project image viewer" aria-hidden="true" inert>
     <button class="lb-close" aria-label="Close">✕</button>
     <div class="lb-stage">
       <button class="lb-handle lb-prev" aria-label="Previous">‹</button>
       <div class="lb-content">
-        <img class="lb-img" src="" alt="">
+        <img class="lb-img" alt="">
         <p class="lb-caption"></p>
       </div>
       <button class="lb-handle lb-next" aria-label="Next">›</button>
@@ -857,9 +876,10 @@ function designSystemPage(notionConnected) {
     { hex: '#22c55e', name: 'Available', usage: 'Availability dot only' },
   ];
   const typeRows = [
-    { sample: 'AI Credits',                  spec: '54px / 700 / −0.03em / Plus Jakarta Sans', where: 'Project page title, featured cards (.proj-title, .feat-title)',        style: 'font-size:54px;font-weight:700;letter-spacing:-0.03em;color:#0a0a0a;line-height:1.1;font-family:"Plus Jakarta Sans",sans-serif' },
+    { sample: 'AI Credits',                  spec: '54px / 700 / −0.03em / Plus Jakarta Sans', where: 'Project page title (.proj-title-m)',                                  style: 'font-size:54px;font-weight:700;letter-spacing:-0.03em;color:#0a0a0a;line-height:1.1;font-family:Plus Jakarta Sans,sans-serif' },
+    { sample: 'Featured project',            spec: 'clamp(24–40px) / 700 / −0.03em / Plus Jakarta Sans', where: 'Featured project title (.feat-title)',                        style: 'font-size:40px;font-weight:700;letter-spacing:-0.03em;color:#0a0a0a;line-height:1.1;font-family:Plus Jakarta Sans,sans-serif' },
     { sample: 'Design system',               spec: '32px / 700 / −0.02em / Roboto',             where: 'Inner page h1, footer statement, project section headings (.inner-content h1, .footer-statement, .proj-content h2)', style: 'font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a' },
-    { sample: 'Senior UX designer.',         spec: '28px / 500 / −0.01em / Plus Jakarta Sans', where: 'Homepage lede (.lede)',                                               style: 'font-size:28px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;font-family:"Plus Jakarta Sans",sans-serif' },
+    { sample: 'Senior UX designer.',         spec: '28px / 500 / −0.01em / Plus Jakarta Sans', where: 'Homepage lede (.lede)',                                               style: 'font-size:28px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;font-family:Plus Jakarta Sans,sans-serif' },
     { sample: 'Transparent AI usage billing across the platform.', spec: '20px / 500 / Roboto', where: 'Project subtitle, content sub-headings, CV role titles (.proj-subtitle, .proj-content h3, .cv-title)', style: 'font-size:20px;font-weight:500;color:#0a0a0a;line-height:1.4' },
     { sample: 'Body copy — project content, about, contact, work rows.', spec: '16px / 400 / Roboto / lh 1.7 / #555', where: 'All body and secondary text (.proj-intro, .proj-content p, .proj-body, .row-title, .cv-desc, .cv-years, .contact-intro)', style: 'font-size:16px;color:#555;line-height:1.7' },
     { sample: 'FEATURED WORK · EXPERIENCE',  spec: '14px / 400 / uppercase / 0.07–0.08em',   where: 'Section labels, about page section labels (.section-label, .more-label, .about-notion h2)', style: 'font-size:14px;letter-spacing:0.07em;text-transform:uppercase;color:#555' },
@@ -1151,7 +1171,7 @@ function designSystemPage(notionConnected) {
           <div class="ds-comp-block">
             <span class="ds-comp-label">Featured card (mobile)</span>
             <div class="ds-comp-demo" style="padding:20px 0;border-left:none;border-right:none;border-radius:0;">
-              <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:48px;font-weight:800;letter-spacing:-0.03em;line-height:1.05;color:#0a0a0a;margin-bottom:10px;">AI Credits</div>
+              <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;letter-spacing:-0.03em;line-height:1.08;color:#0a0a0a;margin-bottom:10px;">AI Credits</div>
               <div style="font-size:15px;color:#555;margin-bottom:14px;">AI credits billing system across Business Manager and Wixel</div>
               <a href="#" style="font-size:14px;font-weight:500;color:#2b6cff;text-decoration:none;">View project ↗</a>
             </div>
@@ -1223,6 +1243,9 @@ function designSystemPage(notionConnected) {
 // ── Build ────────────────────────────────────────────────────
 
 async function build() {
+  if (STRICT_BUILD && !process.env.NOTION_API_KEY) {
+    throw new Error('NOTION_API_KEY is required for production builds');
+  }
   fs.mkdirSync(DIST, { recursive: true });
   fs.mkdirSync(PROJECTS_DIR, { recursive: true });
   fs.mkdirSync(IMAGES, { recursive: true });
@@ -1234,6 +1257,7 @@ async function build() {
 
   let projects = [];
   let subtitleMap = {};
+  const writtenProjectFiles = new Set();
   let tagline = "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
   let aboutHtml = '';
 
@@ -1255,12 +1279,18 @@ async function build() {
       projects.push({ ...p, title, icon, year, slug, summary, subtitle, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
     }
 
+    if (STRICT_BUILD && stats.errors.length) {
+      throw new Error(`Failed to download ${stats.errors.length} project image(s)`);
+    }
+
     for (const p of projects) subtitleMap[p.slug] = p.subtitle;
 
     for (let i = 0; i < projects.length; i++) {
       const prev = projects[(i - 1 + projects.length) % projects.length];
       const next = projects[(i + 1) % projects.length];
-      fs.writeFileSync(path.join(PROJECTS_DIR, `${projects[i].slug}.html`), projectPage(projects[i], prev, next, subtitleMap));
+      const filename = `${projects[i].slug}.html`;
+      fs.writeFileSync(path.join(PROJECTS_DIR, filename), projectPage(projects[i], prev, next, subtitleMap));
+      writtenProjectFiles.add(filename);
       stats.pages++;
       console.log(`  ✓ projects/${projects[i].slug}.html`);
     }
@@ -1269,17 +1299,25 @@ async function build() {
       const hpBlocks = await notion.blocks.children.list({ block_id: HOMEPAGE_PAGE_ID });
       const firstPara = hpBlocks.results.find(b => b.type === 'paragraph');
       if (firstPara) tagline = plainText(firstPara.paragraph.rich_text) || tagline;
-    } catch (e) { console.log('Could not fetch homepage tagline, using default'); }
+    } catch (e) {
+      if (STRICT_BUILD) throw e;
+      console.log('Could not fetch homepage tagline, using default');
+    }
 
     try {
       const aboutBlocks = await fetchBlocks(ABOUT_PAGE_ID);
       aboutHtml = await toHtml(aboutBlocks, '');
-    } catch (e) { console.log('Could not fetch About page from Notion, using fallback'); }
+    } catch (e) {
+      if (STRICT_BUILD) throw e;
+      console.log('Could not fetch About page from Notion, using fallback');
+    }
 
 
   } catch (e) {
     console.error('Notion fetch failed:', e.code || e.status, e.message);
-    console.error('Full error:', JSON.stringify(e.body || e, null, 2));
+    if (STRICT_BUILD) throw new Error(`Production content fetch failed: ${e.message}`);
+    projects = [];
+    subtitleMap = {};
   }
 
   // Generate fallback pages for any META slugs not fetched from Notion
@@ -1294,7 +1332,9 @@ async function build() {
       subtitle: '',
       contentHtml: '',
     };
-    fs.writeFileSync(path.join(PROJECTS_DIR, `${slug}.html`), projectPage(fallbackProj, null, null, subtitleMap));
+    const filename = `${slug}.html`;
+    fs.writeFileSync(path.join(PROJECTS_DIR, filename), projectPage(fallbackProj, null, null, subtitleMap));
+    writtenProjectFiles.add(filename);
     stats.pages++;
     console.log(`  ✓ projects/${slug}.html (static fallback)`);
   }
@@ -1314,6 +1354,7 @@ async function build() {
   const widgetSrc = path.join(__dirname, 'credits-widget.html');
   if (fs.existsSync(widgetSrc)) {
     fs.copyFileSync(widgetSrc, path.join(PROJECTS_DIR, 'credits-widget.html'));
+    writtenProjectFiles.add('credits-widget.html');
     console.log('  ✓ projects/credits-widget.html');
   }
   const widgetAssetsSrc = path.join(__dirname, 'credits-widget-assets');
@@ -1326,6 +1367,13 @@ async function build() {
     console.log('  ✓ projects/credits-widget-assets/');
   }
 
+  for (const file of fs.readdirSync(PROJECTS_DIR)) {
+    if (file.endsWith('.html') && !writtenProjectFiles.has(file)) {
+      fs.unlinkSync(path.join(PROJECTS_DIR, file));
+      console.log(`  ✓ removed stale projects/${file}`);
+    }
+  }
+
   console.log(`\n✓ Done — ${stats.pages} pages, ${stats.images} images downloaded, ${stats.cached || 0} cached`);
   if (stats.errors.length) {
     console.log(`  ${stats.errors.length} error(s):`);
@@ -1333,4 +1381,4 @@ async function build() {
   }
 }
 
-build().catch(err => { console.error('Build error:', err.message); process.exit(0); });
+build().catch(err => { console.error('Build error:', err.message); process.exitCode = 1; });

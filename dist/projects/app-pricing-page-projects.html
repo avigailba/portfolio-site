@@ -22,13 +22,13 @@
       <a href="../index.html">Projects</a>
       <a href="../about.html">About & Contact</a>
     </nav>
-    <button class="mob-burger" id="open-menu" aria-label="Open menu">
+    <button class="mob-burger" id="open-menu" aria-label="Open menu" aria-controls="mob-panel" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
-<div class="mob-scrim" id="mob-scrim"></div>
-<aside class="mob-panel" id="mob-panel">
+<div class="mob-scrim" id="mob-scrim" aria-hidden="true"></div>
+<aside class="mob-panel" id="mob-panel" aria-hidden="true" inert>
   <div class="mob-panel-top">
     <span class="mob-panel-title">Avigail Bahat</span>
     <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
@@ -73,17 +73,17 @@
         <figure class="proj-img">
   <img src="../images/img-3b135a9ccf7a80d08c0bf0ff3c666388.jpg" alt="" loading="lazy">
 </figure>
-<p>The <span class="ctx-tip" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.">Wix App Market</span> pricing infrastructure is the foundation for how developers monetize their apps. I owned the long-term UX evolution across multiple shipping cycles - introducing flexible billing models, transforming plan creation from a modal to a full page, redesigning the pricing comparison interface, and leading the platform-wide migration to <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span>-managed free trials.</p>
+<p>The <button type="button" class="ctx-tip" aria-label="Wix App Market" aria-describedby="term-tip-1" aria-expanded="false">Wix App Market<span class="ctx-tip-pop" id="term-tip-1" role="tooltip">Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.</span></button> pricing infrastructure is the foundation for how developers monetize their apps. I owned the long-term UX evolution across multiple shipping cycles - introducing flexible billing models, transforming plan creation from a modal to a full page, redesigning the pricing comparison interface, and leading the platform-wide migration to <button type="button" class="ctx-tip" aria-label="Wix" aria-describedby="term-tip-2" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-2" role="tooltip">Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></button>-managed free trials.</p>
 <hr>
 <hr>
 <h3>1. Wix-managed Free Trial</h3>
 <p>App developers on the Wix App Market had to implement free trials themselves. Checkout occurred only after the trial ended, resulting in notable conversion drop-off. I led the end-to-end UX for a new Wix-managed Free Trial: $0 upfront checkout with auto-billing at trial end. Scope covered the full journey: package picker, checkout, manage-apps states, email notifications, and a migration plan for apps already on self-managed trials. The result was strong trial-to-paid conversion and significant subscription growth in the first year.</p>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Migration notice shown to developers already running self-managed trials, prompting them to switch to the new Wix-managed system</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Migration notice shown to developers already running self-managed trials, prompting them to switch to the new Wix-managed system</figcaption>
   <img src="../images/img-35d35a9ccf7a80f494f0c9e57aa55de5.jpg" alt="Migration notice shown to developers already running self-managed trials, prompting them to switch to the new Wix-managed system" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Confirmation modal for activating the new Wix-managed free trial — warns developers that changes only go live once the app is published</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Confirmation modal for activating the new Wix-managed free trial — warns developers that changes only go live once the app is published</figcaption>
   <img src="../images/img-35d35a9ccf7a80fe9d64e74b4b6ad4a2.jpg" alt="Confirmation modal for activating the new Wix-managed free trial — warns developers that changes only go live once the app is published" loading="lazy">
 </figure>
 </div></div>
@@ -91,71 +91,71 @@
 <h3><strong>2. Adding Various Pricing Models (e.g., "Pay as You Go," "Metered Billing")</strong></h3>
 <p>App developers were originally limited to fixed-price subscriptions - no usage-based models existed. I designed the UX for Pay-as-you-go and Metered Billing, tackling the challenge of helping developers identify the right model and configure valid plan combinations. </p>
 <p>This produced a conditions matrix, a decision flowchart, and a business model selector, making the choice clear at a glance.</p>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Conditions matrix mapping every valid combination of plan types, billing cycles, and pricing models</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Conditions matrix mapping every valid combination of plan types, billing cycles, and pricing models</figcaption>
   <img src="../images/img-17d35a9ccf7a8016a710ea5e9984964b.jpg" alt="Conditions matrix mapping every valid combination of plan types, billing cycles, and pricing models" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Decision flowchart guiding developers to the right pricing model based on their app's business structure</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-17d35a9ccf7a802ebca2d5e1234ab925.jpg" alt="Decision flowchart guiding developers to the right pricing model based on their app's business structure" loading="lazy">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Decision flowchart guiding developers to the right pricing model based on their app's business structure</figcaption>
+  <img src="../images/img-17d35a9ccf7a802ebca2d5e1234ab925.jpg" alt="Decision flowchart guiding developers to the right pricing model based on their app&#39;s business structure" loading="lazy">
 </figure>
 </div></div>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Business model selector - the entry point where developers choose their pricing structure before configuring plans</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Business model selector - the entry point where developers choose their pricing structure before configuring plans</figcaption>
   <img src="../images/img-36c35a9ccf7a80c791edf8fde2ce4abe.jpg" alt="Business model selector - the entry point where developers choose their pricing structure before configuring plans" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Add a plan page - user can choose to add the new usage-based plan</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Add a plan page - user can choose to add the new usage-based plan</figcaption>
   <img src="../images/img-36c35a9ccf7a80f0be4ed62e684ae804.jpg" alt="Add a plan page - user can choose to add the new usage-based plan" loading="lazy">
 </figure>
 </div></div>
 <hr>
 <h3><strong>3. Revamping the “add a plan” page, which was a modal</strong></h3>
 <p>The original "add a plan" experience was a compact modal - functional but constrained as plans grew more complex. I redesigned it as a dedicated full-page experience, giving each configuration step room to breathe and making the layout extensible for future features.</p>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Before: The original plan creation modal - constrained layout with limited room for complex configurations</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Before: The original plan creation modal - constrained layout with limited room for complex configurations</figcaption>
   <img src="../images/img-35d35a9ccf7a806ca8cee985770216cd.jpg" alt="Before: The original plan creation modal - constrained layout with limited room for complex configurations" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">After: Redesigned as a full, scalable, dedicated page, giving each configuration field space and improving usability for complex plans</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">After: Redesigned as a full, scalable, dedicated page, giving each configuration field space and improving usability for complex plans</figcaption>
   <img src="../images/img-36c35a9ccf7a80abacb7e7dd301204ac.jpg" alt="After: Redesigned as a full, scalable, dedicated page, giving each configuration field space and improving usability for complex plans" loading="lazy">
 </figure>
 </div></div>
 <hr>
 <h3><strong>4. Revamping the Pricing Comparison Page</strong></h3>
 <p>The pricing comparison page is the first thing users see when evaluating plans, so clarity and conversion matter. I redesigned it to improve plan differentiation, simplify the visual hierarchy, and give developers a customization surface to reflect their app's brand and structure.</p>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Redesigned pricing comparison page - clearer plan hierarchy, improved scannability, and a customization surface for developers</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Redesigned pricing comparison page - clearer plan hierarchy, improved scannability, and a customization surface for developers</figcaption>
   <img src="../images/img-35d35a9ccf7a80ca911ac17fb9c9a9aa.jpg" alt="Redesigned pricing comparison page - clearer plan hierarchy, improved scannability, and a customization surface for developers" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Add feature' modal on the Customize Pricing Page — developers define a feature title and tooltip description, then select which plans it applies to, building out the plan comparison table</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-35d35a9ccf7a805bbf7ee7d38586901d.jpg" alt="Add feature' modal on the Customize Pricing Page — developers define a feature title and tooltip description, then select which plans it applies to, building out the plan comparison table" loading="lazy">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Add feature' modal on the Customize Pricing Page — developers define a feature title and tooltip description, then select which plans it applies to, building out the plan comparison table</figcaption>
+  <img src="../images/img-35d35a9ccf7a805bbf7ee7d38586901d.jpg" alt="Add feature&#39; modal on the Customize Pricing Page — developers define a feature title and tooltip description, then select which plans it applies to, building out the plan comparison table" loading="lazy">
 </figure>
 </div></div>
 <hr>
 <h3>5. Downgrade plan</h3>
 <p>Wix App Market users had no way to downgrade their app plan - the only option was to cancel and repurchase, which drove unnecessary churn and pushed some developers away from using Wix’s billing system altogether. There was also a legal obligation to offer downgrade functionality. I designed the downgrade plan flow, addressing the core challenge of enabling users to move to a cheaper plan while still nudging them toward better-value options.</p>
 <p>The solution allows users to select a lower-tier plan while showing a clear overview of what they’re changing to - maintaining transparency without removing the upgrade nudge. The design also extends to external pricing pages with Wix checkout integration. Success metrics targeted a decrease in premium cancellations and increased developer adoption of Wix’s native billing system. (Project is a WIP - final results pending.)</p>
-<div class="col-layout col-2"><div class="col"><figcaption class="proj-caption">Previous state: only upgrade was available — users had no way to downgrade without cancelling and repurchasing</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Previous state: only upgrade was available — users had no way to downgrade without cancelling and repurchasing</figcaption>
   <img src="../images/img-35d35a9ccf7a8080982de13a9baa2a5d.jpg" alt="Previous state: only upgrade was available — users had no way to downgrade without cancelling and repurchasing" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Proposed downgrade flow — mapping the full decision tree for moving to a lower-tier plan, including edge cases and nudge points</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Proposed downgrade flow — mapping the full decision tree for moving to a lower-tier plan, including edge cases and nudge points</figcaption>
   <img src="../images/img-35d35a9ccf7a80faa9b6ec92be21220b.jpg" alt="Proposed downgrade flow — mapping the full decision tree for moving to a lower-tier plan, including edge cases and nudge points" loading="lazy">
 </figure>
 </div></div>
-<div class="col-layout col-3"><div class="col"><figcaption class="proj-caption">New entry point added to the Manage Apps page, surfacing the plan change option without disrupting the existing upgrade path</figcaption>
-<figure class="proj-img">
+<div class="col-layout col-3"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">New entry point added to the Manage Apps page, surfacing the plan change option without disrupting the existing upgrade path</figcaption>
   <img src="../images/img-35d35a9ccf7a8025ade1cbef7259fff1.jpg" alt="New entry point added to the Manage Apps page, surfacing the plan change option without disrupting the existing upgrade path" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Plan selection screen allowing users to choose a lower-tier plan, with clear visibility of what they're changing to</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-35d35a9ccf7a80b98a0be6ece71a549f.jpg" alt="Plan selection screen allowing users to choose a lower-tier plan, with clear visibility of what they're changing to" loading="lazy">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Plan selection screen allowing users to choose a lower-tier plan, with clear visibility of what they're changing to</figcaption>
+  <img src="../images/img-35d35a9ccf7a80b98a0be6ece71a549f.jpg" alt="Plan selection screen allowing users to choose a lower-tier plan, with clear visibility of what they&#39;re changing to" loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption">Downgrade confirmation modal highlighting what the user will lose — nudging toward better-value plans while still allowing the downgrade to proceed</figcaption>
-<figure class="proj-img">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Downgrade confirmation modal highlighting what the user will lose — nudging toward better-value plans while still allowing the downgrade to proceed</figcaption>
   <img src="../images/img-35d35a9ccf7a80fe83cdf17cbcea857a.jpg" alt="Downgrade confirmation modal highlighting what the user will lose — nudging toward better-value plans while still allowing the downgrade to proceed" loading="lazy">
 </figure>
 </div></div>
@@ -176,12 +176,12 @@
       </div>
     </div>
   </section>
-  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true">
+  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true" aria-label="Project image viewer" aria-hidden="true" inert>
     <button class="lb-close" aria-label="Close">✕</button>
     <div class="lb-stage">
       <button class="lb-handle lb-prev" aria-label="Previous">‹</button>
       <div class="lb-content">
-        <img class="lb-img" src="" alt="">
+        <img class="lb-img" alt="">
         <p class="lb-caption"></p>
       </div>
       <button class="lb-handle lb-next" aria-label="Next">›</button>
@@ -220,7 +220,7 @@
   <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
 </footer>
   <script src="../script.js"></script>
-  <script>
+<script>
 var ALL_PROJECTS = [
   { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'Cross-surface AI credits billing that made a new monetization model legible across three surfaces and two user types', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
   { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Installation analytics that gave developers site-level visibility into how their apps were actually being used', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
@@ -233,7 +233,6 @@ var ALL_PROJECTS = [
   { slug: 'internal-app-review-system', title: 'Internal Review System', sub: 'Internal review platform that replaced spreadsheet workarounds and became the team\'s primary tool for app approvals', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
   { slug: 'submit-publish-widget', title: 'Submit & Publish Widget', sub: 'Submission widget that surfaced blockers earlier, reduced rejections, and later enabled auto-publishing for live apps', cat: 'Developer tools', cats: 'developer', year: 2022, featured: false },
   { slug: 'api-keys-page', title: 'API Keys Page', sub: 'API key management that became the primary credential surface for developers building on Wix', cat: 'Developer tools', cats: 'developer cms', year: 2022, featured: false },
-  { slug: 'development-site-creation', title: 'Development Site Creation', sub: '', cat: 'Developer tools', cats: 'developer', year: 2021, featured: false },
   { slug: 'app-coupons', title: 'App Coupons', sub: 'Self-serve coupon platform that shifted promotions from employee-gated to fully developer-controlled', cat: 'Monetisation', cats: 'monetisation cms', year: 2021, featured: false }
 ];
 var CURRENT_SLUG = 'app-pricing-page-projects';
@@ -313,6 +312,5 @@ var CURRENT_SLUG = 'app-pricing-page-projects';
   }
 })();
 </script>
-  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

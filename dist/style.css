@@ -144,6 +144,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 }
 .feat-card:last-child { border-bottom: none; }
 .feat-card:hover { background: #f9f9f9; }
+.feat-card:focus-visible { outline: 2px solid #0a0a0a; outline-offset: -2px; }
 .feat-title {
   grid-column: 1;
   font-size: clamp(24px, 2.5vw, 40px);
@@ -570,7 +571,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 .pm { font-size: 14px; color: #555; }
 .psep { font-size: 14px; color: #ccc; }
 .proj-nav-text { display: none; }
-.proj-main { padding: 0 clamp(40px, 20%, 240px); position: relative; }
+.proj-main { padding: 0 clamp(40px, 20%, 240px); position: relative; min-width: 0; }
 .proj-content { padding: 8px 0 80px; }
 .proj-intro {
   font-size: 16px;
@@ -617,17 +618,22 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 .ctx-tip {
   position: relative;
   display: inline-block;
-  cursor: default;
+  font: inherit;
+  line-height: inherit;
+  background: none;
+  padding: 0;
+  border: 0;
+  cursor: help;
   color: #0a0a0a;
   border-bottom: 1px dashed #0a0a0a;
+  text-align: inherit;
 }
-.ctx-tip::after {
-  content: attr(data-tip);
+.ctx-tip-pop {
   position: absolute;
   bottom: calc(100% + 8px);
   left: 50%;
-  transform: translateX(-50%);
-  width: 220px;
+  transform: translateX(calc(-50% + var(--tip-shift, 0px)));
+  width: min(220px, calc(100vw - 32px));
   background: #0a0a0a;
   color: #fff;
   font-family: Roboto, sans-serif;
@@ -637,7 +643,8 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   padding: 8px 12px;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.15s ease;
+  visibility: hidden;
+  transition: opacity 0.15s ease, visibility 0s linear 0.15s;
   z-index: 200;
   white-space: normal;
 }
@@ -655,8 +662,17 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   transition: opacity 0.15s ease;
   z-index: 201;
 }
-.ctx-tip:hover::after,
-.ctx-tip:hover::before { opacity: 1; }
+.ctx-tip:hover .ctx-tip-pop,
+.ctx-tip:focus-visible .ctx-tip-pop,
+.ctx-tip.open .ctx-tip-pop {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+.ctx-tip:hover::before,
+.ctx-tip:focus-visible::before,
+.ctx-tip.open::before { opacity: 1; }
+.ctx-tip:focus-visible { outline: 2px solid #0a0a0a; outline-offset: 2px; }
 
 /* ── More work (project pages) ───────────────────────────── */
 .more-section { padding: 0 clamp(40px, 20%, 240px); }
@@ -701,6 +717,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 .lb-handle:hover { background: rgba(255,255,255,0.22); color: #fff; }
 .lb-handle[hidden] { visibility: hidden; pointer-events: none; }
 .proj-content img { cursor: zoom-in; }
+.proj-content img:focus-visible { outline: 2px solid #0a0a0a; outline-offset: 4px; }
 
 /* ── Design system page ──────────────────────────────────── */
 .ds-section { margin-bottom: 56px; }
@@ -766,6 +783,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 }
 @media (max-width: 768px) {
   /* Layout */
+  html, body { overflow-x: hidden; overflow-x: clip; }
   #site-header {
     padding: 14px 20px;
     background: #fff;
@@ -806,10 +824,11 @@ nav a.active:hover { color: #fff; text-decoration: none; }
     display: flex; flex-direction: column; position: fixed;
     top: 0; right: 0; bottom: 0; z-index: 51;
     width: 80%; max-width: 320px; background: #fff;
-    transform: translateX(100%); transition: transform 0.34s cubic-bezier(0.22,0.61,0.36,1);
+    transform: translateX(100%); visibility: hidden; pointer-events: none;
+    transition: transform 0.34s cubic-bezier(0.22,0.61,0.36,1), visibility 0s linear 0.34s;
     padding: 56px 24px 34px;
   }
-  .mob-panel.open { transform: translateX(0); box-shadow: -20px 0 50px rgba(0,0,0,0.16); }
+  .mob-panel.open { transform: translateX(0); visibility: visible; pointer-events: auto; transition-delay: 0s; box-shadow: -20px 0 50px rgba(0,0,0,0.16); }
   .mob-panel-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 36px; }
   .mob-panel-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 700; }
   .mob-panel-close {
@@ -1058,7 +1077,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 }
 @media (max-width: 600px) {
   .hdr-row { padding: 0; }
-  .proj-title-m { font-size: 32px; }
+  .proj-title-row .proj-title-m { font-size: 32px; }
   .lb-handle { width: 36px; height: 36px; font-size: 18px; }
   .about-notion { padding: 32px 0 60px; }
   .about-notion h2 { margin: 32px 0 16px; padding-top: 20px; }
@@ -1074,7 +1093,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   .ds-tabs { overflow-x: auto; }
 }
 @media (max-width: 480px) {
-  .proj-title-m { font-size: 28px; }
+  .proj-title-row .proj-title-m { font-size: 28px; }
 }
 
 /* ── Hero flowchart canvas ───────────────────────────────── */

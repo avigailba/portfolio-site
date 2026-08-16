@@ -22,13 +22,13 @@
       <a href="../index.html">Projects</a>
       <a href="../about.html">About & Contact</a>
     </nav>
-    <button class="mob-burger" id="open-menu" aria-label="Open menu">
+    <button class="mob-burger" id="open-menu" aria-label="Open menu" aria-controls="mob-panel" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
-<div class="mob-scrim" id="mob-scrim"></div>
-<aside class="mob-panel" id="mob-panel">
+<div class="mob-scrim" id="mob-scrim" aria-hidden="true"></div>
+<aside class="mob-panel" id="mob-panel" aria-hidden="true" inert>
   <div class="mob-panel-top">
     <span class="mob-panel-title">Avigail Bahat</span>
     <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
@@ -74,7 +74,7 @@
   <img src="../images/img-3a235a9ccf7a802da96eda7935de032c.jpg" alt="" loading="lazy">
 </figure>
 <h2>The problem</h2>
-<p>The <span class="ctx-tip" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.">Wix App Market</span> had no native sales infrastructure. Developers couldn't run their own promotions, and <span class="ctx-tip" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide.">Wix</span> had no mechanism for market-wide sales events. I led the end-to-end UX for a new framework that introduced both, alongside the existing coupon system, covering the creation flow, management interface, and eligibility rules for each offer type.</p>
+<p>The <button type="button" class="ctx-tip" aria-label="Wix App Market" aria-describedby="term-tip-1" aria-expanded="false">Wix App Market<span class="ctx-tip-pop" id="term-tip-1" role="tooltip">Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.</span></button> had no native sales infrastructure. Developers couldn't run their own promotions, and <button type="button" class="ctx-tip" aria-label="Wix" aria-describedby="term-tip-2" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-2" role="tooltip">Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></button> had no mechanism for market-wide sales events. I led the end-to-end UX for a new framework that introduced both, alongside the existing coupon system, covering the creation flow, management interface, and eligibility rules for each offer type.</p>
 <p>My scope included the sale-creation flow, the management interface, and the eligibility rules for each offer type.</p>
 <h3>Mapping the system</h3>
 <p>We had to differentiate three offer types, each with different eligibility rules, discount structures, and management states:</p>
@@ -85,17 +85,17 @@
 </ol>
 <p>Mapped all valid configurations and the conditions under which they could coexist on a single app.
 </p>
-<div class="col-layout col-3"><div class="col"><figcaption class="proj-caption"><strong>Offer-type comparison</strong> - how Coupons, Dev Sales, and Wix Sales differ in behavior, limits, and eligibility.</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-17d35a9ccf7a80ddb44ec8b3172abcd3.jpg" alt="<strong>Offer-type comparison</strong> - how Coupons, Dev Sales, and Wix Sales differ in behavior, limits, and eligibility." loading="lazy">
+<div class="col-layout col-3"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption"><strong>Offer-type comparison</strong> - how Coupons, Dev Sales, and Wix Sales differ in behavior, limits, and eligibility.</figcaption>
+  <img src="../images/img-17d35a9ccf7a80ddb44ec8b3172abcd3.jpg" alt="Offer-type comparison - how Coupons, Dev Sales, and Wix Sales differ in behavior, limits, and eligibility." loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption"><strong>Lifecycle map</strong> - each offer type from creation to expiry.</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-17d35a9ccf7a80ac92b7d2b4772b0210.jpg" alt="<strong>Lifecycle map</strong> - each offer type from creation to expiry." loading="lazy">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption"><strong>Lifecycle map</strong> - each offer type from creation to expiry.</figcaption>
+  <img src="../images/img-17d35a9ccf7a80ac92b7d2b4772b0210.jpg" alt="Lifecycle map - each offer type from creation to expiry." loading="lazy">
 </figure>
-</div><div class="col"><figcaption class="proj-caption"><strong>Status comparison</strong> - Setting actions for each sale status.</figcaption>
-<figure class="proj-img">
-  <img src="../images/img-3a335a9ccf7a800b897df3f598161d02.jpg" alt="<strong>Status comparison</strong> - Setting actions for each sale status." loading="lazy">
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption"><strong>Status comparison</strong> - Setting actions for each sale status.</figcaption>
+  <img src="../images/img-3a335a9ccf7a800b897df3f598161d02.jpg" alt="Status comparison - Setting actions for each sale status." loading="lazy">
 </figure>
 </div></div>
 <h3>Design</h3>
@@ -110,25 +110,25 @@
 <p><strong>Pricing pages with a sale converted at a significantly higher rate than non-sale pages - a lift that held consistently across the vast majority of apps tested.</strong></p>
 <p>We planned on merging the coupons page and the sales page in the future - so all offers will live in one page, and also adding some sale stats to the page. </p>
 <h2>Screens</h2>
-<figcaption class="proj-caption"><strong>Sales tab</strong> — active sales plus entry points to join a Wix Sale or create a dev sale.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-17d35a9ccf7a80b7a341e1ebb44dc438.jpg" alt="<strong>Sales tab</strong> — active sales plus entry points to join a Wix Sale or create a dev sale." loading="lazy">
+  <figcaption class="proj-caption"><strong>Sales tab</strong> — active sales plus entry points to join a Wix Sale or create a dev sale.</figcaption>
+  <img src="../images/img-17d35a9ccf7a80b7a341e1ebb44dc438.jpg" alt="Sales tab — active sales plus entry points to join a Wix Sale or create a dev sale." loading="lazy">
 </figure>
-<figcaption class="proj-caption"><strong>Create a dev sale</strong> — name, discount, applicable plans and cycles, date range.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-17d35a9ccf7a80f8b3acf633890e1681.jpg" alt="<strong>Create a dev sale</strong> — name, discount, applicable plans and cycles, date range." loading="lazy">
+  <figcaption class="proj-caption"><strong>Create a dev sale</strong> — name, discount, applicable plans and cycles, date range.</figcaption>
+  <img src="../images/img-17d35a9ccf7a80f8b3acf633890e1681.jpg" alt="Create a dev sale — name, discount, applicable plans and cycles, date range." loading="lazy">
 </figure>
-<figcaption class="proj-caption"><strong>Join a Wix Sale</strong> — set discount and conditions within market-wide event rules.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-17d35a9ccf7a80f984e0c576a5257f7d.jpg" alt="<strong>Join a Wix Sale</strong> — set discount and conditions within market-wide event rules." loading="lazy">
+  <figcaption class="proj-caption"><strong>Join a Wix Sale</strong> — set discount and conditions within market-wide event rules.</figcaption>
+  <img src="../images/img-17d35a9ccf7a80f984e0c576a5257f7d.jpg" alt="Join a Wix Sale — set discount and conditions within market-wide event rules." loading="lazy">
 </figure>
-<figcaption class="proj-caption"><strong>Management dashboard</strong> — Active, Scheduled, and ended states, with edit and delete.</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-35d35a9ccf7a8072ba12c09738b9e166.jpg" alt="<strong>Management dashboard</strong> — Active, Scheduled, and ended states, with edit and delete." loading="lazy">
+  <figcaption class="proj-caption"><strong>Management dashboard</strong> — Active, Scheduled, and ended states, with edit and delete.</figcaption>
+  <img src="../images/img-35d35a9ccf7a8072ba12c09738b9e166.jpg" alt="Management dashboard — Active, Scheduled, and ended states, with edit and delete." loading="lazy">
 </figure>
-<figcaption class="proj-caption"><strong>Merging coupons and sales</strong> - A quick mockup of how all offerings can look together</figcaption>
 <figure class="proj-img">
-  <img src="../images/img-3a335a9ccf7a808d9577ede521cdb308.jpg" alt="<strong>Merging coupons and sales</strong> - A quick mockup of how all offerings can look together" loading="lazy">
+  <figcaption class="proj-caption"><strong>Merging coupons and sales</strong> - A quick mockup of how all offerings can look together</figcaption>
+  <img src="../images/img-3a335a9ccf7a808d9577ede521cdb308.jpg" alt="Merging coupons and sales - A quick mockup of how all offerings can look together" loading="lazy">
 </figure>
 <h2>Bottom line</h2>
 <p>Three structurally different offer types, each with their own rules, states, and eligibility logic, had to feel like one coherent system to a developer who just wants to run a discount. That was the actual problem, not the form. Strong participation in the first Wix Sale and rapid growth in developer-run promotions afterward showed it landed.</p>
@@ -146,12 +146,12 @@
       </div>
     </div>
   </section>
-  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true">
+  <div id="lightbox" class="lb-overlay" role="dialog" aria-modal="true" aria-label="Project image viewer" aria-hidden="true" inert>
     <button class="lb-close" aria-label="Close">✕</button>
     <div class="lb-stage">
       <button class="lb-handle lb-prev" aria-label="Previous">‹</button>
       <div class="lb-content">
-        <img class="lb-img" src="" alt="">
+        <img class="lb-img" alt="">
         <p class="lb-caption"></p>
       </div>
       <button class="lb-handle lb-next" aria-label="Next">›</button>
@@ -190,7 +190,7 @@
   <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
 </footer>
   <script src="../script.js"></script>
-  <script>
+<script>
 var ALL_PROJECTS = [
   { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'Cross-surface AI credits billing that made a new monetization model legible across three surfaces and two user types', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
   { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Installation analytics that gave developers site-level visibility into how their apps were actually being used', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
@@ -203,7 +203,6 @@ var ALL_PROJECTS = [
   { slug: 'internal-app-review-system', title: 'Internal Review System', sub: 'Internal review platform that replaced spreadsheet workarounds and became the team\'s primary tool for app approvals', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
   { slug: 'submit-publish-widget', title: 'Submit & Publish Widget', sub: 'Submission widget that surfaced blockers earlier, reduced rejections, and later enabled auto-publishing for live apps', cat: 'Developer tools', cats: 'developer', year: 2022, featured: false },
   { slug: 'api-keys-page', title: 'API Keys Page', sub: 'API key management that became the primary credential surface for developers building on Wix', cat: 'Developer tools', cats: 'developer cms', year: 2022, featured: false },
-  { slug: 'development-site-creation', title: 'Development Site Creation', sub: '', cat: 'Developer tools', cats: 'developer', year: 2021, featured: false },
   { slug: 'app-coupons', title: 'App Coupons', sub: 'Self-serve coupon platform that shifted promotions from employee-gated to fully developer-controlled', cat: 'Monetisation', cats: 'monetisation cms', year: 2021, featured: false }
 ];
 var CURRENT_SLUG = 'developer-sale';
@@ -283,6 +282,5 @@ var CURRENT_SLUG = 'developer-sale';
   }
 })();
 </script>
-  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

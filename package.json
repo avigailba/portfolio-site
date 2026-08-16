@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "Static portfolio site generator from Notion",
   "scripts": {
-    "build": "node generate.js"
+    "build": "node generate.js",
+    "check": "node --check generate.js && node --check script.js && node check-site.js"
   },
   "dependencies": {
     "@notionhq/client": "^5.23.2",
-    "@vercel/analytics": "^2.0.1",
     "dotenv": "^16.4.5"
   }
 }
