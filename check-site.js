@@ -58,12 +58,9 @@ for (const file of htmlFiles) {
     }
   }
 
-  if (/<span class="ctx-tip"\b|class="ctx-tip"[^>]*\bdata-tip=/.test(html)) {
-    fail(file, 'term tooltip is missing button semantics');
-  }
   if (html.includes('class="ctx-tip"') &&
-      (!/<button\b[^>]*class="ctx-tip"[^>]*aria-describedby=/.test(html) ||
-       !/<span class="ctx-tip-pop"[^>]*role="tooltip">/.test(html))) {
+      (!/<span\b[^>]*class="ctx-tip"[^>]*role="button"[^>]*tabindex="0"[^>]*data-tip=[^>]*aria-describedby=/.test(html) ||
+       !/<span class="ctx-tip-pop"[^>]*role="tooltip" hidden>/.test(html))) {
     fail(file, 'term tooltip is missing its accessible relationship');
   }
 

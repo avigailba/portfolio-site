@@ -327,7 +327,7 @@ function injectTooltips(html) {
     seen.add(match);
     const tipText = TERM_TIPS[match];
     const tipId = `term-tip-${++tipIndex}`;
-    return `<button type="button" class="ctx-tip" aria-label="${escapeAttr(match)}" aria-describedby="${tipId}" aria-expanded="false">${match}<span class="ctx-tip-pop" id="${tipId}" role="tooltip">${escapeAttr(tipText)}</span></button>`;
+    return `<span class="ctx-tip" role="button" tabindex="0" data-tip="${escapeAttr(tipText)}" aria-label="${escapeAttr(match)}" aria-describedby="${tipId}" aria-expanded="false">${match}<span class="ctx-tip-pop" id="${tipId}" role="tooltip" hidden>${escapeAttr(tipText)}</span></span>`;
   });
 
   return processed + rest;
