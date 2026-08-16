@@ -53,15 +53,15 @@ const stats = { pages: 0, images: 0, errors: [] };
 
 // Project metadata: categories, display title overrides, years, featured status
 const PROJECT_META = {
-  'ai-credits-wallet':                          { title: 'AI Credits', featTitle: 'AI<br>Credits', cats: 'monetisation',          display: 'Monetisation',    year: 2026, featured: true },
-  'app-installation-page-for-developers': { title: 'Installations Page',          cats: 'developer cms',          display: 'Developer tools', year: 2025, featured: true },
+  'ai-credits-wallet':                    { title: 'AI Credits',              subtitle: 'Transparent AI usage billing across Wix\'s developer platform', cats: 'monetisation',          display: 'Monetisation',    year: 2026, featured: true },
+  'app-installation-page-for-developers': { title: 'Installations Page',      subtitle: 'Redesigned the app installation experience end-to-end',          cats: 'developer cms',          display: 'Developer tools', year: 2025, featured: true },
   'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer cms',          display: 'Developer tools', year: 2024, featured: false },
-  'developer-sale':                      { title: 'Developer Sale',               cats: 'developer monetisation cms', display: 'Monetisation', year: 2024, featured: true },
+  'developer-sale':                      { title: 'Developer Sale',           subtitle: 'A monetisation campaign tool for app developers',                cats: 'developer monetisation cms', display: 'Monetisation', year: 2024, featured: true },
   'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'internal cms',           display: 'Internal tools',  year: 2024, featured: false },
   'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',       display: 'Monetisation',    year: 2023, featured: false },
   'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
   'app-pricing-page-projects':           { title: 'App Pricing Page Projects',    cats: 'developer monetisation', display: 'Monetisation',    year: 2023, featured: false },
-  'internal-app-review-system':          { title: 'Internal Review System',       cats: 'internal cms',           display: 'Internal tools',  year: 2022, featured: true },
+  'internal-app-review-system':          { title: 'Internal Review System',   subtitle: 'Replaced a spreadsheet-based review process with a structured tool', cats: 'internal cms',       display: 'Internal tools',  year: 2022, featured: true },
   'submit-publish-widget':               { title: 'Submit & Publish Widget',      cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
   'api-keys-page':                       { title: 'API Keys Page',                cats: 'developer cms',          display: 'Developer tools', year: 2022, featured: false },
   'development-site-creation':           { title: 'Development Site Creation',    cats: 'developer',              display: 'Developer tools', year: 2021, featured: false },
@@ -426,11 +426,13 @@ function indexPage(projects, tagline) {
   const bySlug = {};
   for (const p of projects) bySlug[p.slug] = p;
 
-  // Featured grid: 4 cards
+  // Featured work: one-column horizontal cards
   const featHtml = FEAT_ORDER.map((slug) => {
     const meta = PROJECT_META[slug];
+    const subtitle = bySlug[slug]?.subtitle || bySlug[slug]?.summary || meta.subtitle || '';
     return `<div class="feat-card" onclick="location.href='projects/${slug}.html'">
-  <div class="feat-title">${meta.featTitle || meta.title}</div>
+  <div class="feat-title">${meta.title}</div>
+  ${subtitle ? `<div class="feat-sub">${subtitle}</div>` : ''}
   <div class="feat-arr">↗</div>
   <div class="feat-foot">
     <a class="mob-view-btn" href="projects/${slug}.html" onclick="event.stopPropagation()">View project <span>↗</span></a>
@@ -479,21 +481,7 @@ function indexPage(projects, tagline) {
 
   return wrap('', 'Avigail Bahat — Senior UX Designer', `
   <main class="home-band">
-    <div class="hero-wrap" id="heroWrap">
-      <div class="play-frame" id="playFrame">
-        <canvas id="canvas"></canvas>
-        <div class="mode-select" id="modeSelect">
-          <button class="mode-btn active" id="modeShapes">Shapes</button>
-          <button class="mode-btn" id="modeEmojis">Emojis</button>
-        </div>
-        <div class="frame-hint" id="frameHint">move to draw · click to place</div>
-        <div class="hud" id="hud">
-          <div class="hud-pill">Next: <strong id="nextLabel">Process</strong></div>
-          <button class="reset-btn" id="resetBtn">Clear ✕</button>
-        </div>
-      </div>
-      <p class="lede">${tagline}</p>
-    </div>
+    <p class="lede">${tagline}</p>
     <div id="home-work" class="feat-grid">
       ${featHtml}
     </div>

@@ -119,51 +119,55 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 .inner-content .section-label { margin-top: 48px; }
 .inner-content .section-label:first-of-type { margin-top: 0; }
 
-/* ── Featured grid ───────────────────────────────────────── */
+/* ── Featured work ───────────────────────────────────────── */
 .feat-grid {
   scroll-margin-top: 100px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr;
   border-top: 0.5px solid #ebebeb;
   border-bottom: 0.5px solid #ebebeb;
-  margin-left: calc(-1 * clamp(40px, 20%, 240px));
-  margin-right: calc(-1 * clamp(40px, 20%, 240px));
+  margin-left: calc(-1 * clamp(40px, 20vw, 240px));
+  margin-right: calc(-1 * clamp(40px, 20vw, 240px));
   margin-bottom: 56px;
 }
 .feat-card {
-  padding: 36px 32px;
-  border-right: 0.5px solid #ebebeb;
+  padding: 48px clamp(40px, 20vw, 240px);
+  border-bottom: 0.5px solid #ebebeb;
   cursor: pointer;
   min-width: 0;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 6px 32px;
   transition: background 0.18s ease;
 }
-.feat-card:last-child { border-right: none; }
+.feat-card:last-child { border-bottom: none; }
 .feat-card:hover { background: #f9f9f9; }
 .feat-title {
-  font-size: clamp(24px, 3.5vw, 64px);
+  grid-column: 1;
+  font-size: clamp(24px, 2.5vw, 40px);
   font-weight: 700;
   color: #0a0a0a;
-  line-height: 1.05;
+  line-height: 1.1;
   letter-spacing: -0.03em;
   overflow-wrap: break-word;
   display: block;
-  margin-bottom: 20px;
   transition: filter 0.2s;
 }
 .feat-sub {
+  grid-column: 1;
   font-size: 15px;
   color: #555;
   line-height: 1.5;
-  margin-top: auto;
+  max-width: 72ch;
 }
 .feat-arr {
+  grid-column: 2;
+  grid-row: 1 / 3;
   font-size: 15px;
   color: #555;
-  align-self: flex-end;
+  justify-self: end;
   opacity: 0;
   transform: translate(-3px, 3px);
   transition: opacity 0.18s, transform 0.18s;
@@ -174,36 +178,25 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   color: #0a0a0a;
 }
 
-/* WordArt hover effects — pointer devices only */
 @media (hover: hover) {
-.feat-card:nth-child(1):hover .feat-title {
-  background: linear-gradient(180deg, #dbe4ff 0%, #88a4ff 50%, #6f93ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(1px 1px 0 #5e83ff) drop-shadow(2px 2px 0 #4f74ee) drop-shadow(3px 3px 0 #3f63e0) drop-shadow(4px 4px 0 #3253c9) drop-shadow(5px 5px 0 #2645a8);
+  .feat-card:nth-child(1):hover {
+    background: linear-gradient(110deg, #eef3ff 0%, #f5f0ff 55%, #f3fbff 100%);
+  }
+  .feat-card:nth-child(2):hover {
+    background: linear-gradient(110deg, #fff7e8 0%, #fff0f4 55%, #f7f2ff 100%);
+  }
+  .feat-card:nth-child(3):hover {
+    background: linear-gradient(110deg, #f5efff 0%, #edf4ff 55%, #f2fbff 100%);
+  }
+  .feat-card:nth-child(4):hover {
+    background: linear-gradient(110deg, #eafbf4 0%, #effaf9 55%, #edf5ff 100%);
+  }
 }
-.feat-card:nth-child(2):hover .feat-title {
-  background: linear-gradient(180deg, #ffeccb 0%, #ffc070 50%, #ffae4d 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(1px 1px 0 #ff9e2e) drop-shadow(2px 2px 0 #f08a1c) drop-shadow(3px 3px 0 #db7714) drop-shadow(4px 4px 0 #bd6210) drop-shadow(5px 5px 0 #9c4f0c);
-}
-.feat-card:nth-child(3):hover .feat-title {
-  background: linear-gradient(180deg, #efd9ff 0%, #cd9bfd 50%, #bd84fb 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(1px 1px 0 #ad62f8) drop-shadow(2px 2px 0 #9a4cee) drop-shadow(3px 3px 0 #863bda) drop-shadow(4px 4px 0 #7030bd) drop-shadow(5px 5px 0 #5a2493);
-}
-.feat-card:nth-child(4):hover .feat-title {
-  background: linear-gradient(180deg, #c2f7e1 0%, #5ce6b8 50%, #2fd9a0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(1px 1px 0 #18cf92) drop-shadow(2px 2px 0 #11bd84) drop-shadow(3px 3px 0 #0ea876) drop-shadow(4px 4px 0 #0a8a60) drop-shadow(5px 5px 0 #07724e);
-}
+
+@media (hover: none), (pointer: coarse) {
+  .feat-card:hover,
+  .feat-card:active { background: #fff; }
+  .feat-arr { display: none; }
 }
 
 /* ── Work header + filters ───────────────────────────────── */
@@ -765,8 +758,8 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 960px) {
-  .feat-grid { grid-template-columns: 1fr 1fr; height: auto; margin-left: 0; margin-right: 0; }
-  .feat-card:nth-child(n+3) { border-top: 0.5px solid #ebebeb; }
+  .feat-grid { grid-template-columns: 1fr; height: auto; margin-left: 0; margin-right: 0; }
+  .feat-card { padding: 40px 0; grid-template-columns: minmax(0, 1fr) 24px; gap: 6px 24px; }
 }
 @media (max-width: 768px) {
   :root { --border: #c8c8c8; }
@@ -849,23 +842,18 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   }
   .feat-card {
     border-right: none; border-bottom: 0.5px solid #ebebeb;
-    min-height: unset; padding: 30px 0 24px; gap: 0; flex-direction: column;
+    min-height: unset; padding: 34px 0; gap: 8px;
+    grid-template-columns: 1fr auto;
     transition: none;
   }
   .feat-card:nth-child(n+3) { border-top: none; }
   .feat-card:hover { background: #fff; }
   .feat-title {
-    font-size: 48px; font-weight: 800; letter-spacing: -0.03em;
-    line-height: 1.05; min-height: unset; margin-bottom: 12px;
+    grid-column: 1;
+    font-size: 30px; font-weight: 800; letter-spacing: -0.03em;
+    line-height: 1.08; min-height: unset;
   }
-  /* Disable WordArt hover on touch screens */
-  .feat-card:nth-child(1):hover .feat-title,
-  .feat-card:nth-child(2):hover .feat-title,
-  .feat-card:nth-child(3):hover .feat-title,
-  .feat-card:nth-child(4):hover .feat-title {
-    background: none; -webkit-text-fill-color: unset; filter: none;
-  }
-  .feat-sub { font-size: 15px; }
+  .feat-sub { grid-column: 1; font-size: 15px; }
   .feat-arr { display: none; }
   .feat-foot { display: block; margin-top: 18px; }
 
