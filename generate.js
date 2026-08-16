@@ -17,8 +17,16 @@ if (!process.env.NOTION_API_KEY) {
 const { Client } = require('@notionhq/client');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const https = require('https');
 const http = require('http');
+
+function assetVersion(file) {
+  return crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname, file))).digest('hex').slice(0, 10);
+}
+
+const STYLE_VERSION = assetVersion('style.css');
+const SCRIPT_VERSION = assetVersion('script.js');
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const ROOT_PAGE_ID      = '9e31791fdedf4048bb784d0cbae06e51';
@@ -423,13 +431,13 @@ function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass =
   <link rel="icon" type="image/png" sizes="32x32" href="${prefix}favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="${prefix}favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="${prefix}apple-touch-icon.png">
-  ${extraHead}<link rel="stylesheet" href="${prefix}style.css">
+  ${extraHead}<link rel="stylesheet" href="${prefix}style.css?v=${STYLE_VERSION}">
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
   ${hdr(prefix)}
   ${body}
   ${ftr(prefix)}
-  <script src="${prefix}script.js"></script>
+  <script src="${prefix}script.js?v=${SCRIPT_VERSION}"></script>
 ${extraScript}${analyticsScript}
 </body>
 </html>`;
@@ -684,6 +692,7 @@ var CURRENT_SLUG = '${proj.slug}';
     var hdrElM = document.getElementById('site-header');
     function syncTopM(){ if (hdrElM) sticky.style.top = hdrElM.offsetHeight + 'px'; }
     syncTopM();
+    if (hdrElM && window.ResizeObserver) new ResizeObserver(syncTopM).observe(hdrElM);
     window.addEventListener('scroll', function(){
       syncTopM();
       sticky.classList.toggle('condensed', window.scrollY > 56);
@@ -710,6 +719,9 @@ var CURRENT_SLUG = '${proj.slug}';
     var ticking = false;
     function lerp(a, b, t){ return a + (b - a) * t; }
     function ease(t){ return 1 - Math.pow(1 - t, 3); }
+    if (hdrEl && window.ResizeObserver) {
+      new ResizeObserver(function(){ sticky.style.top = hdrEl.offsetHeight + 'px'; }).observe(hdrEl);
+    }
     function update(){
       ticking = false;
       if (hdrEl) sticky.style.top = hdrEl.offsetHeight + 'px';

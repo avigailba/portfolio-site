@@ -73,12 +73,20 @@ for (const file of htmlFiles) {
     fail(file, 'lightbox is missing its closed accessible state');
   }
 
+  if (html.includes('id="proj-title-sticky"') && !html.includes('ResizeObserver')) {
+    fail(file, 'sticky project header does not track top-bar resizing');
+  }
+
   if (process.env.VERCEL !== '1' && html.includes('/_vercel/insights/script.js')) {
     fail(file, 'Vercel analytics is included outside a Vercel build');
   }
 }
 
 const homepage = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+if (!/href="style\.css\?v=[a-f0-9]{10}"/.test(homepage) ||
+    !/src="script\.js\?v=[a-f0-9]{10}"/.test(homepage)) {
+  fail(path.join(ROOT, 'index.html'), 'CSS and JavaScript references must be content-versioned');
+}
 const featuredAnchors = (homepage.match(/<a class="feat-card"/g) || []).length;
 if (featuredAnchors !== 4 || /<div class="feat-card"/.test(homepage)) {
   fail(path.join(ROOT, 'index.html'), 'featured cards must be full anchor elements');
