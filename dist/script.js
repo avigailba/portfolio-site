@@ -657,6 +657,8 @@ if (document.getElementById('playFrame')) {
   }
 
   tips.forEach(function(tip) {
+    var pop = tip.querySelector('.ctx-tip-pop');
+    if (pop) pop.hidden = false;
     tip.addEventListener('focus', function() {
       closeAll(tip);
       align(tip);
@@ -674,6 +676,11 @@ if (document.getElementById('playFrame')) {
       if (willOpen) align(tip);
     });
     tip.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        tip.click();
+        return;
+      }
       if (e.key === 'Escape') {
         tip.classList.remove('open');
         tip.setAttribute('aria-expanded', 'false');
