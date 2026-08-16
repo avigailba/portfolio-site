@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../style.css?v=2bb1baaae4">
 </head>
 <body class="proj-page">
   <header id="site-header">
@@ -219,7 +219,7 @@
   </div>
   <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
 </footer>
-  <script src="../script.js"></script>
+  <script src="../script.js?v=1c4eab3743"></script>
 <script>
 var ALL_PROJECTS = [
   { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'Cross-surface AI credits billing that made a new monetization model legible across three surfaces and two user types', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
@@ -271,6 +271,7 @@ var CURRENT_SLUG = 'app-pricing-page-projects';
     var hdrElM = document.getElementById('site-header');
     function syncTopM(){ if (hdrElM) sticky.style.top = hdrElM.offsetHeight + 'px'; }
     syncTopM();
+    if (hdrElM && window.ResizeObserver) new ResizeObserver(syncTopM).observe(hdrElM);
     window.addEventListener('scroll', function(){
       syncTopM();
       sticky.classList.toggle('condensed', window.scrollY > 56);
@@ -297,6 +298,9 @@ var CURRENT_SLUG = 'app-pricing-page-projects';
     var ticking = false;
     function lerp(a, b, t){ return a + (b - a) * t; }
     function ease(t){ return 1 - Math.pow(1 - t, 3); }
+    if (hdrEl && window.ResizeObserver) {
+      new ResizeObserver(function(){ sticky.style.top = hdrEl.offsetHeight + 'px'; }).observe(hdrEl);
+    }
     function update(){
       ticking = false;
       if (hdrEl) sticky.style.top = hdrEl.offsetHeight + 'px';

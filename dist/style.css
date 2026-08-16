@@ -594,7 +594,13 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 .proj-content li { margin-bottom: 6px; }
 .proj-content figure { margin: 24px auto; }
 .proj-content img { max-width: 100%; border-radius: 6px; border: 0.5px solid var(--border); }
-.proj-content figcaption { font-size: 14px; color: #555; margin-top: 18px; margin-bottom: 8px; }
+.proj-content figcaption {
+  font-size: 14px;
+  color: #555;
+  margin: 0;
+  padding: 18px 0 8px;
+  background: #fff;
+}
 .proj-content hr { border: none; border-top: 0.5px solid var(--border); margin: 32px 0; }
 .proj-content hr + hr { display: none; }
 .proj-content a { color: #0a0a0a; text-decoration: underline; text-underline-offset: 2px; }
