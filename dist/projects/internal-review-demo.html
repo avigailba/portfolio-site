@@ -87,7 +87,23 @@
     .slide-cover {
       justify-content: center;
       padding-top: 0;
+      background: linear-gradient(135deg, #eef1fc 0%, #fdfdff 55%, #ffffff 100%);
     }
+    .cover-row {
+      display: flex;
+      align-items: center;
+      gap: 64px;
+      flex-wrap: wrap;
+    }
+    .cover-text { flex: 1 1 420px; }
+    .cover-hero {
+      flex: 1 1 420px;
+      min-width: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px -20px rgba(30, 40, 90, 0.25);
+    }
+    .cover-hero img { width: 100%; height: auto; display: block; }
     .cover-badges {
       display: flex;
       gap: 8px;
@@ -176,9 +192,8 @@
     .img-grid {
       display: grid;
       gap: 16px;
-      flex: 1;
+      height: clamp(320px, 60vh, 640px);
       min-height: 0;
-      max-height: clamp(320px, 60vh, 640px);
     }
     .img-grid.g2 { grid-template-columns: 1fr 1fr; }
     .img-grid.g3 { grid-template-columns: 1fr 1fr 1fr; }
@@ -440,13 +455,20 @@
     <div class="slide-header">
       <span class="slide-section">Interview Demo</span>
     </div>
-    <div class="cover-badges">
-      <span class="badge">Internal tools</span>
-      <span class="badge">CMS</span>
-      <span class="badge">2022</span>
+    <div class="cover-row">
+      <div class="cover-text">
+        <div class="cover-badges">
+          <span class="badge">Internal tools</span>
+          <span class="badge">CMS</span>
+          <span class="badge">2022</span>
+        </div>
+        <h1 class="cover-h1">Internal App<br>Review System</h1>
+        <p class="cover-sub">A ground-up rebuild of Wix App Market's internal review platform, after the review team had abandoned it for spreadsheets and Google Docs.</p>
+      </div>
+      <div class="cover-hero">
+        <img src="../images/img-3b135a9ccf7a80ea9f57cfaa4494fb64.jpg" alt="The review workspace, showing a report of developer comments organized by path">
+      </div>
     </div>
-    <h1 class="cover-h1">Internal App<br>Review System</h1>
-    <p class="cover-sub">A ground-up rebuild of Wix App Market's internal review platform, after the review team had abandoned it for spreadsheets and Google Docs.</p>
   </div>
 
   <!-- ② The Problem -->
@@ -497,19 +519,19 @@
     <div class="img-grid g4">
       <div class="img-cell">
         <img src="../images/img-39b35a9ccf7a80639d30e7dab00429f6.jpg" alt="All apps">
-        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>App directory and queue</strong><br>Browse, filter, and assign every app across all review stages. A structural makeover to fix the weak information architecture.</span>
+        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>App directory and queue</strong>Browse, filter, and assign every app across all review stages. A structural makeover to fix the weak information architecture.</span>
       </div>
       <div class="img-cell">
         <img src="../images/img-39b35a9ccf7a8035852af27e1bc2f0e2.jpg" alt="App page">
-        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>App page</strong><br>One app's full history, team, and status in a single view. Closed the no-integrated-workflow gap.</span>
+        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>App page</strong>One app's full history, team, and status in a single view. Closed the no-integrated-workflow gap.</span>
       </div>
       <div class="img-cell">
         <img src="../images/img-39b35a9ccf7a80c799b3f07bc0270576.jpg" alt="Review workspace">
-        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>Review workspace</strong><br>Built from scratch to replace ad-hoc Google Doc reviews. Solves the difficulty of writing a consistent review.</span>
+        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>Review workspace</strong>Built from scratch to replace ad-hoc Google Doc reviews. Solves the difficulty of writing a consistent review.</span>
       </div>
       <div class="img-cell">
         <img src="../images/img-39b35a9ccf7a8059af6bd4b420b393ae.jpg" alt="Team management">
-        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>Team management</strong><br>Role-based access and reviewer assignments across the team. Closes the handoff gap between reviewers.</span>
+        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>Team management</strong>Role-based access and reviewer assignments across the team. Closes the handoff gap between reviewers.</span>
       </div>
     </div>
   </div>
@@ -524,11 +546,11 @@
     <div class="img-grid g2">
       <div class="img-cell">
         <img src="../images/img-3b050a27424045049837f37c0dbcbb0b.jpg" alt="Apps dashboard">
-        <span class="img-cap"><strong>Dashboard: Status, last change, market status, reviewer</strong><br><em>The single source of truth reviewers didn't have before.</em></span>
+        <span class="img-cap"><strong>Dashboard: Status, last change, market status, reviewer</strong><em>The single source of truth reviewers didn't have before.</em></span>
       </div>
       <div class="img-cell">
         <img src="../images/img-bbcd50dd77864ad2be7e03d4f1a45204.jpg" alt="Filters">
-        <span class="img-cap"><strong>Filtering by status and market listing</strong><br><em>Built to hold up as submission volume grows, not just today's backlog.</em></span>
+        <span class="img-cap"><strong>Filtering by status and market listing</strong><em>Built to hold up as submission volume grows, not just today's backlog.</em></span>
       </div>
     </div>
   </div>
@@ -543,15 +565,15 @@
     <div class="img-grid g3">
       <div class="img-cell">
         <img src="../images/img-6414b62696c949a69686d280fef78e32.jpg" alt="Activity log">
-        <span class="img-cap"><strong>Per-app activity log</strong><br><em>Answers what Google Docs couldn't: what changed, when, and by whom.</em></span>
+        <span class="img-cap"><strong>Per-app activity log</strong><em>Answers what Google Docs couldn't: what changed, when, and by whom.</em></span>
       </div>
       <div class="img-cell">
         <img src="../images/img-38435a9ccf7a803ca35ec7a3df5b0825.jpg" alt="App team view">
-        <span class="img-cap"><strong>App team view</strong><br><em>Who's building it, so a handoff doesn't start from zero.</em></span>
+        <span class="img-cap"><strong>App team view</strong><em>Who's building it, so a handoff doesn't start from zero.</em></span>
       </div>
       <div class="img-cell">
         <img src="../images/img-39b35a9ccf7a804b8217cb08bc0b6874.jpg" alt="All statuses">
-        <span class="img-cap"><strong>All statuses and their actions</strong><br><em>Every status the app can be in, and what a reviewer can do from there.</em></span>
+        <span class="img-cap"><strong>All statuses and their actions</strong><em>Every status the app can be in, and what a reviewer can do from there.</em></span>
       </div>
     </div>
   </div>
@@ -568,11 +590,11 @@
     <div class="img-grid g2">
       <div class="img-cell">
         <img src="../images/img-3a335a9ccf7a80439b98d3025148c52b.jpg" alt="Review report">
-        <span class="img-cap"><strong>Review report: Comments organized by path, flagging by type</strong><br><em>The structure a Google Doc could never enforce.</em></span>
+        <span class="img-cap"><strong>Review report: Comments organized by path, flagging by type</strong><em>The structure a Google Doc could never enforce.</em></span>
       </div>
       <div class="img-cell">
         <img src="../images/img-3a335a9ccf7a809bbb3fc6600510972e.jpg" alt="Previous activity">
-        <span class="img-cap"><strong>Previous activity tab: Last review surfaced for context</strong><br><em>No need to dig back through old documents to remember what was already said.</em></span>
+        <span class="img-cap"><strong>Previous activity tab: Last review surfaced for context</strong><em>No need to dig back through old documents to remember what was already said.</em></span>
       </div>
     </div>
   </div>
@@ -589,16 +611,16 @@
     <div class="img-grid g2">
       <div class="img-cell">
         <img src="../images/img-38435a9ccf7a8086a5fcf9625e03c729.jpg" alt="New comment">
-        <span class="img-cap"><strong>Adding a new comment with path, type, and blocker flag</strong><br><em>A blocker flag stops the app from publishing until it's resolved.</em></span>
+        <span class="img-cap"><strong>Adding a new comment with path, type, and blocker flag</strong><em>A blocker flag stops the app from publishing until it's resolved.</em></span>
       </div>
       <div class="img-stack">
         <div class="img-cell">
           <img src="../images/img-39b35a9ccf7a80c8ac0ccd2a5f566729.jpg" alt="Comment types">
-          <span class="img-cap"><strong>All comment types</strong><br><em>One fixed vocabulary, so severity reads the same across every reviewer.</em></span>
+          <span class="img-cap"><strong>All comment types</strong><em>One fixed vocabulary, so severity reads the same across every reviewer.</em></span>
         </div>
         <div class="img-cell">
           <img src="../images/img-38435a9ccf7a803fbbebe389d7ce23e4.jpg" alt="Existing comment">
-          <span class="img-cap"><strong>Moving an unhandled comment from a previous review</strong><br><em>Nothing a developer missed carries over silently.</em></span>
+          <span class="img-cap"><strong>Moving an unhandled comment from a previous review</strong><em>Nothing a developer missed carries over silently.</em></span>
         </div>
       </div>
     </div>
@@ -613,18 +635,14 @@
     </div>
     <h2 class="slide-h">Publish flow</h2>
     <p class="slide-intro">The last step before publishing to the marketplace. Everything from the review workspace carries through, so nothing ships outside the process.</p>
-    <div class="img-grid g3">
+    <div class="img-grid g2">
       <div class="img-cell">
         <img src="../images/img-3a335a9ccf7a800395b1eafb4c5fb66d.jpg" alt="Opening publish">
-        <span class="img-cap"><strong>Opening the publish action from the app's more actions menu</strong><br><em>One entry point, not a separate tool.</em></span>
-      </div>
-      <div class="img-cell">
-        <img src="../images/img-38435a9ccf7a80cb893dd89508d7c2d3.jpg" alt="Publishing">
-        <span class="img-cap"><strong>Publishing in progress</strong><br><em>A clear state, so it doesn't get triggered twice by accident.</em></span>
+        <span class="img-cap"><strong>Opening the publish action from the app's more actions menu</strong><em>One entry point, not a separate tool.</em></span>
       </div>
       <div class="img-cell">
         <img src="../images/img-38435a9ccf7a802ba183ca8517f87af7.jpg" alt="Published">
-        <span class="img-cap"><strong>App successfully published, marked as "listed"</strong><br><em>The status every other view in the platform now reflects.</em></span>
+        <span class="img-cap"><strong>App successfully published, marked as "listed"</strong><em>The status every other view in the platform now reflects.</em></span>
       </div>
     </div>
   </div>
@@ -641,15 +659,15 @@
     <div class="img-grid g3">
       <div class="img-cell">
         <img src="../images/img-38435a9ccf7a80eeb2a8f65463952fd5.jpg" alt="First publish">
-        <span class="img-cap"><strong>1. Revenue share agreement shown before confirming</strong><br><em>Surfaced once, at the moment it actually matters.</em></span>
+        <span class="img-cap"><strong>1. Revenue share agreement shown before confirming</strong><em>Surfaced once, at the moment it actually matters.</em></span>
       </div>
       <div class="img-cell">
         <img src="../images/img-38435a9ccf7a80738a68efc0d5282683.jpg" alt="Review report attached">
-        <span class="img-cap"><strong>2. Review report attached to the publish action</strong><br><em>The full review history stays with the decision, not in a separate document.</em></span>
+        <span class="img-cap"><strong>2. Review report attached to the publish action</strong><em>The full review history stays with the decision, not in a separate document.</em></span>
       </div>
       <div class="img-cell">
         <img src="../images/img-38435a9ccf7a80ea9288f772303c0370.jpg" alt="Internal note">
-        <span class="img-cap"><strong>3. Adding an internal note before publishing</strong><br><em>Context for the next reviewer, not just the developer.</em></span>
+        <span class="img-cap"><strong>3. Adding an internal note before publishing</strong><em>Context for the next reviewer, not just the developer.</em></span>
       </div>
     </div>
   </div>
@@ -664,15 +682,15 @@
     <div class="img-grid g3">
       <div class="img-cell">
         <img src="../images/img-77849552a9324b4580d314b3bfc6e966.jpg" alt="Team management">
-        <span class="img-cap"><strong>All review team members, their roles and emails</strong><br><em>One roster instead of asking around to find out who's who.</em></span>
+        <span class="img-cap"><strong>All review team members, their roles and emails</strong><em>One roster instead of asking around to find out who's who.</em></span>
       </div>
       <div class="img-cell">
         <img src="../images/img-12c77f84c928436397cc7844a5773dc9.jpg" alt="Role assignment">
-        <span class="img-cap"><strong>Four role types control what each member can do</strong><br><em>Access matched to responsibility, not granted by default.</em></span>
+        <span class="img-cap"><strong>Four role types control what each member can do</strong><em>Access matched to responsibility, not granted by default.</em></span>
       </div>
       <div class="img-cell">
         <img src="../images/img-38435a9ccf7a806c83b8c68f5295bd4d.jpg" alt="Viewer role">
-        <span class="img-cap"><strong>Viewer role: Preview only, no changes</strong><br><em>Visibility without the risk of an accidental edit.</em></span>
+        <span class="img-cap"><strong>Viewer role: Preview only, no changes</strong><em>Visibility without the risk of an accidental edit.</em></span>
       </div>
     </div>
   </div>
