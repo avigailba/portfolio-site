@@ -100,7 +100,8 @@
       flex: 1 1 480px;
       min-width: 0;
       height: min(60vh, 560px);
-      border-radius: 12px;
+      margin: -40px -72px 0 0;
+      border-radius: 0 0 0 16px;
       overflow: hidden;
       box-shadow: 0 24px 60px -20px rgba(30, 40, 90, 0.25);
     }
@@ -274,28 +275,24 @@
     .img-stack .img-cell img { height: 100%; }
 
     /* Impact slide */
-    .slide-impact { text-align: center; }
-    .slide-impact .slide-header { justify-content: center; }
-    .slide-impact .slide-h { text-align: center; }
     .impact-stat {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 26px;
+      font-size: 20px;
       font-weight: 500;
       color: #0a0a0a;
-      line-height: 1.55;
-      max-width: 720px;
-      margin: 0 auto 44px;
+      line-height: 1.65;
+      max-width: 640px;
+      margin-bottom: 36px;
     }
     .bottom-line-block {
-      max-width: 680px;
-      margin: 0 auto;
+      border-left: 3px solid #ebebeb;
+      padding-left: 20px;
+      max-width: 640px;
     }
     .bottom-line-block p {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 22px;
-      font-weight: 500;
+      font-size: 16px;
       color: #555;
-      line-height: 1.5;
+      line-height: 1.75;
       font-style: italic;
     }
 
@@ -736,7 +733,7 @@
   </div>
 
   <!-- ⑫ Impact -->
-  <div class="slide slide-vcenter slide-impact" data-label="Impact">
+  <div class="slide slide-vcenter" data-label="Impact">
     <div class="slide-header">
       <span class="slide-section">Impact</span>
     </div>
