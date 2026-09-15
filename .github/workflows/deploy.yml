@@ -29,16 +29,6 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - run: npm ci
-      - uses: actions/cache@v4
-        with:
-          path: dist/images
-          key: images-${{ hashFiles('generate.js') }}
-          restore-keys: images-
-      - run: node generate.js
-        env:
-          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
-      - run: npm run check
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
