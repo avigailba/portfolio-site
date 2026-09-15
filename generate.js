@@ -652,6 +652,7 @@ var CURRENT_SLUG = '${proj.slug}';
           ${nextProj ? `<button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">→</button>` : ''}
         </div>
         ${proj.subtitle ? `<p class="proj-subtitle-m">${proj.subtitle}</p>` : ''}
+        ${proj.slug === 'internal-app-review-system' ? `<div class="proj-deck-wrap"><a class="proj-deck-btn" href="internal-review-demo.html" target="_blank" rel="noopener">Present</a></div>` : ''}
         <div class="proj-meta-m">
           ${prevProj ? `<button class="proj-nav-text" aria-label="Previous project" onclick="location.href='${prevProj.slug}.html'">← Previous</button>` : ''}
           ${nextProj ? `<button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">Next →</button>` : ''}
@@ -1379,8 +1380,11 @@ async function build() {
     console.log('  ✓ projects/credits-widget-assets/');
   }
 
+  // Preserve manually created demo/static files that are not generator output
+  const KEEP_PROJECT_FILES = new Set(['internal-review-demo.html']);
+
   for (const file of fs.readdirSync(PROJECTS_DIR)) {
-    if (file.endsWith('.html') && !writtenProjectFiles.has(file)) {
+    if (file.endsWith('.html') && !writtenProjectFiles.has(file) && !KEEP_PROJECT_FILES.has(file)) {
       fs.unlinkSync(path.join(PROJECTS_DIR, file));
       console.log(`  ✓ removed stale projects/${file}`);
     }

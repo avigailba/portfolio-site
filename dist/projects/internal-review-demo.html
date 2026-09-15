@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internal Review System: Interview Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: #fff;
+      color: #0a0a0a;
+      overflow: hidden;
+      height: 100dvh;
+      width: 100vw;
+    }
+
+    /* Progress bar */
+    #progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: #0a0a0a;
+      z-index: 200;
+      transition: width 0.3s ease;
+    }
+
+    /* Deck */
+    #deck {
+      width: 100vw;
+      height: 100dvh;
+      position: relative;
+    }
+
+    /* Slides */
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 40px 72px 96px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      overflow-y: auto;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Text-only slides: vertically centered */
+    .slide-vcenter {
+      justify-content: center;
+    }
+
+    /* Slide header */
+    .slide-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+      flex-shrink: 0;
+    }
+    .slide-section {
+      font-size: 12px;
+      font-weight: 600;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .slide-sep {
+      width: 1px;
+      height: 12px;
+      background: #ddd;
+    }
+    .slide-title-sm {
+      font-size: 12px;
+      color: #aaa;
+      font-weight: 400;
+    }
+
+    /* Cover slide */
+    .slide-cover {
+      justify-content: center;
+      padding-top: 0;
+    }
+    .cover-badges {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex-shrink: 0;
+    }
+    .badge {
+      font-size: 13px;
+      color: #555;
+      border: 0.5px solid #e0e0e0;
+      border-radius: 3px;
+      padding: 4px 10px;
+      font-family: 'Inter', sans-serif;
+    }
+    .cover-h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(36px, 4.5vw, 64px);
+      font-weight: 700;
+      color: #0a0a0a;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 20px;
+      max-width: 820px;
+    }
+    .cover-sub {
+      font-size: 18px;
+      color: #555;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    /* Section heading */
+    .slide-h {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(26px, 3vw, 44px);
+      font-weight: 700;
+      color: #0a0a0a;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+    .slide-intro {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+      line-height: 1.5;
+    }
+
+    /* Text content */
+    .slide-body {
+      font-size: 17px;
+      color: #0a0a0a;
+      line-height: 1.75;
+      max-width: 680px;
+    }
+    .slide-body + .slide-body { margin-top: 18px; }
+    .slide-body strong { font-weight: 600; }
+
+    /* Bullet list */
+    .slide-list {
+      list-style: none;
+      max-width: 680px;
+      margin-top: 4px;
+    }
+    .slide-list li {
+      font-size: 17px;
+      color: #0a0a0a;
+      line-height: 1.65;
+      padding: 12px 0 12px 24px;
+      border-bottom: 0.5px solid #ebebeb;
+      position: relative;
+    }
+    .slide-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #aaa;
+    }
+    .slide-list li:first-child { border-top: 0.5px solid #ebebeb; }
+    .slide-list li em { color: #555; font-style: italic; }
+
+    /* Image grid */
+    .img-grid {
+      display: grid;
+      gap: 16px;
+      flex: 1;
+      min-height: 0;
+    }
+    .img-grid.g2 { grid-template-columns: 1fr 1fr; }
+    .img-grid.g3 { grid-template-columns: 1fr 1fr 1fr; }
+    .img-grid.g4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+    .img-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .img-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: top center;
+      border-radius: 6px;
+      border: 0.5px solid #ebebeb;
+      background: #f9f9f9;
+      flex: 1;
+      min-height: 0;
+      display: block;
+      cursor: zoom-in;
+    }
+    .img-cap {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.5;
+      flex-shrink: 0;
+    }
+    .img-cap strong {
+      font-weight: 600;
+      color: #0a0a0a;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Scope slide: images shouldn't stretch to fill — let vcenter do the work */
+    .slide-vcenter .img-grid {
+      flex: none;
+      height: clamp(260px, 38vh, 420px);
+    }
+
+    /* Stacked cell */
+    .img-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 0;
+    }
+    .img-stack .img-cell { flex: 1; }
+    .img-stack .img-cell img { height: 100%; }
+
+    /* Impact slide */
+    .impact-stat {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: #0a0a0a;
+      line-height: 1.65;
+      max-width: 640px;
+      margin-bottom: 36px;
+    }
+    .bottom-line-block {
+      border-left: 3px solid #ebebeb;
+      padding-left: 20px;
+      max-width: 640px;
+    }
+    .bottom-line-block p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.75;
+      font-style: italic;
+    }
+
+    /* Navigation */
+    #nav {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 0.5px solid #e8e8e8;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      white-space: nowrap;
+    }
+    .nav-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0a0a0a;
+      font-size: 16px;
+      border-radius: 50%;
+      transition: background 0.15s;
+      font-family: 'Inter', sans-serif;
+      flex-shrink: 0;
+    }
+    .nav-btn:hover { background: #f0f0f0; }
+    .nav-btn:disabled { color: #ccc; cursor: default; }
+    .nav-btn:disabled:hover { background: none; }
+
+    .nav-dots { display: flex; gap: 5px; align-items: center; }
+    .nav-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #ddd;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      border: none;
+      padding: 0;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .nav-dot.active { background: #0a0a0a; transform: scale(1.4); }
+
+    /* Dot tooltip */
+    .nav-dot::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0a0a0a;
+      color: #fff;
+      font-size: 11px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      white-space: nowrap;
+      padding: 4px 8px;
+      border-radius: 4px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+    .nav-dot:hover::after { opacity: 1; }
+
+    .nav-count {
+      font-size: 12px;
+      color: #999;
+      font-weight: 500;
+      min-width: 36px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Keyboard hint */
+    #kb-hint {
+      position: fixed;
+      bottom: 76px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 0.05em;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+    #kb-hint.gone { opacity: 0; }
+
+    /* Lightbox */
+    #lb {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.93);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    #lb.open { opacity: 1; pointer-events: auto; }
+    #lb-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 16px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+      z-index: 1;
+    }
+    #lb-close:hover { background: rgba(255,255,255,0.2); }
+    #lb-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      max-width: calc(100vw - 160px);
+      max-height: calc(100vh - 80px);
+    }
+    #lb-img {
+      max-width: 100%;
+      max-height: calc(100vh - 130px);
+      object-fit: contain;
+      border-radius: 6px;
+      display: block;
+    }
+    #lb-cap {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      line-height: 1.4;
+    }
+    .lb-arrow {
+      width: 44px;
+      height: 44px;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 22px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .lb-arrow:hover { background: rgba(255,255,255,0.2); }
+    .lb-arrow:disabled { opacity: 0.2; cursor: default; }
+    .lb-arrow:disabled:hover { background: rgba(255,255,255,0.1); }
+  </style>
+</head>
+<body>
+
+
+<div id="progress"></div>
+<div id="deck">
+
+  <!-- ① Cover -->
+  <div class="slide slide-cover" data-label="Cover">
+    <div class="slide-header">
+      <span class="slide-section">Interview Demo</span>
+    </div>
+    <div class="cover-badges">
+      <span class="badge">Internal tools</span>
+      <span class="badge">CMS</span>
+      <span class="badge">2022</span>
+    </div>
+    <h1 class="cover-h1">Internal App<br>Review System</h1>
+    <p class="cover-sub">A ground-up rebuild of Wix App Market's internal review platform, after the review team had abandoned it for spreadsheets and Google Docs.</p>
+  </div>
+
+  <!-- ② The Problem -->
+  <div class="slide" data-label="The problem">
+    <div class="slide-header">
+      <span class="slide-section">Background</span>
+    </div>
+    <h2 class="slide-h">The problem</h2>
+    <p class="slide-body">Wix App Market's internal review platform is the tool Account Managers use to evaluate and approve apps before they go live, spanning four interconnected product areas.</p>
+    <p class="slide-body" style="margin-top: 18px;">When I joined, the team had stopped using it. Review work was scattered across personal Google Docs, with no shared history, no visibility between submissions, and no consistent handoffs. The cycle below shows what the process actually looked like.</p>
+    <div style="margin-top:28px;flex-shrink:0;">
+      <p style="margin-bottom:10px;font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.07em;font-family:'Inter',sans-serif;">App review cycle</p>
+      <svg viewBox="0 0 820 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;overflow:visible;" role="img" aria-label="App review cycle workflow diagram">
+        <defs>
+          <marker id="ah" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+            <polygon points="0 0,6 2.5,0 5" fill="#bbb"/>
+          </marker>
+          <marker id="ah-r" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+            <polygon points="0 0,6 2.5,0 5" fill="#e06060"/>
+          </marker>
+        </defs>
+        <!-- Main flow arrows -->
+        <line x1="152" y1="103" x2="180" y2="103" stroke="#bbb" stroke-width="1" marker-end="url(#ah)"/>
+        <line x1="314" y1="103" x2="342" y2="103" stroke="#bbb" stroke-width="1" marker-end="url(#ah)"/>
+        <line x1="476" y1="103" x2="504" y2="103" stroke="#bbb" stroke-width="1" marker-end="url(#ah)"/>
+        <line x1="638" y1="103" x2="666" y2="103" stroke="#bbb" stroke-width="1" marker-end="url(#ah)"/>
+        <!-- Decline loop: under review up to declined -->
+        <line x1="571" y1="82" x2="571" y2="54" stroke="#e06060" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#ah-r)"/>
+        <!-- Decline loop: declined left to dev fixes -->
+        <line x1="506" y1="31" x2="476" y2="31" stroke="#e06060" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#ah-r)"/>
+        <!-- Decline loop: dev fixes down to assigned -->
+        <line x1="409" y1="52" x2="409" y2="80" stroke="#bbb" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#ah)"/>
+        <!-- Loop edge labels -->
+        <text x="578" y="69" font-family="Inter,sans-serif" font-size="10" fill="#e06060">declined</text>
+        <text x="417" y="69" font-family="Inter,sans-serif" font-size="10" fill="#999">resubmit</text>
+        <!-- Node 1: App submitted -->
+        <rect x="20" y="82" width="130" height="42" rx="6" fill="#FFF5D6" stroke="#D4B840" stroke-width="0.5"/>
+        <text x="85" y="107" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="500" fill="#5c4a00">App submitted</text>
+        <!-- Node 2: Pending review -->
+        <rect x="182" y="82" width="130" height="42" rx="6" fill="#fff" stroke="#ebebeb" stroke-width="0.5"/>
+        <text x="247" y="107" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="500" fill="#0a0a0a">Pending review</text>
+        <!-- Node 3: Assigned to AM -->
+        <rect x="344" y="82" width="130" height="42" rx="6" fill="#fff" stroke="#ebebeb" stroke-width="0.5"/>
+        <text x="409" y="107" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="500" fill="#0a0a0a">Assigned to AM</text>
+        <!-- Node 4: Under review -->
+        <rect x="506" y="82" width="130" height="42" rx="6" fill="#fff" stroke="#ebebeb" stroke-width="0.5"/>
+        <text x="571" y="107" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="500" fill="#0a0a0a">Under review</text>
+        <!-- Node 5: Approved and published -->
+        <rect x="668" y="82" width="130" height="42" rx="6" fill="#EAFBEE" stroke="#7dcc84" stroke-width="0.5"/>
+        <text x="733" y="101" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="500" fill="#1a6a1f">Approved</text>
+        <text x="733" y="115" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#1a6a1f">&amp; published</text>
+        <!-- Loop node: Dev makes changes (above Assigned) -->
+        <rect x="344" y="10" width="130" height="42" rx="6" fill="#F6F6F6" stroke="#e0e0e0" stroke-width="0.5"/>
+        <text x="409" y="29" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="500" fill="#555">Dev makes</text>
+        <text x="409" y="43" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="500" fill="#555">changes</text>
+        <!-- Loop node: Declined (above Under Review) -->
+        <rect x="506" y="10" width="130" height="42" rx="6" fill="#FFF0F0" stroke="#e08080" stroke-width="0.5"/>
+        <text x="571" y="29" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="500" fill="#cc3333">Declined</text>
+        <text x="571" y="43" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#cc3333">comments sent</text>
+      </svg>
+      <p style="margin-top:8px;font-size:11px;color:#aaa;font-family:'Inter',sans-serif;">Previously: review work happened across Google Docs, Sheets, and Slides with no shared history</p>
+    </div>
+  </div>
+
+  <!-- ③ Research -->
+  <div class="slide slide-vcenter" data-label="Research">
+    <div class="slide-header">
+      <span class="slide-section">Process</span>
+      <div class="slide-sep"></div>
+      <span class="slide-title-sm">Research</span>
+    </div>
+    <h2 class="slide-h">Research</h2>
+    <p class="slide-body" style="margin-bottom: 20px;">Met with Account Managers to walk through the current system, shadowed them running actual reviews, audited the Docs and Sheets they were using instead, and pulled analytics on time to publish and how many resubmissions an app typically needed. That surfaced:</p>
+    <ul class="slide-list">
+      <li>Confusing UI in the current system</li>
+      <li>Difficulty writing a consistent review</li>
+      <li>Weak information architecture</li>
+      <li>No integrated workflow</li>
+    </ul>
+  </div>
+
+  <!-- ④ Scope + Overview (merged) -->
+  <div class="slide slide-vcenter" data-label="Scope">
+    <div class="slide-header">
+      <span class="slide-section">Process</span>
+      <div class="slide-sep"></div>
+      <span class="slide-title-sm">Scope</span>
+    </div>
+    <h2 class="slide-h">Deciding on scope</h2>
+    <p class="slide-intro">Before designing any screens, I mapped the product into four areas, building on Wix's own UI system to fix the confusing-UI complaint at the platform level first.</p>
+    <div class="img-grid g4">
+      <div class="img-cell">
+        <img src="../images/img-39b35a9ccf7a80639d30e7dab00429f6.jpg" alt="All apps">
+        <span class="img-cap"><strong>① App directory and queue</strong><br>Browse, filter, and assign every app across all review stages. A structural makeover to fix the weak information architecture.</span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-39b35a9ccf7a8035852af27e1bc2f0e2.jpg" alt="App page">
+        <span class="img-cap"><strong>② App page</strong><br>One app's full history, team, and status in a single view. Closed the no-integrated-workflow gap.</span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-39b35a9ccf7a80c799b3f07bc0270576.jpg" alt="Review workspace">
+        <span class="img-cap"><strong>③ Review workspace</strong><br>Built from scratch to replace ad-hoc Google Doc reviews</span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-39b35a9ccf7a8059af6bd4b420b393ae.jpg" alt="Team management">
+        <span class="img-cap"><strong>④ Team management</strong><br>Role-based access and reviewer assignments across the team</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ Apps Directory -->
+  <div class="slide" data-label="Apps directory">
+    <div class="slide-header">
+      <span class="slide-section">Apps Directory</span>
+    </div>
+    <h2 class="slide-h">Apps directory & review queue</h2>
+    <p class="slide-intro">The full marketplace directory, across all stages</p>
+    <div class="img-grid g2">
+      <div class="img-cell">
+        <img src="../images/img-3b050a27424045049837f37c0dbcbb0b.jpg" alt="Apps dashboard">
+        <span class="img-cap">Dashboard: Status, last change, market status, reviewer<br><em>One queue instead of scattered spreadsheets.</em></span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-bbcd50dd77864ad2be7e03d4f1a45204.jpg" alt="Filters">
+        <span class="img-cap">Filtering by status and market listing</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ App page -->
+  <div class="slide" data-label="App page">
+    <div class="slide-header">
+      <span class="slide-section">App Page</span>
+    </div>
+    <h2 class="slide-h">App page</h2>
+    <p class="slide-intro">Submission history, team notes, and current status in one place</p>
+    <div class="img-grid g2">
+      <div class="img-stack">
+        <div class="img-cell" style="flex: 2;">
+          <img src="../images/img-6414b62696c949a69686d280fef78e32.jpg" alt="Activity log">
+          <span class="img-cap">Per-app activity log<br><em>Answers what Google Docs couldn't: what changed, when, and by whom.</em></span>
+        </div>
+        <div class="img-cell" style="flex: 1;">
+          <img src="../images/img-39b35a9ccf7a804b8217cb08bc0b6874.jpg" alt="All statuses">
+          <span class="img-cap">All statuses and their actions</span>
+        </div>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-38435a9ccf7a803ca35ec7a3df5b0825.jpg" alt="App team view">
+        <span class="img-cap">App team view</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ Review workflow part 1 -->
+  <div class="slide" data-label="Review workflow">
+    <div class="slide-header">
+      <span class="slide-section">Review Workspace</span>
+      <div class="slide-sep"></div>
+      <span class="slide-title-sm">1 of 2</span>
+    </div>
+    <h2 class="slide-h">Review workflow</h2>
+    <p class="slide-intro">Commenting, flagging issues, and submitting the review in one place, the workspace built to replace ad-hoc Google Doc reviews</p>
+    <div class="img-grid g2">
+      <div class="img-cell">
+        <img src="../images/img-3a335a9ccf7a80439b98d3025148c52b.jpg" alt="Review report">
+        <span class="img-cap">Review report: Comments organized by path, flagging by type</span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-3a335a9ccf7a809bbb3fc6600510972e.jpg" alt="Previous activity">
+        <span class="img-cap">Previous activity tab: Last review surfaced for context</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑧ Review workflow part 2 -->
+  <div class="slide" data-label="Adding comments">
+    <div class="slide-header">
+      <span class="slide-section">Review Workspace</span>
+      <div class="slide-sep"></div>
+      <span class="slide-title-sm">2 of 2</span>
+    </div>
+    <h2 class="slide-h">Adding comments</h2>
+    <div class="img-grid g2">
+      <div class="img-stack">
+        <div class="img-cell">
+          <img src="../images/img-38435a9ccf7a8086a5fcf9625e03c729.jpg" alt="New comment">
+          <span class="img-cap">Adding a new comment with path, type, and blocker flag</span>
+        </div>
+        <div class="img-cell">
+          <img src="../images/img-39b35a9ccf7a80c8ac0ccd2a5f566729.jpg" alt="Comment types">
+          <span class="img-cap">All comment types</span>
+        </div>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-38435a9ccf7a803fbbebe389d7ce23e4.jpg" alt="Existing comment">
+        <span class="img-cap">Moving an unhandled comment from a previous review</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑨ Publish flow part 1 -->
+  <div class="slide" data-label="Publish flow">
+    <div class="slide-header">
+      <span class="slide-section">Publish Flow</span>
+      <div class="slide-sep"></div>
+      <span class="slide-title-sm">1 of 2</span>
+    </div>
+    <h2 class="slide-h">Publish flow</h2>
+    <p class="slide-intro">The last step before publishing to the marketplace</p>
+    <div class="img-grid g2">
+      <div class="img-cell">
+        <img src="../images/img-3a335a9ccf7a800395b1eafb4c5fb66d.jpg" alt="Opening publish">
+        <span class="img-cap">Opening the publish action from the app's more actions menu</span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-38435a9ccf7a80eeb2a8f65463952fd5.jpg" alt="First publish">
+        <span class="img-cap">First publish: Revenue share agreement shown before confirming</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑩ Publish flow part 2 -->
+  <div class="slide" data-label="Publish (continued)">
+    <div class="slide-header">
+      <span class="slide-section">Publish Flow</span>
+      <div class="slide-sep"></div>
+      <span class="slide-title-sm">2 of 2</span>
+    </div>
+    <div class="img-grid g2">
+      <div class="img-stack">
+        <div class="img-cell">
+          <img src="../images/img-38435a9ccf7a80738a68efc0d5282683.jpg" alt="Review report attached">
+          <span class="img-cap">Review report attached to the publish action</span>
+        </div>
+        <div class="img-cell">
+          <img src="../images/img-38435a9ccf7a80ea9288f772303c0370.jpg" alt="Internal note">
+          <span class="img-cap">Adding an internal note before publishing</span>
+        </div>
+      </div>
+      <div class="img-stack">
+        <div class="img-cell">
+          <img src="../images/img-38435a9ccf7a80cb893dd89508d7c2d3.jpg" alt="Publishing">
+          <span class="img-cap">Publishing in progress</span>
+        </div>
+        <div class="img-cell">
+          <img src="../images/img-38435a9ccf7a802ba183ca8517f87af7.jpg" alt="Published">
+          <span class="img-cap">App successfully published, marked as "listed"</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑪ Team management -->
+  <div class="slide" data-label="Team management">
+    <div class="slide-header">
+      <span class="slide-section">Team Management</span>
+    </div>
+    <h2 class="slide-h">Team management & roles</h2>
+    <p class="slide-intro">Role-based access for the review team, closing the handoff gap: who owns which review, and what they're allowed to touch</p>
+    <div class="img-grid g3">
+      <div class="img-cell">
+        <img src="../images/img-77849552a9324b4580d314b3bfc6e966.jpg" alt="Team management">
+        <span class="img-cap">All review team members, their roles and emails</span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-12c77f84c928436397cc7844a5773dc9.jpg" alt="Role assignment">
+        <span class="img-cap">Four role types control what each member can do</span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-38435a9ccf7a806c83b8c68f5295bd4d.jpg" alt="Viewer role">
+        <span class="img-cap">Viewer role: Preview only, no changes</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑫ Impact -->
+  <div class="slide slide-vcenter" data-label="Impact">
+    <div class="slide-header">
+      <span class="slide-section">Impact</span>
+    </div>
+    <h2 class="slide-h">Impact</h2>
+    <p class="impact-stat">The tool is still actively used by Wix's Developer Relations team, and became their primary review surface. It reduced account manager workload, shortened the review cycle, and made app evaluations faster and more consistent across the team.</p>
+    <div class="bottom-line-block">
+      <p>The team had already voted with their feet, doing the actual review work in spreadsheets outside the platform. Success wasn't launching a redesign; it was building something good enough that they'd stop reaching for Google Docs. The tool became their primary review surface, which is the only metric that actually mattered.</p>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- Lightbox -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button id="lb-close" aria-label="Close">✕</button>
+  <button class="lb-arrow" id="lb-prev" aria-label="Previous image">‹</button>
+  <div id="lb-inner">
+    <img id="lb-img" alt="">
+    <p id="lb-cap"></p>
+  </div>
+  <button class="lb-arrow" id="lb-next" aria-label="Next image">›</button>
+</div>
+
+<p id="kb-hint">← → to navigate</p>
+
+<nav id="nav" role="navigation" aria-label="Slide navigation">
+  <button class="nav-btn" id="btn-prev" aria-label="Previous slide">←</button>
+  <div class="nav-dots" id="nav-dots" aria-hidden="true"></div>
+  <span class="nav-count" id="nav-count" aria-live="polite"></span>
+  <button class="nav-btn" id="btn-next" aria-label="Next slide">→</button>
+</nav>
+
+<script>
+(function () {
+  var slides = Array.from(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var cur = 0;
+
+  // Build dots with tooltips
+  var dotsEl = document.getElementById('nav-dots');
+  slides.forEach(function (slide, i) {
+    var label = slide.dataset.label || ('Slide ' + (i + 1));
+    var d = document.createElement('button');
+    d.className = 'nav-dot';
+    d.setAttribute('aria-label', label);
+    d.dataset.label = label;
+    d.addEventListener('click', function () { goTo(i); });
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= total) return;
+    slides[cur].classList.remove('active');
+    cur = idx;
+    slides[cur].classList.add('active');
+    slides[cur].scrollTop = 0;
+    dotsEl.querySelectorAll('.nav-dot').forEach(function (d, i) {
+      d.classList.toggle('active', i === cur);
+    });
+    document.getElementById('nav-count').textContent = (cur + 1) + ' / ' + total;
+    document.getElementById('btn-prev').disabled = cur === 0;
+    document.getElementById('btn-next').disabled = cur === total - 1;
+    document.getElementById('progress').style.width = ((cur + 1) / total * 100) + '%';
+  }
+
+  document.getElementById('btn-prev').addEventListener('click', function () { goTo(cur - 1); hideHint(); });
+  document.getElementById('btn-next').addEventListener('click', function () { goTo(cur + 1); hideHint(); });
+
+  var hint = document.getElementById('kb-hint');
+  var hintGone = false;
+  function hideHint() {
+    if (!hintGone) { hintGone = true; hint.classList.add('gone'); }
+  }
+  setTimeout(hideHint, 4000);
+
+  // ----- Lightbox -----
+  var lb = document.getElementById('lb');
+  var lbImg = document.getElementById('lb-img');
+  var lbCap = document.getElementById('lb-cap');
+  var lbPrev = document.getElementById('lb-prev');
+  var lbNext = document.getElementById('lb-next');
+  var lbImages = [];
+  var lbIdx = 0;
+
+  function openLb(images, startIdx) {
+    lbImages = images;
+    lbIdx = startIdx;
+    showLbImage(lbIdx);
+    lb.classList.add('open');
+  }
+
+  function showLbImage(idx) {
+    var item = lbImages[idx];
+    lbImg.src = item.src;
+    lbImg.alt = item.alt;
+    lbCap.textContent = item.cap;
+    var multi = lbImages.length > 1;
+    lbPrev.style.visibility = multi ? '' : 'hidden';
+    lbNext.style.visibility = multi ? '' : 'hidden';
+    lbPrev.disabled = idx === 0;
+    lbNext.disabled = idx === lbImages.length - 1;
+  }
+
+  function closeLb() { lb.classList.remove('open'); }
+
+  document.querySelectorAll('.img-cell img').forEach(function (img) {
+    img.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var activeSlide = document.querySelector('.slide.active');
+      var imgs = Array.from(activeSlide.querySelectorAll('.img-cell img'));
+      var images = imgs.map(function (el) {
+        var cap = el.closest('.img-cell') && el.closest('.img-cell').querySelector('.img-cap');
+        return { src: el.src, alt: el.alt, cap: cap ? cap.textContent : '' };
+      });
+      openLb(images, Math.max(0, imgs.indexOf(img)));
+    });
+  });
+
+  document.getElementById('lb-close').addEventListener('click', closeLb);
+  lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+  lbPrev.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (lbIdx > 0) { lbIdx--; showLbImage(lbIdx); }
+  });
+  lbNext.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (lbIdx < lbImages.length - 1) { lbIdx++; showLbImage(lbIdx); }
+  });
+
+  // Unified keyboard handler — lightbox takes priority when open
+  document.addEventListener('keydown', function (e) {
+    if (lb.classList.contains('open')) {
+      if (e.key === 'Escape') { closeLb(); return; }
+      if (e.key === 'ArrowRight') { if (lbIdx < lbImages.length - 1) { lbIdx++; showLbImage(lbIdx); } return; }
+      if (e.key === 'ArrowLeft') { if (lbIdx > 0) { lbIdx--; showLbImage(lbIdx); } return; }
+      return;
+    }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { goTo(cur + 1); hideHint(); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { goTo(cur - 1); hideHint(); }
+  });
+
+  goTo(0);
+})();
+</script>
+</body>
+</html>
