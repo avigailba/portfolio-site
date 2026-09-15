@@ -97,13 +97,14 @@
     }
     .cover-text { flex: 1 1 420px; }
     .cover-hero {
-      flex: 1 1 420px;
+      flex: 1 1 480px;
       min-width: 0;
+      height: min(72vh, 680px);
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 24px 60px -20px rgba(30, 40, 90, 0.25);
     }
-    .cover-hero img { width: 100%; height: auto; display: block; }
+    .cover-hero img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
     .cover-badges {
       display: flex;
       gap: 8px;
@@ -246,6 +247,7 @@
       color: #555;
       line-height: 1.5;
       flex-shrink: 0;
+      min-height: 68px;
     }
     .img-cap strong {
       font-weight: 600;
@@ -516,10 +518,12 @@
     <h2 class="slide-h">Research</h2>
     <div style="display:flex;gap:56px;align-items:center;flex-wrap:wrap;">
     <div style="flex:1 1 380px;max-width:460px;">
-    <p class="slide-body">Met with Account Managers to walk through the current system, shadowed them running actual reviews, audited the Docs and Sheets they were using instead, and pulled analytics on time to publish and how many resubmissions an app typically needed. That surfaced:</p>
+    <p class="slide-body">Met with Account Managers to walk through the current system, shadowed them running actual reviews, audited the Docs and Sheets they were using instead, and pulled analytics on time to publish and how many resubmissions an app typically needed.</p>
     <p class="slide-body" style="margin-top: 20px;">Together, these caused longer review times and slower cycles across the team.</p>
     </div>
-    <div class="research-grid" style="flex:1 1 420px;">
+    <div style="flex:1 1 420px;">
+      <p style="margin-bottom:10px;font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.07em;font-family:'Inter',sans-serif;">What surfaced</p>
+      <div class="research-grid">
       <div class="research-card">
         <h3>Confusing UI in the current system</h3>
         <p>The tool's own interface was part of the problem, reviewers found it harder to work in than the spreadsheets they'd moved to instead.</p>
@@ -535,6 +539,7 @@
       <div class="research-card">
         <h3>No integrated workflow</h3>
         <p>Reviewing, commenting, and publishing were disconnected steps, not one flow, so context got lost moving between them.</p>
+      </div>
       </div>
     </div>
     </div>
