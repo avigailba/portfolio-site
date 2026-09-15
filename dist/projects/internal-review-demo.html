@@ -188,6 +188,29 @@
     .slide-list li:first-child { border-top: 0.5px solid #ebebeb; }
     .slide-list li em { color: #555; font-style: italic; }
 
+    /* Research issue cards */
+    .research-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .research-card {
+      border: 0.5px solid #ebebeb;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .research-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #0a0a0a;
+      margin-bottom: 8px;
+    }
+    .research-card p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.6;
+    }
+
     /* Image grid */
     .img-grid {
       display: grid;
@@ -497,14 +520,30 @@
       <span class="slide-title-sm">Research</span>
     </div>
     <h2 class="slide-h">Research</h2>
-    <p class="slide-body" style="margin-bottom: 20px;">Met with Account Managers to walk through the current system, shadowed them running actual reviews, audited the Docs and Sheets they were using instead, and pulled analytics on time to publish and how many resubmissions an app typically needed. That surfaced:</p>
-    <ul class="slide-list">
-      <li>Confusing UI in the current system</li>
-      <li>Difficulty writing a consistent review</li>
-      <li>Weak information architecture</li>
-      <li>No integrated workflow</li>
-    </ul>
+    <div style="display:flex;gap:56px;align-items:center;flex-wrap:wrap;">
+    <div style="flex:1 1 380px;max-width:460px;">
+    <p class="slide-body">Met with Account Managers to walk through the current system, shadowed them running actual reviews, audited the Docs and Sheets they were using instead, and pulled analytics on time to publish and how many resubmissions an app typically needed. That surfaced:</p>
     <p class="slide-body" style="margin-top: 20px;">Together, these caused longer review times and slower cycles across the team.</p>
+    </div>
+    <div class="research-grid" style="flex:1 1 420px;">
+      <div class="research-card">
+        <h3>Confusing UI in the current system</h3>
+        <p>The tool's own interface was part of the problem, reviewers found it harder to work in than the spreadsheets they'd moved to instead.</p>
+      </div>
+      <div class="research-card">
+        <h3>Difficulty writing a consistent review</h3>
+        <p>With no shared format, every Account Manager wrote reviews differently: comments, structure, and detail varied reviewer to reviewer.</p>
+      </div>
+      <div class="research-card">
+        <h3>Weak information architecture</h3>
+        <p>Submission history, app status, and team details lived in different places, making it hard to find what mattered for a decision.</p>
+      </div>
+      <div class="research-card">
+        <h3>No integrated workflow</h3>
+        <p>Reviewing, commenting, and publishing were disconnected steps, not one flow, so context got lost moving between them.</p>
+      </div>
+    </div>
+    </div>
   </div>
 
   <!-- ④ Scope + Overview (merged) -->
