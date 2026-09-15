@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <link rel="stylesheet" href="../style.css?v=fed261dcaf">
+  <link rel="stylesheet" href="../style.css?v=f370fee40f">
 </head>
 <body class="proj-page">
   <header id="site-header">
@@ -63,7 +63,7 @@
           <h1 class="proj-title-m">Internal Reviews System</h1>
           <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='developer-sale.html'">→</button>
         </div>
-        <p class="proj-subtitle-m">A platform that replaced spreadsheet workarounds and became the team's primary tool for app approvals</p>
+        <p class="proj-subtitle-m">A ground-up rebuild of Wix App Market's internal review platform, after the team had abandoned it for spreadsheets and Google Docs</p>
         <div class="proj-deck-wrap"><a class="proj-deck-btn" href="internal-review-demo.html" target="_blank" rel="noopener">Presentation mode ↗</a></div>
         <div class="proj-meta-m">
           <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='app-installation-page-for-developers.html'">← Previous</button>
@@ -76,11 +76,11 @@
 </figure>
 <h2>The problem</h2>
 <p><span class="ctx-tip" role="button" tabindex="0" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics." aria-label="Wix App Market" aria-describedby="term-tip-1" aria-expanded="false">Wix App Market<span class="ctx-tip-pop" id="term-tip-1" role="tooltip" hidden>Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.</span></span>'s internal review platform is the tool Account Managers use to evaluate and approve apps before they go live. It spans four interconnected product areas: the app directory and queue, per-app activity and team views, the review workspace, and team management.</p>
-<p>When I joined the project, the team had stopped using it and the process was not <strong>platformized</strong>. Review work happened in personal Google Docs, which meant no shared history, no visibility into what changed between submissions, and no consistent way to hand off between reviewers. That wasn't sustainable and the volume of app submissions was only increasing.</p>
+<p>When I joined the project, the team had stopped using it, and it wasn't updated or fixed. Review work happened in personal Google Docs, which meant no shared history, no visibility into what changed between submissions, and no consistent way to hand off between reviewers. As the team grew and more apps were submitted, that stopped being sustainable.</p>
 <h2>Process</h2>
 <h3>Research</h3>
-<p>Conducted discovery research to identify why Account Managers were doing review work in external tools instead of the platform.
-Pain points pointed to the UI of the current system I difficulties in writing a consistent review, the information architecture, and the lack of an integrated workflow</p>
+<p>Met with Account Managers to walk through the current system, shadowed them running actual reviews, audited the Docs and Sheets they were using instead, and pulled analytics on time to publish and how many resubmissions an app typically needed.
+That surfaced pain points in the UI of the current system, difficulty writing a consistent review, weak information architecture, and the lack of an integrated workflow.</p>
 <h3>Deciding on the product areas</h3>
 <p>Before designing the screens, I mapped the product into four areas to define scope and structure.</p>
 <ol>
@@ -108,6 +108,7 @@ Pain points pointed to the UI of the current system I difficulties in writing a 
 </div></div>
 <h3>Redesigning the platform</h3>
 <ul>
+  <li>Built on <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide." aria-label="Wix" aria-describedby="term-tip-2" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-2" role="tooltip" hidden>Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></span>'s own internal UI system rather than a bespoke visual language, directly addressing the confusing-UI complaint that came up in research</li>
   <li>Mapped the product into four areas before designing any screens: app directory and queue, per-app view, review workspace, and team management. The review workspace was built from scratch; the others required significant rethinking.</li>
   <li>Restructured the information architecture to handle scale: one view for all apps at every stage, with filters and status logic designed to hold up as submission volume grew</li>
   <li>Designed the review workflow around how reviewers actually worked: comments organized by app path, blocker flags inline, and previous submission history always visible alongside the current one</li>
@@ -120,7 +121,7 @@ Pain points pointed to the UI of the current system I difficulties in writing a 
   <li>Facilitated a bug hunt session with Account Managers before launch to validate the redesign and surface edge cases</li>
 </ul>
 <h2>Impact</h2>
-<p>The tool is still actively used by <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide." aria-label="Wix" aria-describedby="term-tip-2" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-2" role="tooltip" hidden>Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></span>'s Developer Relations team. It reduced account manager workload, shortened the review cycle, and made app evaluations faster and more consistent across the team.</p>
+<p>The tool is still actively used by Wix's Developer Relations team. It reduced account manager workload, shortened both the review cycle and time to publish, and made app evaluations faster and more consistent across the team.</p>
 <h2>Screens</h2>
 <h3>Apps directory and review queue</h3>
 <p>The full marketplace directory, across all stages</p>
@@ -286,7 +287,7 @@ var ALL_PROJECTS = [
   { slug: 'payouts-page', title: 'Payouts Page', sub: 'Redesigning the payout experience for App Market developers', cat: 'Monetisation', cats: 'monetisation cms', year: 2023, featured: false },
   { slug: 'refund-flow', title: 'Refund Flow', sub: 'Self-serve refund flow that eliminated manual Dev Relations intervention and scaled with the platform', cat: 'Monetisation', cats: 'monetisation', year: 2023, featured: false },
   { slug: 'app-pricing-page-projects', title: 'App Pricing Page Projects', sub: 'Pricing page redesigns across three shipping cycles, including a free trial migration that drove a measurable lift in conversion', cat: 'Monetisation', cats: 'developer monetisation', year: 2023, featured: false },
-  { slug: 'internal-app-review-system', title: 'Internal Review System', sub: 'A platform that replaced spreadsheet workarounds and became the team\'s primary tool for app approvals', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
+  { slug: 'internal-app-review-system', title: 'Internal Review System', sub: 'A ground-up rebuild of Wix App Market\'s internal review platform, after the team had abandoned it for spreadsheets and Google Docs', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
   { slug: 'submit-publish-widget', title: 'Submit & Publish Widget', sub: 'Submission widget that surfaced blockers earlier, reduced rejections, and later enabled auto-publishing for live apps', cat: 'Developer tools', cats: 'developer', year: 2022, featured: false },
   { slug: 'api-keys-page', title: 'API Keys Page', sub: 'API key management that became the primary credential surface for developers building on Wix', cat: 'Developer tools', cats: 'developer cms', year: 2022, featured: false },
   { slug: 'app-coupons', title: 'App Coupons', sub: 'Self-serve coupon platform that shifted promotions from employee-gated to fully developer-controlled', cat: 'Monetisation', cats: 'monetisation cms', year: 2021, featured: false }

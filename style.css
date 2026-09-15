@@ -808,6 +808,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   .inner-main, .proj-main, .more-section { padding: 0 20px; }
   .proj-page-grid { grid-template-columns: 0 1fr 0; overflow: visible; }
   .proj-side-nav { display: none; }
+  .proj-deck-wrap { display: none; }
   /* Desktop nav → hamburger */
   #site-header nav { display: none; }
   .hdr-mail { display: none; }
