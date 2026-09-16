@@ -288,6 +288,125 @@
     .img-stack .img-cell { flex: 1; }
     .img-stack .img-cell img { height: 100%; }
 
+    /* Scope slide — live mini UI mockups */
+    .scope-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      flex: 1;
+      min-height: 0;
+    }
+    .scope-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 0;
+    }
+    .scope-mock {
+      background: #f9f9f9;
+      border: 0.5px solid #ebebeb;
+      border-radius: 6px;
+      padding: 10px;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-family: 'Inter', sans-serif;
+      font-size: 9px;
+    }
+    .sc-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 6px;
+      border-bottom: 0.5px solid #e8e8e8;
+      flex-shrink: 0;
+    }
+    .sc-label { font-size: 9px; font-weight: 600; color: #0a0a0a; }
+    .sc-tabs { display: flex; gap: 3px; flex-shrink: 0; }
+    .sc-tab {
+      font-size: 8px; padding: 2px 7px; border-radius: 2px;
+      color: #888; background: transparent;
+    }
+    .sc-tab.on { background: #0a0a0a; color: #fff; }
+    .sc-row {
+      display: flex; align-items: center; gap: 5px;
+      padding: 4px 0; border-bottom: 0.5px solid #f0f0f0; flex-shrink: 0;
+    }
+    .sc-row:last-of-type { border-bottom: none; }
+    .sc-dot {
+      width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+    }
+    .sc-dot.pending  { background: #f5c842; }
+    .sc-dot.review   { background: #5b8ef0; }
+    .sc-dot.approved { background: #3db060; }
+    .sc-dot.declined { background: #e05050; }
+    .sc-line {
+      height: 6px; background: #e0e0e0; border-radius: 2px; flex: 1; min-width: 0;
+    }
+    .sc-line.short { max-width: 30px; }
+    .sc-line.med   { max-width: 50px; }
+    .sc-pill {
+      font-size: 7.5px; padding: 1px 5px; border-radius: 8px;
+      font-weight: 500; flex-shrink: 0; white-space: nowrap;
+    }
+    .sc-pill.pending  { background: #fff3cc; color: #806000; }
+    .sc-pill.review   { background: #dce8ff; color: #2050b0; }
+    .sc-pill.approved { background: #d4f0dc; color: #1a6030; }
+    .sc-pill.declined { background: #ffe0de; color: #b03030; }
+    .sc-pill.listed   { background: #f0f0f0; color: #555; }
+    .sc-avatar {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: #d8d8d8; flex-shrink: 0;
+    }
+    .sc-input {
+      background: #fff; border: 0.5px solid #ddd; border-radius: 3px;
+      padding: 5px 6px; color: #aaa; font-size: 8px; flex-shrink: 0;
+    }
+    .sc-actions {
+      display: flex; gap: 4px; margin-top: auto; flex-shrink: 0; padding-top: 6px;
+    }
+    .sc-btn {
+      flex: 1; height: 17px; border-radius: 3px; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 8px; font-weight: 500;
+    }
+    .sc-btn.primary { background: #0a0a0a; color: #fff; }
+    .sc-btn.ghost   { border: 0.5px solid #ccc; color: #555; }
+
+    /* Marker highlight */
+    .mark {
+      background: linear-gradient(120deg, #ffe066 0%, #ffe066 100%);
+      background-repeat: no-repeat;
+      background-size: 100% 55%;
+      background-position: 0 85%;
+      padding: 0 2px;
+    }
+
+    /* Nav arrow tooltips */
+    .nav-btn { position: relative; }
+    .nav-btn[data-label]::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0a0a0a;
+      color: #fff;
+      font-size: 11px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      white-space: nowrap;
+      padding: 4px 8px;
+      border-radius: 4px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+    .nav-btn[data-label]:not(:disabled):hover::after { opacity: 1; }
+
     /* Impact slide */
     .impact-stat {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -462,6 +581,7 @@
       color: rgba(255,255,255,0.45);
       text-align: center;
       line-height: 1.4;
+      white-space: pre-line;
     }
     .lb-arrow {
       width: 44px;
@@ -613,8 +733,8 @@
       <span class="slide-section">Solution</span>
     </div>
     <h2 class="slide-h">App page</h2>
-    <p class="slide-intro">Submission history, team notes, and current status in one place. What used to be scattered across personal Docs is now centralized here.</p>
-    <div class="img-grid g3">
+    <p class="slide-intro">Submission history, team notes, and current status in one place. What used to be scattered across personal Docs is now centralized here, and every app status listing has its own&nbsp;actions.</p>
+    <div class="img-grid" style="grid-template-columns: 2fr 1fr 1fr;">
       <div class="img-cell">
         <img src="../images/img-6414b62696c949a69686d280fef78e32.jpg" alt="Activity log">
         <span class="img-cap"><strong>Per-app activity log</strong><em>Answers what Google Docs couldn't: what changed, when, and by&nbsp;whom.</em></span>
@@ -638,7 +758,7 @@
       <span class="slide-title-sm">1 of 2</span>
     </div>
     <h2 class="slide-h">Review workflow</h2>
-    <p class="slide-intro">Commenting, flagging issues, and submitting the review in one place. Unlike the other three areas, this wasn't a redesign: it's a workspace <strong style="color:#0a0a0a;">built entirely from scratch</strong> to replace ad-hoc Google Doc reviews, answering the research finding that reviewers had no consistent way to structure a review.</p>
+    <p class="slide-intro">Commenting, flagging issues, and submitting the review in one place. Unlike the other three areas, this wasn't a redesign: it's a workspace <strong style="color:#0a0a0a;">built entirely from scratch</strong> to replace ad-hoc Google Doc reviews, answering the research finding that reviewers had no consistent way to structure a review. On a second submission, the reviewer sees the previous report alongside the new one and can address the issues raised there, all in the same&nbsp;place.</p>
     <div class="img-grid g2">
       <div class="img-cell">
         <img src="../images/img-3a335a9ccf7a80439b98d3025148c52b.jpg" alt="Review report">
@@ -646,7 +766,7 @@
       </div>
       <div class="img-cell">
         <img src="../images/img-3a335a9ccf7a809bbb3fc6600510972e.jpg" alt="Previous activity">
-        <span class="img-cap"><strong>Previous activity tab: Last review surfaced for context</strong><em>No need to dig back through old documents to remember what was already said.</em></span>
+        <span class="img-cap"><strong>Previous activity tab: Last review surfaced for context</strong><em>On a second submission, the system shows diffs between the previous version and the current one. The reviewer sees what the developer fixed and what they didn't, without leaving the&nbsp;workspace.</em></span>
       </div>
     </div>
   </div>
@@ -659,7 +779,7 @@
       <span class="slide-title-sm">2 of 2</span>
     </div>
     <h2 class="slide-h">Adding comments</h2>
-    <p class="slide-intro">Comment types and blocker flags, plus a way to carry forward what wasn't resolved last time. Reviewers write once, and the report keeps the structure consistent for them.</p>
+    <p class="slide-intro">Comment types and blocker flags, plus a way to carry forward what wasn't resolved last time. <span class="mark">Reviewers write once, and the report keeps the structure consistent for them.</span></p>
     <div class="img-grid g2">
       <div class="img-cell">
         <img src="../images/img-38435a9ccf7a8086a5fcf9625e03c729.jpg" alt="New comment">
@@ -672,7 +792,7 @@
         </div>
         <div class="img-cell">
           <img src="../images/img-38435a9ccf7a803fbbebe389d7ce23e4.jpg" alt="Existing comment">
-          <span class="img-cap"><strong>Moving an unhandled comment from a previous review</strong><em>Nothing a developer missed carries over silently.</em></span>
+          <span class="img-cap"><strong>Moving an unhandled comment from a previous review</strong><em>The system surfaces diffs between the previous submission and the current one, so the reviewer can see exactly what was fixed and what was&nbsp;not.</em></span>
         </div>
       </div>
     </div>
@@ -694,7 +814,7 @@
       </div>
       <div class="img-cell">
         <img src="../images/img-38435a9ccf7a802ba183ca8517f87af7.jpg" alt="Published">
-        <span class="img-cap"><strong>App successfully published, marked as "listed"</strong><em>The status every other view in the platform now reflects.</em></span>
+        <span class="img-cap"><strong>App successfully published, marked as "listed"</strong><em>See the full publish flow in the next slide.</em></span>
       </div>
     </div>
   </div>
@@ -715,7 +835,7 @@
       </div>
       <div class="img-cell">
         <img src="../images/img-38435a9ccf7a80738a68efc0d5282683.jpg" alt="Review report attached">
-        <span class="img-cap"><strong>2. Review report attached to the publish action</strong><em>The full review history stays with the decision, not in a separate&nbsp;document.</em></span>
+        <span class="img-cap"><strong>2. Review report attached to the publish action</strong><em>The full review history stays with the decision, not in a separate document. Sending the review itself was still done in a dedicated Wix platform: the connection between the two systems had not been&nbsp;made.</em></span>
       </div>
       <div class="img-cell">
         <img src="../images/img-38435a9ccf7a80ea9288f772303c0370.jpg" alt="Internal note">
@@ -867,7 +987,7 @@
       var imgs = Array.from(activeSlide.querySelectorAll('.img-cell img'));
       var images = imgs.map(function (el) {
         var cap = el.closest('.img-cell') && el.closest('.img-cell').querySelector('.img-cap');
-        return { src: el.src, alt: el.alt, cap: cap ? cap.textContent : '' };
+        return { src: el.src, alt: el.alt, cap: cap ? cap.innerText.trim() : '' };
       });
       openLb(images, Math.max(0, imgs.indexOf(img)));
     });
