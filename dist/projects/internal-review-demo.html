@@ -229,40 +229,39 @@
     /* Image grid */
     .img-grid {
       display: grid;
-      gap: 16px;
+      column-gap: 16px;
+      row-gap: 10px;
       flex: 1;
       min-height: 0;
-      align-items: start;
-      align-content: start;
+      grid-template-rows: 1fr auto;
     }
     .img-grid.g2 { grid-template-columns: 1fr 1fr; }
     .img-grid.g3 { grid-template-columns: 1fr 1fr 1fr; }
     .img-grid.g4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
 
     .img-cell {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 2;
       min-height: 0;
-      overflow: hidden;
     }
     .img-cell img {
       width: 100%;
-      height: clamp(160px, 30vh, 300px);
+      height: 100%;
       object-fit: contain;
       object-position: center center;
       border-radius: 6px;
       border: 0.5px solid #ebebeb;
       background: #f9f9f9;
-      flex: none;
       display: block;
       cursor: zoom-in;
+      min-height: 0;
     }
     .img-cap {
       font-size: 14px;
       color: #555;
       line-height: 1.5;
-      flex-shrink: 0;
+      align-self: start;
     }
     .img-cap strong {
       font-weight: 600;
@@ -272,15 +271,20 @@
     }
     .img-cap em { font-style: normal; }
 
-    /* Stacked cell */
+    /* Stacked cell — flex context, not part of the outer subgrid */
     .img-stack {
       display: flex;
       flex-direction: column;
       gap: 16px;
       min-height: 0;
     }
-    .img-stack .img-cell { flex: 1; }
-    .img-stack .img-cell img { height: 100%; }
+    .img-stack .img-cell {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 8px;
+    }
+    .img-stack .img-cell img { flex: 1; height: 100%; }
 
     /* Scope slide — live mini UI mockups */
     .scope-grid {
@@ -631,7 +635,7 @@
     <div style="display:flex;gap:56px;align-items:center;flex-wrap:wrap;">
     <div style="flex:1 1 420px;max-width:520px;">
     <p class="slide-body">Wix App Market's internal review platform is the tool Account Managers use to evaluate and approve apps before they go live, spanning four interconnected product areas.</p>
-    <p class="slide-body" style="margin-top: 18px;">When I joined, the team had stopped using it, and it wasn't updated or fixed. Review work was scattered across personal Google Docs, with no shared history, no visibility between submissions, and no consistent handoffs. As the team grew and more apps were submitted, that stopped being&nbsp;sustainable.</p>
+    <p class="slide-body" style="margin-top: 18px;">When I joined, the team had stopped using it, and it wasn't updated or fixed. Review work was scattered across personal Google Docs, with no shared history, no visibility between submissions, and no consistent handoffs. <span class="mark">As the team grew and more apps were submitted, that stopped being&nbsp;sustainable.</span></p>
     </div>
     <div class="img-cell" style="flex:1 1 420px;min-width:0;margin-top:0;">
       <img src="../images/figjam-app-review-cycle.png" alt="App review cycle: App submitted, pending review, assigned to an account manager, reviewed and commented on, then either declined (comments sent to developer, who makes changes and resubmits) or approved and published." style="width:100%;display:block;border-radius:6px;border:0.5px solid #ebebeb;cursor:zoom-in;height:auto;flex:none;">
@@ -649,7 +653,7 @@
     <div style="display:flex;gap:56px;align-items:center;flex-wrap:wrap;">
     <div style="flex:1 1 380px;max-width:460px;">
     <p class="slide-body">Met with Account Managers to walk through the current system, shadowed them running actual reviews, audited the Docs and Sheets they were using instead, and pulled analytics on time to publish and how many resubmissions an app typically needed.</p>
-    <p class="slide-body" style="margin-top: 20px;">Together, these caused longer review times and slower cycles across the team.</p>
+    <p class="slide-body" style="margin-top: 20px;"><span class="mark">Together, these caused longer review times and slower cycles across the team.</span></p>
     </div>
     <div style="flex:1 1 420px;">
       <p style="margin-bottom:10px;font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.07em;font-family:'Inter',sans-serif;">What surfaced</p>
@@ -681,23 +685,23 @@
       <span class="slide-section">Process</span>
     </div>
     <h2 class="slide-h">Deciding on scope</h2>
-    <p class="slide-intro">Before designing any screens, I mapped the product into four areas, building on Wix's own UI system to fix the confusing-UI complaint at the platform level first.</p>
+    <p class="slide-intro">Before designing any screens, I mapped the product into four areas: the app directory, the app page, the review workspace, and team management. Each one mapped to a gap the research surfaced. I built on Wix's own design system to fix the confusing-UI complaint at the platform level first, before touching any review-specific&nbsp;logic.</p>
     <div class="img-grid g4">
       <div class="img-cell">
         <img src="../images/img-39b35a9ccf7a80639d30e7dab00429f6.jpg" alt="All apps">
-        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>App directory and queue</strong>Browse, filter, and assign every app across all review stages. A structural makeover to fix the weak information architecture.</span>
+        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>App directory and queue</strong>Browse, filter, and assign every app across all review stages. <span class="mark">A structural makeover to fix the weak information architecture.</span></span>
       </div>
       <div class="img-cell">
         <img src="../images/img-39b35a9ccf7a8035852af27e1bc2f0e2.jpg" alt="App page">
-        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>App page</strong>One app's full history, team, and status in a single view. Closed the integrated-workflow gap.</span>
+        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>App page</strong>One app's full history, team, and status in a single view. <span class="mark">Closed the integrated-workflow&nbsp;gap.</span></span>
       </div>
       <div class="img-cell">
         <img src="../images/img-39b35a9ccf7a80c799b3f07bc0270576.jpg" alt="Review workspace">
-        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>Review workspace</strong>Built from scratch to replace ad-hoc Google Doc reviews. Made reviews consistent for the first time.</span>
+        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>Review workspace</strong><span class="mark">Built from scratch to replace ad-hoc Google Doc reviews.</span> Made reviews consistent for the first time.</span>
       </div>
       <div class="img-cell">
         <img src="../images/img-39b35a9ccf7a8059af6bd4b420b393ae.jpg" alt="Team management">
-        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>Team management</strong>Role-based access and reviewer assignments across the team. Closes the handoff gap between&nbsp;reviewers.</span>
+        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>Team management</strong>Role-based access and reviewer assignments across the team. <span class="mark">Closes the handoff gap between&nbsp;reviewers.</span></span>
       </div>
     </div>
   </div>
@@ -708,8 +712,8 @@
       <span class="slide-section">Solution</span>
     </div>
     <h2 class="slide-h">Apps directory & review queue</h2>
-    <p class="slide-intro">The full marketplace directory, across all stages. One queue that replaced the spreadsheet tracking account managers had built for themselves.</p>
-    <div class="img-grid g2">
+    <p class="slide-intro">The full marketplace directory, across every review stage, with market status, submission status, assignee, and last-change date visible in one row. One structured queue replaced the spreadsheet account managers had built outside the platform to compensate for what the original tool couldn't&nbsp;show.</p>
+    <div class="img-grid g2" style="grid-template-columns: 3fr 2fr;">
       <div class="img-cell">
         <img src="../images/img-3b050a27424045049837f37c0dbcbb0b.jpg" alt="Apps dashboard">
         <span class="img-cap"><strong>Dashboard: Status, last change, market status, reviewer</strong><em>The single source of truth reviewers didn't have before.</em></span>
@@ -727,7 +731,7 @@
       <span class="slide-section">Solution</span>
     </div>
     <h2 class="slide-h">App page</h2>
-    <p class="slide-intro">Submission history, team notes, and current status in one place. What used to be scattered across personal Docs is now centralized here, and every app status listing has its own&nbsp;actions.</p>
+    <p class="slide-intro">Submission history, team notes, and current status in one place, per app. <span class="mark">What used to be scattered across personal Docs is now centralized here.</span> Every status an app can be in has its own set of actions, so a reviewer never has to go looking for what to do&nbsp;next.</p>
     <div class="img-grid" style="grid-template-columns: 2fr 1fr 1fr;">
       <div class="img-cell">
         <img src="../images/img-6414b62696c949a69686d280fef78e32.jpg" alt="Activity log">
@@ -752,7 +756,7 @@
       <span class="slide-title-sm">1 of 2</span>
     </div>
     <h2 class="slide-h">Review workflow</h2>
-    <p class="slide-intro">Commenting, flagging issues, and submitting the review in one place. Unlike the other three areas, this wasn't a redesign: it's a workspace <strong style="color:#0a0a0a;">built entirely from scratch</strong> to replace ad-hoc Google Doc reviews, answering the research finding that reviewers had no consistent way to structure a review. On a second submission, the reviewer sees the previous report alongside the new one and can address the issues raised there, all in the same&nbsp;place.</p>
+    <p class="slide-intro">Commenting, flagging issues, and submitting the review in one place. Unlike the other three areas, this wasn't a redesign: <span class="mark">it's a workspace built entirely from scratch to replace ad-hoc Google Doc reviews</span>, answering the research finding that reviewers had no consistent way to structure a review. On a second submission, the reviewer sees the previous report alongside the new one and can address the issues raised there, all in the same&nbsp;place.</p>
     <div class="img-grid g2">
       <div class="img-cell">
         <img src="../images/img-3a335a9ccf7a80439b98d3025148c52b.jpg" alt="Review report">
@@ -773,7 +777,7 @@
       <span class="slide-title-sm">2 of 2</span>
     </div>
     <h2 class="slide-h">Adding comments</h2>
-    <p class="slide-intro">Comment types and blocker flags, plus a way to carry forward what wasn't resolved last time. <span class="mark">Reviewers write once, and the report keeps the structure consistent for them.</span></p>
+    <p class="slide-intro">Comment types and blocker flags, plus a way to carry forward what wasn't resolved last time. A blocker flag stops the app from going live until the developer addresses it. <span class="mark">Reviewers write once, and the report keeps the structure consistent for&nbsp;them.</span></p>
     <div class="img-grid g2">
       <div class="img-cell">
         <img src="../images/img-38435a9ccf7a8086a5fcf9625e03c729.jpg" alt="New comment">
@@ -800,7 +804,7 @@
       <span class="slide-title-sm">1 of 2</span>
     </div>
     <h2 class="slide-h">Publish flow</h2>
-    <p class="slide-intro">The last step before publishing to the marketplace. Everything from the review workspace carries through, so nothing ships outside the process.</p>
+    <p class="slide-intro">The last step before an app goes live in the marketplace. The workflow pulls in everything from the review, so a reviewer doesn't have to reconstruct context at the moment of decision. <span class="mark">Nothing ships outside the process.</span></p>
     <div class="img-grid g2">
       <div class="img-cell">
         <img src="../images/img-3a335a9ccf7a800395b1eafb4c5fb66d.jpg" alt="Opening publish">
@@ -821,7 +825,7 @@
       <span class="slide-title-sm">2 of 2</span>
     </div>
     <h2 class="slide-h">The publish wizard</h2>
-    <p class="slide-intro">Three steps built right into the flow: revenue share, review report, then an internal note. A paper trail that used to live in a Google Doc now travels with the app automatically.</p>
+    <p class="slide-intro">Three steps built into the publish action itself: confirming revenue share, attaching the review report, and adding an internal note. A paper trail that used to live in a personal Google Doc now travels with the app automatically, without the reviewer having to copy&nbsp;anything.</p>
     <div class="img-grid g3">
       <div class="img-cell">
         <img src="../images/img-38435a9ccf7a80eeb2a8f65463952fd5.jpg" alt="First publish">
@@ -844,7 +848,7 @@
       <span class="slide-section">Solution</span>
     </div>
     <h2 class="slide-h">Team management & roles</h2>
-    <p class="slide-intro">Role-based access for the review team, closing the handoff gap: who owns which review, and what they're allowed to touch. An access model the old process never had.</p>
+    <p class="slide-intro">Role-based access for the review team, mapped to actual responsibility. The previous process had no formal access model: anyone could touch anything, and no one had a clear view of who owned which review. This closes that handoff&nbsp;gap.</p>
     <div class="img-grid g3">
       <div class="img-cell">
         <img src="../images/img-77849552a9324b4580d314b3bfc6e966.jpg" alt="Team management">
@@ -867,7 +871,7 @@
       <span class="slide-section">Impact</span>
     </div>
     <h2 class="slide-h">Impact</h2>
-    <p class="impact-stat">The tool is still actively used by Wix's Developer Relations team. It reduced account manager workload, shortened both the review cycle and time to publish, and made app evaluations faster and more consistent across the team.</p>
+    <p class="impact-stat">The tool is still actively used by Wix's Developer Relations team. <span class="mark">It reduced account manager workload, shortened both the review cycle and time to publish</span>, and made app evaluations faster and more consistent across the team.</p>
     <div class="bottom-line-block">
       <p>The team had already voted with their feet, doing the actual review work in spreadsheets outside the platform. Success wasn't launching a redesign; it was building something good enough that they'd stop reaching for Google Docs. The tool became their primary review surface, which is the only metric that actually&nbsp;mattered.</p>
     </div>
