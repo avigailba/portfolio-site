@@ -64,17 +64,17 @@ const stats = { pages: 0, images: 0, errors: [] };
 const PROJECT_META = {
   'ai-credits-wallet':                    { title: 'AI Credits',              subtitle: 'Transparent AI usage billing across Wix\'s developer platform', cats: 'monetisation',          display: 'Monetisation',    year: 2026, featured: true },
   'app-installation-page-for-developers': { title: 'Installations Page',      subtitle: 'Redesigned the app installation experience end-to-end',          cats: 'developer cms',          display: 'Developer tools', year: 2025, featured: true },
-  'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer cms',          display: 'Developer tools', year: 2024, featured: false },
+  'internal-app-review-system':          { title: 'Internal Review System',   subtitle: 'Replaced a spreadsheet-based review process with a structured tool', cats: 'internal cms',       display: 'Internal tools',  year: 2022, featured: true },
   'developer-sale':                      { title: 'Developer Sale',           subtitle: 'A monetisation campaign tool for app developers',                cats: 'developer monetisation cms', display: 'Monetisation', year: 2024, featured: true },
+  'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer cms',          display: 'Developer tools', year: 2024, featured: false },
   'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'internal cms',           display: 'Internal tools',  year: 2024, featured: false },
   'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',       display: 'Monetisation',    year: 2023, featured: false },
   'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
   'app-pricing-page-projects':           { title: 'App Pricing Page Projects',    cats: 'developer monetisation', display: 'Monetisation',    year: 2023, featured: false },
-  'internal-app-review-system':          { title: 'Internal Review System',   subtitle: 'Replaced a spreadsheet-based review process with a structured tool', cats: 'internal cms',       display: 'Internal tools',  year: 2022, featured: true },
   'submit-publish-widget':               { title: 'Submit & Publish Widget',      cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
   'api-keys-page':                       { title: 'API Keys Page',                cats: 'developer cms',          display: 'Developer tools', year: 2022, featured: false },
-  'development-site-creation':           { title: 'Development Site Creation',    cats: 'developer',              display: 'Developer tools', year: 2021, featured: false },
   'app-coupons':                         { title: 'App Coupons',                  cats: 'monetisation cms',       display: 'Monetisation',    year: 2021, featured: false },
+  'development-site-creation':           { title: 'Development Site Creation',    cats: 'developer',              display: 'Developer tools', year: 2021, featured: false },
 };
 
 // Featured rows shown on homepage (in order)
@@ -464,7 +464,7 @@ function indexPage(projects, tagline) {
 </a>`;
   }).join('\n  ');
 
-  // Full list: sort by year desc, then by PROJECT_META insertion order
+  // Full list: Notion insertion order (PROJECT_META key order)
   const metaSlugs = Object.keys(PROJECT_META);
   // When Notion is unavailable projects is empty — fall back to all known slugs
   const allSlugs = projects.length > 0
@@ -473,12 +473,7 @@ function indexPage(projects, tagline) {
   for (const p of projects) {
     if (!PROJECT_META[p.slug] && !allSlugs.includes(p.slug)) allSlugs.push(p.slug);
   }
-  allSlugs.sort((a, b) => {
-    const ya = PROJECT_META[a]?.year || parseInt(bySlug[a]?.year || '0');
-    const yb = PROJECT_META[b]?.year || parseInt(bySlug[b]?.year || '0');
-    if (yb !== ya) return yb - ya;
-    return metaSlugs.indexOf(a) - metaSlugs.indexOf(b);
-  });
+  allSlugs.sort((a, b) => metaSlugs.indexOf(a) - metaSlugs.indexOf(b));
 
   const listHtml = allSlugs.map((slug, i) => {
     const meta = PROJECT_META[slug];
