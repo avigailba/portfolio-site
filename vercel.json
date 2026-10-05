@@ -1,5 +1,11 @@
 {
   "buildCommand": "node generate.js",
   "outputDirectory": "dist",
-  "installCommand": "npm ci"
+  "installCommand": "npm ci",
+  "rewrites": [
+    {
+      "source": "/duda",
+      "destination": "/duda/index.html"
+    }
+  ]
 }
