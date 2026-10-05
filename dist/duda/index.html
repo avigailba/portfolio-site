@@ -84,7 +84,19 @@
     .slide-title-sm { font-size: 14px; color: #555; font-weight: 400; text-transform: uppercase; letter-spacing: 0.07em; }
 
     /* Cover slide */
-    .slide-cover { justify-content: center; }
+    .slide-cover {
+      justify-content: center;
+      padding-top: 0;
+      background: linear-gradient(90deg, rgba(78,89,130,0.2) 0%, rgba(202,211,255,0.2) 100%), #ffffff;
+    }
+    .cover-row { display: flex; align-items: center; }
+    .cover-text { flex: 1 1 420px; max-width: 560px; position: relative; z-index: 1; }
+    .cover-hero {
+      position: absolute; top: 110px; right: 0; bottom: 0; width: 54%;
+      border-radius: 16px 0 0 0; overflow: hidden;
+      box-shadow: 0 24px 60px -20px rgba(30, 40, 90, 0.25);
+    }
+    .cover-hero img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
     .cover-badges { display: flex; gap: 8px; margin-bottom: 28px; flex-shrink: 0; }
     .badge {
       font-size: 14px; color: #555; border: 0.5px solid #e0e0e0; border-radius: 3px;
@@ -298,14 +310,21 @@
 
   <!-- Cover -->
   <div class="slide slide-cover" data-label="Cover">
-    <div class="cover-badges">
-      <span class="badge">Queue management</span>
-      <span class="badge">Duda take-home</span>
-      <span class="badge">2026</span>
+    <div class="cover-row">
+      <div class="cover-text">
+        <div class="cover-badges">
+          <span class="badge">Queue management</span>
+          <span class="badge">Duda take-home</span>
+          <span class="badge">2026</span>
+        </div>
+        <h1 class="cover-h1">Conference Queue <span style="color:#aaa;font-weight:400;">(working title)</span></h1>
+        <p class="cover-sub">A virtual queue for parent-teacher conference night. Parents book a 1:1 slot, then track their place in line in real time, replacing the shared sign-up sheet schools use today.</p>
+        <button class="cover-start-btn" id="cover-start">Start</button>
+      </div>
+      <div class="cover-hero">
+        <img src="../images/duda-wireframes/06-queue-status.png" alt="Queue status screen showing a parent's place in line">
+      </div>
     </div>
-    <h1 class="cover-h1">Conference Queue <span style="color:#aaa;font-weight:400;">(working title)</span></h1>
-    <p class="cover-sub">A virtual queue for parent-teacher conference night. Parents book a 1:1 slot, then track their place in line in real time, replacing the shared sign-up sheet schools use today.</p>
-    <button class="cover-start-btn" id="cover-start">Start</button>
   </div>
 
   <!-- Research -->
@@ -341,7 +360,6 @@
       <div class="split-col">
     <p class="chip-label">Queue types</p>
     <table class="queue-table">
-      <tr><th>Type</th><th>How it works</th></tr>
       <tr><td>Live queue</td><td>People join as they come, and wait their turn on the spot.</td></tr>
       <tr><td>Booked queue</td><td>People reserve a slot before they arrive, then join the queue on the day.</td></tr>
     </table>
@@ -410,7 +428,6 @@
     <p class="slide-body">I chose parent-teacher meetings because they usually run on a shared Google Sheet.</p>
     <p class="slide-body" style="margin-top:18px;"><span class="mark">A sign-up sheet is a list. What's missing is the queue itself: a live position, and a notification when it's your turn.</span> Parents also need a way to change or edit their slot, and the manager needs a way to get notified.</p>
 
-    <p class="chip-label" style="margin-top:36px;">Target users</p>
     <div class="split-grid">
       <div class="split-col">
         <h3>Parent, primary</h3>
@@ -563,12 +580,10 @@
   <div class="slide slide-vcenter" data-label="How I used AI">
     <div class="slide-header"><span class="slide-section">Process</span></div>
     <h2 class="slide-h">How I used AI</h2>
-    <p class="slide-intro">Draft, replace with what actually happened.</p>
     <ul class="slide-list">
-      <li>Checked the idea against Duda's three options before building on it.</li>
-      <li>Drafted a first pass of research framing and copy, corrected it against my own findings.</li>
-      <li>Built this deck in my own site's template instead of a generic one.</li>
-      <li><em>Flows, screens, and final wording are mine.</em></li>
+      <li>Brainstormed and created the deck.</li>
+      <li>Got copy suggestions.</li>
+      <li>Prioritized user actions.</li>
     </ul>
   </div>
 
