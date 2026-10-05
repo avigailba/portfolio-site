@@ -134,7 +134,10 @@
     .slide-list li:first-child { border-top: 0.5px solid #ebebeb; }
     .slide-list li em { color: #555; font-style: italic; }
 
-    .research-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .research-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; align-items: start; }
+    .research-grid .split-col { min-width: 0; max-width: none; }
+    .research-grid .queue-table td { padding-right: 12px; }
+    @media (max-width: 860px) { .research-grid { grid-template-columns: 1fr; gap: 24px; } }
 
     /* Two-column text blocks (target users, scope) */
     .split-grid { display: flex; gap: 56px; flex-wrap: wrap; align-items: flex-start; }
@@ -310,7 +313,7 @@
     <div class="slide-header"><span class="slide-section">Process</span></div>
     <h2 class="slide-h">Research</h2>
     <p class="slide-intro">The brief was open, so I spent a day on the market, the user types, and feature ideas.</p>
-    <div class="split-grid">
+    <div class="research-grid">
       <div class="split-col">
         <p class="chip-label">Competitors</p>
         <ul class="slide-list">
@@ -335,14 +338,15 @@
           <li>Experience (art exhibit)</li>
         </ul>
       </div>
-    </div>
-
-    <p class="chip-label" style="margin-top:22px;">Queue types</p>
+      <div class="split-col">
+    <p class="chip-label">Queue types</p>
     <table class="queue-table">
       <tr><th>Type</th><th>How it works</th></tr>
       <tr><td>Live queue</td><td>People join as they come, and wait their turn on the spot.</td></tr>
       <tr><td>Booked queue</td><td>People reserve a slot before they arrive, then join the queue on the day.</td></tr>
     </table>
+      </div>
+    </div>
   </div>
 
   <!-- What I considered: actions brainstormed -->
