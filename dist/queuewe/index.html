@@ -753,11 +753,14 @@
     document.getElementById('progress').style.width = (cur / (total - 1) * 100) + '%';
     var onCover = cur === 0;
     document.getElementById('nav').style.display = onCover ? 'none' : 'flex';
-    document.getElementById('side-nav').style.display = onCover ? 'none' : 'flex';
-    document.getElementById('deck').style.left = onCover ? '0' : '170px';
+    var compactLayout = window.matchMedia('(max-width: 1100px)').matches;
+    document.getElementById('side-nav').style.display = (onCover || compactLayout) ? 'none' : 'flex';
+    document.getElementById('deck').style.left = (onCover || compactLayout) ? '0' : '170px';
     document.getElementById('progress').style.display = onCover ? 'none' : 'block';
     if (onCover) hint.classList.add('gone');
   }
+
+  window.addEventListener('resize', function () { goTo(cur); });
 
   document.getElementById('side-title').addEventListener('click', function () { goTo(0); });
   document.getElementById('btn-prev').addEventListener('click', function () { goTo(cur - 1); hideHint(); });
