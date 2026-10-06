@@ -497,7 +497,7 @@
           <p>Books a slot and waits for their turn. Always sees the live status, and can change the slot until the manager's cutoff.</p>
         </div>
       </div>
-      <p class="slide-body premise-terms">The research behind this is in the <a href="#" class="research-link" onclick="var i=[].slice.call(document.querySelectorAll('.slide')).findIndex(function(x){return x.dataset.label==='Appendix: competitors and users'});document.querySelectorAll('.side-item')[i].click();return false;">appendix</a>.</p>
+      <p class="slide-body premise-terms">The research behind this is in the <a href="#" class="research-link" data-goto="Appendix: competitors and users">appendix</a>.</p>
   </div>
 
   <div class="slide slide-vcenter" data-label="Visitor features">
@@ -509,7 +509,7 @@
         <tr><td><ul class="scope-cell"><li>Book and edit a slot</li><li>See the session time</li><li>Delay notification with the new time</li><li>Reminder, coming up, and starting now notifications</li><li>Cancel, which notifies the manager</li></ul></td><td><ul class="scope-cell"><li>Share the appointment</li><li>Add to calendar</li><li>Get notified if a slot opens up</li><li>Notify the visitor before the manager changes their slot</li><li>Check in when they arrive, so the manager can see they're here</li><li>Swipe to check in</li></ul></td><td><ul class="scope-cell"><li>People ahead</li><li>Visitor can say they're running late</li><li>Feedback after the session</li><li>Approve in advance that they're coming</li></ul></td></tr>
       </tbody>
     </table>
-    <p class="slide-body premise-terms">The research behind this is in the <a href="#" class="research-link" onclick="var i=[].slice.call(document.querySelectorAll('.slide')).findIndex(function(x){return x.dataset.label==='Appendix: competitors and users'});document.querySelectorAll('.side-item')[i].click();return false;">appendix</a>.</p>
+    <p class="slide-body premise-terms">The research behind this is in the <a href="#" class="research-link" data-goto="Appendix: competitors and users">appendix</a>.</p>
   </div>
 
   <div class="slide slide-vcenter" data-label="Manager features">
@@ -518,10 +518,10 @@
     <table class="scope-table scope-by-priority scope-single">
       <thead><tr><th>Must have</th><th>Nice to have</th><th>Later</th></tr></thead>
       <tbody>
-        <tr><td><ul class="scope-cell"><li>Set up the queue</li><li>Start the session</li><li>Queue properties: slot time, multiple days and more</li><li>Delay the queue</li><li>Mark the session in progress, end or extend it</li><li>See who is now</li><li>See schedule</li><li>Cancel the queue</li><li>Notification when the session is almost up</li><li>Skip a visitor who doesn't show up</li></ul></td><td><ul class="scope-cell"><li>Block a slot, add time, take a short break</li><li>When a session ends early, call the next visitor if they are in, or take a short break</li><li>Change the order of appointments</li><li>Close the queue to new visitors</li><li>Add a visitor by hand</li><li>Swipe to check in a visitor</li><li>Queue property: virtual or physical meeting, or let the visitor choose</li></ul></td><td><ul class="scope-cell"><li>Waiting list, and queue setup on an outside service</li><li>Live vs. non-live queue setting</li><li>Analytics</li></ul></td></tr>
+        <tr><td><ul class="scope-cell"><li>Set up the queue</li><li>Start the session</li><li>Queue properties: slot time, multiple days and more</li><li>Delay the queue</li><li>Mark the session in progress, end or extend it</li><li>See who is now</li><li>See schedule</li><li>Cancel the queue</li><li>Notification when the session is almost up</li><li>Skip a visitor who doesn't show up</li></ul></td><td><ul class="scope-cell"><li>Block a slot, add time, take a short break</li><li>When a session ends early, call the next visitor if they are in, or take a short break</li><li>Change the order of appointments</li><li>Close the queue to new visitors</li><li>Add a visitor by hand</li><li>Swipe to check in a visitor</li><li>Queue property: virtual or physical meeting, or let the visitor choose</li></ul></td><td><ul class="scope-cell"><li>Waiting list, and queue setup on an outside service</li><li>Live vs. non-live queue setting</li><li>Analytics</li><li>Customize the look of the waiting screen: colors, fonts, and more</li></ul></td></tr>
       </tbody>
     </table>
-    <p class="slide-body premise-terms">The research behind this is in the <a href="#" class="research-link" onclick="var i=[].slice.call(document.querySelectorAll('.slide')).findIndex(function(x){return x.dataset.label==='Appendix: competitors and users'});document.querySelectorAll('.side-item')[i].click();return false;">appendix</a>.</p>
+    <p class="slide-body premise-terms">The research behind this is in the <a href="#" class="research-link" data-goto="Appendix: competitors and users">appendix</a>.</p>
   </div>
 
   <div class="slide slide-vcenter " data-label="Visitor journey wireframes 1">
@@ -551,7 +551,7 @@
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/05-home-upcoming.png" alt="Home, upcoming session"></div>
-        <figcaption class="img-cap"><span class="screen-title">Home</span><span class="screen-sub">The upcoming session, with a link to past sessions when there are any.</span></figcaption>
+        <figcaption class="img-cap"><span class="screen-title">Home</span><span class="screen-sub">The upcoming session, with a link to past sessions when there are any. <i style="font-style:italic">I considered showing past sessions on the home screen, but decided they are not important enough to see every time.</i></span></figcaption>
       </figure>
     </div>
   </div>
@@ -624,9 +624,9 @@
   <div class="slide" data-label="UI screens">
     <div class="slide-header"><span class="slide-section">Solution</span></div>
     <h2 class="slide-h">UI screens</h2>
-    <p class="slide-intro">The home screen and a lock screen tracker widget.</p>
+    <p class="slide-intro"><i style="font-style:italic">With few elements, the design needs to be bold, like a queue ticket.</i></p>
     <div class="img-grid g2">
-      <div class="img-cell"><img src="images/visitor-home.webp" alt="Visitor home screen"><span class="img-cap"><strong>Home screen (visitor)</strong><em>See your session time and how many people are ahead of you. If the manager delays the queue, the new time shows here.</em></span></div>
+      <div class="img-cell"><img src="images/visitor-home.webp" alt="Visitor home screen"><span class="img-cap"><strong>Home screen (visitor)</strong><em>See your session time and how many people are ahead of you.</em></span></div>
       <div class="img-cell"><img src="images/visitor-tracker-widget.png" alt="Lock screen tracker widget"><span class="img-cap"><strong>Tracker widget</strong><em>A live tracker on the lock screen counts down to your turn, so you do not need to open the app.</em></span></div>
     </div>
   </div>
@@ -649,17 +649,17 @@
   </div>
 
   <!-- How I used AI -->
-  <div class="slide slide-vcenter" data-label="How I used AI">
+    <!-- Summary -->
+  <div class="slide slide-vcenter" data-label="Appendix: AI use">
     <div class="slide-header"><span class="slide-section">Process</span></div>
-    <h2 class="slide-h">How I used AI</h2>
+    <h2 class="slide-h">My AI toolkit</h2>
     <ul class="slide-list">
-      <li>Brainstormed and created the deck.</li>
-      <li>Got copy suggestions.</li>
-      <li>Prioritized user actions.</li>
+      <li><strong>Research:</strong> design and competitors.</li>
+      <li><strong>The deck:</strong> building it in code, and writing the copy.</li>
+      <li><strong>Tools:</strong> Codex, Claude Code, and the Figma agent.</li>
     </ul>
   </div>
 
-  <!-- Summary -->
   <!-- Research -->
   <div class="slide slide-vcenter" data-label="Appendix: competitors and users">
     <div class="slide-header"><span class="slide-section">Appendix</span></div>
@@ -926,6 +926,14 @@
     if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { goTo(cur - 1); hideHint(); }
   });
 
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-goto]');
+    if (!a) return;
+    e.preventDefault();
+    for (var k = 0; k < total; k++) {
+      if (slides[k].dataset.label === a.dataset.goto) { goTo(k); hideHint(); break; }
+    }
+  });
   goTo(0);
 })();
 </script>
