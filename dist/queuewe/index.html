@@ -831,6 +831,22 @@
     if (lbIdx < lbImages.length - 1) { lbIdx++; showLbImage(lbIdx); }
   });
 
+  var touchStart = null;
+  lb.addEventListener('touchstart', function (e) {
+    if (!lb.classList.contains('open') || !e.changedTouches.length) return;
+    touchStart = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+  }, { passive: true });
+  lb.addEventListener('touchend', function (e) {
+    if (!touchStart || !e.changedTouches.length) return;
+    var dx = e.changedTouches[0].clientX - touchStart.x;
+    var dy = e.changedTouches[0].clientY - touchStart.y;
+    touchStart = null;
+    if (Math.abs(dx) < 48 || Math.abs(dx) <= Math.abs(dy)) return;
+    if (dx < 0 && lbIdx < lbImages.length - 1) { lbIdx++; showLbImage(lbIdx); }
+    if (dx > 0 && lbIdx > 0) { lbIdx--; showLbImage(lbIdx); }
+  }, { passive: true });
+  lb.addEventListener('touchcancel', function () { touchStart = null; }, { passive: true });
+
   document.addEventListener('keydown', function (e) {
     if (lb.classList.contains('open')) {
       if (e.key === 'Escape') { closeLb(); return; }
