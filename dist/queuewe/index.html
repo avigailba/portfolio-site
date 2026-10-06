@@ -179,7 +179,7 @@
     .slide-premise .slide-h { font-size: clamp(32px, 3vw, 44px); letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 10px; }
     .slide-premise .slide-body { font-size: 16px; line-height: 1.7; max-width: 820px; }
     .slide-premise .slide-body + .slide-body { margin-top: 18px; }
-    .premise-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin-top: 36px; width: 100%; }
+    .premise-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: 36px; width: 100%; }
     .premise-card { background: #fff; border: 0.5px solid #ebebeb; border-radius: 6px; padding: 24px; min-height: 0; max-width: none; }
     .premise-h { font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 20px !important; font-weight: 700 !important; color: #0a0a0a !important; text-transform: none !important; letter-spacing: 0 !important; line-height: 1.4 !important; margin-bottom: 12px !important; }
     .premise-card ul { margin: 0; padding-left: 20px; }
@@ -436,7 +436,11 @@
     .scope-single td { width: 33%; }
     .scope-single tbody tr:last-child td { border-bottom: none; }
     .scope-single thead th { padding-top: 0; }
-    .slide-intro + .scope-single { margin-top: 24px; }
+    .slide-h + .scope-single { margin-top: 24px; }
+    .premise-terms { margin-top: 24px; }
+    .premise-terms { margin-top: 24px; }
+    .research-link { color: #0a0a0a; text-decoration: underline; text-underline-offset: 3px; }
+    .premise-card p { font-size: 16px; line-height: 1.6; margin: 0; color: #0a0a0a; }
 </style>
   <style>
     @font-face { font-family: 'Plus Jakarta Sans'; src: url('fonts/PlusJakartaSans-Variable.ttf') format('truetype'); font-weight: 200 800; font-display: swap; }
@@ -478,38 +482,27 @@
   <!-- Focused problem and target users -->
   <div class="slide slide-vcenter slide-premise" data-label="Overview">
     <div class="slide-header"><span class="slide-section">Overview</span></div>
-    <h2 class="slide-h">Queuewe: A booking app for 1:1 meetings</h2>
-    <p class="slide-body">A simple booking system where people book a 1:1 meeting, see their place in line, get notified when it's their turn, and see delays. Parent-teacher meetings are the first use case.</p>
-    <p class="slide-body" style="margin-top:18px;">Today these meetings run on a shared Google Sheet. It's a list, so nobody knows how long the wait is, and no one is updated on changes.</p>
-    <p class="slide-body" style="margin-top:18px;"><strong>The principle:</strong> the queue must always be in tune with what is happening. When a session runs late, ends early, or changes, everyone sees it right away.</p>
+    <h2 class="slide-h">From a shared sheet to a live queue</h2>
+    <p class="slide-body">Parent-teacher meetings usually run on a shared Google Sheet, so nobody knows the wait or hears about changes.</p>
+    <p class="slide-body" style="margin-top:14px;">Queuewe is an app for 1:1 sessions. A <strong>manager</strong> creates a <strong>schedule</strong> of <strong>slots</strong> for <strong>sessions</strong>. A <strong>visitor</strong> books a <strong>slot</strong>, watches the live queue move until it's their time.</p>
+    <p class="slide-body" style="margin-top:0;">The rule: the queue always matches what is happening, and everyone sees a late or early session right away.</p>
 
       <div class="premise-grid">
         <div class="split-col premise-card">
           <h3 class="premise-h">Manager (Teacher or staff)</h3>
-          <ul>
-            <li>Sets the cutoff for when visitors can edit or cancel</li>
-            <li>Creates the schedule</li>
-            <li>Sends an invite link to visitors</li>
-            <li>Checks visitors in and out to keep the line moving</li>
-            <li>Gets notified when a session is about to end, and can extend it. Visitors are notified of the change.</li>
-          </ul>
+          <p>Creates the schedule, shares the link, and runs each session. Keeps visitors informed as things change.</p>
         </div>
         <div class="split-col premise-card">
-          <h3 class="premise-h">Visitor (parent)</h3>
-          <ul>
-            <li>Books a slot from the invite link</li>
-            <li>Edits or cancels a session until the manager's cutoff</li>
-            <li>Gets notified of delays</li>
-            <li>Gets notified when a session is coming up, starting, and about to end</li>
-          </ul>
+          <h3 class="premise-h">Visitor (Parent)</h3>
+          <p>Books a slot and waits for their turn. Always sees the live status, and can change the slot until the manager's cutoff.</p>
         </div>
       </div>
+      <p class="slide-body premise-terms">The research behind this is in the <a href="#" class="research-link" onclick="var i=[].slice.call(document.querySelectorAll('.slide')).findIndex(function(x){return x.dataset.label==='Appendix: competitors and users'});document.querySelectorAll('.side-item')[i].click();return false;">appendix</a>.</p>
   </div>
 
   <div class="slide slide-vcenter" data-label="Visitor features">
     <div class="slide-header"><span class="slide-section">Visitor features</span></div>
     <h2 class="slide-h">Visitor (Parent) features</h2>
-    <p class="slide-intro">The visitor journey is about joining the queue easily and always knowing its live status, with notifications at key points along the way.</p>
     <table class="scope-table scope-by-priority scope-single">
       <thead><tr><th>Must have</th><th>Nice to have</th><th>Later</th></tr></thead>
       <tbody>
@@ -521,7 +514,6 @@
   <div class="slide slide-vcenter" data-label="Manager features">
     <div class="slide-header"><span class="slide-section">Manager features</span></div>
     <h2 class="slide-h">Manager (Teacher) features</h2>
-    <p class="slide-intro">The manager sets the queue properties and type, then gets a link to share with potential visitors. Later, the manager can view the schedule, check visitors in and out, and delay sessions.</p>
     <table class="scope-table scope-by-priority scope-single">
       <thead><tr><th>Must have</th><th>Nice to have</th><th>Later</th></tr></thead>
       <tbody>
