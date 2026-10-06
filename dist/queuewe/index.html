@@ -426,6 +426,7 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
     }
+    @media (min-width: 1025px) { .slide[data-label="UI screens"] .img-cell img { height: 85%; align-self: end; } }
 </style>
   <style>
     @font-face { font-family: 'Plus Jakarta Sans'; src: url('fonts/PlusJakartaSans-Variable.ttf') format('truetype'); font-weight: 200 800; font-display: swap; }
@@ -451,11 +452,12 @@
         <span class="badge">Avigail Bahat | Senior product designer | Take-home task</span>
       </div>
       <h1 class="cover-h1">Queuewe</h1>
-      <p class="cover-sub">A queue app for sessions like teacher-parent meetings, which are usually run on unscalable Google Sheets.</p>
+      <p class="cover-sub">A queue app for sessions like teacher-parent meetings, which usually run on Google Sheets that do not scale.</p>
       <ul class="cover-tldr">
-        <li><strong>Booking with a live position:</strong> see who is ahead and when your turn is.</li>
-        <li><strong>Delay notifications:</strong> when the manager delays the queue, visitors are told the new time.</li>
-        <li><strong>Session control:</strong> the manager marks sessions in progress and decides when to end or extend them.</li>
+        <li><strong>Choose a slot:</strong> visitors pick an available time that works for them.</li>
+        <li><strong>Live turn time:</strong> visitors always see when their turn is.</li>
+        <li><strong>Delay notifications:</strong> when the manager delays the queue, visitors get the new time.</li>
+        <li><strong>Session control:</strong> the manager starts each session and decides when to end or extend it.</li>
       </ul>
       <button class="cover-start-btn" id="cover-start">Start</button>
     </div>
