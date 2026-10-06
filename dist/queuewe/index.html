@@ -19,6 +19,9 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :where(h1, h2, h3, p, li, td, th, figcaption, .side-label, .impact-stat) { text-wrap: pretty; }
+    :where(h1, h2, h3) { text-wrap: balance; }
+
     body {
       font-family: 'Roboto', sans-serif;
       -webkit-font-smoothing: antialiased;
@@ -253,11 +256,6 @@
     .flow-box.visitor { background: #eefbf0; border-color: #bfe8c3; }
     .flow-arrow { flex: 0 0 auto; width: 22px; text-align: center; color: #bbb; font-size: 15px; }
 
-    .mark {
-      background: linear-gradient(120deg, #FFFBEE 0%, #FFFBEE 100%); background-repeat: no-repeat;
-      background-size: 100% 55%; background-position: 0 85%; padding: 0 2px;
-    }
-
     /* Bottom line */
     .impact-stat {
       font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 400;
@@ -469,7 +467,7 @@
     <div class="slide-header"><span class="slide-section">Overview</span></div>
     <h2 class="slide-h">Queuewe: A booking app for 1:1 meetings</h2>
     <p class="slide-body">A simple booking system where people book a 1:1 meeting, see their place in line, get notified when it's their turn, and see delays. Parent-teacher meetings are the first use case.</p>
-    <p class="slide-body" style="margin-top:18px;"><span class="mark">Today these meetings run on a shared Google Sheet. It's a list, so nobody knows how long the wait is, and no one is updated on changes.</span></p>
+    <p class="slide-body" style="margin-top:18px;">Today these meetings run on a shared Google Sheet. It's a list, so nobody knows how long the wait is, and no one is updated on changes.</p>
 
       <div class="premise-grid">
         <div class="split-col premise-card">
