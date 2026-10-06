@@ -127,9 +127,10 @@
     .cover-text { flex: 0 0 auto; max-width: 560px; position: relative; z-index: 1; }
     .cover-hero { position: absolute; top: 110px; right: 0; bottom: 0; width: 56%; border-radius: 16px 0 0 0; overflow: hidden; box-shadow: 0 24px 60px -20px rgba(30, 40, 90, 0.25); }
     .cover-hero img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
-    .slide-cover .cover-hero { position: absolute; top: auto; right: 0; bottom: 0; width: auto; height: 94%; border-radius: 0; box-shadow: none; overflow: visible; pointer-events: none; }
-    .slide-cover .cover-hero img { width: auto; height: 100%; object-fit: contain; object-position: right bottom; display: block; }
+    .slide-cover .cover-hero { position: absolute; top: 50%; right: 0; bottom: auto; transform: translateY(-50%); width: 80%; right: -12%; height: auto; border-radius: 0; box-shadow: none; overflow: visible; pointer-events: none; }
+    .slide-cover .cover-hero img { width: 100%; height: auto; object-fit: contain; display: block; filter: drop-shadow(0 28px 32px rgba(30, 40, 80, 0.22)); }
     .slide-cover .cover-text { max-width: 540px; }
+    .slide-cover .cover-h1 { font-size: clamp(30px, 3.4vw, 46px); white-space: nowrap; }
     .slide-cover .cover-sub, .slide-cover .cover-tldr { max-width: 540px; }
     .cover-badges { display: flex; gap: 8px; margin-bottom: 28px; flex-shrink: 0; }
     .badge { font-size: 13px; color: #555; padding: 0 10px 0 0; font-family: 'Roboto', sans-serif; }
@@ -365,12 +366,12 @@
       }
       .slide-cover .cover-text { flex: 0 0 auto; width: 100%; max-width: none; }
       .slide-cover .cover-badges { margin-bottom: 20px; }
-      .slide-cover .cover-h1 { font-size: clamp(42px, 13vw, 54px); line-height: 1.02; margin-bottom: 14px; }
+      .slide-cover .cover-h1 { font-size: clamp(42px, 13vw, 54px); line-height: 1.02; margin-bottom: 14px; white-space: normal; }
       .slide-cover .cover-sub, .slide-cover .cover-tldr { max-width: none; font-size: 16px; }
       .slide-cover .cover-tldr { margin-top: 18px; }
       .slide-cover .cover-start-btn { margin-top: 22px; }
       .slide-cover .cover-hero {
-        position: relative; order: -1; inset: auto; align-self: center; width: 100%; height: auto;
+        position: relative; order: -1; inset: auto; transform: none; align-self: center; width: 100%; height: auto;
         max-width: 460px; margin: 0 auto 18px; overflow: visible;
       }
       .slide-cover .cover-hero img { display: block; width: 100%; height: auto; object-fit: contain; object-position: center; }
@@ -465,8 +466,8 @@
       <div class="cover-badges">
         <span class="badge">Avigail Bahat | Senior product designer | Take-home task</span>
       </div>
-      <h1 class="cover-h1">Queuewe</h1>
-      <p class="cover-sub">An app for 1:1 sessions. Book a slot, then follow your turn live.</p>
+      <h1 class="cover-h1">Queuewe: 1:1 Sessions</h1>
+      <p class="cover-sub">Book a slot, then follow your turn live.</p>
       <p class="cover-label">Main features:</p>
       <ol class="cover-tldr">
         <li><strong>Choose a slot:</strong> visitors pick an available time that the manager created.</li>
@@ -474,9 +475,9 @@
         <li><strong>Delay notifications:</strong> when a session runs late, everyone waiting gets the new time.</li>
         <li><strong>Session control:</strong> the manager starts each session, then ends or extends it.</li>
       </ol>
-      <button class="cover-start-btn" id="cover-start">Start</button>
+      <button class="cover-start-btn" id="cover-start">View presentation</button>
     </div>
-    <div class="cover-hero"><img src="images/cover-hero.webp" alt="Queuewe lock screen widget and visitor home screen"></div>
+    <div class="cover-hero"><img src="images/cover-hero.webp" alt="Queuewe visitor home screen"></div>
   </div>
 
   <!-- Focused problem and target users -->
@@ -626,8 +627,8 @@
     <h2 class="slide-h">UI screens</h2>
     <p class="slide-intro"><i style="font-style:italic">With few elements, the design needs to be bold, like a queue ticket.</i></p>
     <div class="img-grid g2">
-      <div class="img-cell"><img src="images/visitor-home.webp" alt="Visitor home screen"><span class="img-cap"><strong>Home screen (visitor)</strong><em>See your session time and how many people are ahead of you.</em></span></div>
-      <div class="img-cell"><img src="images/visitor-tracker-widget.png" alt="Lock screen tracker widget"><span class="img-cap"><strong>Tracker widget</strong><em>A live tracker on the lock screen counts down to your turn, so you do not need to open the app.</em></span></div>
+      <div class="img-cell"><img src="images/visitor-home.webp" alt="Visitor home screen"><span class="img-cap"><strong>Home screen (visitor)</strong><em>See when your session starts and how many people are ahead of you.</em></span></div>
+      <div class="img-cell"><img src="images/visitor-tracker-widget.png" alt="Lock screen tracker widget"><span class="img-cap"><strong>Tracker widget</strong><em>Shows how much time you have left, so you do not need to open the app. <i style="font-style:italic">I chose a progress bar because the lock screen is glanceable: a filling bar shows how close the session is without reading.</i></em></span></div>
     </div>
   </div>
 
