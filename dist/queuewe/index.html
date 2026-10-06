@@ -129,8 +129,8 @@
     .cover-hero img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
     .slide-cover .cover-hero { position: absolute; top: auto; right: 0; bottom: 0; width: auto; height: 94%; border-radius: 0; box-shadow: none; overflow: visible; pointer-events: none; }
     .slide-cover .cover-hero img { width: auto; height: 100%; object-fit: contain; object-position: right bottom; display: block; }
-    .slide-cover .cover-text { max-width: 480px; }
-    .slide-cover .cover-sub, .slide-cover .cover-tldr { max-width: 480px; }
+    .slide-cover .cover-text { max-width: 540px; }
+    .slide-cover .cover-sub, .slide-cover .cover-tldr { max-width: 540px; }
     .cover-badges { display: flex; gap: 8px; margin-bottom: 28px; flex-shrink: 0; }
     .badge { font-size: 13px; color: #555; padding: 0 10px 0 0; font-family: 'Roboto', sans-serif; }
     .chip-label { margin-bottom: 10px; font-size: 14px; font-weight: 400; color: #555; text-transform: uppercase; letter-spacing: 0.07em; font-family: 'Roboto', sans-serif; }
@@ -427,6 +427,9 @@
       *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
     }
     @media (min-width: 1025px) { .slide[data-label="UI screens"] .img-cell img { height: 85%; align-self: end; } }
+    .slide-cover .cover-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; color: #0a0a0a; margin-top: 28px; }
+    .slide-cover ol.cover-tldr { list-style: decimal; padding-left: 22px; margin-top: 8px; }
+    .slide-cover ol.cover-tldr li { padding: 4px 0; }
 </style>
   <style>
     @font-face { font-family: 'Plus Jakarta Sans'; src: url('fonts/PlusJakartaSans-Variable.ttf') format('truetype'); font-weight: 200 800; font-display: swap; }
@@ -452,13 +455,14 @@
         <span class="badge">Avigail Bahat | Senior product designer | Take-home task</span>
       </div>
       <h1 class="cover-h1">Queuewe</h1>
-      <p class="cover-sub">A queue app for sessions like teacher-parent meetings, which usually run on Google Sheets that do not scale.</p>
-      <ul class="cover-tldr">
-        <li><strong>Choose a slot:</strong> visitors pick an available time that works for them.</li>
+      <p class="cover-sub">An app for 1:1 sessions. Book a slot, then follow your turn live.</p>
+      <p class="cover-label">Main features:</p>
+      <ol class="cover-tldr">
+        <li><strong>Choose a slot:</strong> visitors pick an available time.</li>
         <li><strong>Live turn time:</strong> visitors always see when their turn is.</li>
-        <li><strong>Delay notifications:</strong> when the manager delays the queue, visitors get the new time.</li>
-        <li><strong>Session control:</strong> the manager starts each session and decides when to end or extend it.</li>
-      </ul>
+        <li><strong>Delay notifications:</strong> when a session runs late, everyone waiting gets the new time.</li>
+        <li><strong>Session control:</strong> the manager starts each session, then ends or extends it.</li>
+      </ol>
       <button class="cover-start-btn" id="cover-start">Start</button>
     </div>
     <div class="cover-hero"><img src="images/cover-hero.webp" alt="Queuewe lock screen widget and visitor home screen"></div>
