@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Queuewe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: #fff;
+      color: #0a0a0a;
+      overflow: hidden;
+      height: 100dvh;
+      width: 100vw;
+    }
+
+    /* Side navigation */
+    #side-nav {
+      position: fixed; top: 0; left: 0; bottom: 0; width: 170px;
+      border-right: 0.5px solid #ebebeb; background: #fff; z-index: 150;
+      display: flex; flex-direction: column; overflow-y: auto;
+    }
+    #side-title { cursor: pointer;
+      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700;
+      color: #0a0a0a; padding: 24px 20px 16px; border-bottom: 0.5px solid #ebebeb; flex-shrink: 0;
+    }
+    #side-list { padding: 8px 0; }
+    .side-item {
+      display: flex; align-items: baseline; gap: 10px; width: 100%; text-align: left;
+      border: none; background: none; cursor: pointer; padding: 9px 20px; font-family: 'Inter', sans-serif;
+    }
+    .side-group { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: #0a0a0a; padding: 14px 20px 6px; margin-top: 8px; border-top: 0.5px solid #ebebeb; }
+    .side-item:hover { background: #f7f7f7; }
+    .side-num { font-size: 13px; color: #555; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+    .side-label { font-size: 13px; color: #0a0a0a; line-height: 1.4; }
+    .side-item.active .side-num, .side-item.active .side-label { color: #0a0a0a; font-weight: 500; }
+
+    /* Progress bar */
+    #progress {
+      position: fixed;
+      top: 0; left: 170px; right: 0;
+      height: 2px;
+      background: #0a0a0a;
+      z-index: 200;
+      transition: width 0.3s ease;
+    }
+
+    /* Deck */
+    #deck {
+      position: fixed;
+      top: 0; left: 170px; right: 0; bottom: 0;
+    }
+    @media (max-width: 860px) {
+      #side-nav { display: none; }
+      #progress { left: 0; }
+      #deck { left: 0; }
+    }
+
+    /* Slides */
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 40px 72px 96px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      overflow-y: auto;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .slide-vcenter { justify-content: center; }
+
+    .slide-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; flex-shrink: 0; }
+    .slide-section { font-size: 12px; font-weight: 600; color: #555; text-transform: uppercase; letter-spacing: 0.1em; }
+    .slide-sep { width: 1px; height: 12px; background: #ddd; }
+    .slide-title-sm { font-size: 14px; color: #555; font-weight: 400; text-transform: uppercase; letter-spacing: 0.07em; }
+
+    /* Cover slide */
+    .slide-cover {
+      justify-content: center;
+      padding-top: 0;
+      background: #e9eaf3;
+      overflow: hidden;
+    }
+    .cover-row { display: flex; align-items: center; }
+    .cover-text { flex: 0 0 auto; max-width: 560px; position: relative; z-index: 1; }
+    .cover-hero { position: absolute; top: 110px; right: 0; bottom: 0; width: 56%; border-radius: 16px 0 0 0; overflow: hidden; box-shadow: 0 24px 60px -20px rgba(30, 40, 90, 0.25); }
+    .cover-hero img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+    .slide-cover .cover-hero { position: absolute; top: auto; right: 0; bottom: 0; width: auto; height: 94%; border-radius: 0; box-shadow: none; overflow: visible; pointer-events: none; }
+    .slide-cover .cover-hero img { width: auto; height: 100%; object-fit: contain; object-position: right bottom; display: block; }
+    .slide-cover .cover-text { max-width: 480px; }
+    .slide-cover .cover-sub, .slide-cover .cover-tldr { max-width: 480px; }
+    .cover-badges { display: flex; gap: 8px; margin-bottom: 28px; flex-shrink: 0; }
+    .badge { font-size: 13px; color: #555; padding: 0 10px 0 0; font-family: 'Inter', sans-serif; }
+    .chip-label { margin-bottom: 10px; font-size: 14px; font-weight: 400; color: #555; text-transform: uppercase; letter-spacing: 0.07em; font-family: 'Inter', sans-serif; }
+
+    /* Queue table */
+    .queue-table { width: 100%; max-width: 680px; border-collapse: collapse; margin-top: 4px; border-top: 0.5px solid #ebebeb; }
+    .queue-table th { text-align: left; font-size: 14px; font-weight: 400; color: #555; text-transform: uppercase; letter-spacing: 0.07em; padding: 0 0 8px; border-bottom: 0.5px solid #ebebeb; }
+    .queue-table td { font-size: 18px; color: #0a0a0a; line-height: 1.5; padding: 9px 24px 9px 0; border-bottom: 0.5px solid #ebebeb; vertical-align: top; }
+    .queue-table td:first-child { white-space: nowrap; }
+
+    .cover-h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(36px, 4.5vw, 64px); font-weight: 700; color: #0a0a0a; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 20px; max-width: 820px; }
+    .cover-sub { font-size: 18px; color: #555; line-height: 1.6; max-width: 600px; }
+    .cover-start-btn {
+      margin-top: 32px; font-size: 15px; font-weight: 400; color: #fff; background: #0a0a0a;
+      border: none; border-radius: 6px; padding: 12px 28px; cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: opacity 0.15s;
+    }
+    .cover-start-btn:hover { opacity: 0.85; }
+
+    .slide-h {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(26px, 3vw, 44px);
+      font-weight: 700; color: #0a0a0a; letter-spacing: -0.025em; line-height: 1.1;
+      margin-bottom: 10px; flex-shrink: 0;
+    }
+    .slide-intro { font-size: 18px; color: #555; margin-bottom: 14px; flex-shrink: 0; line-height: 1.5; max-width: 680px; }
+
+    .slide-body { font-size: 18px; color: #0a0a0a; line-height: 1.75; max-width: 680px; }
+    .slide-body + .slide-body { margin-top: 18px; }
+    .slide-body strong { font-weight: 600; }
+
+    .slide-list { list-style: none; max-width: 680px; margin-top: 4px; }
+    .slide-list li { font-size: 18px; color: #0a0a0a; line-height: 1.65; padding: 12px 0 12px 24px; border-bottom: 0.5px solid #ebebeb; position: relative; }
+    .slide-list li::before { content: '→'; position: absolute; left: 0; color: #555; }
+    .slide-list li:first-child { border-top: 0.5px solid #ebebeb; }
+    .slide-list li em { color: #555; font-style: italic; }
+
+    .research-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; align-items: start; }
+    .research-grid .split-col { min-width: 0; max-width: none; }
+    .research-grid .queue-table td { padding-right: 12px; }
+    @media (max-width: 860px) { .research-grid { grid-template-columns: 1fr; gap: 24px; } }
+    /* Two-column text blocks (target users, scope) */
+    .split-grid { display: flex; gap: 56px; flex-wrap: wrap; align-items: flex-start; }
+    .split-col { flex: 1 1 320px; max-width: 460px; }
+    .split-col h3 { font-size: 14px; font-weight: 400; color: #555; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; }
+    .slide-premise .slide-header { margin-bottom: 18px; }
+    .slide-premise .slide-h { font-size: clamp(32px, 3vw, 44px); letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 10px; }
+    .slide-premise .slide-body { font-size: 18px; line-height: 1.7; max-width: 820px; }
+    .slide-premise .slide-body + .slide-body { margin-top: 18px; }
+    .premise-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin-top: 36px; width: 100%; }
+    .premise-card { background: #fff; border: 0.5px solid #ebebeb; border-radius: 6px; padding: 24px; min-height: 0; max-width: none; }
+    .premise-h { font-size: 20px !important; font-weight: 600 !important; color: #0a0a0a !important; text-transform: none !important; letter-spacing: 0 !important; line-height: 1.4 !important; margin-bottom: 12px !important; }
+    .premise-card ul { margin: 0; padding-left: 20px; }
+    .premise-card li { font-size: 16px !important; line-height: 1.6 !important; padding: 2px 0 !important; }
+    @media (max-width: 860px) {
+      .slide-premise { padding: 28px 28px 88px; }
+      .premise-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 28px; }
+      .premise-card { padding: 20px; }
+    }
+    .split-col p, .split-col li { font-size: 18px; color: #0a0a0a; line-height: 1.5; }
+
+    /* Image grid + placeholders */
+    .img-grid { display: grid; column-gap: 16px; row-gap: 10px; flex: 1; min-height: 0; grid-template-rows: 1fr auto; }
+    .img-grid.g2 { grid-template-columns: 1fr 1fr; }
+    .img-grid.g3 { grid-template-columns: 1fr 1fr 1fr; }
+    .img-grid.g5 { grid-template-columns: repeat(5, 1fr); }
+    .img-cell { display: grid; grid-template-rows: subgrid; grid-row: span 2; min-height: 0; }
+    .img-cell img {
+      width: 100%; height: 100%; object-fit: contain; object-position: center center;
+      border-radius: 6px; border: 0.5px solid #ebebeb; background: #f9f9f9; display: block;
+      cursor: zoom-in; min-height: 0;
+    }
+    .ph-box {
+      width: 100%; height: 100%; min-height: 160px; border: 1px dashed #d4d4d4; border-radius: 6px;
+      background: #fafafa; display: flex; align-items: center; justify-content: center;
+      color: #555; font-size: 15px; text-align: center; padding: 10px; font-family: 'Inter', sans-serif;
+    }
+    .img-cap { font-size: 15px; color: #0a0a0a; line-height: 1.5; align-self: start; }
+    .img-cap strong { font-weight: 600; color: #0a0a0a; display: block; margin-bottom: 2px; }
+    .img-cap em { font-style: normal; }
+
+    /* Visitor screens */
+    .screen-grid.cols-4 { grid-template-columns: repeat(4, 1fr) !important; }
+    .screen-grid.cols-6 { grid-template-columns: repeat(6, 1fr) !important; }
+    .screen-grid.cols-4 .screen-cell { max-width: 250px; }
+    .screen-grid.cols-4 .screen-img img { max-height: 520px; }
+    .screen-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 48px 40px; margin-top: 40px; justify-items: center; }
+    .screen-cell { margin: 0; display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 200px; }
+    .screen-img { position: relative; }
+    .screen-img img { width: 100%; height: auto; max-height: 420px; object-fit: contain; display: block; border: 0.5px solid #ebebeb; border-radius: 8px; cursor: zoom-in; }
+    .screen-cell .img-cap { font-size: 15px; color: #0a0a0a; display: block; }
+    .screen-cell .screen-title { display: block; font-weight: 600; color: #0a0a0a; font-size: 15px; }
+    .screen-cell .screen-sub { display: block; color: #555; font-size: 15px; margin-top: 2px; }
+    .screen-cell .screen-note { font-style: italic; }
+    .hotspot {
+      position: absolute; width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: 50%;
+      background: #0a0a0a; color: #fff; font-size: 14px; display: flex; align-items: center; justify-content: center;
+    }
+
+    .cover-tldr { list-style: none; max-width: 680px; margin: 28px 0 0; }
+    .cover-tldr li { font-size: 18px; color: #0a0a0a; line-height: 1.65; padding: 6px 0; }
+    .cover-tldr li::before { content: none; }
+    .research-two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 56px; max-width: 1000px; }
+    .research-two .slide-list li { font-size: 18px; padding: 8px 0 8px 22px; }
+    .scope-three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 1080px; }
+    .scope-three .slide-list li { font-size: 18px; padding: 6px 0 6px 20px; }
+    .scope-table { width: 100%; border-collapse: collapse; max-width: 1080px; }
+    .scope-table th { text-align: left; font-size: 14px; font-weight: 400; color: #555; text-transform: uppercase; letter-spacing: 0.07em; padding: 0 16px 10px 0; border-bottom: 0.5px solid #ebebeb; vertical-align: bottom; }
+    .scope-table td { font-size: 18px; color: #0a0a0a; line-height: 1.45; padding: 8px 16px 8px 0; border-bottom: 0.5px solid #ebebeb; vertical-align: top; width: 33%; }
+    .scope-by-priority tbody th { font-size: 15px; font-weight: 600; color: #0a0a0a; text-transform: none; letter-spacing: 0; line-height: 1.4; text-align: left; vertical-align: top; padding: 12px 24px 10px 0; border-bottom: 0.5px solid #ebebeb; white-space: nowrap; width: 1%; }
+    .scope-by-priority tbody tr:last-child th, .scope-by-priority tbody tr:last-child td { border-bottom: none; }
+    .scope-by-priority td { width: 50%; padding: 10px 24px 10px 0; }
+    .scope-cell { list-style: none; margin: 0; padding: 0; }
+    .scope-cell li { font-size: 18px; line-height: 1.4; padding: 2px 0; }
+    /* Flowchart */
+    .flow-lane { margin-bottom: 26px; flex-shrink: 0; }
+    .flow-lane-label { font-size: 14px; font-weight: 400; color: #555; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; font-family: 'Inter', sans-serif; }
+    .flow-row { display: flex; align-items: center; overflow-x: auto; padding-bottom: 8px; }
+    .flow-box {
+      flex: 0 0 auto; width: 150px; min-height: 76px; border: 0.5px solid #ebebeb; border-radius: 6px;
+      background: #fff; display: flex; align-items: center; justify-content: center; text-align: center;
+      font-size: 15px; color: #0a0a0a; line-height: 1.35; padding: 8px;
+    }
+    .flow-box.visitor { background: #eefbf0; border-color: #bfe8c3; }
+    .flow-arrow { flex: 0 0 auto; width: 22px; text-align: center; color: #bbb; font-size: 15px; }
+
+    .mark {
+      background: linear-gradient(120deg, #FFFBEE 0%, #FFFBEE 100%); background-repeat: no-repeat;
+      background-size: 100% 55%; background-position: 0 85%; padding: 0 2px;
+    }
+
+    /* Bottom line */
+    .impact-stat {
+      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400;
+      color: #0a0a0a; line-height: 1.65; max-width: 640px; margin-bottom: 36px;
+    }
+    .bottom-line-block { border-left: 3px solid #ebebeb; padding-left: 20px; max-width: 640px; }
+    .bottom-line-block p { font-size: 15px; color: #0a0a0a; line-height: 1.5; font-style: italic; }
+
+    /* Navigation */
+    .nav-btn { position: relative; }
+    .nav-btn[data-label]::after {
+      content: attr(data-label); position: absolute; bottom: calc(100% + 8px); left: 50%;
+      transform: translateX(-50%); background: #0a0a0a; color: #fff; font-size: 14px;
+      font-family: 'Inter', sans-serif; font-weight: 500; white-space: nowrap; padding: 4px 8px;
+      border-radius: 4px; pointer-events: none; opacity: 0; transition: opacity 0.15s ease;
+    }
+    .nav-btn[data-label]:not(:disabled):hover::after { opacity: 1; }
+
+    #nav {
+      position: fixed; bottom: 28px; left: calc(50% + 85px); transform: translateX(-50%);
+      display: flex; align-items: center; gap: 12px; z-index: 100;
+      background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      padding: 6px 10px; border-radius: 999px; border: 0.5px solid #e8e8e8;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06); white-space: nowrap;
+    }
+    .nav-btn {
+      width: 32px; height: 32px; border: none; background: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; color: #0a0a0a; font-size: 16px;
+      border-radius: 50%; transition: background 0.15s; font-family: 'Inter', sans-serif; flex-shrink: 0;
+    }
+    .nav-btn:hover { background: #f0f0f0; }
+    .nav-btn:disabled { color: #ccc; cursor: default; }
+    .nav-btn:disabled:hover { background: none; }
+
+    .nav-dots { display: flex; gap: 5px; align-items: center; }
+    .nav-dot {
+      width: 5px; height: 5px; border-radius: 50%; background: #ddd; cursor: pointer;
+      transition: background 0.2s, transform 0.2s; border: none; padding: 0; flex-shrink: 0; position: relative;
+    }
+    .nav-dot.active { background: #0a0a0a; transform: scale(1.4); }
+    .nav-dot::after {
+      content: attr(data-label); position: absolute; bottom: calc(100% + 8px); left: 50%;
+      transform: translateX(-50%); background: #0a0a0a; color: #fff; font-size: 14px;
+      font-family: 'Inter', sans-serif; font-weight: 500; white-space: nowrap; padding: 4px 8px;
+      border-radius: 4px; pointer-events: none; opacity: 0; transition: opacity 0.15s ease;
+    }
+    .nav-dot:hover::after { opacity: 1; }
+    .nav-count { font-size: 14px; color: #555; font-weight: 500; min-width: 36px; text-align: center; font-variant-numeric: tabular-nums; }
+
+    #kb-hint {
+      position: fixed; bottom: 76px; left: calc(50% + 85px); transform: translateX(-50%); font-size: 14px;
+      color: #bbb; letter-spacing: 0.05em; transition: opacity 0.6s ease; pointer-events: none;
+    }
+    #kb-hint.gone { opacity: 0; }
+    @media (max-width: 860px) {
+      #nav { left: 50%; }
+      #kb-hint { left: 50%; }
+    }
+
+    /* Lightbox */
+    #lb {
+      position: fixed; inset: 0; background: rgba(10, 10, 10, 0.93); z-index: 500;
+      display: flex; align-items: center; justify-content: center; gap: 20px;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+    }
+    #lb.open { opacity: 1; pointer-events: auto; }
+    #lb-close {
+      position: absolute; top: 20px; right: 24px; width: 40px; height: 40px; border: none;
+      background: rgba(255,255,255,0.1); color: #fff; font-size: 16px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s; z-index: 1;
+    }
+    #lb-close:hover { background: rgba(255,255,255,0.2); }
+    #lb-inner { display: flex; flex-direction: column; align-items: center; gap: 14px; max-width: calc(100vw - 160px); max-height: calc(100vh - 80px); }
+    #lb-img { max-width: 100%; max-height: calc(100vh - 130px); object-fit: contain; border-radius: 6px; display: block; }
+    #lb-cap { font-size: 15px; color: rgba(255,255,255,0.45); text-align: center; line-height: 1.4; white-space: pre-line; }
+    .lb-arrow {
+      width: 44px; height: 44px; border: none; background: rgba(255,255,255,0.1); color: #fff;
+      font-size: 22px; border-radius: 50%; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; transition: background 0.15s; flex-shrink: 0;
+    }
+    .lb-arrow:hover { background: rgba(255,255,255,0.2); }
+    .lb-arrow:disabled { opacity: 0.2; cursor: default; }
+    .lb-arrow:disabled:hover { background: rgba(255,255,255,0.1); }
+      /* Labels: Plus Jakarta Sans bold at body size, no caps */
+    .slide-section, .slide-title-sm, .chip-label, .queue-table th, .split-col h3, .scope-table th, .flow-lane-label, .scope-by-priority tbody th {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; color: #0a0a0a; text-transform: none; letter-spacing: 0;
+    }
+    .slide-h + .research-two { margin-top: 28px; }
+</style>
+  <style>
+    @font-face { font-family: 'Plus Jakarta Sans'; src: url('fonts/PlusJakartaSans-Variable.ttf') format('truetype'); font-weight: 200 800; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('fonts/Inter-Variable.ttf') format('truetype'); font-weight: 100 900; font-display: swap; }
+  </style>
+</head>
+<body>
+
+<nav id="side-nav" aria-label="Slide list">
+  <div id="side-title">Queuewe</div>
+  <div id="side-list"></div>
+</nav>
+
+<div id="progress"></div>
+<div id="deck">
+  <!-- Cover -->
+  <div class="slide slide-cover" data-label="Cover">
+    <div class="cover-text">
+      <div class="cover-badges">
+        <span class="badge">Avigail Bahat | Senior product designer | Take-home task</span>
+      </div>
+      <h1 class="cover-h1">Queuewe</h1>
+      <p class="cover-sub">A queue app for sessions like teacher-parent meetings, which are usually run on unscalable Google Sheets.</p>
+      <ul class="cover-tldr">
+        <li><strong>Booking with a live position:</strong> see who is ahead and when your turn is.</li>
+        <li><strong>Delay notifications:</strong> when the manager delays the queue, visitors are told the new time.</li>
+        <li><strong>Session control:</strong> the manager marks sessions in progress and decides when to end or extend them.</li>
+      </ul>
+      <button class="cover-start-btn" id="cover-start">Start</button>
+    </div>
+    <div class="cover-hero"><img src="images/cover-hero.webp" alt="Queuewe lock screen widget and visitor home screen"></div>
+  </div>
+
+  <!-- Focused problem and target users -->
+  <div class="slide slide-vcenter slide-premise" data-label="Overview">
+    <div class="slide-header"><span class="slide-section">Overview</span></div>
+    <h2 class="slide-h">Queuewe: A booking app for 1:1 meetings</h2>
+    <p class="slide-body">A simple booking system where people book a 1:1 meeting, see their place in line, get notified when it's their turn, and see delays. Parent-teacher meetings are the first use case.</p>
+    <p class="slide-body" style="margin-top:18px;"><span class="mark">Today these meetings run on a shared Google Sheet. It's a list, so nobody knows how long the wait is, and no one is updated on changes.</span></p>
+
+      <div class="premise-grid">
+        <div class="split-col premise-card">
+          <h3 class="premise-h">Manager (Teacher or staff)</h3>
+          <ul>
+            <li>Sets the cutoff for when visitors can edit or cancel</li>
+            <li>Creates the schedule</li>
+            <li>Sends an invite link to visitors</li>
+            <li>Checks visitors in and out to keep the line moving</li>
+            <li>Gets notified when a session is about to end, and can extend it. Visitors are notified of the change.</li>
+          </ul>
+        </div>
+        <div class="split-col premise-card">
+          <h3 class="premise-h">Visitor (parent)</h3>
+          <ul>
+            <li>Books a slot from the invite link</li>
+            <li>Edits or cancels a session until the manager's cutoff</li>
+            <li>Gets notified of delays</li>
+            <li>Gets notified when a session is coming up, starting, and about to end</li>
+          </ul>
+        </div>
+      </div>
+  </div>
+
+  <div class="slide slide-vcenter" data-label="Scope">
+    <div class="slide-header"><span class="slide-section">Scope</span></div>
+    <h2 class="slide-h">App features</h2>
+    <p class="slide-intro">The app features sorted by priority.</p>
+    <table class="scope-table scope-by-priority">
+      <thead><tr><th></th><th>Visitor (Parent)</th><th>Manager (Teacher)</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Must have</th><td><ul class="scope-cell"><li>Book and edit a slot</li><li>See the session time</li><li>Delay notification with the new time</li><li>Reminder, coming up, and starting now notifications</li><li>Cancel, which notifies the manager</li></ul></td><td><ul class="scope-cell"><li>Set up the queue</li><li>Start the session</li><li>Queue properties: slot time, multiple days and more</li><li>Delay the queue</li><li>Mark the session in progress, end or extend it</li><li>See who is now</li><li>See schedule</li><li>Cancel the queue</li><li>Notification when the session is almost up</li><li>Skip a visitor who doesn't show up</li></ul></td></tr>
+        <tr><th scope="row">Nice to have</th><td><ul class="scope-cell"><li>Share the appointment</li><li>Add to calendar</li><li>Get notified if a slot opens up</li><li>Notify the visitor before the manager changes their slot</li><li>Check in when they arrive, so the manager can see they're here</li><li>Swipe to check in</li></ul></td><td><ul class="scope-cell"><li>Block a slot, add time, take a short break</li><li>Change the order of appointments</li><li>Close the queue to new visitors</li><li>Add a visitor by hand</li><li>Swipe to check in a visitor</li></ul></td></tr>
+        <tr><th scope="row">Later</th><td><ul class="scope-cell"><li>People ahead</li><li>Visitor can say they're running late</li><li>Feedback after the session</li><li>Approve in advance that they're coming</li></ul></td><td><ul class="scope-cell"><li>Waiting list, and queue setup on an outside service</li><li>Live vs. non-live queue setting</li><li>Analytics</li></ul></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="slide slide-vcenter " data-label="Visitor journey wireframes 1">
+    <div class="slide-header">
+      <span class="slide-section">Visitor journey wireframes</span>
+      <div class="slide-sep"></div>
+      <span class="slide-title-sm">1 of 3</span>
+    </div>
+    <h2 class="slide-h">From invite link to setting the meeting</h2>
+    <p class="slide-intro">The visitor signs in and sets a time slot, and can edit it until the session starts.</p>
+    <div class="screen-grid cols-5">
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/01-invite-whatsapp.png" alt="Invite link, WhatsApp class chat"></div>
+        <figcaption class="img-cap"><span class="screen-title">Invite link, WhatsApp class chat</span><span class="screen-sub">Elinor sends the session link in the class chat.</span></figcaption>
+      </figure>
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/02-choose-slot.png" alt="Choose a slot"></div>
+        <figcaption class="img-cap"><span class="screen-title">Choose a slot</span><span class="screen-sub">Pick a time on Sunday or Monday.</span></figcaption>
+      </figure>
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/03-login.png" alt="Log in"></div>
+        <figcaption class="img-cap"><span class="screen-title">Log in</span><span class="screen-sub">Sign in with email and password, or with Google or Facebook.</span></figcaption>
+      </figure>
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/04-all-set.png" alt="Booking confirmed"></div>
+        <figcaption class="img-cap"><span class="screen-title">Booking confirmed</span><span class="screen-sub">Add it to your calendar or share it. You can edit it until the day of the session.</span><span class="screen-sub screen-note">Note: once logged in, the user has notifications and an option to create a queue in the topbar.</span></figcaption>
+      </figure>
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/05-home-upcoming.png" alt="Home, upcoming session"></div>
+        <figcaption class="img-cap"><span class="screen-title">Home</span><span class="screen-sub">The upcoming session, with a link to past sessions when there are any.</span></figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="slide slide-vcenter " data-label="Visitor journey wireframes 2">
+    <div class="slide-header">
+      <span class="slide-section">Visitor journey wireframes</span>
+      <div class="slide-sep"></div>
+      <span class="slide-title-sm">2 of 3</span>
+    </div>
+    <h2 class="slide-h">The session is coming up</h2>
+    <p class="slide-intro">As the session is coming up, the session time becomes bigger and clearer. The visitor gets notified of a delay and when they need to come in.</p>
+    <div class="screen-grid cols-5">
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/06-queue-status.png" alt="Queue status, 4 people ahead"></div>
+        <figcaption class="img-cap"><span class="screen-title">Queue status on the day of the event</span><span class="screen-sub">The session time can't be edited, but the visitor can cancel, which notifies the manager.</span></figcaption>
+      </figure>
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/07-delay-notice.png" alt="Delay notification"></div>
+        <figcaption class="img-cap"><span class="screen-title">Delay notification</span><span class="screen-sub">The manager can choose to delay the queue, and when they do, the visitor gets notified of the new time.</span></figcaption>
+      </figure>
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/08-home-delayed.png" alt="Home, delayed"></div>
+        <figcaption class="img-cap"><span class="screen-title">Home, delayed</span><span class="screen-sub">A delayed meeting shows DELAYED and the new start time.</span></figcaption>
+      </figure>
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/09-reminder-15min.png" alt="Reminder, 15 minutes"></div>
+        <figcaption class="img-cap"><span class="screen-title">Session is coming up notification</span><span class="screen-sub">It tells the visitor to get ready and be near the location.</span></figcaption>
+      </figure>
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/10-starting-now.png" alt="Starting now notification"></div>
+        <figcaption class="img-cap"><span class="screen-title">Starting now notification</span><span class="screen-sub">A notification when the session is starting now. It tells the visitor to step in, since the manager is waiting.</span></figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="slide slide-vcenter " data-label="Visitor journey wireframes 3">
+    <div class="slide-header">
+      <span class="slide-section">Visitor journey wireframes</span>
+      <div class="slide-sep"></div>
+      <span class="slide-title-sm">3 of 3</span>
+    </div>
+    <h2 class="slide-h">Session start to end</h2>
+    <p class="slide-intro">During the session, the visitor can see it in progress and gets told when time is almost up. At the end, they can send feedback. Once the session moves to past sessions, the home screen shows an empty state with the option to start their own queue or learn how it works.</p>
+    <div class="screen-grid cols-5">
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/11-sessions-starts-now.png" alt="Session starts now"></div>
+        <figcaption class="img-cap"><span class="screen-title">Session starts now</span><span class="screen-sub">The session has started, and the manager is waiting for the visitor. The app shows the same message next to the notification.</span></figcaption>
+      </figure>
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/12-session-in-progress.png" alt="Session in progress"></div>
+        <figcaption class="img-cap"><span class="screen-title">Session in progress</span><span class="screen-sub">The manager needs to mark the session as in progress. The visitor then sees the session is running, and other visitors can get a delay notice if it's delayed.</span></figcaption>
+      </figure>
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/13-almost-up.png" alt="Time is almost up"></div>
+        <figcaption class="img-cap"><span class="screen-title">Time is almost up</span><span class="screen-sub">A notification tells the visitor (and the manager) that 3 minutes are left, so they can wrap up.</span></figcaption>
+      </figure>
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/14-session-ended.png" alt="Session ended"></div>
+        <figcaption class="img-cap"><span class="screen-title">Session ended</span><span class="screen-sub">The session is over, with a feedback option. The manager can decide when to end the session and when to make it longer.</span></figcaption>
+      </figure>
+      <figure class="screen-cell">
+        <div class="screen-img"><img src="images/wireframes/15-no-upcoming.png" alt="No upcoming sessions"></div>
+        <figcaption class="img-cap"><span class="screen-title">No upcoming sessions</span><span class="screen-sub">Once a session has ended, the user sees an empty state with a link to see past sessions.</span></figcaption>
+      </figure>
+    </div>
+  </div>
+
+
+  <div class="slide" data-label="UI screens">
+    <div class="slide-header"><span class="slide-section">Solution</span></div>
+    <h2 class="slide-h">Polished UI screens</h2>
+    <p class="slide-intro">The home screen and a lock screen tracker widget.</p>
+    <div class="img-grid g2">
+      <div class="img-cell"><img src="images/visitor-home.webp" alt="Visitor home screen"><span class="img-cap"><strong>Home screen (visitor)</strong></span></div>
+      <div class="img-cell"><img src="images/visitor-tracker-widget.png" alt="Lock screen tracker widget"><span class="img-cap"><strong>Tracker widget</strong></span></div>
+    </div>
+  </div>
+
+  <!-- How I used AI -->
+  <div class="slide slide-vcenter" data-label="How I used AI">
+    <div class="slide-header"><span class="slide-section">Process</span></div>
+    <h2 class="slide-h">How I used AI</h2>
+    <ul class="slide-list">
+      <li>Brainstormed and created the deck.</li>
+      <li>Got copy suggestions.</li>
+      <li>Prioritized user actions.</li>
+    </ul>
+  </div>
+
+  <!-- Summary -->
+  <div class="slide slide-vcenter" data-label="Summary and thanks">
+    <div class="slide-header"><span class="slide-section">Summary</span></div>
+    <h2 class="slide-h">Summary</h2>
+    <ul class="slide-list">
+      <li>The problem: parent-teacher meetings run on a shared Google Sheet, with no live position and no notifications.</li>
+      <li>Users: parents (primary), teachers and school staff (secondary).</li>
+      <li>Scope: parent booking and the live queue, with the teacher side at wireframe level.</li>
+      <li>Journey: book a slot, track the queue, get notified when it's your turn.</li>
+      <li>Next: finish the wireframes and the polished UI screens.</li>
+    </ul>
+    <p class="slide-body" style="margin-top:32px;">Thanks for reading. Happy to walk through any of this live.</p>
+    <div style="display:flex;gap:24px;margin-top:16px;">
+      <a href="mailto:avigailba@gmail.com" style="font-size:15px;color:#0a0a0a;font-weight:400;">avigailba@gmail.com ↗</a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noopener" style="font-size:15px;color:#0a0a0a;font-weight:400;">LinkedIn ↗</a>
+    </div>
+  </div>
+
+  <!-- Research -->
+  <div class="slide slide-vcenter" data-label="Appendix: competitors and users">
+    <div class="slide-header"><span class="slide-section">Appendix</span></div>
+    <h2 class="slide-h">Research: competitors and users</h2>
+    <p class="slide-intro">The brief was open, so I spent a day researching competitors, user types, queue types, and possible actions.</p>
+    <div class="research-two">
+      <div>
+        <p class="chip-label">Competitors</p>
+        <ul class="slide-list compact">
+          <li><a href="https://queuebeesolution.com" target="_blank" rel="noopener"><strong>QueueBee</strong></a>, queue management for customer waiting lines</li>
+          <li><a href="https://qrq.app" target="_blank" rel="noopener"><strong>QRQ</strong></a>, queue management and virtual queue software</li>
+          <li><a href="https://play.google.com" target="_blank" rel="noopener"><strong>Queue App</strong></a>, virtual waiting list (Google Play)</li>
+          <li><strong>Clalit</strong>, queue and waiting-list setup on an outside service</li>
+          <li><a href="https://calendly.com" target="_blank" rel="noopener"><strong>Calendly</strong></a>, meeting scheduling</li>
+        </ul>
+      </div>
+      <div>
+        <p class="chip-label">Users</p>
+        <ul class="slide-list compact">
+          <li>Parent-Teacher talk</li>
+          <li>Salon</li>
+          <li>Gov service</li>
+          <li>Medical clinic</li>
+          <li>Buy tickets to something</li>
+          <li>Consultation</li>
+          <li>Hairdresser</li>
+          <li>Restaurant</li>
+          <li>Experience (art exhibit)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide slide-vcenter" data-label="Appendix: queue types and actions">
+    <div class="slide-header"><span class="slide-section">Appendix</span></div>
+    <h2 class="slide-h">Research: queue types and actions</h2>
+    <div class="research-two">
+      <div>
+        <p class="chip-label">Queue types</p>
+        <table class="queue-table">
+          <tr><td>Live queue</td><td>People join as they come, and wait their turn on the spot.</td></tr>
+          <tr><td>Booked queue</td><td>People reserve a slot before they arrive, then join the queue on the day.</td></tr>
+        </table>
+      </div>
+      <div>
+        <p class="chip-label">Main actions</p>
+        <ul class="slide-list compact">
+          <li><strong>Visitor:</strong> book and edit a slot, see the session time, view their slot, get delay and reminder notifications, cancel, check in when they arrive</li>
+          <li><strong>Manager:</strong> set up the queue (slot time, multiple days), delay it, mark the session in progress and end or extend it, see who is now, see who is booked and checked in, skip a no-show, remove all queue, get told when a session is almost up</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- Lightbox -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button id="lb-close" aria-label="Close">✕</button>
+  <button class="lb-arrow" id="lb-prev" aria-label="Previous image">‹</button>
+  <div id="lb-inner">
+    <img id="lb-img" alt="">
+    <p id="lb-cap"></p>
+  </div>
+  <button class="lb-arrow" id="lb-next" aria-label="Next image">›</button>
+</div>
+
+<p id="kb-hint">← → to navigate</p>
+
+<nav id="nav" role="navigation" aria-label="Slide navigation">
+  <button class="nav-btn" id="btn-prev" aria-label="Previous slide">←</button>
+  <div class="nav-dots" id="nav-dots" aria-hidden="true"></div>
+  <span class="nav-count" id="nav-count" aria-live="polite"></span>
+  <button class="nav-btn" id="btn-next" aria-label="Next slide">→</button>
+</nav>
+
+<script>
+(function () {
+  var slides = Array.from(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var cur = 0;
+
+  var dotsEl = document.getElementById('nav-dots');
+  var sideListEl = document.getElementById('side-list');
+  slides.forEach(function (slide, i) {
+    var label = slide.dataset.label || ('Slide ' + (i + 1));
+
+    var d = document.createElement('button');
+    d.className = 'nav-dot';
+    d.setAttribute('aria-label', label);
+    d.dataset.label = label;
+    d.addEventListener('click', function () { goTo(i); hideHint(); });
+    dotsEl.appendChild(d);
+
+    var isApp = label.indexOf('Appendix: ') === 0;
+    var tag = slide.querySelector('.slide-section');
+    if (isApp && !sideListEl.querySelector('.side-group')) {
+      var g = document.createElement('div');
+      g.className = 'side-group';
+      g.textContent = 'Appendix';
+      sideListEl.appendChild(g);
+    }
+    if (isApp) label = label.replace('Appendix: ', '');
+    label = label.charAt(0).toUpperCase() + label.slice(1);
+    if (tag) tag.textContent = label;
+    var s = document.createElement('button');
+    s.className = 'side-item';
+    if (i === 0) s.style.display = 'none';
+    s.innerHTML = '<span class="side-num">' + String(i).padStart(2, '0') + '</span><span class="side-label">' + label + '</span>';
+    s.addEventListener('click', function () { goTo(i); hideHint(); });
+    sideListEl.appendChild(s);
+  });
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= total) return;
+    slides[cur].classList.remove('active');
+    cur = idx;
+    slides[cur].classList.add('active');
+    slides[cur].scrollTop = 0;
+    dotsEl.querySelectorAll('.nav-dot').forEach(function (d, i) {
+      d.classList.toggle('active', i === cur);
+    });
+    sideListEl.querySelectorAll('.side-item').forEach(function (s, i) {
+      s.classList.toggle('active', i === cur);
+    });
+    document.getElementById('nav-count').textContent = cur + ' / ' + (total - 1);
+    document.getElementById('btn-prev').disabled = cur === 0;
+    document.getElementById('btn-next').disabled = cur === total - 1;
+    document.getElementById('progress').style.width = (cur / (total - 1) * 100) + '%';
+    var onCover = cur === 0;
+    document.getElementById('nav').style.display = onCover ? 'none' : 'flex';
+    document.getElementById('side-nav').style.display = onCover ? 'none' : 'flex';
+    document.getElementById('deck').style.left = onCover ? '0' : '170px';
+    document.getElementById('progress').style.display = onCover ? 'none' : 'block';
+    if (onCover) hint.classList.add('gone');
+  }
+
+  document.getElementById('side-title').addEventListener('click', function () { goTo(0); });
+  document.getElementById('btn-prev').addEventListener('click', function () { goTo(cur - 1); hideHint(); });
+  document.getElementById('btn-next').addEventListener('click', function () { goTo(cur + 1); hideHint(); });
+  var startBtn = document.getElementById('cover-start');
+  if (startBtn) startBtn.addEventListener('click', function () { goTo(1); });
+
+  var hint = document.getElementById('kb-hint');
+  var hintGone = false;
+  function hideHint() {
+    if (!hintGone) { hintGone = true; hint.classList.add('gone'); }
+  }
+  setTimeout(hideHint, 4000);
+
+  // ----- Lightbox -----
+  var lb = document.getElementById('lb');
+  var lbImg = document.getElementById('lb-img');
+  var lbCap = document.getElementById('lb-cap');
+  var lbPrev = document.getElementById('lb-prev');
+  var lbNext = document.getElementById('lb-next');
+  var lbImages = [];
+  var lbIdx = 0;
+
+  function openLb(images, startIdx) {
+    lbImages = images;
+    lbIdx = startIdx;
+    showLbImage(lbIdx);
+    lb.classList.add('open');
+  }
+
+  function showLbImage(idx) {
+    var item = lbImages[idx];
+    lbImg.src = item.src;
+    lbImg.alt = item.alt;
+    lbCap.textContent = item.cap;
+    var multi = lbImages.length > 1;
+    lbPrev.style.visibility = multi ? '' : 'hidden';
+    lbNext.style.visibility = multi ? '' : 'hidden';
+    lbPrev.disabled = idx === 0;
+    lbNext.disabled = idx === lbImages.length - 1;
+  }
+
+  function closeLb() { lb.classList.remove('open'); }
+
+  document.querySelectorAll('.img-cell img, .screen-img img').forEach(function (img) {
+    img.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var activeSlide = document.querySelector('.slide.active');
+      var imgs = Array.from(activeSlide.querySelectorAll('.img-cell img, .screen-img img'));
+      var images = imgs.map(function (el) {
+        var cap = el.closest('.img-cell, .screen-cell') && el.closest('.img-cell, .screen-cell').querySelector('.img-cap');
+        return { src: el.src, alt: el.alt, cap: cap ? cap.innerText.trim() : '' };
+      });
+      openLb(images, Math.max(0, imgs.indexOf(img)));
+    });
+  });
+
+  document.getElementById('lb-close').addEventListener('click', closeLb);
+  lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+  lbPrev.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (lbIdx > 0) { lbIdx--; showLbImage(lbIdx); }
+  });
+  lbNext.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (lbIdx < lbImages.length - 1) { lbIdx++; showLbImage(lbIdx); }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (lb.classList.contains('open')) {
+      if (e.key === 'Escape') { closeLb(); return; }
+      if (e.key === 'ArrowRight') { if (lbIdx < lbImages.length - 1) { lbIdx++; showLbImage(lbIdx); } return; }
+      if (e.key === 'ArrowLeft') { if (lbIdx > 0) { lbIdx--; showLbImage(lbIdx); } return; }
+      return;
+    }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { goTo(cur + 1); hideHint(); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { goTo(cur - 1); hideHint(); }
+  });
+
+  goTo(0);
+})();
+</script>
+</body>
+</html>
