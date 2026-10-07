@@ -55,16 +55,6 @@
 
     #mobile-menu, #mobile-menu-backdrop { display: none; }
 
-    /* Progress bar */
-    #progress {
-      position: fixed;
-      top: 0; left: 170px; right: 0;
-      height: 2px;
-      background: #0a0a0a;
-      z-index: 200;
-      transition: width 0.3s ease;
-    }
-
     /* Deck */
     #deck {
       position: fixed;
@@ -88,7 +78,6 @@
         position: fixed; inset: 0; z-index: 300; background: rgba(10,10,10,.28);
       }
       #mobile-menu-backdrop.open { display: block; }
-      #progress { left: 0; }
       #deck { left: 0; }
     }
 
@@ -127,9 +116,9 @@
     .cover-text { flex: 0 0 auto; max-width: 560px; position: relative; z-index: 1; }
     .cover-hero { position: absolute; top: 110px; right: 0; bottom: 0; width: 56%; border-radius: 16px 0 0 0; overflow: hidden; box-shadow: 0 24px 60px -20px rgba(30, 40, 90, 0.25); }
     .cover-hero img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
-    .slide-cover .cover-hero { position: absolute; top: 50%; right: -12%; bottom: auto; transform: translateY(-50%); width: 76%; height: auto; border-radius: 0; box-shadow: none; overflow: visible; pointer-events: none; }
+    .slide-cover .cover-hero { position: absolute; top: 50%; right: -12%; bottom: auto; transform: translateY(-50%); width: 80%; height: auto; border-radius: 0; box-shadow: none; overflow: visible; pointer-events: none; }
     .slide-cover .cover-hero img { width: 100%; height: auto; object-fit: contain; display: block; filter: drop-shadow(0 28px 32px rgba(30, 40, 80, 0.22)); }
-    .slide-cover .cover-text { max-width: min(540px, calc(48% - 110px)); }
+    .slide-cover .cover-text { max-width: min(540px, calc(48% - 120px)); }
     .slide-cover .cover-h1 { font-size: clamp(30px, 3.4vw, 46px); white-space: nowrap; }
     .slide-cover .cover-sub, .slide-cover .cover-tldr { max-width: 100%; }
     .cover-badges { display: flex; gap: 8px; margin-bottom: 28px; flex-shrink: 0; }
@@ -467,7 +456,6 @@
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
 </button>
 <button id="mobile-menu-backdrop" type="button" aria-label="Close slide menu"></button>
-<div id="progress"></div>
 <div id="deck">
   <!-- Cover -->
   <div class="slide slide-cover" data-label="Cover">
@@ -541,7 +529,7 @@
       <span class="slide-title-sm">1 of 3</span>
     </div>
     <h2 class="slide-h">From invite link to booked slot</h2>
-    <p class="slide-intro">The visitor signs in, books a slot, and can edit it until the manager's cutoff.</p>
+    <p class="slide-intro">The visitor logs in, books a slot, and can edit it until the manager's cutoff.</p>
     <div class="screen-grid cols-5">
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/01-invite-whatsapp.png" alt="Invite link, WhatsApp class chat"></div>
@@ -553,11 +541,11 @@
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/03-login.png" alt="Log in"></div>
-        <figcaption class="img-cap"><span class="screen-title">Sign in</span><span class="screen-sub">Use email, Google or Facebook to see past sessions and follow a session's progress.</span></figcaption>
+        <figcaption class="img-cap"><span class="screen-title">Log in or sign up</span><span class="screen-sub">Use email, Google or Facebook to see past sessions and follow a session's progress.</span></figcaption>
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/04-all-set.png" alt="Booking confirmed"></div>
-        <figcaption class="img-cap"><span class="screen-title">Booking confirmed</span><span class="screen-sub">The visitor can add it to a calendar or share it, and edit it until the manager's cutoff.</span><span class="screen-sub screen-note">Note: once signed in, the visitor has notifications in the topbar.</span></figcaption>
+        <figcaption class="img-cap"><span class="screen-title">Booking confirmed</span><span class="screen-sub">The visitor can add it to a calendar or share it, and edit it until the manager's cutoff.</span><span class="screen-sub screen-note">Note: once logged in, the visitor has notifications in the topbar.</span></figcaption>
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/05-home-upcoming.png" alt="Home, upcoming session"></div>
@@ -634,10 +622,10 @@
   <div class="slide" data-label="UI screens">
     <div class="slide-header"><span class="slide-section">Solution</span></div>
     <h2 class="slide-h">Designed to read at a glance</h2>
-    <p class="slide-intro">Visitors get bold screens that read at a glance, like a queue ticket. Managers get a calm, simple flow for setting up a schedule.</p>
+    <p class="slide-intro">I chose the key moment for each role. For visitors, it is the day of the session, with bold screens that read at a glance, like a queue ticket. For managers, it is setting up the schedule, with a calm, simple flow.</p>
     <div class="img-grid g3">
-      <div class="img-cell"><img src="images/visitor-home.webp" alt="Visitor home screen"><span class="img-cap"><strong>Home screen (visitor)</strong><em>Shows when the session starts and how many people are ahead in the queue.</em></span></div>
-      <div class="img-cell"><img src="images/visitor-tracker-widget.png" alt="Lock screen tracker widget"><span class="img-cap"><strong>Tracker widget</strong><em>Shows how much time is left, so the visitor does not need to open the app. <i style="font-style:italic">I chose a progress bar because the lock screen is glanceable: a filling bar shows how close the session is without reading.</i></em></span></div>
+      <div class="img-cell"><img src="images/visitor-home.webp" alt="Visitor home screen"><span class="img-cap"><strong>Home on the day of the session (visitor)</strong><em>Shows when the session starts and how many people are ahead in the queue. <i style="font-style:italic">The home screen leads with the upcoming session, because that is what the visitor opens the app for.</i></em></span></div>
+      <div class="img-cell"><img src="images/visitor-tracker-widget.png" alt="Lock screen tracker widget"><span class="img-cap"><strong>Tracker widget (visitor)</strong><em>Shows how much time is left, so the visitor does not need to open the app. <i style="font-style:italic">I chose a progress bar because the lock screen is glanceable: a filling bar shows how close the session is without reading.</i></em></span></div>
       <div class="img-cell"><img src="images/manager-create-schedule.png" alt="Manager screen: choose a starting point for a schedule"><span class="img-cap"><strong>Create a schedule (manager)</strong><em>Start from a preset, with AI, from scratch, or by connecting a service. <i style="font-style:italic">The preset is selected by default because it is the quickest start for a common event, like a parent-teacher evening.</i></em></span></div>
     </div>
   </div>
@@ -827,13 +815,11 @@
     document.getElementById('nav-count').textContent = cur + ' / ' + (total - 1);
     document.getElementById('btn-prev').disabled = cur === 0;
     document.getElementById('btn-next').disabled = cur === total - 1;
-    document.getElementById('progress').style.width = (cur / (total - 1) * 100) + '%';
     var onCover = cur === 0;
     document.getElementById('nav').style.display = onCover ? 'none' : 'flex';
     var compactLayout = window.matchMedia('(max-width: 1100px)').matches;
     document.getElementById('side-nav').style.display = (onCover || compactLayout) ? 'none' : 'flex';
     document.getElementById('deck').style.left = (onCover || compactLayout) ? '0' : '170px';
-    document.getElementById('progress').style.display = onCover ? 'none' : 'block';
     if (onCover) hint.classList.add('gone');
   }
 
