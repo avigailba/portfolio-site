@@ -239,6 +239,7 @@
     .scope-three .slide-list li { font-size: 16px; padding: 6px 0 6px 20px; }
     .scope-table { width: 100%; border-collapse: collapse; max-width: 1080px; }
     .scope-table th { text-align: left; font-size: 14px; font-weight: 400; color: #555; text-transform: uppercase; letter-spacing: 0.07em; padding: 0 16px 10px 0; border-bottom: 0.5px solid #ebebeb; vertical-align: bottom; }
+    .scope-table th .th-sub { display: block; margin-top: 6px; font-size: 14px; font-weight: 400; color: #555; text-transform: none; letter-spacing: 0; line-height: 1.4; }
     .scope-table td { font-size: 16px; color: #0a0a0a; line-height: 1.5; padding: 8px 16px 8px 0; border-bottom: 0.5px solid #ebebeb; vertical-align: top; width: 33%; }
     .scope-by-priority tbody th { font-size: 16px; font-weight: 600; color: #0a0a0a; text-transform: none; letter-spacing: 0; line-height: 1.4; text-align: left; vertical-align: top; padding: 12px 24px 10px 0; border-bottom: 0.5px solid #ebebeb; white-space: nowrap; width: 1%; }
     .scope-by-priority tbody tr:last-child th, .scope-by-priority tbody tr:last-child td { border-bottom: none; }
@@ -505,9 +506,9 @@
     <div class="slide-header"><span class="slide-section">Visitor features</span></div>
     <h2 class="slide-h">Get notified at every key point</h2>
     <table class="scope-table scope-by-priority scope-single">
-      <thead><tr><th>Must have</th><th>Nice to have</th><th>Later</th></tr></thead>
+      <thead><tr><th>Must have<span class="th-sub">Needed for the queue to always match what is happening</span></th><th>Nice to have<span class="th-sub">Makes a must have easier, using what already exists</span></th><th>Later<span class="th-sub">Needs something new: a service, new data, or a new type of user</span></th></tr></thead>
       <tbody>
-        <tr><td><ul class="scope-cell"><li>Book and edit a slot</li><li>See the session time</li><li>Delay notification with the new time</li><li>Reminder, coming up, and starting now notifications</li><li>Cancel, which notifies the manager</li></ul></td><td><ul class="scope-cell"><li>Share the appointment</li><li>Add to calendar</li><li>Get notified if a slot opens up</li><li>Notify the visitor before the manager changes their slot</li><li>Check in when they arrive, so the manager can see they're here</li><li>Swipe to check in</li></ul></td><td><ul class="scope-cell"><li>People ahead</li><li>Visitor can say they're running late</li><li>Feedback after the session</li><li>Approve in advance that they're coming</li></ul></td></tr>
+        <tr><td><ul class="scope-cell"><li>Book and edit a slot</li><li>See the session time</li><li>Delay notification with the new time</li><li>Reminder, coming up, and starting now notifications</li><li>Cancel, which notifies the manager</li><li>Notification before the manager changes or cancels their slot</li></ul></td><td><ul class="scope-cell"><li>Share the appointment</li><li>Add to calendar</li><li>Get notified if a slot opens up</li><li>Check in when they arrive, so the manager can see they're here</li><li>Swipe to check in</li></ul></td><td><ul class="scope-cell"><li>People ahead</li><li>Visitor can say they're running late</li><li>Feedback after the session</li><li>Approve in advance that they're coming</li></ul></td></tr>
       </tbody>
     </table>
     <p class="slide-body premise-terms">The research behind this is in the <a href="#" class="research-link" data-goto="Appendix: competitors and users">appendix</a>.</p>
@@ -517,9 +518,9 @@
     <div class="slide-header"><span class="slide-section">Manager features</span></div>
     <h2 class="slide-h">Set up and run the queue</h2>
     <table class="scope-table scope-by-priority scope-single">
-      <thead><tr><th>Must have</th><th>Nice to have</th><th>Later</th></tr></thead>
+      <thead><tr><th>Must have<span class="th-sub">Needed for the queue to always match what is happening</span></th><th>Nice to have<span class="th-sub">Makes a must have easier, using what already exists</span></th><th>Later<span class="th-sub">Needs something new: a service, new data, or a new type of user</span></th></tr></thead>
       <tbody>
-        <tr><td><ul class="scope-cell"><li>Set up the queue</li><li>Start the session</li><li>Queue properties: slot time, multiple days and more</li><li>Delay the queue</li><li>Mark the session in progress, end or extend it</li><li>See who is now</li><li>See schedule</li><li>Cancel the queue</li><li>Notification when the session is almost up</li><li>Skip a visitor who doesn't show up</li></ul></td><td><ul class="scope-cell"><li>Block a slot, add time, take a short break</li><li>When a session ends early, call the next visitor if they are in, or take a short break</li><li>Change the order of appointments</li><li>Close the queue to new visitors</li><li>Add a visitor by hand</li><li>Swipe to check in a visitor</li><li>Queue property: virtual or physical meeting, or let the visitor choose</li></ul></td><td><ul class="scope-cell"><li>Waiting list, and queue setup on an outside service</li><li>Live vs. non-live queue setting</li><li>Analytics</li><li>Customize the look of the waiting screen: colors, fonts, and more</li></ul></td></tr>
+        <tr><td><ul class="scope-cell"><li>Set up the queue</li><li>Create a schedule: choose and edit a preset, or build a custom schedule</li><li>Start the session</li><li>Queue properties: slot time, multiple days and more</li><li>Delay the queue</li><li>Mark the session in progress, end or extend it</li><li>See who is now</li><li>See schedule</li><li>Cancel the queue</li><li>Notification when the session is almost up</li></ul></td><td><ul class="scope-cell"><li>Block a slot, add time, take a short break</li><li>When a session ends early, call the next visitor if they are in, or take a short break</li><li>Change the order of appointments</li><li>Close the queue to new visitors</li><li>Add a visitor by hand</li><li>Swipe to check in a visitor</li><li>Queue property: virtual or physical meeting, or let the visitor choose</li><li>Skip a visitor who doesn't show up</li><li>Create a schedule with an AI assistant</li><li>Connect a calendar service, such as Google Calendar: its schedule becomes the slots, and Queuewe runs the live queue</li><li>Export schedule</li></ul></td><td><ul class="scope-cell"><li>Waiting list, and queue setup on an outside service</li><li>Live vs. non-live queue setting</li><li>Analytics</li><li>Customize the look of the waiting screen: colors, fonts, and more</li></ul></td></tr>
       </tbody>
     </table>
     <p class="slide-body premise-terms">The research behind this is in the <a href="#" class="research-link" data-goto="Appendix: competitors and users">appendix</a>.</p>
@@ -675,6 +676,7 @@
           <li><a href="https://play.google.com" target="_blank" rel="noopener"><strong>Queue App</strong></a>, virtual waiting list (Google Play)</li>
           <li><strong>Clalit</strong>, queue and waiting-list setup on an outside service</li>
           <li><a href="https://calendly.com" target="_blank" rel="noopener"><strong>Calendly</strong></a>, meeting scheduling</li>
+          <li><a href="https://calendar.google.com" target="_blank" rel="noopener"><strong>Google Calendar</strong></a>, calendar with appointment schedules</li>
         </ul>
       </div>
       <div>
