@@ -233,6 +233,7 @@
     .cover-tldr li::marker { font-weight: 700; }
     .cover-tldr li::before { content: none; }
     .research-two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 56px; max-width: 1000px; }
+    .slide[data-label="Appendix: queue types"] .research-two { grid-template-columns: 1fr; max-width: 760px; }
     .research-two .slide-list li { font-size: 16px; padding: 8px 0 8px 22px; }
     .scope-three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 1080px; }
     .scope-three .slide-list li { font-size: 16px; padding: 6px 0 6px 20px; }
@@ -284,11 +285,11 @@
     }
     .slide[data-label="Appendix: competitors and users"] .slide-list li,
     .slide[data-label="Appendix: competitors and users"] .slide-list li:first-child,
-    .slide[data-label="Appendix: queue types and actions"] .slide-list li,
-    .slide[data-label="Appendix: queue types and actions"] .slide-list li:first-child,
-    .slide[data-label="Appendix: queue types and actions"] .queue-table,
-    .slide[data-label="Appendix: queue types and actions"] .queue-table th,
-    .slide[data-label="Appendix: queue types and actions"] .queue-table td {
+    .slide[data-label="Appendix: queue types"] .slide-list li,
+    .slide[data-label="Appendix: queue types"] .slide-list li:first-child,
+    .slide[data-label="Appendix: queue types"] .queue-table,
+    .slide[data-label="Appendix: queue types"] .queue-table th,
+    .slide[data-label="Appendix: queue types"] .queue-table td {
       border: 0;
     }
     /* Flowchart */
@@ -323,26 +324,26 @@
 
     #nav {
       position: fixed; bottom: 28px; left: calc(50% + 85px); transform: translateX(-50%);
-      display: flex; align-items: center; gap: 12px; z-index: 100;
+      display: flex; align-items: center; gap: 18px; z-index: 100;
       background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      padding: 6px 10px; border-radius: 999px; border: 0.5px solid #e8e8e8;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06); white-space: nowrap;
+      padding: 8px 14px; border-radius: 999px; border: 0.5px solid #e0e0e0;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.10); white-space: nowrap;
     }
     .nav-btn {
-      width: 32px; height: 32px; border: none; background: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; color: #0a0a0a; font-size: 16px;
+      width: 48px; height: 48px; border: none; background: #f2f2f2; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; color: #0a0a0a; font-size: 24px;
       border-radius: 50%; transition: background 0.15s; font-family: 'Roboto', sans-serif; flex-shrink: 0;
     }
-    .nav-btn:hover { background: #f0f0f0; }
-    .nav-btn:disabled { color: #ccc; cursor: default; }
+    .nav-btn:hover { background: #e4e4e4; }
+    .nav-btn:disabled { color: #ccc; background: none; cursor: default; }
     .nav-btn:disabled:hover { background: none; }
 
-    .nav-dots { display: flex; gap: 5px; align-items: center; }
+    .nav-dots { display: flex; gap: 8px; align-items: center; }
     .nav-dot {
-      width: 5px; height: 5px; border-radius: 50%; background: #ddd; cursor: pointer;
+      width: 8px; height: 8px; border-radius: 50%; background: #d4d4d4; cursor: pointer;
       transition: background 0.2s, transform 0.2s; border: none; padding: 0; flex-shrink: 0; position: relative;
     }
-    .nav-dot.active { background: #0a0a0a; transform: scale(1.4); }
+    .nav-dot.active { background: var(--teal); width: 11px; height: 11px; }
     .nav-dot::after {
       content: attr(data-label); position: absolute; bottom: calc(100% + 8px); left: 50%;
       transform: translateX(-50%); background: #0a0a0a; color: #fff; font-size: 14px;
@@ -350,7 +351,7 @@
       border-radius: 4px; pointer-events: none; opacity: 0; transition: opacity 0.15s ease;
     }
     .nav-dot:hover::after { opacity: 1; }
-    .nav-count { font-size: 14px; color: #555; font-weight: 500; min-width: 36px; text-align: center; font-variant-numeric: tabular-nums; }
+    .nav-count { font-size: 17px; color: #555; font-weight: 500; min-width: 36px; text-align: center; font-variant-numeric: tabular-nums; }
 
     #kb-hint {
       position: fixed; bottom: 76px; left: calc(50% + 85px); transform: translateX(-50%); font-size: 14px;
@@ -472,11 +473,11 @@
       .slide[data-label="Appendix: AI use"] .slide-list li:first-child { border: 0; }
       .slide[data-label="Appendix: competitors and users"] .slide-list li,
       .slide[data-label="Appendix: competitors and users"] .slide-list li:first-child,
-      .slide[data-label="Appendix: queue types and actions"] .slide-list li,
-      .slide[data-label="Appendix: queue types and actions"] .slide-list li:first-child,
-      .slide[data-label="Appendix: queue types and actions"] .queue-table,
-      .slide[data-label="Appendix: queue types and actions"] .queue-table th,
-      .slide[data-label="Appendix: queue types and actions"] .queue-table td { border: 0; }
+      .slide[data-label="Appendix: queue types"] .slide-list li,
+      .slide[data-label="Appendix: queue types"] .slide-list li:first-child,
+      .slide[data-label="Appendix: queue types"] .queue-table,
+      .slide[data-label="Appendix: queue types"] .queue-table th,
+      .slide[data-label="Appendix: queue types"] .queue-table td { border: 0; }
 
       #nav { bottom: calc(12px + env(safe-area-inset-bottom)); gap: 8px; padding: 5px 8px; }
       .nav-btn { width: 40px; height: 40px; }
@@ -527,8 +528,9 @@
       .slide-intro { margin-bottom: 40px !important; }
       .slide-h + :not(.slide-intro), .slide-intro + * { margin-top: 0 !important; }
       .screen-heading .screen-title { white-space: normal !important; font-size: 16px !important; }
-      .screen-heading { align-items: flex-start !important; justify-content: flex-start !important; min-height: 2.7em !important; }
-      .screen-img { width: 188px !important; }
+      .screen-heading { align-items: flex-start !important; justify-content: flex-start !important; }
+      .screen-img { width: 100% !important; }
+      .screen-img img { width: 146px !important; }
     }
 
     /* UI screens, three together: phone on top, left-aligned text under it */
@@ -543,7 +545,7 @@
     /* Wireframe numbers, continuous across the three journey slides */
     body { counter-reset: shot; }
     .screen-cell { counter-increment: shot; }
-    .screen-cell .screen-title::before { content: counter(shot, decimal-leading-zero); display: inline-block; margin-right: 8px; color: var(--teal); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .screen-cell .screen-title::before { content: counter(shot, decimal-leading-zero); display: inline-block; margin-right: 6px; color: var(--teal); font-size: inherit; font-weight: inherit; line-height: inherit; font-variant-numeric: tabular-nums; }
 </style>
 </head>
 <body>
@@ -589,7 +591,7 @@
       <div class="premise-grid">
         <div class="split-col premise-card">
           <h3 class="premise-h">Manager (Teacher or staff)</h3>
-          <p>Creates the schedule, shares the link, and runs each session. Queuewe automatically keeps visitors informed as things change.</p>
+          <p>Creates the schedule, shares the link, and runs each session: start, extend, delay or cancel.</p>
         </div>
         <div class="split-col premise-card">
           <h3 class="premise-h">Visitor (Parent)</h3>
@@ -619,7 +621,7 @@
     <table class="scope-table scope-by-priority scope-single">
       <thead><tr><th>Must have<span class="th-sub">Needed for the queue to always match what is happening</span></th><th>Nice to have<span class="th-sub">Makes a must have easier, using what already exists</span></th><th>Later<span class="th-sub">Needs something new: a service, new data, or a new type of user</span></th></tr></thead>
       <tbody>
-        <tr><td><ol class="scope-cell"><li>Create a schedule with a wizard: choose a preset or start from scratch, and set slot time and days</li><li>Share the schedule link</li><li>See the schedule and who is now</li><li>Start the session</li><li>Delay the queue</li><li>Mark the session in progress, end or extend it</li><li>Notification when the session is almost up</li><li>Cancel the queue</li></ol></td><td><ol class="scope-cell"><li>Adjust the day: block a slot, add time, take a short break, or call the next visitor when a session ends early</li><li>Edit the queue: change the order of sessions, add a visitor by hand, skip a visitor who doesn't show up, or close it to new visitors</li><li>More queue settings: virtual or physical meeting (or let the visitor choose), and when the manager accepts changes</li><li>Save drafts and export a schedule</li><li>Create a schedule with an AI assistant</li><li>Connect a calendar or booking service, such as Google Calendar: its schedule becomes the slots, and Queuewe runs the live queue</li></ol></td><td><ol class="scope-cell"><li>Waiting list, and queue setup on an outside service</li><li>Live vs. non-live queue setting</li><li>Analytics</li><li>Customize the look of the waiting screen: colors, fonts, and more</li><li>Swipe to check in a visitor</li></ol></td></tr>
+        <tr><td><ol class="scope-cell"><li>Create a schedule: preset or from scratch, slot time and days</li><li>Share the schedule link</li><li>See the schedule and who is now</li><li>Start, end or extend the session</li><li>Delay the queue</li><li>Notification when the session is almost up</li><li>Cancel the queue</li></ol></td><td><ol class="scope-cell"><li>Adjust the day: block a slot, add time, take a break, or call the next visitor early</li><li>Edit the queue: reorder, add a visitor, skip one who doesn't show up, or close it to new visitors</li><li>Queue settings: virtual or physical meeting, and when changes are accepted</li><li>Save drafts and export a schedule</li><li>Create a schedule with AI</li><li>Connect a calendar or booking service, such as Google Calendar</li></ol></td><td><ol class="scope-cell"><li>Waiting list, and queue setup on an outside service</li><li>Live vs. non-live queue setting</li><li>Analytics</li><li>Customize the look of the waiting screen: colors, fonts, and more</li><li>Swipe to check in a visitor</li></ol></td></tr>
       </tbody>
     </table>
     <p class="slide-body premise-terms">The research behind this is in the <a href="#" class="research-link" data-goto="Appendix: competitors and users">appendix</a>.</p>
@@ -632,27 +634,27 @@
       <span class="slide-title-sm">1 of 3</span>
     </div>
     <h2 class="slide-h">From invite link to booked slot</h2>
-    <p class="slide-intro">The visitor opens the manager's message, logs in and picks a time. The booking then shows on the home screen and can be edited until the manager's cutoff.</p>
+    <p class="slide-intro">The visitor opens the manager's link, logs in and picks a time. The booking then shows on the home screen and can be edited until the manager's cutoff.</p>
     <div class="screen-grid cols-5">
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/01-invite-whatsapp.png" alt="Invite link, WhatsApp class chat"></div>
-        <div class="screen-heading"><span class="screen-title">Invite link, WhatsApp class chat</span></div><figcaption class="img-cap"><span class="screen-sub">Elinor, the manager, shares the schedule with everyone at once.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Invite link</span></div><figcaption class="img-cap"><span class="screen-sub">Elinor, the manager, shares it in the class WhatsApp chat.</span></figcaption>
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/02-choose-slot.png" alt="Choose a slot"></div>
-        <div class="screen-heading"><span class="screen-title">Choose a slot</span></div><figcaption class="img-cap"><span class="screen-sub">Parents can pick a time on Sunday or Monday.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Choose a slot</span></div><figcaption class="img-cap"><span class="screen-sub">Visitors can see what's available and pick a time.</span></figcaption>
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/03-login.png" alt="Log in"></div>
-        <div class="screen-heading"><span class="screen-title">Log in or sign up</span></div><figcaption class="img-cap"><span class="screen-sub">Use email, Google or Facebook to see past sessions and follow a session's progress.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Log in or sign up</span></div><figcaption class="img-cap"><span class="screen-sub">Email, Google or Facebook, to track sessions and see past ones.</span><span class="screen-sub screen-note">Note: after login, the topbar gives access to notifications, sessions, schedules, settings, help, account and log out.</span></figcaption>
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/04-all-set.png" alt="Booking confirmed"></div>
-        <div class="screen-heading"><span class="screen-title">Booking confirmed</span></div><figcaption class="img-cap"><span class="screen-sub">The visitor can add it to a calendar or share it, and edit it until the manager's cutoff.</span><span class="screen-sub screen-note">Note: once logged in, the visitor has notifications in the topbar.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Booking confirmed</span></div><figcaption class="img-cap"><span class="screen-sub">Add to calendar, share, or edit until the cutoff.</span></figcaption>
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/05-home-upcoming.png" alt="Home, upcoming session"></div>
-        <div class="screen-heading"><span class="screen-title">Home</span></div><figcaption class="img-cap"><span class="screen-sub">The upcoming session, with a link to past sessions when there are any. <i style="font-style:italic">I considered showing past sessions on the home screen, but decided they are not important enough to see every time.</i></span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Home</span></div><figcaption class="img-cap"><span class="screen-sub">The upcoming session, with a link to past sessions. <i style="font-style:italic">I left past sessions out, since the visitor mostly needs the upcoming one.</i></span></figcaption>
       </figure>
     </div>
   </div>
@@ -668,23 +670,23 @@
     <div class="screen-grid cols-5">
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/06-queue-status.png" alt="Queue status, 4 people ahead"></div>
-        <div class="screen-heading"><span class="screen-title">Queue status on the day of the session</span></div><figcaption class="img-cap"><span class="screen-sub">The visitor can't edit the slot now, but can cancel, which notifies the manager.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Queue status</span></div><figcaption class="img-cap"><span class="screen-sub">On the day of the session, editing is closed, but the visitor can still cancel.</span></figcaption>
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/07-delay-notice.png" alt="Delay notification"></div>
-        <div class="screen-heading"><span class="screen-title">Delay notification</span></div><figcaption class="img-cap"><span class="screen-sub">The visitor sees the new time as soon as the manager delays the queue.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Delay notification</span></div><figcaption class="img-cap"><span class="screen-sub">The new time shows as soon as the manager delays the queue.</span></figcaption>
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/08-home-delayed.png" alt="Home, delayed"></div>
-        <div class="screen-heading"><span class="screen-title">Home, delayed</span></div><figcaption class="img-cap"><span class="screen-sub">The session card shows the new start time with a clear label.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Home, delayed</span></div><figcaption class="img-cap"><span class="screen-sub">The new start time stays the hero, with a small label that says delayed.</span></figcaption>
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/09-reminder-15min.png" alt="Reminder, 15 minutes"></div>
-        <div class="screen-heading"><span class="screen-title">Coming up notification</span></div><figcaption class="img-cap"><span class="screen-sub">It tells the visitor to get ready and be near the location.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Coming up notification</span></div><figcaption class="img-cap"><span class="screen-sub">The visitor is told to get ready and be nearby.</span></figcaption>
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/10-starting-now.png" alt="Starting now notification"></div>
-        <div class="screen-heading"><span class="screen-title">Starting now notification</span></div><figcaption class="img-cap"><span class="screen-sub">The visitor is told to step in, since the manager is waiting.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Starting now notification</span></div><figcaption class="img-cap"><span class="screen-sub">The visitor is told to step in, because the manager is waiting.</span></figcaption>
       </figure>
     </div>
   </div>
@@ -700,23 +702,23 @@
     <div class="screen-grid cols-5">
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/11-sessions-starts-now.png" alt="Session starts now"></div>
-        <div class="screen-heading"><span class="screen-title">Session starts now</span></div><figcaption class="img-cap"><span class="screen-sub">The app shows the same message as the notification, in case the visitor opens it instead.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Session starts now</span></div><figcaption class="img-cap"><span class="screen-sub">The same message as the notification, for a visitor who opens the app instead.</span></figcaption>
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/12-session-in-progress.png" alt="Session in progress"></div>
-        <div class="screen-heading"><span class="screen-title">Session in progress</span></div><figcaption class="img-cap"><span class="screen-sub">The manager marks it as running, so the visitor sees it too. Waiting visitors are notified if it runs late.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Session in progress</span></div><figcaption class="img-cap"><span class="screen-sub">The manager marks it as running, so the visitor sees it too.</span></figcaption>
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/13-almost-up.png" alt="Time is almost up"></div>
-        <div class="screen-heading"><span class="screen-title">Time is almost up</span></div><figcaption class="img-cap"><span class="screen-sub">A notification tells the visitor (and the manager) that 3 minutes are left, so both can wrap up.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Time is almost up</span></div><figcaption class="img-cap"><span class="screen-sub">The visitor and manager are told 3 minutes are left.</span></figcaption>
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/14-session-ended.png" alt="Session ended"></div>
-        <div class="screen-heading"><span class="screen-title">Session ended</span></div><figcaption class="img-cap"><span class="screen-sub">The manager decides when it stops and when to add time. The visitor can leave feedback.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Session ended</span></div><figcaption class="img-cap"><span class="screen-sub">The manager decides when it stops. The visitor can leave feedback.</span></figcaption>
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/15-no-upcoming.png" alt="No upcoming sessions"></div>
-        <div class="screen-heading"><span class="screen-title">No upcoming sessions</span></div><figcaption class="img-cap"><span class="screen-sub">Nothing is booked, so the home screen shows an empty state and a link to look back.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">No upcoming sessions</span></div><figcaption class="img-cap"><span class="screen-sub">Nothing is booked, so the home screen is empty, with a link to past sessions.</span></figcaption>
       </figure>
     </div>
   </div>
@@ -725,17 +727,17 @@
   <div class="slide slide-vcenter" data-label="UI screens">
     <div class="slide-header"><span class="slide-section">UI screens</span></div>
     <h2 class="slide-h">Designed to read at a glance</h2>
-    <p class="slide-intro">I chose the key moment for each role: the day of the session for visitors, and schedule setup for managers.</p>
+    <p class="slide-intro">I chose the key moment for each role: the day of the session for visitors, and schedule setup for managers. <strong>Click an image for a bigger view.</strong></p>
     <div class="ui-row ui-three">
-      <figure class="ui-col"><img src="images/visitor-home.webp" alt="Visitor home screen"><figcaption class="img-cap"><strong>Home on the day of the session (visitor)</strong><em>Shows when the session starts and how many people are ahead in the queue, and flags a delay. <i style="font-style:italic">The home screen leads with the upcoming session, and the start time is the largest element, because that is the one thing the visitor needs to know.</i></em></figcaption></figure>
-      <figure class="ui-col"><img src="images/visitor-tracker-widget.png" alt="Lock screen tracker widget"><figcaption class="img-cap"><strong>Tracker widget (visitor)</strong><em>Shows how much time is left, so the visitor does not need to open the app. <i style="font-style:italic">I chose a progress bar because the lock screen is glanceable: a filling bar shows how close the session is without reading.</i></em></figcaption></figure>
-      <figure class="ui-col"><img src="images/manager-create-schedule.png" alt="Manager screen: choose a starting point for a schedule"><figcaption class="img-cap"><strong>Create a schedule (manager)</strong><em>A wizard starts right after the manager chooses to create a new schedule. Its first step is how to begin: from a preset, with AI, from scratch, or by connecting a service. <i style="font-style:italic">The preset is selected by default because it is the quickest start for a common event, like a parent-teacher evening.</i></em></figcaption></figure>
+      <figure class="ui-col"><img src="images/visitor-home.webp" alt="Visitor home screen"><figcaption class="img-cap"><strong>Home on the day of the session (visitor)</strong><em>Shows the start time, how many people are ahead, and any delay. <i style="font-style:italic">The start time is the largest element, because it is the one thing the visitor needs to know.</i></em></figcaption></figure>
+      <figure class="ui-col"><img src="images/visitor-tracker-widget.png" alt="Lock screen tracker widget"><figcaption class="img-cap"><strong>Tracker widget (visitor)</strong><em>Shows how much time is left, without opening the app. <i style="font-style:italic">A filling bar can be read at a glance on a lock screen.</i></em></figcaption></figure>
+      <figure class="ui-col"><img src="images/manager-create-schedule.png" alt="Manager screen: choose a starting point for a schedule"><figcaption class="img-cap"><strong>Create a schedule (manager)</strong><em>A wizard starts when the manager creates a schedule. Its first step is how to begin: preset, AI, scratch or a connected service. <i style="font-style:italic">The preset is selected by default, as the quickest start for a common event.</i></em></figcaption></figure>
     </div>
   </div>
 
   <div class="slide slide-vcenter" data-label="Summary">
     <div class="slide-header"><span class="slide-section">Summary</span></div>
-    <h2 class="slide-h">What works, and what's next</h2>
+    <h2 class="slide-h">Summary and next steps</h2>
     <p class="slide-intro">I chose to focus on parent-teacher meetings and spent most of the task designing for the visitor: booking and the live queue. The manager side is scoped, with the first step of schedule setup designed.</p>
     <ul class="slide-list">
       <li>The problem: parent-teacher meetings run on a shared Google Sheet, with no live position and no notifications.</li>
@@ -753,11 +755,11 @@
   <div class="slide slide-vcenter" data-label="Appendix: AI use">
     <div class="slide-header"><span class="slide-section">Process</span></div>
     <h2 class="slide-h">My AI toolkit</h2>
-    <p class="slide-intro">AI sped up the work around the design.</p>
+    <p class="slide-intro">Where AI supports the work.</p>
     <ul class="slide-list">
-      <li><strong>Research:</strong> design and competitors.</li>
-      <li><strong>Design advice:</strong> AI reviewed my screens and gave feedback.</li>
-      <li><strong>Copy:</strong> AI helped write the copy in the screens and in the deck.</li>
+      <li><strong>Research:</strong> design and competitors, with the Mobbin connector.</li>
+      <li><strong>Review:</strong> feedback on my work across design, product and content.</li>
+      <li><strong>Copy:</strong> drafting and editing the copy in the screens and in the deck.</li>
       <li><strong>The deck:</strong> built in code with Codex and Claude Code.</li>
       <li><strong>Tools:</strong> Codex, Claude Code, and the Figma agent.</li>
     </ul>
@@ -797,25 +799,18 @@
     </div>
   </div>
 
-  <div class="slide slide-vcenter" data-label="Appendix: queue types and actions">
+  <div class="slide slide-vcenter" data-label="Appendix: queue types">
     <div class="slide-header"><span class="slide-section">Appendix</span></div>
-    <h2 class="slide-h">Research: queue types and actions</h2>
+    <h2 class="slide-h">Research: queue types</h2>
+    <p class="slide-intro">Queues differ by how people join and where they meet. That shaped the scope.</p>
     <div class="research-two">
       <div>
-        <p class="chip-label">Queue types</p>
         <table class="queue-table">
           <tr><td>Live queue</td><td>People join as they come, and wait their turn on the spot.</td></tr>
           <tr><td>Booked queue</td><td>People reserve a slot before they arrive, then join the queue on the day.</td></tr>
           <tr><td>Physical meeting</td><td>People meet in person at a set place, like a school or a clinic.</td></tr>
           <tr><td>Virtual meeting</td><td>People meet online by video call, using a link in their booking.</td></tr>
         </table>
-      </div>
-      <div>
-        <p class="chip-label">Main actions</p>
-        <ul class="slide-list compact">
-          <li><strong>Visitor:</strong> book and edit a slot, see the session time, view their slot, get delay and reminder notifications, cancel, check in when they arrive</li>
-          <li><strong>Manager:</strong> set up the queue (slot time, multiple days), delay it, mark the session in progress and end or extend it, see who is now, see who is booked and checked in, skip a no-show, remove all queue, get told when a session is almost up</li>
-        </ul>
       </div>
     </div>
   </div>
