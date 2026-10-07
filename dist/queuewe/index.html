@@ -153,7 +153,7 @@
 
     .slide-list { list-style: none; max-width: 680px; margin-top: 4px; }
     .slide-list li { font-size: 16px; color: #0a0a0a; line-height: 1.6; padding: 10px 0 10px 24px; border-bottom: 0.5px solid #ebebeb; position: relative; }
-    .slide-list li::before { content: '→'; position: absolute; left: 0; color: #555; }
+    .slide-list li::before { content: '•'; position: absolute; left: 0; color: #555; }
     .slide-list li:first-child { border-top: 0.5px solid #ebebeb; }
     .slide-list li em { color: #555; font-style: italic; }
 
@@ -516,7 +516,7 @@
     <table class="scope-table scope-by-priority scope-single">
       <thead><tr><th>Must have<span class="th-sub">Needed for the queue to always match what is happening</span></th><th>Nice to have<span class="th-sub">Makes a must have easier, using what already exists</span></th><th>Later<span class="th-sub">Needs something new: a service, new data, or a new type of user</span></th></tr></thead>
       <tbody>
-        <tr><td><ol class="scope-cell"><li>Create a schedule: choose a preset or start from scratch, and set slot time and days</li><li>Share the schedule link</li><li>See the schedule and who is now</li><li>Start the session</li><li>Delay the queue</li><li>Mark the session in progress, end or extend it</li><li>Notification when the session is almost up</li><li>Cancel the queue</li></ol></td><td><ol class="scope-cell"><li>Adjust the day: block a slot, add time, take a short break, or call the next visitor when a session ends early</li><li>Edit the queue: change the order of sessions, add a visitor by hand, skip a visitor who doesn't show up, or close it to new visitors</li><li>More queue settings: virtual or physical meeting (or let the visitor choose), and when the manager accepts changes</li><li>Save drafts and export a schedule</li><li>Create a schedule with an AI assistant</li><li>Connect a calendar or booking service, such as Google Calendar: its schedule becomes the slots, and Queuewe runs the live queue</li></ol></td><td><ol class="scope-cell"><li>Waiting list, and queue setup on an outside service</li><li>Live vs. non-live queue setting</li><li>Analytics</li><li>Customize the look of the waiting screen: colors, fonts, and more</li><li>Swipe to check in a visitor</li></ol></td></tr>
+        <tr><td><ol class="scope-cell"><li>Create a schedule with a wizard: choose a preset or start from scratch, and set slot time and days</li><li>Share the schedule link</li><li>See the schedule and who is now</li><li>Start the session</li><li>Delay the queue</li><li>Mark the session in progress, end or extend it</li><li>Notification when the session is almost up</li><li>Cancel the queue</li></ol></td><td><ol class="scope-cell"><li>Adjust the day: block a slot, add time, take a short break, or call the next visitor when a session ends early</li><li>Edit the queue: change the order of sessions, add a visitor by hand, skip a visitor who doesn't show up, or close it to new visitors</li><li>More queue settings: virtual or physical meeting (or let the visitor choose), and when the manager accepts changes</li><li>Save drafts and export a schedule</li><li>Create a schedule with an AI assistant</li><li>Connect a calendar or booking service, such as Google Calendar: its schedule becomes the slots, and Queuewe runs the live queue</li></ol></td><td><ol class="scope-cell"><li>Waiting list, and queue setup on an outside service</li><li>Live vs. non-live queue setting</li><li>Analytics</li><li>Customize the look of the waiting screen: colors, fonts, and more</li><li>Swipe to check in a visitor</li></ol></td></tr>
       </tbody>
     </table>
     <p class="slide-body premise-terms">The research behind this is in the <a href="#" class="research-link" data-goto="Appendix: competitors and users">appendix</a>.</p>
@@ -626,24 +626,22 @@
     <div class="img-grid g3">
       <div class="img-cell"><img src="images/visitor-home.webp" alt="Visitor home screen"><span class="img-cap"><strong>Home on the day of the session (visitor)</strong><em>Shows when the session starts and how many people are ahead in the queue. <i style="font-style:italic">The home screen leads with the upcoming session, because that is what the visitor opens the app for.</i></em></span></div>
       <div class="img-cell"><img src="images/visitor-tracker-widget.png" alt="Lock screen tracker widget"><span class="img-cap"><strong>Tracker widget (visitor)</strong><em>Shows how much time is left, so the visitor does not need to open the app. <i style="font-style:italic">I chose a progress bar because the lock screen is glanceable: a filling bar shows how close the session is without reading.</i></em></span></div>
-      <div class="img-cell"><img src="images/manager-create-schedule.png" alt="Manager screen: choose a starting point for a schedule"><span class="img-cap"><strong>Create a schedule (manager)</strong><em>Start from a preset, with AI, from scratch, or by connecting a service. <i style="font-style:italic">The preset is selected by default because it is the quickest start for a common event, like a parent-teacher evening.</i></em></span></div>
+      <div class="img-cell"><img src="images/manager-create-schedule.png" alt="Manager screen: choose a starting point for a schedule"><span class="img-cap"><strong>Create a schedule (manager)</strong><em>The first step of a wizard: start from a preset, with AI, from scratch, or by connecting a service. <i style="font-style:italic">The preset is selected by default because it is the quickest start for a common event, like a parent-teacher evening.</i></em></span></div>
     </div>
   </div>
 
   <div class="slide slide-vcenter" data-label="Summary">
     <div class="slide-header"><span class="slide-section">Summary</span></div>
     <h2 class="slide-h">Summary</h2>
+    <p class="slide-intro">I chose to focus on parent-teacher meetings and spent most of the task designing for the visitor: booking and the live queue. The manager side is scoped, with the first step of schedule setup designed.</p>
     <ul class="slide-list">
       <li>The problem: parent-teacher meetings run on a shared Google Sheet, with no live position and no notifications.</li>
-      <li>Users: parents (primary), teachers and school staff (secondary).</li>
-      <li>Scope: parent booking and the live queue, with the teacher side at wireframe level.</li>
-      <li>Journey: book a slot, track the queue, get notified when the turn comes.</li>
-      <li>Next: finish the wireframes and the polished UI screens.</li>
-    </ul>
+      <li>Main strengths of the solution: a lock screen widget that gives the visitor a live view of the queue, and a home screen built around the upcoming session. Live notifications and queue changes are a clear step up from the shared sheet.</li>
+      <li>Next: the manager experience, such as how a manager checks visitors in and out, and what happens when someone doesn't show up.</li>    </ul>
     <p class="slide-body" style="margin-top:32px;">Thanks for reading. Happy to walk through any of this live.</p>
     <div style="display:flex;gap:24px;margin-top:16px;">
-      <a href="mailto:avigailba@gmail.com" style="font-size:15px;color:#0a0a0a;font-weight:400;">avigailba@gmail.com ↗</a>
-      <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noopener" style="font-size:15px;color:#0a0a0a;font-weight:400;">LinkedIn ↗</a>
+      <a href="mailto:avigailba@gmail.com" style="font-size:15px;color:#0a0a0a;font-weight:400;">avigailba@gmail.com</a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noopener" style="font-size:15px;color:#0a0a0a;font-weight:400;">LinkedIn</a>
     </div>
   </div>
 
