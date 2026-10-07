@@ -155,7 +155,7 @@
 
     .slide-list { list-style: none; max-width: 680px; margin-top: 4px; }
     .slide-list li { font-size: 16px; color: #0a0a0a; line-height: 1.6; padding: 10px 0 10px 24px; border-bottom: 0.5px solid #ebebeb; position: relative; }
-    .slide-list li::before { content: '•'; position: absolute; left: 0; color: #555; }
+    .slide-list li::before { content: ''; position: absolute; left: 2px; top: 18px; width: 9px; height: 9px; border-radius: 50%; background: var(--teal); }
     .slide-list li:first-child { border-top: 0.5px solid #ebebeb; }
     .slide-list li em { color: #555; font-style: italic; }
 
@@ -718,7 +718,7 @@
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/15-no-upcoming.png" alt="No upcoming sessions"></div>
-        <div class="screen-heading"><span class="screen-title">No upcoming sessions</span></div><figcaption class="img-cap"><span class="screen-sub">Nothing is booked, so the home screen is empty, with a link to past sessions.</span></figcaption>
+        <div class="screen-heading"><span class="screen-title">No upcoming sessions</span></div><figcaption class="img-cap"><span class="screen-sub">Nothing is booked, so the home screen is empty, with a link to past sessions. <i style="font-style:italic">I chose not to add a "Create a schedule" action here, because most visitors never need it. Product may disagree, since it would promote the feature.</i></span></figcaption>
       </figure>
     </div>
   </div>
