@@ -155,7 +155,7 @@
 
     .slide-list { list-style: none; max-width: 680px; margin-top: 4px; }
     .slide-list li { font-size: 16px; color: #0a0a0a; line-height: 1.6; padding: 10px 0 10px 24px; border-bottom: 0.5px solid #ebebeb; position: relative; }
-    .slide-list li::before { content: ''; position: absolute; left: 2px; top: 18px; width: 9px; height: 9px; border-radius: 50%; background: var(--teal); }
+    .slide-list li::before { content: ''; position: absolute; left: 2px; top: 18px; width: 9px; height: 9px; border-radius: 50%; background: #0a0a0a; }
     .slide-list li:first-child { border-top: 0.5px solid #ebebeb; }
     .slide-list li em { color: #555; font-style: italic; }
 
@@ -606,7 +606,7 @@
     <h2 class="slide-h">Get notified at every key point</h2>
     <p class="slide-intro">Key need: the visitor must book a slot and always know where things stand.</p>
     <table class="scope-table scope-by-priority scope-single">
-      <thead><tr><th>Must have<span class="th-sub">Needed for the queue to always match what is happening</span></th><th>Nice to have<span class="th-sub">Makes a must have easier, using what already exists</span></th><th>Later<span class="th-sub">Needs something new: a service, new data, or a new type of user</span></th></tr></thead>
+      <thead><tr><th>Must have</th><th>Nice to have</th><th>Later</th></tr></thead>
       <tbody>
         <tr><td><ol class="scope-cell"><li>Book and edit a slot</li><li>Cancel, which notifies the manager</li><li>See the session time</li><li>Reminder, coming up, and starting now notifications</li><li>Notification on any change</li></ol></td><td><ol class="scope-cell"><li>Share the session</li><li>Add to calendar</li><li>Get notified if a slot opens up</li><li>Check in when they arrive, so the manager can see they're here</li><li>See how many people are ahead</li></ol></td><td><ol class="scope-cell"><li>Visitor can say they're running late</li><li>Feedback after the session</li><li>Approve in advance that they're coming</li><li>Swipe to check in</li></ol></td></tr>
       </tbody>
@@ -619,7 +619,7 @@
     <h2 class="slide-h">Set up and run the queue</h2>
     <p class="slide-intro">Key need: the manager must create a schedule, know what's happening and keep the queue moving.</p>
     <table class="scope-table scope-by-priority scope-single">
-      <thead><tr><th>Must have<span class="th-sub">Needed for the queue to always match what is happening</span></th><th>Nice to have<span class="th-sub">Makes a must have easier, using what already exists</span></th><th>Later<span class="th-sub">Needs something new: a service, new data, or a new type of user</span></th></tr></thead>
+      <thead><tr><th>Must have</th><th>Nice to have</th><th>Later</th></tr></thead>
       <tbody>
         <tr><td><ol class="scope-cell"><li>Create a schedule: preset or from scratch, slot time and days</li><li>Share the schedule link</li><li>See the schedule and who is now</li><li>Start, end or extend the session</li><li>Delay the queue</li><li>Notification when the session is almost up</li><li>Cancel the queue</li></ol></td><td><ol class="scope-cell"><li>Adjust the day: block a slot, add time, take a break, or call the next visitor early</li><li>Edit the queue: reorder, add a visitor, skip one who doesn't show up, or close it to new visitors</li><li>Queue settings: virtual or physical meeting, and when changes are accepted</li><li>Save drafts and export a schedule</li><li>Create a schedule with AI</li><li>Connect a calendar or booking service, such as Google Calendar</li></ol></td><td><ol class="scope-cell"><li>Waiting list, and queue setup on an outside service</li><li>Live vs. non-live queue setting</li><li>Analytics</li><li>Customize the look of the waiting screen: colors, fonts, and more</li><li>Swipe to check in a visitor</li></ol></td></tr>
       </tbody>
@@ -654,7 +654,7 @@
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/05-home-upcoming.png" alt="Home, upcoming session"></div>
-        <div class="screen-heading"><span class="screen-title">Home</span></div><figcaption class="img-cap"><span class="screen-sub">The upcoming session, with a link to past sessions. <i style="font-style:italic">I left past sessions out, since the visitor mostly needs the upcoming one.</i></span></figcaption>
+        <div class="screen-heading"><span class="screen-title">Home</span></div><figcaption class="img-cap"><span class="screen-sub">The upcoming session, with a link to past sessions. <i style="font-style:italic">I went back and forth on how much to show here. Days before the session nothing is urgent, so the home screen stays calm, and the start time takes over on the day.</i></span></figcaption>
       </figure>
     </div>
   </div>
@@ -698,7 +698,7 @@
       <span class="slide-title-sm">3 of 3</span>
     </div>
     <h2 class="slide-h">Session start to end</h2>
-    <p class="slide-intro">The visitor follows the session and is told when time is almost up. Afterward, the home screen shows an empty state.</p>
+    <p class="slide-intro">The visitor follows the session and is told when time is almost up. Afterward, the home screen shows an empty state. I left out a "Create a schedule" action: most visitors will not need it, but some may.</p>
     <div class="screen-grid cols-5">
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/11-sessions-starts-now.png" alt="Session starts now"></div>
@@ -718,7 +718,7 @@
       </figure>
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/15-no-upcoming.png" alt="No upcoming sessions"></div>
-        <div class="screen-heading"><span class="screen-title">No upcoming sessions</span></div><figcaption class="img-cap"><span class="screen-sub">Nothing is booked, so the home screen is empty, with a link to past sessions. <i style="font-style:italic">I chose not to add a "Create a schedule" action here, because most visitors never need it. Product may disagree, since it would promote the feature.</i></span></figcaption>
+        <div class="screen-heading"><span class="screen-title">No upcoming sessions</span></div><figcaption class="img-cap"><span class="screen-sub">Nothing is booked, so the home screen is empty.</span></figcaption>
       </figure>
     </div>
   </div>
@@ -755,11 +755,10 @@
   <div class="slide slide-vcenter" data-label="Appendix: AI use">
     <div class="slide-header"><span class="slide-section">Process</span></div>
     <h2 class="slide-h">My AI toolkit</h2>
-    <p class="slide-intro">Where AI supports the work.</p>
     <ul class="slide-list">
       <li><strong>Research:</strong> design and competitors, with the Mobbin connector.</li>
-      <li><strong>Review:</strong> feedback on my work across design, product and content.</li>
       <li><strong>Copy:</strong> drafting and editing the copy in the screens and in the deck.</li>
+      <li><strong>Review:</strong> feedback on my work across design, product and content.</li>
       <li><strong>The deck:</strong> built in code with Codex and Claude Code.</li>
       <li><strong>Tools:</strong> Codex, Claude Code, and the Figma agent.</li>
     </ul>
@@ -769,7 +768,7 @@
   <div class="slide slide-vcenter" data-label="Appendix: competitors and users">
     <div class="slide-header"><span class="slide-section">Appendix</span></div>
     <h2 class="slide-h">Research: competitors and users</h2>
-    <p class="slide-intro">The brief was open, so I spent a day researching competitors, user types, queue types, and possible actions.</p>
+    <p class="slide-intro">The brief was open, so I spent a day researching competitors and user types.</p>
     <div class="research-two">
       <div>
         <p class="chip-label">Competitors</p>
@@ -795,22 +794,6 @@
           <li>Restaurant</li>
           <li>Experience (art exhibit)</li>
         </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="slide slide-vcenter" data-label="Appendix: queue types">
-    <div class="slide-header"><span class="slide-section">Appendix</span></div>
-    <h2 class="slide-h">Research: queue types</h2>
-    <p class="slide-intro">Queues differ by how people join and where they meet. That shaped the scope.</p>
-    <div class="research-two">
-      <div>
-        <table class="queue-table">
-          <tr><td>Live queue</td><td>People join as they come, and wait their turn on the spot.</td></tr>
-          <tr><td>Booked queue</td><td>People reserve a slot before they arrive, then join the queue on the day.</td></tr>
-          <tr><td>Physical meeting</td><td>People meet in person at a set place, like a school or a clinic.</td></tr>
-          <tr><td>Virtual meeting</td><td>People meet online by video call, using a link in their booking.</td></tr>
-        </table>
       </div>
     </div>
   </div>
