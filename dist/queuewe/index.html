@@ -320,9 +320,9 @@
       transition: background 0.15s; z-index: 1;
     }
     #lb-close:hover { background: rgba(255,255,255,0.2); }
-    #lb-inner { display: flex; flex-direction: column; align-items: center; gap: 14px; max-width: calc(100vw - 160px); max-height: calc(100vh - 80px); }
-    #lb-img { max-width: 100%; max-height: calc(100vh - 130px); object-fit: contain; border-radius: 6px; display: block; }
-    #lb-cap { font-size: 14px; color: #fff; text-align: center; line-height: 1.4; white-space: pre-line; }
+    #lb-inner { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 40px; max-width: calc(100vw - 160px); max-height: calc(100vh - 80px); }
+    #lb-img { flex: 0 1 auto; min-width: 0; max-width: 62%; max-height: calc(100vh - 80px); object-fit: contain; border-radius: 6px; display: block; }
+    #lb-cap { flex: 0 1 340px; font-size: 16px; color: #fff; text-align: left; line-height: 1.5; white-space: pre-line; }
     #lb-cap strong { display: block; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; color: #fff; margin-bottom: 2px; }
     .lb-arrow {
       width: 44px; height: 44px; border: none; background: rgba(255,255,255,0.1); color: #fff;
@@ -413,8 +413,9 @@
       #kb-hint { display: none; }
 
       #lb { display: grid; grid-template-columns: 40px minmax(0, 1fr) 40px; gap: 8px; padding: env(safe-area-inset-top) 8px env(safe-area-inset-bottom); }
-      #lb-inner { width: 100%; min-width: 0; max-width: none; max-height: calc(100svh - 120px); }
-      #lb-img { max-height: calc(100svh - 168px); }
+      #lb-inner { flex-direction: column; gap: 14px; width: 100%; min-width: 0; max-width: none; max-height: calc(100svh - 120px); }
+      #lb-img { max-width: 100%; max-height: calc(100svh - 168px); }
+      #lb-cap { flex: 0 0 auto; font-size: 14px; }
       #lb-close { top: calc(10px + env(safe-area-inset-top)); right: 10px; }
       .lb-arrow { width: 40px; height: 40px; }
     }
@@ -444,7 +445,34 @@
 </style>
   <style>
     @font-face { font-family: 'Plus Jakarta Sans'; src: url('fonts/PlusJakartaSans-Variable.ttf') format('truetype'); font-weight: 200 800; font-display: swap; }
-  </style>
+  
+    /* Spacing system: label, title and subtitle at fixed positions, content stacked under them */
+    @media (min-width: 769px) {
+      .slide:not(.slide-cover) { padding-top: 40px !important; padding-bottom: 96px !important; justify-content: flex-start !important; }
+      .slide-header { margin-bottom: 16px !important; }
+      .slide-h { margin-bottom: 24px !important; }
+      .slide-h:has(+ .slide-intro) { margin-bottom: 12px !important; }
+      .slide-intro { margin-bottom: 40px !important; }
+      .slide-h + :not(.slide-intro), .slide-intro + * { margin-top: 0 !important; }
+      .screen-heading .screen-title { white-space: normal !important; font-size: 16px !important; }
+      .screen-heading { align-items: flex-start !important; justify-content: flex-start !important; min-height: 2.7em !important; }
+      .screen-img { width: 188px !important; }
+    }
+
+    /* UI screens, three together: phone on top, left-aligned text under it */
+    .ui-row { display: flex; flex-wrap: nowrap; gap: 48px; align-items: center; justify-content: center; }
+    .ui-three { align-items: flex-start; gap: 40px; }
+    .ui-col { margin: 0; flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+    .ui-col img { height: clamp(300px, calc(100vh - 535px), 420px); width: auto; border: 0.5px solid #ebebeb; border-radius: 6px; background: #fff; padding: 16px; display: block; cursor: zoom-in; align-self: center; }
+    .ui-col .img-cap { width: 100%; max-width: 380px; align-self: center; font-size: 16px; line-height: 1.5; color: #0a0a0a; text-align: left; }
+    .ui-col .img-cap strong { display: block; margin-bottom: 4px; }
+    .ui-col .img-cap em { font-style: normal; color: #555; display: block; }
+    @media (min-width: 769px) { .screen-img img { max-height: 360px !important; } }
+    /* Wireframe numbers, continuous across the three journey slides */
+    body { counter-reset: shot; }
+    .screen-cell { counter-increment: shot; }
+    .screen-cell .screen-title::before { content: counter(shot, decimal-leading-zero); display: inline-block; margin-right: 8px; color: #008b70; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+</style>
 </head>
 <body>
 
@@ -502,6 +530,7 @@
   <div class="slide slide-vcenter" data-label="Visitor features">
     <div class="slide-header"><span class="slide-section">Visitor features</span></div>
     <h2 class="slide-h">Get notified at every key point</h2>
+    <p class="slide-intro">Key need: the visitor must book a slot and always know where things stand.</p>
     <table class="scope-table scope-by-priority scope-single">
       <thead><tr><th>Must have<span class="th-sub">Needed for the queue to always match what is happening</span></th><th>Nice to have<span class="th-sub">Makes a must have easier, using what already exists</span></th><th>Later<span class="th-sub">Needs something new: a service, new data, or a new type of user</span></th></tr></thead>
       <tbody>
@@ -514,6 +543,7 @@
   <div class="slide slide-vcenter" data-label="Manager features">
     <div class="slide-header"><span class="slide-section">Manager features</span></div>
     <h2 class="slide-h">Set up and run the queue</h2>
+    <p class="slide-intro">Key need: the manager must create a schedule, know what's happening and keep the queue moving.</p>
     <table class="scope-table scope-by-priority scope-single">
       <thead><tr><th>Must have<span class="th-sub">Needed for the queue to always match what is happening</span></th><th>Nice to have<span class="th-sub">Makes a must have easier, using what already exists</span></th><th>Later<span class="th-sub">Needs something new: a service, new data, or a new type of user</span></th></tr></thead>
       <tbody>
@@ -530,7 +560,7 @@
       <span class="slide-title-sm">1 of 3</span>
     </div>
     <h2 class="slide-h">From invite link to booked slot</h2>
-    <p class="slide-intro">The visitor logs in, books a slot, and can edit it until the manager's cutoff.</p>
+    <p class="slide-intro">The visitor opens the manager's message, logs in and picks a time. The booking then shows on the home screen and can be edited until the manager's cutoff.</p>
     <div class="screen-grid cols-5">
       <figure class="screen-cell">
         <div class="screen-img"><img src="images/wireframes/01-invite-whatsapp.png" alt="Invite link, WhatsApp class chat"></div>
@@ -573,7 +603,6 @@
         <figcaption class="img-cap"><span class="screen-title">Delay notification</span><span class="screen-sub">The visitor sees the new time as soon as the manager delays the queue.</span></figcaption>
       </figure>
       <figure class="screen-cell">
-    <p class="slide-intro">Key need: the visitor must book a slot and always know where things stand.</p>
         <div class="screen-img"><img src="images/wireframes/08-home-delayed.png" alt="Home, delayed"></div>
         <figcaption class="img-cap"><span class="screen-title">Home, delayed</span><span class="screen-sub">The session card shows the new start time with a clear label.</span></figcaption>
       </figure>
@@ -586,7 +615,6 @@
         <figcaption class="img-cap"><span class="screen-title">Starting now notification</span><span class="screen-sub">The visitor is told to step in, since the manager is waiting.</span></figcaption>
       </figure>
     </div>
-    <p class="slide-intro">Key need: the manager must create a schedule, know what's happening and keep the queue moving.</p>
   </div>
 
   <div class="slide slide-vcenter " data-label="Visitor journey wireframes 3">
@@ -622,20 +650,20 @@
   </div>
 
 
-  <div class="slide" data-label="UI screens">
-    <div class="slide-header"><span class="slide-section">Solution</span></div>
+  <div class="slide slide-vcenter" data-label="UI screens">
+    <div class="slide-header"><span class="slide-section">UI screens</span></div>
     <h2 class="slide-h">Designed to read at a glance</h2>
-    <p class="slide-intro">I chose the key moment for each role. For visitors, it is the day of the session, with bold screens that read at a glance, like a queue ticket. For managers, it is setting up the schedule, with a calm, simple flow.</p>
-    <div class="img-grid g3">
-      <div class="img-cell"><img src="images/visitor-home.webp" alt="Visitor home screen"><span class="img-cap"><strong>Home on the day of the session (visitor)</strong><em>Shows when the session starts and how many people are ahead in the queue, and flags a delay. <i style="font-style:italic">The home screen leads with the upcoming session, because that is what the visitor opens the app for.</i></em></span></div>
-      <div class="img-cell"><img src="images/visitor-tracker-widget.png" alt="Lock screen tracker widget"><span class="img-cap"><strong>Tracker widget (visitor)</strong><em>Shows how much time is left, so the visitor does not need to open the app. <i style="font-style:italic">I chose a progress bar because the lock screen is glanceable: a filling bar shows how close the session is without reading.</i></em></span></div>
-      <div class="img-cell"><img src="images/manager-create-schedule.png" alt="Manager screen: choose a starting point for a schedule"><span class="img-cap"><strong>Create a schedule (manager)</strong><em>The first step of a wizard: start from a preset, with AI, from scratch, or by connecting a service. <i style="font-style:italic">The preset is selected by default because it is the quickest start for a common event, like a parent-teacher evening.</i></em></span></div>
+    <p class="slide-intro">I chose the key moment for each role: the day of the session for visitors, and schedule setup for managers.</p>
+    <div class="ui-row ui-three">
+      <figure class="ui-col"><img src="images/visitor-home.webp" alt="Visitor home screen"><figcaption class="img-cap"><strong>Home on the day of the session (visitor)</strong><em>Shows when the session starts and how many people are ahead in the queue, and flags a delay. <i style="font-style:italic">The home screen leads with the upcoming session, because that is what the visitor opens the app for.</i></em></figcaption></figure>
+      <figure class="ui-col"><img src="images/visitor-tracker-widget.png" alt="Lock screen tracker widget"><figcaption class="img-cap"><strong>Tracker widget (visitor)</strong><em>Shows how much time is left, so the visitor does not need to open the app. <i style="font-style:italic">I chose a progress bar because the lock screen is glanceable: a filling bar shows how close the session is without reading.</i></em></figcaption></figure>
+      <figure class="ui-col"><img src="images/manager-create-schedule.png" alt="Manager screen: choose a starting point for a schedule"><figcaption class="img-cap"><strong>Create a schedule (manager)</strong><em>A wizard starts right after the manager chooses to create a new schedule. Its first step is how to begin: from a preset, with AI, from scratch, or by connecting a service. <i style="font-style:italic">The preset is selected by default because it is the quickest start for a common event, like a parent-teacher evening.</i></em></figcaption></figure>
     </div>
   </div>
 
   <div class="slide slide-vcenter" data-label="Summary">
     <div class="slide-header"><span class="slide-section">Summary</span></div>
-    <h2 class="slide-h">Summary</h2>
+    <h2 class="slide-h">What works, and what's next</h2>
     <p class="slide-intro">I chose to focus on parent-teacher meetings and spent most of the task designing for the visitor: booking and the live queue. The manager side is scoped, with the first step of schedule setup designed.</p>
     <ul class="slide-list">
       <li>The problem: parent-teacher meetings run on a shared Google Sheet, with no live position and no notifications.</li>
@@ -874,13 +902,13 @@
 
   function closeLb() { lb.classList.remove('open'); }
 
-  document.querySelectorAll('.img-cell img, .screen-img img').forEach(function (img) {
+  document.querySelectorAll('.img-cell img, .screen-img img, .ui-col img').forEach(function (img) {
     img.addEventListener('click', function (e) {
       e.stopPropagation();
       var activeSlide = document.querySelector('.slide.active');
-      var imgs = Array.from(activeSlide.querySelectorAll('.img-cell img, .screen-img img'));
+      var imgs = Array.from(activeSlide.querySelectorAll('.img-cell img, .screen-img img, .ui-col img'));
       var images = imgs.map(function (el) {
-        var cap = el.closest('.img-cell, .screen-cell') && el.closest('.img-cell, .screen-cell').querySelector('.img-cap');
+        var cap = el.closest('.img-cell, .screen-cell, .ui-col') && el.closest('.img-cell, .screen-cell, .ui-col').querySelector('.img-cap');
         return { src: el.src, alt: el.alt, cap: cap ? cap.innerText.trim() : '' };
       });
       openLb(images, Math.max(0, imgs.indexOf(img)));
