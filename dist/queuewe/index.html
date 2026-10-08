@@ -548,6 +548,47 @@
     .screen-cell { counter-increment: shot; }
     .screen-cell .screen-title::before { content: counter(shot, decimal-leading-zero); display: inline-block; margin-right: 6px; color: var(--teal); font-size: inherit; font-weight: inherit; line-height: inherit; font-variant-numeric: tabular-nums; }
 </style>
+  <style id="mobile-layout-fixes">
+    .mobile-only-user { display: none; }
+    @media (max-width: 600px) {
+      .mobile-only-user { display: list-item; }
+      .slide[data-label="Visitor features"] .scope-table tbody tr,
+      .slide[data-label="Manager features"] .scope-table tbody tr,
+      .slide[data-label="Visitor features"] .scope-table tbody th,
+      .slide[data-label="Manager features"] .scope-table tbody th,
+      .slide[data-label="Visitor features"] .scope-table tbody td,
+      .slide[data-label="Manager features"] .scope-table tbody td { border: 0 !important; }
+
+      .ui-row, .ui-three {
+        display: grid; grid-template-columns: minmax(0, 1fr); align-items: stretch; justify-content: stretch;
+        align-self: stretch; width: 100%; min-width: 0; gap: 24px;
+      }
+      .ui-col { width: 100%; max-width: 100%; min-width: 0; align-items: stretch; gap: 12px; }
+      .ui-col img { width: 100%; max-width: 300px; height: auto; max-height: 60svh; object-fit: contain; align-self: center; }
+      .ui-col .img-cap { width: 100%; max-width: none; align-self: stretch; }
+
+      .premise-grid {
+        grid-template-columns: minmax(0, 1fr); width: 100%; max-width: 100%; gap: 16px; margin-top: 24px;
+      }
+      .premise-card { width: 100%; min-width: 0; max-width: 100%; padding: 20px; }
+
+      .screen-grid, .screen-grid.cols-4, .screen-grid.cols-5, .screen-grid.cols-6 {
+        grid-template-columns: minmax(0, 1fr) !important; gap: 0; margin-top: 20px; justify-items: stretch;
+      }
+      .screen-grid .screen-cell {
+        display: flex; flex-direction: column; align-items: stretch; gap: 12px;
+        width: 100%; max-width: none; padding: 20px 0; border-bottom: 0.5px solid #ebebeb;
+      }
+      .screen-cell { width: 100%; }
+      .screen-grid .screen-cell .screen-img { width: 100%; padding: 12px; }
+      .screen-grid .screen-cell .screen-img img {
+        width: 100%; max-width: 300px; height: auto; max-height: 60svh; object-fit: contain;
+      }
+      .screen-grid .screen-cell .screen-heading { width: 100%; flex-wrap: wrap; align-items: flex-start; }
+      .screen-grid .screen-cell .screen-heading .screen-title { white-space: normal; }
+      .screen-grid .screen-cell .img-cap { width: 100%; margin: 0; }
+    }
+  </style>
 </head>
 <body>
 
@@ -794,6 +835,7 @@
           <li>Hairdresser</li>
           <li>Restaurant</li>
           <li>Experience (art exhibit)</li>
+          <li class="mobile-only-user">Viewer</li>
         </ul>
       </div>
     </div>
@@ -908,7 +950,10 @@
 
   window.addEventListener('resize', function () { goTo(cur); });
 
-  document.getElementById('side-title').addEventListener('click', function () { goTo(0); });
+  document.getElementById('side-title').addEventListener('click', function () {
+    if (window.matchMedia('(max-width: 600px)').matches) closeMobileMenu();
+    goTo(0);
+  });
   document.getElementById('btn-prev').addEventListener('click', function () { goTo(cur - 1); hideHint(); });
   document.getElementById('btn-next').addEventListener('click', function () { goTo(cur + 1); hideHint(); });
   var startBtn = document.getElementById('cover-start');
