@@ -378,11 +378,12 @@
       transition: background 0.15s; z-index: 1;
     }
     #lb-close:hover { background: rgba(255,255,255,0.2); }
-    #lb-inner { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 40px; max-width: calc(100vw - 160px); max-height: calc(100vh - 80px); }
+    #lb-inner { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 40px; width: calc(100vw - 160px); max-width: calc(100vw - 160px); max-height: calc(100vh - 80px); }
     #lb-img { flex: 0 1 auto; min-width: 0; max-width: 62%; max-height: calc(100vh - 80px); object-fit: contain; border-radius: 6px; display: block; }
-    #lb-img.wf { border-radius: 9.6% / 4.6%; }
+    #lb-img.wf { border-radius: 12% / 6%; }
     #lb-cap { flex: 0 1 340px; font-size: 16px; color: #fff; text-align: left; line-height: 1.5; white-space: pre-line; }
     #lb-cap strong { display: block; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; color: #fff; margin-bottom: 2px; }
+    #lb-cap .lb-number { color: var(--teal); margin-right: 4px; font-variant-numeric: tabular-nums; }
     .lb-arrow {
       width: 44px; height: 44px; border: none; background: rgba(255,255,255,0.1); color: #fff;
       font-size: 22px; border-radius: 50%; cursor: pointer; display: flex; align-items: center;
@@ -551,6 +552,26 @@
   <style id="mobile-layout-fixes">
     .mobile-only-user { display: none; }
     @media (max-width: 600px) {
+      .slide-cover {
+        padding-top: calc(64px + env(safe-area-inset-top));
+        padding-bottom: calc(24px + env(safe-area-inset-bottom));
+      }
+      .slide-cover .cover-hero {
+        display: flex; flex: 1 1 0; min-height: 0; align-self: stretch;
+        align-items: center; justify-content: center; margin: 0 auto 12px;
+      }
+      .slide-cover .cover-hero img {
+        width: auto; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain;
+      }
+      .slide-cover .cover-text { display: flex; flex-direction: column; }
+      .slide-cover .cover-badges {
+        position: fixed; top: calc(12px + env(safe-area-inset-top)); left: 68px; right: 14px; z-index: 250;
+        min-height: 44px; margin: 0; align-items: center;
+      }
+      .slide-cover .cover-badges .badge { padding: 0; font-size: 12px; line-height: 1.25; }
+      .slide-cover .cover-start-btn { order: 2; align-self: flex-start; margin: 22px 0 20px; }
+      .slide-cover .cover-label { order: 3; margin-top: 0; }
+      .slide-cover .cover-tldr { order: 4; margin-top: 8px; }
       .mobile-only-user { display: list-item; }
       .slide[data-label="Visitor features"] .scope-table tbody tr,
       .slide[data-label="Manager features"] .scope-table tbody tr,
@@ -990,7 +1011,16 @@
     var capParts = (item.cap || '').split('\n');
     lbCap.textContent = '';
     var capTitle = document.createElement('strong');
-    capTitle.textContent = capParts[0];
+    var numberedTitle = capParts[0].match(/^(\d{2})\s+(.+)$/);
+    if (numberedTitle) {
+      var capNumber = document.createElement('span');
+      capNumber.className = 'lb-number';
+      capNumber.textContent = numberedTitle[1];
+      capTitle.appendChild(capNumber);
+      capTitle.appendChild(document.createTextNode(' ' + numberedTitle[2]));
+    } else {
+      capTitle.textContent = capParts[0];
+    }
     lbCap.appendChild(capTitle);
     if (capParts.length > 1) lbCap.appendChild(document.createTextNode(capParts.slice(1).join('\n')));
     var multi = lbImages.length > 1;
@@ -1012,7 +1042,11 @@
         var cap = cell && cell.querySelector('.img-cap');
         var head = cell && cell.querySelector('.screen-heading .screen-title');
         var text = (cap ? cap.innerText.trim() : '');
-        if (head) text = head.innerText.trim() + '\n' + text;
+        if (head) {
+          var screenCells = Array.from(cell.parentElement.querySelectorAll('.screen-cell'));
+          var screenNumber = String(screenCells.indexOf(cell) + 1).padStart(2, '0');
+          text = screenNumber + ' ' + head.innerText.trim() + '\n' + text;
+        }
         return { src: el.src, alt: el.alt, cap: text };
       });
       openLb(images, Math.max(0, imgs.indexOf(img)));
