@@ -786,9 +786,10 @@ function aboutPage() {
         <h1>Avigail Bahat</h1>
         <p class="cv-headline">Senior Product Designer | Tools, Platforms &amp; AI Products</p>
         <ul class="cv-contact">
-          <li><a href="mailto:avigailba@gmail.com">avigailba@gmail.com</a></li>
-          <li><a href="http://www.avigailba.com">avigailba.com</a></li>
-          <li><a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer">LinkedIn</a></li>
+          <li><a href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span class="cv-link-icon" aria-hidden="true">↗</span></a></li>
+          <li><a href="https://www.avigailba.com" target="_blank" rel="noopener"><span>avigailba.com</span><span class="cv-link-icon" aria-hidden="true">↗</span></a></li>
+          <li><a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noopener"><span>LinkedIn</span><span class="cv-link-icon" aria-hidden="true">↗</span></a></li>
+          <li><a href="Avigail%20Bahat%20CV.pdf" download aria-label="Download Avigail Bahat's CV as a PDF"><span aria-hidden="true">↓</span><span>Download CV</span></a></li>
           <li>Tel Aviv</li>
         </ul>
       </header>
@@ -1317,6 +1318,13 @@ async function build() {
     fs.copyFileSync(widgetSrc, path.join(PROJECTS_DIR, 'credits-widget.html'));
     writtenProjectFiles.add('credits-widget.html');
     console.log('  ✓ projects/credits-widget.html');
+  }
+
+  // Include the current PDF linked from the About and CV page.
+  const cvSrc = path.join(__dirname, 'Avigail Bahat CV.pdf');
+  if (fs.existsSync(cvSrc)) {
+    fs.copyFileSync(cvSrc, path.join(DIST, 'Avigail Bahat CV.pdf'));
+    console.log('  ✓ Avigail Bahat CV.pdf');
   }
   const widgetAssetsSrc = path.join(__dirname, 'credits-widget-assets');
   if (fs.existsSync(widgetAssetsSrc)) {
