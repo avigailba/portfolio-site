@@ -735,141 +735,94 @@ var CURRENT_SLUG = '${proj.slug}';
 </script>`, '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">\n  ', 'proj-page');
 }
 
-function aboutPage(notionHtml) {
-  // If Notion content fetched, use it; otherwise use hardcoded fallback
-  if (notionHtml && notionHtml.trim()) {
-    let content = notionHtml;
-    // Year-range paragraphs
-    content = content.replace(/<p>(\d{4}[→–]\d{4})<\/p>/g, '<p class="notion-years">$1</p>');
-    // Merge <p><strong>Company</strong></p><p>Role</p> → <p><strong>Company · Role</strong></p>
-    // Only matches short role-title lines (no period, ≤80 chars) to avoid absorbing description paragraphs
-    content = content.replace(/<p><strong>([^<]+)<\/strong><\/p>\s*<p>([^<.]{1,80}?)<\/p>/g, '<p><strong>$1 · $2</strong></p>');
-    // Normalize column layouts (year col | content col | ...empty cols) → cv-row
-    content = content.replace(/<div class="col-layout col-\d+">((?:<div class="col">[\s\S]*?<\/div>)+)<\/div>/g, (match, inner) => {
-      const cols = [];
-      const colRegex = /<div class="col">([\s\S]*?)<\/div>/g;
-      let m;
-      while ((m = colRegex.exec(inner)) !== null) cols.push(m[1].trim());
-      if (cols.length < 2) return match;
-      return `<div class="cv-row"><div class="cv-col-year">${cols[0]}</div><div class="cv-col-content">${cols[1]}</div></div>`;
-    });
-    // Strip Contact h2 and any hr immediately following it
-    content = content.replace(/<h2>Contact<\/h2>\s*(<hr>)?/g, '');
-    // Contact links: blue text + icon (↗ for external/email, ↓ for CV/download)
-    content = content.replace(/<p><a href="([^"]+)"([^>]*)>([^<\n]+)<\/a><\/p>/g, (match, href, attrs, text) => {
-      const icon = href.includes('docs.google.com') ? ' ↓' : ' ↗';
-      return `<span class="about-contact-link"><a href="${href}"${attrs} class="about-contact-inline">${text}${icon}</a></span>`;
-    });
-    // Wrap consecutive contact link spans in a flex row
-    content = content.replace(/((?:<span class="about-contact-link">[\s\S]*?<\/span>\s*){2,})/g, (match) => {
-      return `<div class="about-contact-row">${match.trim()}</div>`;
-    });
-    // Wrap plain year paragraphs in cv-row — only if col-layout regex didn't already create them
-    if (!content.includes('class="cv-row"')) {
-      content = content.replace(
-        /(<p class="notion-years">[^<]*<\/p>)([\s\S]*?)(?=<p class="notion-years">|<hr>|<h2>|$)/g,
-        (match, yearP, rest) => {
-          const contentHtml = rest.trim();
-          if (!contentHtml) return `<div class="cv-row"><div class="cv-col-year">${yearP}</div><div class="cv-col-content"></div></div>\n`;
-          return `<div class="cv-row"><div class="cv-col-year">${yearP}</div><div class="cv-col-content">${contentHtml}</div></div>\n`;
-        }
-      );
-    }
-    return wrap('', 'About — Avigail Bahat', `
+// CV page: content mirrors the Google Doc CV verbatim (static, not fetched from Notion).
+const CV_EXPERIENCE = [
+  { role: 'Senior UX Designer', org: 'Wix, OS Company', years: '2025–2026', bullets: [
+    'Designed the AI credits wallet for free and premium users across Wix products.',
+    'Led the app installation data page; shipped code with AI tools.' ] },
+  { role: 'Senior UX Designer', org: 'Wix, App Market’s Developer Center', years: '2020–2025', bullets: [
+    'Sole designer: payouts, refunds, pricing, free trials, sales, and internal Reviews and Collections tools. Helped write docs; contributed components to the Wix Design System.',
+    'Designed auto-publishing, so live apps could ship minor updates without a full review.' ] },
+  { role: 'UX Designer', org: 'Wix, Labs Company', years: '2019–2020',
+    text: 'Designed apps that filled gaps in Wix, like comments and a Sheets connector.' },
+  { role: 'UX Designer', org: 'Wix, Media', years: '2018–2019',
+    text: 'Designed Wix Video features and its live streaming flow.' },
+  { role: 'Founding UX Designer', org: 'Wix, ADI', years: '2014–2018', bullets: [
+    'One of the founding designers of Wix’s AI site builder.',
+    'Shaped the product from concept to launch.' ] },
+  { role: 'Marketing Designer & Lead', org: 'Wix', years: '2012–2013',
+    text: 'Created campaigns, landing pages, and a site badges app; worked on paywall A/B tests.' },
+  { role: 'Graphic Designer', org: 'McCann Erickson (2010–2012) · Walla News (2008–2010)' },
+];
+const CV_ACHIEVEMENTS = [
+  ['Wix ADI', 'One of the founding UX designers of Wix’s AI website builder.'],
+  ['AI Credits system', 'Led UX across Business Manager and Wixel; usage grew significantly with no support escalations.'],
+  ['Wix Developer Center', 'Sole designer for 5 years; led the free trial and sales systems that grew subscriptions and upgrade revenue.'],
+  ['App installation data', 'First installation data page for developers; shipped code with AI tools. Strong engagement with no promotion.'],
+  ['Internal Reviews system', 'Rebuilt the App Market review tool from the ground up; still in use, it shortened review cycles.'],
+];
+const CV_TOOLS = [
+  ['Design', 'Figma, FigJam, Figma Make'],
+  ['AI', 'Claude, Codex'],
+  ['Work', 'Google Workspace, Jira, Notion, Slack'],
+];
+
+function aboutPage() {
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const exp = CV_EXPERIENCE.map((e) => `
+          <article class="cv-job">
+            <h3 class="cv-job-title">${esc(e.role)}</h3>
+            <p class="cv-job-meta">${esc(e.org)}${e.years ? ` <span aria-hidden="true">|</span> <time>${e.years}</time>` : ''}</p>
+            ${e.text ? `<p>${esc(e.text)}</p>` : ''}
+            ${e.bullets ? `<ul>${e.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
+          </article>`).join('');
+  const ach = CV_ACHIEVEMENTS.map(([t, d]) => `
+            <li><h3 class="cv-job-title">${esc(t)}</h3><p>${esc(d)}</p></li>`).join('');
+  const tools = CV_TOOLS.map(([k, v]) => `<li><strong>${k}:</strong> ${esc(v)}</li>`).join('');
+  return wrap('', 'Avigail Bahat, Senior Product Designer', `
   <main class="inner-main">
-    <div class="inner-content">
-      <h1>About</h1>
-      <div class="about-notion">
-        ${content}
+    <div class="cv-page">
+      <header class="cv-head">
+        <h1>Avigail Bahat</h1>
+        <p class="cv-headline">Senior Product Designer | Tools, Platforms &amp; AI Products</p>
+        <ul class="cv-contact">
+          <li><a href="mailto:avigailba@gmail.com">avigailba@gmail.com</a></li>
+          <li><a href="http://www.avigailba.com">avigailba.com</a></li>
+          <li><a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer">LinkedIn</a></li>
+          <li>Tel Aviv</li>
+        </ul>
+      </header>
+      <div class="cv-cols">
+        <div class="cv-col-main">
+          <section aria-labelledby="cv-summary">
+            <h2 id="cv-summary">Summary</h2>
+            <p>Senior Product Designer with 10+ years at Wix, designing developer platforms, monetization, and AI products, and shipping code with AI tools. Working closely with product and engineering.</p>
+          </section>
+          <section aria-labelledby="cv-experience">
+            <h2 id="cv-experience">Experience</h2>${exp}
+          </section>
+        </div>
+        <div class="cv-col-side">
+          <section aria-labelledby="cv-achievements">
+            <h2 id="cv-achievements">Key Achievements</h2>
+            <ul class="cv-plain">${ach}
+            </ul>
+          </section>
+          <section aria-labelledby="cv-education">
+            <h2 id="cv-education">Education</h2>
+            <h3 class="cv-job-title">B.Des. in Graphic Design</h3>
+            <p>Shenkar College of Engineering and Design</p>
+          </section>
+          <section aria-labelledby="cv-tools">
+            <h2 id="cv-tools">Tools</h2>
+            <ul class="cv-plain">${tools}</ul>
+          </section>
+          <section aria-labelledby="cv-side">
+            <h2 id="cv-side">Side Projects</h2>
+            <p>Design and build my own products end to end with AI: a Mac calendar app, a job-hunt aggregator, and websites.</p>
+          </section>
+        </div>
       </div>
-    </div>
-  </main>`);
-  }
-
-  return wrap('', 'About — Avigail Bahat', `
-  <main class="inner-main">
-    <div class="inner-content">
-
-      <h1>About</h1>
-      <p class="about-bio">Senior UX Designer. I've spent my career building tools - for developers, for internal teams, and for end users.</p>
-
-      <p class="section-label">Contact</p>
-      <div class="about-contact-row">
-        <a href="mailto:avigailba@gmail.com" class="about-contact-inline">avigailba@gmail.com ↗</a>
-        <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer" class="about-contact-inline">LinkedIn ↗</a>
-        <a href="https://docs.google.com/document/d/1f0pEtgv_I89h16hgUF0ncW52EBcFwVPrjrJFzW3teI4/export?format=pdf" target="_blank" rel="noreferrer" class="about-contact-inline">CV ↓</a>
-      </div>
-
-      <p class="section-label">Education</p>
-
-      <div class="cv-role">
-        <div class="cv-role-header"><span class="cv-years">2006–2010 · Shenkar College of Engineering &amp; Design</span></div>
-        <p class="cv-desc">B.Des. in Graphic Design</p>
-      </div>
-
-      <p class="section-label">Experience</p>
-
-      <div class="cv-role">
-        <span class="cv-years">2025→2026</span>
-        <span class="cv-company">Wix - OS Company</span>
-        <span class="cv-role-title">Senior UX Designer</span>
-        <p class="cv-desc">Designed platform-level AI and developer-facing products. Led UX for the AI Credits system across Business Manager and Wixel, and redesigned the app installation data experience for developers.</p>
-        <p class="cv-proj-list">AI Credits Wallet, App Installation View</p>
-      </div>
-
-      <div class="cv-role">
-        <span class="cv-years">2020→2025</span>
-        <span class="cv-company">Wix - App Market's Developer Center</span>
-        <span class="cv-role-title">Senior UX Designer</span>
-        <p class="cv-desc">Owned design across Wix's Developer Center: monetisation infrastructure, platform tooling, and internal operations. Worked end-to-end on developer onboarding, payout systems, pricing, and marketplace tooling.</p>
-        <p class="cv-proj-list">App Pricing, Payouts, Refund Flow, Developer Sale, App Coupons, App Collections, App Reviews, Internal Review System, Submit &amp; Publish, API Keys, Development Site Creation</p>
-      </div>
-
-      <div class="cv-role">
-        <span class="cv-years">2019→2020</span>
-        <span class="cv-company">Wix - Labs Company</span>
-        <span class="cv-role-title">UX Designer</span>
-        <p class="cv-desc">Designed experimental product initiatives within Wix Labs, including a comments app and early-stage features.</p>
-      </div>
-
-      <div class="cv-role">
-        <span class="cv-years">2018→2019</span>
-        <span class="cv-company">Wix - Media</span>
-        <span class="cv-role-title">UX Designer</span>
-        <p class="cv-desc">Designed Wix Video's management experience, covering layouts, settings, and live video creation and broadcasting.</p>
-      </div>
-
-      <div class="cv-role">
-        <span class="cv-years">2014→2018</span>
-        <span class="cv-company">Wix - ADI</span>
-        <span class="cv-role-title">Founding UX Designer</span>
-        <p class="cv-desc">One of the founding UX designers on Wix ADI, an AI-powered website builder. Helped shape the product from concept through launch.</p>
-      </div>
-
-      <div class="cv-role">
-        <span class="cv-years">2012→2013</span>
-        <span class="cv-company">Wix</span>
-        <span class="cv-role-title">Marketing Designer &amp; Lead</span>
-        <p class="cv-desc">Designed campaigns, landing pages, and banners. Led A/B tests on pricing and paywall pages.</p>
-      </div>
-
-      <div class="cv-role">
-        <span class="cv-years">2010→2012</span>
-        <span class="cv-company">McCann Erickson</span>
-        <span class="cv-role-title">Graphic Designer</span>
-        <p class="cv-desc">Designed campaigns, print ads, and commercial storyboards as part of a small creative team.</p>
-      </div>
-
-      <div class="cv-role">
-        <span class="cv-years">2008→2010</span>
-        <span class="cv-company">Walla News</span>
-        <span class="cv-role-title">Graphic Designer</span>
-        <p class="cv-desc">Created visual assets and retouched images for the news site.</p>
-      </div>
-
-<p class="section-label">Skills</p>
-      <p class="cv-skills">Figma · Google Suite · Cursor · Claude Code · Hebrew (native) · English</p>
-
     </div>
   </main>`);
 }
@@ -1349,7 +1302,7 @@ async function build() {
 
   for (const [file, html] of [
     ['index.html',          indexPage(projects, tagline)],
-    ['about.html',          aboutPage(aboutHtml)],
+    ['about.html',          aboutPage()],
     ['contact.html',        '<meta http-equiv="refresh" content="0;url=about.html">'],
     ['design-system.html',  designSystemPage(projects.length > 0)],
   ]) {
