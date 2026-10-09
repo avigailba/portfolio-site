@@ -1238,26 +1238,27 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 .cv-contact a:hover { opacity: 0.75; }
 .cv-contact a { display: inline-flex; align-items: center; gap: 4px; }
 .cv-link-icon { color: #555; font-size: 13px; }
-.cv-cols { border-top: 0.5px solid #ebebeb; padding-top: 48px; display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 0 64px; align-items: start; }
+.cv-cols { border-top: 0.5px solid #ebebeb; padding-top: 48px; display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; }
 .cv-page h2 { font-size: 14px; font-weight: 400; color: #555; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 8px; }
 .cv-page section { margin-bottom: 48px; }
 .cv-page p { font-size: 16px; color: #555; line-height: 1.7; margin-bottom: 4px; }
 .cv-job { margin-bottom: 32px; }
 .cv-job-title { font-size: 16px; font-weight: 600; color: #0a0a0a; line-height: 1.4; margin-bottom: 2px; }
 .cv-job-meta { font-size: 14px; }
-.cv-page ul:not(.cv-contact):not(.cv-plain):not(.cv-ach-grid) { margin: 8px 0 0 20px; font-size: 16px; color: #555; line-height: 1.7; }
-.cv-plain { list-style: none; font-size: 16px; color: #555; line-height: 1.7; }
-.cv-plain > li { margin-bottom: 20px; }
-.cv-plain strong { font-weight: 600; color: #0a0a0a; }
-/* Key Achievements: 3 + 2 columns, no dividers */
-.cv-ach-grid { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 48px; }
-.cv-ach-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 600; color: #0a0a0a; line-height: 1.4; margin-bottom: 2px; }
+.cv-achievements-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; list-style: none; margin: 0; padding: 0; font-size: 16px; color: #555; line-height: 1.7; }
+.cv-achievements-list > li { min-width: 0; }
+.cv-achievements-list .cv-job-title { font-weight: 700; margin-bottom: 6px; }
+.cv-achievements-list p { margin-bottom: 0; }
+.cv-notion-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.cv-page ul:not(.cv-contact):not(.cv-achievements-list) { margin: 8px 0 0 20px; font-size: 16px; color: #555; line-height: 1.7; }
 @media (max-width: 960px) {
   .cv-cols { grid-template-columns: 1fr; }
-  .cv-ach-grid { grid-template-columns: 1fr; gap: 24px; }
+  .cv-achievements-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 600px) {
   .cv-page { padding: 32px 0 60px; }
+  .cv-notion-columns { grid-template-columns: 1fr; }
+  .cv-achievements-list { grid-template-columns: 1fr; gap: 16px; }
 }
 .cv-page h1, .cv-job-title { font-family: 'Plus Jakarta Sans', sans-serif; }
 .cv-page p, .cv-page li, .cv-page h3, .cv-headline { text-wrap: balance; }

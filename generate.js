@@ -31,6 +31,7 @@ const SCRIPT_VERSION = assetVersion('script.js');
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const ROOT_PAGE_ID      = '9e31791fdedf4048bb784d0cbae06e51';
 const ABOUT_PAGE_ID     = '36e35a9ccf7a81f6953dcab2aebb27fc';
+const CV_EXPORT_URL     = 'https://docs.google.com/document/d/1HvgKDdU_XvW8u6X23vUb-6-JnLNDaQRSTpAuO-dA-j8/export?format=pdf';
 const CONTACT_PAGE_ID   = '36e35a9ccf7a8188a447fd3e36ee88cd';
 const HOMEPAGE_PAGE_ID  = '37135a9ccf7a81b2a7a7c0a2702d8c98';
 
@@ -159,7 +160,7 @@ function rt(richText) {
           href = slug ? `${slug}.html` : href;
         }
         const isExternal = href.startsWith('http') || href.startsWith('mailto');
-        s = `<a href="${href}"${isExternal ? ' target="_blank" rel="noopener"' : ''}>${s}</a>`;
+        s = `<a href="${escapeAttr(href)}"${isExternal ? ' target="_blank" rel="noopener"' : ''}>${s}</a>`;
       }
       return s;
     }).join('');
@@ -352,7 +353,7 @@ function hdr(prefix, current = '') {
   <div class="hdr-row">
     <a href="${prefix}index.html" class="mob-logo">
       <span class="mob-logo-name">Avigail Bahat</span>
-      <span class="mob-logo-role">Senior UX Designer</span>
+      <span class="mob-logo-role">Senior Product Designer</span>
     </a>
     <nav>
       <a href="${prefix}index.html"${cur('projects')}>Projects</a>
@@ -501,7 +502,7 @@ function indexPage(projects, tagline) {
 </div>`;
   }).join('\n  ');
 
-  return wrap('', 'Avigail Bahat — Senior UX Designer', `
+  return wrap('', 'Avigail Bahat — Senior Product Designer', `
   <main class="home-band">
     <p class="lede">${tagline}</p>
     <div id="home-work" class="feat-grid">
@@ -736,98 +737,148 @@ var CURRENT_SLUG = '${proj.slug}';
 </script>`, '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">\n  ', 'proj-page');
 }
 
-// CV page: content mirrors the Google Doc CV verbatim (static, not fetched from Notion).
-const CV_EXPERIENCE = [
-  { role: 'Senior UX Designer', org: 'Wix, OS Company', years: '2025–2026', bullets: [
-    'Designed the AI credits wallet for free and premium users across Wix products.',
-    'Led the app installation data page; shipped code with AI tools.' ] },
-  { role: 'Senior UX Designer', org: 'Wix, App Market’s Developer Center', years: '2020–2025', bullets: [
-    'Sole designer: payouts, refunds, pricing, free trials, sales, and internal Reviews and Collections tools. Helped write docs; contributed components to the Wix Design System.',
-    'Designed auto-publishing, so live apps could ship minor updates without a full review.' ] },
-  { role: 'UX Designer', org: 'Wix, Labs Company', years: '2019–2020',
-    text: 'Designed apps that filled gaps in Wix, like comments and a Sheets connector.' },
-  { role: 'UX Designer', org: 'Wix, Media', years: '2018–2019',
-    text: 'Designed Wix Video features and its live streaming flow.' },
-  { role: 'Founding UX Designer', org: 'Wix, ADI', years: '2014–2018', bullets: [
-    'One of the founding designers of Wix’s AI site builder.',
-    'Shaped the product from concept to launch.' ] },
-  { role: 'Marketing Designer & Lead', org: 'Wix', years: '2012–2013',
-    text: 'Created campaigns, landing pages, and a site badges app; worked on paywall A/B tests.' },
-  { role: 'Graphic Designer', org: 'McCann Erickson (2010–2012) · Walla News (2008–2010)' },
-];
-const CV_ACHIEVEMENTS = [
-  ['Wix ADI', 'One of the founding UX designers of Wix’s AI website builder.'],
-  ['AI Credits system', 'Led UX across Business Manager and Wixel; usage grew significantly with no support escalations.'],
-  ['Wix Developer Center', 'Sole designer for 5 years; led the free trial and sales systems that grew subscriptions and upgrade revenue.'],
-  ['App installation data', 'First installation data page for developers; shipped code with AI tools. Strong engagement with no promotion.'],
-  ['Internal Reviews system', 'Rebuilt the App Market review tool from the ground up; still in use, it shortened review cycles.'],
-];
-const CV_TOOLS = [
-  ['Design', 'Figma, FigJam, Figma Make'],
-  ['AI', 'Claude, Codex'],
-  ['Work', 'Google Workspace, Jira, Notion, Slack'],
-];
+// About/CV content comes from the Notion About & Contact page at build time.
+async function aboutPage(blocks) {
+  const summaryBlocks = [];
+  const contactBlocks = [];
+  const sections = [];
+  let currentSection = null;
+  let foundHeading = false;
 
-function aboutPage() {
-  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
-  const exp = CV_EXPERIENCE.map((e) => `
-          <article class="cv-job">
-            <h3 class="cv-job-title">${esc(e.role)}</h3>
-            <p class="cv-job-meta">${esc(e.org)}${e.years ? ` <span aria-hidden="true">|</span> <time>${e.years}</time>` : ''}</p>
-            ${e.text ? `<p>${esc(e.text)}</p>` : ''}
-            ${e.bullets ? `<ul>${e.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
-          </article>`).join('');
-  const ach = CV_ACHIEVEMENTS.map(([t, d]) => `
-            <li><h3 class="cv-ach-title">${esc(t)}</h3><p>${esc(d)}</p></li>`).join('');
-  const tools = CV_TOOLS.map(([k, v]) => `<li><strong>${k}:</strong> ${esc(v)}</li>`).join('');
+  for (const block of blocks || []) {
+    if (block.type === 'heading_2') {
+      foundHeading = true;
+      currentSection = { title: plainText(block.heading_2.rich_text).trim(), blocks: [] };
+      sections.push(currentSection);
+      continue;
+    }
+    if (!foundHeading && block.type === 'paragraph') {
+      const text = plainText(block.paragraph.rich_text).trim();
+      if (!text) continue;
+      if (block.paragraph.rich_text.some((item) => item.href) || /^(cv|resume)$/i.test(text)) {
+        contactBlocks.push(block);
+      } else if (!summaryBlocks.length) {
+        summaryBlocks.push(block);
+      }
+      continue;
+    }
+    if (currentSection) currentSection.blocks.push(block);
+  }
+
+  const blockText = (block) => block.type === 'paragraph'
+    ? plainText(block.paragraph.rich_text).trim()
+    : '';
+  const paragraphHtml = (block, className = '') => {
+    if (block.type !== 'paragraph') return '';
+    const content = rt(block.paragraph.rich_text);
+    return content ? `<p${className ? ` class="${className}"` : ''}>${content}</p>` : '';
+  };
+  const contactHtml = contactBlocks.map((block) => {
+    const rich = block.paragraph.rich_text;
+    const label = plainText(rich).trim();
+    const isCv = /^(cv|resume)$/i.test(label);
+    const href = isCv ? CV_EXPORT_URL : rich.find((item) => item.href)?.href;
+    if (!href) return '';
+    const external = /^https?:/i.test(href);
+    const icon = isCv ? '↓' : '↗';
+    const labelHtml = rt(rich.map((item) => ({ ...item, href: null })));
+    return `<li><a href="${escapeAttr(href)}"${external ? ' target="_blank" rel="noopener"' : ''}><span>${labelHtml}</span><span class="cv-link-icon" aria-hidden="true">${icon}</span></a></li>`;
+  }).join('');
+
+  const sideSections = [];
+  const experienceSections = [];
+  let achievementsSection = null;
+  for (const section of sections) {
+    const isExperience = /^experience$/i.test(section.title);
+    const rendered = [];
+
+    if (/^key achievements$/i.test(section.title)) {
+      const entries = section.blocks.filter((block) => block.type === 'paragraph' && blockText(block));
+      const achievementItems = [];
+      for (let i = 0; i < entries.length; i += 2) {
+        const title = blockText(entries[i]);
+        const description = entries[i + 1];
+        achievementItems.push(`<li><h3 class="cv-job-title">${escapeAttr(title)}</h3>${description ? paragraphHtml(description) : ''}</li>`);
+      }
+      if (achievementItems.length) {
+        const id = `about-section-${slugify(section.title)}`;
+        achievementsSection = `<section class="cv-achievements" aria-labelledby="${id}"><h2 id="${id}">${escapeAttr(section.title)}</h2><ul class="cv-achievements-list">${achievementItems.join('')}</ul></section>`;
+      }
+      continue;
+    }
+
+    for (const block of section.blocks) {
+      if (block.type === 'column_list') {
+        const columns = await fetchBlocks(block.id);
+        const columnBlocks = await Promise.all(columns.map((column) => fetchBlocks(column.id)));
+        const firstColumnText = columnBlocks[0]?.map(blockText).find(Boolean) || '';
+
+        if (/^education$/i.test(firstColumnText)) {
+          const content = columnBlocks.slice(1).flat().filter((item) => blockText(item));
+          sideSections.push({ title: 'Education', html: content.map((item) => paragraphHtml(item)).join('') });
+          continue;
+        }
+
+        if (isExperience) {
+          const year = firstColumnText;
+          const content = columnBlocks.slice(1).flat().filter((item) => blockText(item));
+          const roleLine = content.shift();
+          const roleText = blockText(roleLine || {});
+          const splitAt = roleText.lastIndexOf(' - ');
+          const organization = splitAt >= 0 ? roleText.slice(0, splitAt) : '';
+          const role = splitAt >= 0 ? roleText.slice(splitAt + 3) : roleText;
+          const details = content
+            .filter((item) => !item.paragraph.rich_text.length || !item.paragraph.rich_text.every((part) => part.annotations?.italic))
+            .map((item) => paragraphHtml(item))
+            .join('');
+          rendered.push(`<article class="cv-job">
+            <p class="cv-job-meta">${organization ? `${escapeAttr(organization)} · ` : ''}<time>${escapeAttr(year)}</time></p>
+            <h3 class="cv-job-title">${escapeAttr(role)}</h3>
+            ${details}
+          </article>`);
+          continue;
+        }
+
+        const columnsHtml = columnBlocks.map((items) => `<div>${items.map((item) => paragraphHtml(item)).join('')}</div>`).join('');
+        rendered.push(`<div class="cv-notion-columns">${columnsHtml}</div>`);
+      } else if (block.type === 'paragraph' && blockText(block)) {
+        rendered.push(paragraphHtml(block));
+      } else if (['bulleted_list_item', 'numbered_list_item', 'heading_3'].includes(block.type)) {
+        rendered.push(await toHtml([block]));
+      }
+    }
+    const html = rendered.join('\n');
+    if (!html) continue;
+    if (isExperience) experienceSections.push({ title: section.title, html });
+    else sideSections.push({ title: section.title, html });
+  }
+
+  const summaryHtml = summaryBlocks.map((block) => paragraphHtml(block)).join('');
+  const renderSection = (section, index) => {
+    const id = `about-section-${slugify(section.title) || index}`;
+    return `<section aria-labelledby="${id}"><h2 id="${id}">${escapeAttr(section.title)}</h2>${section.html}</section>`;
+  };
+  const sideHtml = sideSections.map(renderSection).join('');
+  const experienceHtml = experienceSections.map(renderSection).join('');
+
   return wrap('', 'Avigail Bahat, Senior Product Designer', `
   <main class="inner-main">
     <div class="cv-page">
       <header class="cv-head">
         <h1>Avigail Bahat</h1>
-        <p class="cv-headline">Senior Product Designer | Tools, Platforms &amp; AI Products</p>
-        <ul class="cv-contact">
-          <li><a href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span class="cv-link-icon" aria-hidden="true">↗</span></a></li>
-          <li><a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noopener"><span>LinkedIn</span><span class="cv-link-icon" aria-hidden="true">↗</span></a></li>
-          <li><a href="Avigail%20Bahat%20CV.pdf" download aria-label="Download Avigail Bahat's CV as a PDF"><span aria-hidden="true">↓</span><span>Download CV</span></a></li>
-          <li>Tel Aviv</li>
-        </ul>
+        <ul class="cv-contact">${contactHtml}</ul>
       </header>
-      <section class="cv-summary" aria-labelledby="cv-summary">
-        <h2 id="cv-summary">Summary</h2>
-        <p>Senior Product Designer with 10+ years at Wix, designing developer platforms, monetization, and AI products, and shipping code with AI tools. Working closely with product and engineering.</p>
-      </section>
-      <section class="cv-achievements" aria-labelledby="cv-achievements">
-        <h2 id="cv-achievements">Key Achievements</h2>
-        <ul class="cv-ach-grid">${ach}
-        </ul>
-      </section>
+      ${summaryHtml ? `<section aria-labelledby="cv-summary"><h2 id="cv-summary">Summary</h2>${summaryHtml}</section>` : ''}
+      ${achievementsSection || ''}
       <div class="cv-cols">
         <div class="cv-col-main">
-          <section aria-labelledby="cv-experience">
-            <h2 id="cv-experience">Experience</h2>${exp}
-          </section>
-        </div>
-        <div class="cv-col-side">
-          <section aria-labelledby="cv-education">
-            <h2 id="cv-education">Education</h2>
-            <h3 class="cv-job-title">B.Des. in Graphic Design</h3>
-            <p>Shenkar College of Engineering and Design</p>
-          </section>
-          <section aria-labelledby="cv-tools">
-            <h2 id="cv-tools">Tools</h2>
-            <ul class="cv-plain">${tools}</ul>
-          </section>
-          <section aria-labelledby="cv-side">
-            <h2 id="cv-side">Side Projects</h2>
-            <p>Design and build my own products end to end with AI: a Mac calendar app, a job-hunt aggregator, and websites.</p>
-          </section>
+          ${experienceHtml}
+          ${sideHtml}
         </div>
       </div>
     </div>
   </main>`, '', '', '', 'about');
 }
-
 
 function designSystemPage(notionConnected) {
   const swatches = [
@@ -1221,7 +1272,7 @@ async function build() {
   let subtitleMap = {};
   const writtenProjectFiles = new Set();
   let tagline = "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
-  let aboutHtml = '';
+  let aboutBlocks = [];
 
   try {
     console.log('Fetching project pages from Notion...');
@@ -1267,11 +1318,10 @@ async function build() {
     }
 
     try {
-      const aboutBlocks = await fetchBlocks(ABOUT_PAGE_ID);
-      aboutHtml = await toHtml(aboutBlocks, '');
+      aboutBlocks = await fetchBlocks(ABOUT_PAGE_ID);
     } catch (e) {
       if (STRICT_BUILD) throw e;
-      console.log('Could not fetch About page from Notion, using fallback');
+      console.log('Could not fetch About page from Notion');
     }
 
 
@@ -1303,7 +1353,7 @@ async function build() {
 
   for (const [file, html] of [
     ['index.html',          indexPage(projects, tagline)],
-    ['about.html',          aboutPage()],
+    ['about.html',          await aboutPage(aboutBlocks)],
     ['contact.html',        '<meta http-equiv="refresh" content="0;url=about.html">'],
     ['design-system.html',  designSystemPage(projects.length > 0)],
   ]) {

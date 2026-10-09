@@ -20,6 +20,8 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      NOTION_API_KEY: ${{ secrets.NOTION_TOKEN }}
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
@@ -29,6 +31,8 @@ jobs:
         with:
           node-version: 20
           cache: npm
+      - run: npm ci
+      - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
