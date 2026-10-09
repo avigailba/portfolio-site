@@ -346,7 +346,8 @@ async function hydrateTables(blocks) {
 // ── Layout ──────────────────────────────────────────────────
 
 // prefix: '' for root pages, '../' for project pages in dist/projects/
-function hdr(prefix) {
+function hdr(prefix, current = '') {
+  const cur = (name) => current === name ? ' aria-current="page"' : '';
   return `<header id="site-header">
   <div class="hdr-row">
     <a href="${prefix}index.html" class="mob-logo">
@@ -354,8 +355,8 @@ function hdr(prefix) {
       <span class="mob-logo-role">Senior UX Designer</span>
     </a>
     <nav>
-      <a href="${prefix}index.html">Projects</a>
-      <a href="${prefix}about.html">About & Contact</a>
+      <a href="${prefix}index.html"${cur('projects')}>Projects</a>
+      <a href="${prefix}about.html"${cur('about')}>About & Contact</a>
     </nav>
     <button class="mob-burger" id="open-menu" aria-label="Open menu" aria-controls="mob-panel" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -369,13 +370,13 @@ function hdr(prefix) {
     <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
   </div>
   <nav class="mob-panel-nav">
-    <a href="${prefix}index.html" class="mob-panel-link">Projects</a>
-    <a href="${prefix}about.html" class="mob-panel-link">About & Contact</a>
+    <a href="${prefix}index.html" class="mob-panel-link"${cur('projects')}>Projects</a>
+    <a href="${prefix}about.html" class="mob-panel-link"${cur('about')}>About & Contact</a>
   </nav>
   <div class="mob-panel-foot">
     <div class="mob-panel-social">
-      <a href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span class="mob-arr">↗</span></a>
-      <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span class="mob-arr">↗</span></a>
+      <a href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span class="mob-arr" aria-hidden="true">↗</span></a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span class="mob-arr" aria-hidden="true">↗</span></a>
     </div>
   </div>
 </aside>`;
@@ -402,13 +403,13 @@ function ftr(prefix = '') {
     </div>
     <div class="footer-right">
       <a href="mailto:avigailba@gmail.com" class="footer-link">
-        <span>avigailba@gmail.com</span><span class="footer-arr">↗</span>
+        <span>avigailba@gmail.com</span><span class="footer-arr" aria-hidden="true">↗</span>
       </a>
       <a href="https://www.linkedin.com/in/avigailbahat/" class="footer-link">
-        <span>LinkedIn</span><span class="footer-arr">↗</span>
+        <span>LinkedIn</span><span class="footer-arr" aria-hidden="true">↗</span>
       </a>
       <a href="${prefix}design-system.html" class="footer-link">
-        <span>Design system</span><span class="footer-arr">↗</span>
+        <span>Design system</span><span class="footer-arr" aria-hidden="true">↗</span>
       </a>
     </div>
   </div>
@@ -417,7 +418,7 @@ function ftr(prefix = '') {
 }
 
 // prefix: '' for root pages, '../' for project pages
-function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass = '') {
+function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass = '', current = '') {
   const analyticsScript = process.env.VERCEL === '1'
     ? '\n<script defer src="/_vercel/insights/script.js"></script>'
     : '';
@@ -434,7 +435,7 @@ function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass =
   ${extraHead}<link rel="stylesheet" href="${prefix}style.css?v=${STYLE_VERSION}">
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
-  ${hdr(prefix)}
+  ${hdr(prefix, current)}
   ${body}
   ${ftr(prefix)}
   <script src="${prefix}script.js?v=${SCRIPT_VERSION}"></script>
@@ -777,7 +778,7 @@ function aboutPage() {
             ${e.bullets ? `<ul>${e.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
           </article>`).join('');
   const ach = CV_ACHIEVEMENTS.map(([t, d]) => `
-            <li><h3 class="cv-job-title">${esc(t)}</h3><p>${esc(d)}</p></li>`).join('');
+            <li><h3 class="cv-ach-title">${esc(t)}</h3><p>${esc(d)}</p></li>`).join('');
   const tools = CV_TOOLS.map(([k, v]) => `<li><strong>${k}:</strong> ${esc(v)}</li>`).join('');
   return wrap('', 'Avigail Bahat, Senior Product Designer', `
   <main class="inner-main">
@@ -793,22 +794,22 @@ function aboutPage() {
           <li>Tel Aviv</li>
         </ul>
       </header>
+      <section class="cv-summary" aria-labelledby="cv-summary">
+        <h2 id="cv-summary">Summary</h2>
+        <p>Senior Product Designer with 10+ years at Wix, designing developer platforms, monetization, and AI products, and shipping code with AI tools. Working closely with product and engineering.</p>
+      </section>
+      <section class="cv-achievements" aria-labelledby="cv-achievements">
+        <h2 id="cv-achievements">Key Achievements</h2>
+        <ul class="cv-ach-grid">${ach}
+        </ul>
+      </section>
       <div class="cv-cols">
         <div class="cv-col-main">
-          <section aria-labelledby="cv-summary">
-            <h2 id="cv-summary">Summary</h2>
-            <p>Senior Product Designer with 10+ years at Wix, designing developer platforms, monetization, and AI products, and shipping code with AI tools. Working closely with product and engineering.</p>
-          </section>
           <section aria-labelledby="cv-experience">
             <h2 id="cv-experience">Experience</h2>${exp}
           </section>
         </div>
         <div class="cv-col-side">
-          <section aria-labelledby="cv-achievements">
-            <h2 id="cv-achievements">Key Achievements</h2>
-            <ul class="cv-plain">${ach}
-            </ul>
-          </section>
           <section aria-labelledby="cv-education">
             <h2 id="cv-education">Education</h2>
             <h3 class="cv-job-title">B.Des. in Graphic Design</h3>
@@ -825,7 +826,7 @@ function aboutPage() {
         </div>
       </div>
     </div>
-  </main>`);
+  </main>`, '', '', '', 'about');
 }
 
 
