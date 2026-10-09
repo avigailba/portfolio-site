@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="style.css?v=ab06b17ed5">
+  <link rel="stylesheet" href="style.css?v=764a953222">
 </head>
 <body>
   <header id="site-header">
@@ -19,7 +19,7 @@
     </a>
     <nav>
       <a href="index.html">Projects</a>
-      <a href="about.html">About & Contact</a>
+      <a href="about.html" aria-current="page">About & Contact</a>
     </nav>
     <button class="mob-burger" id="open-menu" aria-label="Open menu" aria-controls="mob-panel" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -34,12 +34,12 @@
   </div>
   <nav class="mob-panel-nav">
     <a href="index.html" class="mob-panel-link">Projects</a>
-    <a href="about.html" class="mob-panel-link">About & Contact</a>
+    <a href="about.html" class="mob-panel-link" aria-current="page">About & Contact</a>
   </nav>
   <div class="mob-panel-foot">
     <div class="mob-panel-social">
-      <a href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span class="mob-arr">↗</span></a>
-      <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span class="mob-arr">↗</span></a>
+      <a href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span class="mob-arr" aria-hidden="true">↗</span></a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span class="mob-arr" aria-hidden="true">↗</span></a>
     </div>
   </div>
 </aside>
@@ -57,12 +57,22 @@
           <li>Tel Aviv</li>
         </ul>
       </header>
+      <section class="cv-summary" aria-labelledby="cv-summary">
+        <h2 id="cv-summary">Summary</h2>
+        <p>Senior Product Designer with 10+ years at Wix, designing developer platforms, monetization, and AI products, and shipping code with AI tools. Working closely with product and engineering.</p>
+      </section>
+      <section class="cv-achievements" aria-labelledby="cv-achievements">
+        <h2 id="cv-achievements">Key Achievements</h2>
+        <ul class="cv-ach-grid">
+            <li><h3 class="cv-ach-title">Wix ADI</h3><p>One of the founding UX designers of Wix’s AI website builder.</p></li>
+            <li><h3 class="cv-ach-title">AI Credits system</h3><p>Led UX across Business Manager and Wixel; usage grew significantly with no support escalations.</p></li>
+            <li><h3 class="cv-ach-title">Wix Developer Center</h3><p>Sole designer for 5 years; led the free trial and sales systems that grew subscriptions and upgrade revenue.</p></li>
+            <li><h3 class="cv-ach-title">App installation data</h3><p>First installation data page for developers; shipped code with AI tools. Strong engagement with no promotion.</p></li>
+            <li><h3 class="cv-ach-title">Internal Reviews system</h3><p>Rebuilt the App Market review tool from the ground up; still in use, it shortened review cycles.</p></li>
+        </ul>
+      </section>
       <div class="cv-cols">
         <div class="cv-col-main">
-          <section aria-labelledby="cv-summary">
-            <h2 id="cv-summary">Summary</h2>
-            <p>Senior Product Designer with 10+ years at Wix, designing developer platforms, monetization, and AI products, and shipping code with AI tools. Working closely with product and engineering.</p>
-          </section>
           <section aria-labelledby="cv-experience">
             <h2 id="cv-experience">Experience</h2>
           <article class="cv-job">
@@ -110,16 +120,6 @@
           </section>
         </div>
         <div class="cv-col-side">
-          <section aria-labelledby="cv-achievements">
-            <h2 id="cv-achievements">Key Achievements</h2>
-            <ul class="cv-plain">
-            <li><h3 class="cv-job-title">Wix ADI</h3><p>One of the founding UX designers of Wix’s AI website builder.</p></li>
-            <li><h3 class="cv-job-title">AI Credits system</h3><p>Led UX across Business Manager and Wixel; usage grew significantly with no support escalations.</p></li>
-            <li><h3 class="cv-job-title">Wix Developer Center</h3><p>Sole designer for 5 years; led the free trial and sales systems that grew subscriptions and upgrade revenue.</p></li>
-            <li><h3 class="cv-job-title">App installation data</h3><p>First installation data page for developers; shipped code with AI tools. Strong engagement with no promotion.</p></li>
-            <li><h3 class="cv-job-title">Internal Reviews system</h3><p>Rebuilt the App Market review tool from the ground up; still in use, it shortened review cycles.</p></li>
-            </ul>
-          </section>
           <section aria-labelledby="cv-education">
             <h2 id="cv-education">Education</h2>
             <h3 class="cv-job-title">B.Des. in Graphic Design</h3>
@@ -157,13 +157,13 @@
     </div>
     <div class="footer-right">
       <a href="mailto:avigailba@gmail.com" class="footer-link">
-        <span>avigailba@gmail.com</span><span class="footer-arr">↗</span>
+        <span>avigailba@gmail.com</span><span class="footer-arr" aria-hidden="true">↗</span>
       </a>
       <a href="https://www.linkedin.com/in/avigailbahat/" class="footer-link">
-        <span>LinkedIn</span><span class="footer-arr">↗</span>
+        <span>LinkedIn</span><span class="footer-arr" aria-hidden="true">↗</span>
       </a>
       <a href="design-system.html" class="footer-link">
-        <span>Design system</span><span class="footer-arr">↗</span>
+        <span>Design system</span><span class="footer-arr" aria-hidden="true">↗</span>
       </a>
     </div>
   </div>
