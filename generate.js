@@ -788,7 +788,6 @@ function aboutPage() {
         <p class="cv-headline">Senior Product Designer | Tools, Platforms &amp; AI Products</p>
         <ul class="cv-contact">
           <li><a href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span class="cv-link-icon" aria-hidden="true">↗</span></a></li>
-          <li><a href="https://www.avigailba.com" target="_blank" rel="noopener"><span>avigailba.com</span><span class="cv-link-icon" aria-hidden="true">↗</span></a></li>
           <li><a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noopener"><span>LinkedIn</span><span class="cv-link-icon" aria-hidden="true">↗</span></a></li>
           <li><a href="Avigail%20Bahat%20CV.pdf" download aria-label="Download Avigail Bahat's CV as a PDF"><span aria-hidden="true">↓</span><span>Download CV</span></a></li>
           <li>Tel Aviv</li>
