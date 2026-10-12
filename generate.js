@@ -502,7 +502,7 @@ function indexPage(projects, tagline) {
 </div>`;
   }).join('\n  ');
 
-  return wrap('', 'Avigail Bahat — Senior Product Designer', `
+  return wrap('', 'Avigail Bahat | Senior Product Designer', `
   <main class="home-band">
     <p class="lede">${tagline}</p>
     <div id="home-work" class="feat-grid">
@@ -562,7 +562,40 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
         after;
     }
   }
+  // TL;DR box: a Notion paragraph that starts with "TL;DR" becomes a two-column summary box.
+  // One column per sentence (up to three): what was done, how it was reached, the outcome.
+  if (contentHtml) {
+    contentHtml = contentHtml.replace(/<p>\s*TL;DR:?\s*([\s\S]*?)<\/p>/i, (m, inner) => {
+      let parts = inner.trim().split(/(?<=[.!?])\s+/).filter(Boolean);
+      if (parts.length > 3) parts = [parts.slice(0, parts.length - 2).join(' '), parts[parts.length - 2], parts[parts.length - 1]];
+      const cols = parts.map(t => `<p>${t}</p>`).join('');
+      return `<div class="proj-tldr"><span class="proj-tldr-label">TL;DR</span><div class="proj-tldr-grid" data-cols="${parts.length}">${cols}</div></div>`;
+    });
+  }
   if (contentHtml) contentHtml = injectTooltips(contentHtml);
+
+  // Hero image (the first image, before the first heading) is not clickable: no lightbox
+  if (contentHtml) {
+    const figIdx = contentHtml.indexOf('<figure class="proj-img">');
+    const h2Idx  = contentHtml.search(/<h2/);
+    if (figIdx !== -1 && (h2Idx === -1 || figIdx < h2Idx)) {
+      contentHtml = contentHtml.slice(0, figIdx) + '<figure class="proj-img proj-hero">' + contentHtml.slice(figIdx + '<figure class="proj-img">'.length);
+    }
+  }
+
+
+  // "Last updated" line under the Bottom line section (project pages only), from the page's Notion last-edited time
+  if (contentHtml && proj.lastEdited) {
+    const d = new Date(proj.lastEdited);
+    if (!isNaN(d)) {
+      const label = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+      const updatedHtml = `<p class="proj-updated">Last updated ${label}</p>`;
+      const blIdx = contentHtml.search(/<h2[^>]*>\s*(?:<strong>)?\s*Bottom line/i);
+      const nextH2 = blIdx === -1 ? -1 : contentHtml.slice(blIdx + 4).search(/<h2/);
+      if (nextH2 === -1) contentHtml += '\n' + updatedHtml;
+      else contentHtml = contentHtml.slice(0, blIdx + 4 + nextH2) + updatedHtml + '\n' + contentHtml.slice(blIdx + 4 + nextH2);
+    }
+  }
 
   // Inject "Screens" h2 before the first screen-section h3 (the first h3 immediately
   // followed by a figcaption or proj-img, which marks the transition from process text to screens).
@@ -629,7 +662,7 @@ var CURRENT_SLUG = '${proj.slug}';
 })();
 </script>`;
 
-  return wrap(prefix, `${title} — Avigail Bahat`, `
+  return wrap(prefix, `${title} | Avigail Bahat`, `
   <div class="proj-page-grid">
     <div class="proj-gutter proj-gutter-left"></div>
     <main class="proj-main">
@@ -649,7 +682,6 @@ var CURRENT_SLUG = '${proj.slug}';
           ${nextProj ? `<button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">→</button>` : ''}
         </div>
         ${proj.subtitle ? `<p class="proj-subtitle-m">${proj.subtitle}</p>` : ''}
-        ${proj.slug === 'internal-app-review-system' ? `<div class="proj-deck-wrap"><a class="proj-deck-btn" href="internal-review-demo.html" target="_blank" rel="noopener">Presentation mode ↗</a></div>` : ''}
         <div class="proj-meta-m">
           ${prevProj ? `<button class="proj-nav-text" aria-label="Previous project" onclick="location.href='${prevProj.slug}.html'">← Previous</button>` : ''}
           ${nextProj ? `<button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">Next →</button>` : ''}
@@ -908,9 +940,10 @@ function designSystemPage(notionConnected) {
     { sample: 'Featured project',            spec: 'clamp(24–40px) / 700 / −0.03em / Plus Jakarta Sans', where: 'Featured project title (.feat-title)',                        style: 'font-size:40px;font-weight:700;letter-spacing:-0.03em;color:#0a0a0a;line-height:1.1;font-family:Plus Jakarta Sans,sans-serif' },
     { sample: 'Design system',               spec: '32px / 700 / −0.02em / Roboto',             where: 'Inner page h1, footer statement, project section headings (.inner-content h1, .footer-statement, .proj-content h2)', style: 'font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a' },
     { sample: 'Senior UX designer.',         spec: '28px / 500 / −0.01em / Plus Jakarta Sans', where: 'Homepage lede (.lede)',                                               style: 'font-size:28px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;font-family:Plus Jakarta Sans,sans-serif' },
+    { sample: 'I planned and rebuilt a stale internal review tool.', spec: '20px (18px in 3 columns) / 500 / −0.01em / Plus Jakarta Sans', where: 'TL;DR box text (.proj-tldr p)', style: 'font-size:20px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;line-height:1.4;font-family:Plus Jakarta Sans,sans-serif' },
     { sample: 'Transparent AI usage billing across the platform.', spec: '20px / 500 / Roboto', where: 'Project subtitle, content sub-headings, CV role titles (.proj-subtitle, .proj-content h3, .cv-title)', style: 'font-size:20px;font-weight:500;color:#0a0a0a;line-height:1.4' },
     { sample: 'Body copy — project content, about, contact, work rows.', spec: '16px / 400 / Roboto / lh 1.7 / #555', where: 'All body and secondary text (.proj-intro, .proj-content p, .proj-body, .row-title, .cv-desc, .cv-years, .contact-intro)', style: 'font-size:16px;color:#555;line-height:1.7' },
-    { sample: 'FEATURED WORK · EXPERIENCE',  spec: '14px / 400 / uppercase / 0.07–0.08em',   where: 'Section labels, about page section labels (.section-label, .more-label, .about-notion h2)', style: 'font-size:14px;letter-spacing:0.07em;text-transform:uppercase;color:#555' },
+    { sample: 'FEATURED WORK · EXPERIENCE',  spec: '14px / 400 / uppercase / 0.07–0.08em',   where: 'Section labels, about page section labels, TL;DR label (.section-label, .more-label, .about-notion h2, .proj-tldr-label)', style: 'font-size:14px;letter-spacing:0.07em;text-transform:uppercase;color:#555' },
     { sample: 'Nav links, years, tags, meta', spec: '14px / 400 / Roboto',                    where: 'Nav links, row meta, tag labels, footer text',                          style: 'font-size:14px;color:#555' },
   ];
   const spacings = [
@@ -958,6 +991,9 @@ function designSystemPage(notionConnected) {
   const built = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
   const changelog = [
+    { date: '12 Oct 2026', change: 'TL;DR box added to project pages: 0.5px #ebebeb border, 8px radius, 40px padding, label 14px uppercase #555, one column per sentence (up to three) in Plus Jakarta Sans 500, stacked on mobile' },
+    { date: '12 Oct 2026', change: 'Last updated line added under the Bottom line on project pages (14px, #555), dated from the Notion page last edit' },
+    { date: '12 Oct 2026', change: 'Browser tab titles use a vertical bar instead of an em dash' },
     { date: '2 Jun 2026', change: 'Project page images now use site padding (clamp(40px, 20%, 240px)) — content aligned with header' },
     { date: '2 Jun 2026', change: 'Prev/next project nav buttons changed to blue (#2563eb)' },
     { date: '2 Jun 2026', change: 'All work section label removed — filters shown directly. All filter renamed All projects' },
@@ -992,7 +1028,7 @@ function designSystemPage(notionConnected) {
     </div>`
   ).join('\n    ');
 
-  return wrap('', 'Design System — Avigail Bahat', `
+  return wrap('', 'Design System | Avigail Bahat', `
   <div id="ds-gate" style="position:fixed;inset:0;z-index:999;background:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;">
     <div style="max-width:300px;width:100%;padding:0 24px;">
       <p style="font-size:15px;color:#555;margin-bottom:20px;text-align:center;">Enter password</p>
@@ -1092,6 +1128,13 @@ function designSystemPage(notionConnected) {
             <span class="ds-comp-label">More work CTA</span>
             <div class="ds-comp-demo">
               <a href="#" class="more-cta-link">See all work →</a>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">TL;DR box (project page, one column per sentence, up to three)</span>
+            <div class="ds-comp-demo proj-content" style="padding:24px;">
+              <div class="proj-tldr" style="margin:0;"><span class="proj-tldr-label">TL;DR</span><div class="proj-tldr-grid" data-cols="3"><p>What was done, in one sentence.</p><p>How it was reached, in one sentence.</p><p>The outcome, in one sentence.</p></div></div>
             </div>
           </div>
 
@@ -1304,7 +1347,7 @@ async function build() {
       const title = stripEmoji(p.title);
       const slug = NOTION_ID_TO_SLUG[p.id.replace(/-/g, '')] || slugify(title);
       const subtitle = firstSubtitle(p.blocks) || summary || '';
-      projects.push({ ...p, title, icon, year, slug, summary, subtitle, contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
+      projects.push({ ...p, title, icon, year, slug, summary, subtitle, lastEdited: meta.last_edited_time || '', contentHtml, excerpt: excerpt(p.blocks), callout: firstCallout(p.blocks) });
     }
 
     if (STRICT_BUILD && stats.errors.length) {

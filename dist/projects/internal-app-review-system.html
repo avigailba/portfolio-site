@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Internal Reviews System — Avigail Bahat</title>
+  <title>App Review Platform | Avigail Bahat</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <link rel="stylesheet" href="../style.css?v=b57cfd17aa">
+  <link rel="stylesheet" href="../style.css?v=de7ce8e55b">
 </head>
 <body class="proj-page">
   <header id="site-header">
@@ -60,35 +60,34 @@
         </div>
         <div class="proj-title-row">
           <button class="proj-nav-arr" id="proj-prev" aria-label="Previous project" onclick="location.href='app-installation-page-for-developers.html'">←</button>
-          <h1 class="proj-title-m">Internal Reviews System</h1>
+          <h1 class="proj-title-m">App Review Platform</h1>
           <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='developer-sale.html'">→</button>
         </div>
-        <p class="proj-subtitle-m">A ground-up rebuild of Wix App Market's internal review platform</p>
-        <div class="proj-deck-wrap"><a class="proj-deck-btn" href="internal-review-demo.html" target="_blank" rel="noopener">Presentation mode ↗</a></div>
+        <p class="proj-subtitle-m">Ground-up rebuild of Wix App Market’s internal review platform that shortened review cycles.</p>
         <div class="proj-meta-m">
           <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='app-installation-page-for-developers.html'">← Previous</button>
           <button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='developer-sale.html'">Next →</button>
         </div>
       </div>
       <div class="proj-content">
-        <figure class="proj-img">
+        <figure class="proj-img proj-hero">
   <img src="../images/img-3b135a9ccf7a80ea9f57cfaa4494fb64.jpg" alt="" loading="lazy">
 </figure>
+<div class="proj-tldr"><span class="proj-tldr-label">TL;DR</span><div class="proj-tldr-grid" data-cols="3"><p>I planned and rebuilt a stale internal review tool with a clearer structure and the features reviewers were missing.</p><p>I started with interviews and by shadowing Account Managers as they ran reviews, then tested the redesign with them in a bug hunt before launch.</p><p>Review cycles got shorter, and the tool has been in use since the 2022 launch.</p></div></div>
 <h2>The problem</h2>
-<p><span class="ctx-tip" role="button" tabindex="0" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics." aria-label="Wix App Market" aria-describedby="term-tip-1" aria-expanded="false">Wix App Market<span class="ctx-tip-pop" id="term-tip-1" role="tooltip" hidden>Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.</span></span>'s internal review platform is the tool Account Managers use to evaluate and approve apps before they go live. It spans four interconnected product areas: the app directory and queue, per-app activity and team views, the review workspace, and team management.</p>
-<p>When I joined the project, the team had stopped using it, and it wasn't updated or fixed. Review work happened in personal Google Docs, which meant no shared history, no visibility into what changed between submissions, and no consistent way to hand off between reviewers. As the team grew and more apps were submitted, that stopped being sustainable.</p>
+<p>Account Managers who review apps for the <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics." aria-label="Wix App Market" aria-describedby="term-tip-1" aria-expanded="false">Wix App Market<span class="ctx-tip-pop" id="term-tip-1" role="tooltip" hidden>Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.</span></span> wrote their reviews in different tools: some used Google Docs, others used Sheets. The internal review tool was no longer updated, so no one used it, and with no one using it, nothing got fixed. That meant no shared history, no visibility into what changed between submissions, and no consistent handoff between reviewers. As more apps were submitted, that stopped being sustainable.</p>
 <h2>Process</h2>
 <h3>Research</h3>
-<p>Met with Account Managers to walk through the current system, shadowed them running actual reviews, audited the Docs and Sheets they were using instead, and pulled analytics on time to publish and how many resubmissions an app typically needed.
-That surfaced pain points in the UI of the current system, difficulty writing a consistent review, weak information architecture, and the lack of an integrated workflow.</p>
+<p>Met with Account Managers to walk through the current system, shadowed them running reviews, audited the Docs and Sheets they used instead, and pulled analytics on time to publish and resubmissions per app.</p>
+<p>Four pain points came out of it:</p>
+<ul>
+  <li>A confusing UI</li>
+  <li>Difficulty writing a consistent review</li>
+  <li>Weak information architecture</li>
+  <li>No integrated workflow</li>
+</ul>
 <h3>Deciding on the product areas</h3>
-<p>Before designing the screens, I mapped the product into four areas to define scope and structure.</p>
-<ol>
-  <li>App directory</li>
-  <li>App page with activity page and development team page</li>
-  <li>The  review workspace - <em>this was entirely new</em></li>
-  <li>Account managers team management</li>
-</ol>
+<p>I split the product into four areas before designing any screens, and the review workspace was entirely new. Click any image to see it bigger.</p>
 <div class="col-layout col-4"><div class="col"><figure class="proj-img">
   <figcaption class="proj-caption">All apps - Browse, filter, and assign every app</figcaption>
   <img src="../images/img-39b35a9ccf7a80639d30e7dab00429f6.jpg" alt="All apps - Browse, filter, and assign every app" loading="lazy">
@@ -107,21 +106,32 @@ That surfaced pain points in the UI of the current system, difficulty writing a 
 </figure>
 </div></div>
 <h3>Redesigning the platform</h3>
-<ul>
-  <li>Built on <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide." aria-label="Wix" aria-describedby="term-tip-2" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-2" role="tooltip" hidden>Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></span>'s own internal UI system rather than a bespoke visual language, directly addressing the confusing-UI complaint that came up in research</li>
-  <li>Mapped the product into four areas before designing any screens: app directory and queue, per-app view, review workspace, and team management. The review workspace was built from scratch; the others required significant rethinking.</li>
-  <li>Restructured the information architecture to handle scale: one view for all apps at every stage, with filters and status logic designed to hold up as submission volume grew</li>
-  <li>Designed the review workflow around how reviewers actually worked: comments organized by app path, blocker flags inline, and previous submission history always visible alongside the current one</li>
-  <li>Made two key structural decisions: auto-start a review on first comment as well as via an explicit button, and show diffs as a side-by-side column rather than introduce a new pattern reviewers had to learn</li>
-  <li>Added a three-state listing status (Listed, Never Listed, Removed) to give reviewers a clearer picture of each app's history at a glance</li>
-</ul>
+<ol>
+  <li><strong>Order:</strong> Every step of an app's submission is logged with who did it.</li>
+  <li><strong>Continuity:</strong> The previous report sits next to the current one, so a resubmission no longer means digging through an old doc.</li>
+  <li><strong>Consistency:</strong> Comments are organized by app path, blockers are flagged inline, and the report is generated automatically.</li>
+  <li><strong>Faster:</strong> Changes between submissions show as a before and after column, simple and with nothing new to learn.</li>
+  <li><strong>Scale:</strong> One view for all apps at every stage, with search, filters, and status logic built to hold up as submissions grew.</li>
+  <li><strong>New status:</strong> Three listing states (Listed, Never Listed, Removed) show each app's market history at a glance.</li>
+  <li><strong>Familiar:</strong> Built on <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide." aria-label="Wix" aria-describedby="term-tip-2" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-2" role="tooltip" hidden>Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></span>'s internal UI system instead of a new visual language, answering the confusing UI complaint from research.</li>
+</ol>
+<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Review report - comments organized by path, flagging issues by type and location within the app</figcaption>
+  <img src="../images/img-98693c59eaed4f0a9c18804be6f0dc60.jpg" alt="Review report - comments organized by path, flagging issues by type and location within the app" loading="lazy">
+</figure>
+</div><div class="col"><figure class="proj-img">
+  <figcaption class="proj-caption">Previous activity tab - all changes and comments from the app's last review, surfaced for context</figcaption>
+  <img src="../images/img-cb1ea799db054a96acae4c20549a53aa.jpg" alt="Previous activity tab - all changes and comments from the app&#39;s last review, surfaced for context" loading="lazy">
+</figure>
+</div></div>
+<div class="col-layout col-2"><div class="col"></div><div class="col"></div></div>
 <h2>Delivery</h2>
 <ul>
-  <li>Ran weekly syncs with the Account Management team to align on scope and surface edge cases early</li>
-  <li>Facilitated a bug hunt session with Account Managers before launch to validate the redesign and surface edge cases</li>
+  <li>Ran weekly syncs with Account Management to align on scope and surface edge cases early.</li>
+  <li>Ran a bug hunt with Account Managers before launch to validate the redesign. It showed that the diff in the second review was not built properly and needed more work.</li>
 </ul>
 <h2>Impact</h2>
-<p>The tool is still actively used by Wix's Developer Relations team. It reduced account manager workload, shortened both the review cycle and time to publish, and made app evaluations faster and more consistent across the team.</p>
+<p><strong>Review cycles got shorter.</strong> The team stopped working in Google Docs and moved their reviews into the platform, where anyone with permission can follow an app's full history. It has been in use since the 2022 launch, including after AI entered the review process. The team has since added features themselves, such as more filters on the main page and marking an app as premium, which used to need a developer.</p>
 <h2>Screens</h2>
 <h3>Apps directory and review queue</h3>
 <p>The full marketplace directory, across all stages</p>
@@ -180,8 +190,8 @@ That surfaced pain points in the UI of the current system, difficulty writing a 
   <img src="../images/img-3a335a9ccf7a800395b1eafb4c5fb66d.jpg" alt="Opening the publish action from the app&#39;s more actions menu" loading="lazy">
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">First publish — revenue share agreement shown before confirming</figcaption>
-  <img src="../images/img-38435a9ccf7a80eeb2a8f65463952fd5.jpg" alt="First publish — revenue share agreement shown before confirming" loading="lazy">
+  <figcaption class="proj-caption">First publish - revenue share agreement shown before confirming</figcaption>
+  <img src="../images/img-38435a9ccf7a80eeb2a8f65463952fd5.jpg" alt="First publish - revenue share agreement shown before confirming" loading="lazy">
 </figure>
 </div></div>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
@@ -194,8 +204,8 @@ That surfaced pain points in the UI of the current system, difficulty writing a 
 </figure>
 </div></div>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Publishing in progress — loading state as the app goes live</figcaption>
-  <img src="../images/img-38435a9ccf7a80cb893dd89508d7c2d3.jpg" alt="Publishing in progress — loading state as the app goes live" loading="lazy">
+  <figcaption class="proj-caption">Publishing in progress - loading state as the app goes live</figcaption>
+  <img src="../images/img-38435a9ccf7a80cb893dd89508d7c2d3.jpg" alt="Publishing in progress - loading state as the app goes live" loading="lazy">
 </figure>
 </div><div class="col"><figure class="proj-img">
   <figcaption class="proj-caption">App successfully published to the marketplace and marked as “listed”</figcaption>
@@ -205,8 +215,8 @@ That surfaced pain points in the UI of the current system, difficulty writing a 
 <h3>Team management and roles</h3>
 <p>Role-based access for the review team</p>
 <div class="col-layout col-3"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Team management - all Cactus users, their roles and emails, with options to add or remove members</figcaption>
-  <img src="../images/img-77849552a9324b4580d314b3bfc6e966.jpg" alt="Team management - all Cactus users, their roles and emails, with options to add or remove members" loading="lazy">
+  <figcaption class="proj-caption">Team management - all users, their roles and emails, with options to add or remove members</figcaption>
+  <img src="../images/img-77849552a9324b4580d314b3bfc6e966.jpg" alt="Team management - all users, their roles and emails, with options to add or remove members" loading="lazy">
 </figure>
 </div><div class="col"><figure class="proj-img">
   <figcaption class="proj-caption">Role assignment - four role types (Admin, Account Manager, Integration Manager, Viewer) control what each member can do</figcaption>
@@ -220,6 +230,7 @@ That surfaced pain points in the UI of the current system, difficulty writing a 
 <h2>Bottom line</h2>
 <p>The team had already voted with their feet, doing the actual review work in spreadsheets outside the platform. Success wasn't launching a redesign; it was building something good enough that they'd stop reaching for Google Docs. The tool became their primary review surface, which is the only metric that actually mattered.</p>
 
+<p class="proj-updated">Last updated 12 October 2026</p>
       </div>
     </main>
     <div class="proj-gutter proj-gutter-right"></div>
@@ -276,12 +287,12 @@ That surfaced pain points in the UI of the current system, difficulty writing a 
   </div>
   <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
 </footer>
-  <script src="../script.js?v=b01fdd7046"></script>
+  <script src="../script.js?v=a21506aa09"></script>
 <script>
 var ALL_PROJECTS = [
   { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'A new AI monetization model that had to work for two types of users, across three products, without becoming two separate systems.', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
   { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Installation analytics that gave developers site-level visibility into how their apps were actually being used', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
-  { slug: 'internal-app-review-system', title: 'Internal Review System', sub: 'A ground-up rebuild of Wix App Market\'s internal review platform', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
+  { slug: 'internal-app-review-system', title: 'Internal Review System', sub: 'Ground-up rebuild of Wix App Market’s internal review platform that shortened review cycles.', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
   { slug: 'developer-sale', title: 'Developer Sale', sub: 'Sales infrastructure that made market-wide promotions possible and drove strong growth in subscriptions and upgrade revenue', cat: 'Monetisation', cats: 'developer monetisation cms', year: 2024, featured: true },
   { slug: 'app-reviews-revamp', title: 'App Reviews Revamp', sub: 'Cross-app review management system designed to give developers with many apps unified control over their feedback', cat: 'Developer tools', cats: 'developer cms', year: 2024, featured: false },
   { slug: 'app-collections-internal-manager', title: 'App Collections Manager', sub: 'Internal curation tool that replaced manual workflows and scaled App Market collection management across two generation modes', cat: 'Internal tools', cats: 'internal cms', year: 2024, featured: false },

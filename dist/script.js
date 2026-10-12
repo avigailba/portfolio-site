@@ -705,7 +705,7 @@ if (document.getElementById('playFrame')) {
   var images = [], current = 0;
   var lastTrigger = null;
   var previousBodyOverflow = '';
-  var imgs = Array.from(document.querySelectorAll('.proj-content img'));
+  var imgs = Array.from(document.querySelectorAll('.proj-content img')).filter(function(img) { return !img.closest('.proj-hero'); });
   imgs.forEach(function(img, i) {
     img.tabIndex = 0;
     img.setAttribute('role', 'button');

@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Design System — Avigail Bahat</title>
+  <title>Design System | Avigail Bahat</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="style.css?v=b57cfd17aa">
+  <link rel="stylesheet" href="style.css?v=de7ce8e55b">
 </head>
 <body>
   <header id="site-header">
@@ -134,6 +134,14 @@
     </div>
     <div class="ds-type-row">
       <span class="ds-type-num">5</span>
+      <div class="ds-type-sample" style="font-size:20px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;line-height:1.4;font-family:Plus Jakarta Sans,sans-serif">I planned and rebuilt a stale internal review tool.</div>
+      <div class="ds-type-meta">
+        <span class="ds-type-spec">20px (18px in 3 columns) / 500 / −0.01em / Plus Jakarta Sans<span class="ds-type-color"><span class="ds-type-dot" style="background:#0a0a0a"></span>#0a0a0a</span></span>
+        <span class="ds-type-where">TL;DR box text (.proj-tldr p)</span>
+      </div>
+    </div>
+    <div class="ds-type-row">
+      <span class="ds-type-num">6</span>
       <div class="ds-type-sample" style="font-size:20px;font-weight:500;color:#0a0a0a;line-height:1.4">Transparent AI usage billing across the platform.</div>
       <div class="ds-type-meta">
         <span class="ds-type-spec">20px / 500 / Roboto<span class="ds-type-color"><span class="ds-type-dot" style="background:#0a0a0a"></span>#0a0a0a</span></span>
@@ -141,7 +149,7 @@
       </div>
     </div>
     <div class="ds-type-row">
-      <span class="ds-type-num">6</span>
+      <span class="ds-type-num">7</span>
       <div class="ds-type-sample" style="font-size:16px;color:#555;line-height:1.7">Body copy — project content, about, contact, work rows.</div>
       <div class="ds-type-meta">
         <span class="ds-type-spec">16px / 400 / Roboto / lh 1.7 / #555<span class="ds-type-color"><span class="ds-type-dot" style="background:#555"></span>#555</span></span>
@@ -149,15 +157,15 @@
       </div>
     </div>
     <div class="ds-type-row">
-      <span class="ds-type-num">7</span>
+      <span class="ds-type-num">8</span>
       <div class="ds-type-sample" style="font-size:14px;letter-spacing:0.07em;text-transform:uppercase;color:#555">FEATURED WORK · EXPERIENCE</div>
       <div class="ds-type-meta">
         <span class="ds-type-spec">14px / 400 / uppercase / 0.07–0.08em<span class="ds-type-color"><span class="ds-type-dot" style="background:#555"></span>#555</span></span>
-        <span class="ds-type-where">Section labels, about page section labels (.section-label, .more-label, .about-notion h2)</span>
+        <span class="ds-type-where">Section labels, about page section labels, TL;DR label (.section-label, .more-label, .about-notion h2, .proj-tldr-label)</span>
       </div>
     </div>
     <div class="ds-type-row">
-      <span class="ds-type-num">8</span>
+      <span class="ds-type-num">9</span>
       <div class="ds-type-sample" style="font-size:14px;color:#555">Nav links, years, tags, meta</div>
       <div class="ds-type-meta">
         <span class="ds-type-spec">14px / 400 / Roboto<span class="ds-type-color"><span class="ds-type-dot" style="background:#555"></span>#555</span></span>
@@ -282,6 +290,13 @@
             <span class="ds-comp-label">More work CTA</span>
             <div class="ds-comp-demo">
               <a href="#" class="more-cta-link">See all work →</a>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">TL;DR box (project page, one column per sentence, up to three)</span>
+            <div class="ds-comp-demo proj-content" style="padding:24px;">
+              <div class="proj-tldr" style="margin:0;"><span class="proj-tldr-label">TL;DR</span><div class="proj-tldr-grid" data-cols="3"><p>What was done, in one sentence.</p><p>How it was reached, in one sentence.</p><p>The outcome, in one sentence.</p></div></div>
             </div>
           </div>
 
@@ -424,6 +439,18 @@
         <span class="ds-section-title">Changelog</span>
         <div class="ds-changelog">
           <div class="ds-cl-row">
+      <span class="ds-cl-date">12 Oct 2026</span>
+      <span class="ds-cl-text">TL;DR box added to project pages: 0.5px #ebebeb border, 8px radius, 40px padding, label 14px uppercase #555, one column per sentence (up to three) in Plus Jakarta Sans 500, stacked on mobile</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">12 Oct 2026</span>
+      <span class="ds-cl-text">Last updated line added under the Bottom line on project pages (14px, #555), dated from the Notion page last edit</span>
+    </div>
+    <div class="ds-cl-row">
+      <span class="ds-cl-date">12 Oct 2026</span>
+      <span class="ds-cl-text">Browser tab titles use a vertical bar instead of an em dash</span>
+    </div>
+    <div class="ds-cl-row">
       <span class="ds-cl-date">2 Jun 2026</span>
       <span class="ds-cl-text">Project page images now use site padding (clamp(40px, 20%, 240px)) — content aligned with header</span>
     </div>
@@ -530,7 +557,7 @@
         </div>
       </div>
 
-      <p class="ds-updated">Last built: 9 October 2026</p>
+      <p class="ds-updated">Last built: 12 October 2026</p>
     </div>
   </main>
   <script>
@@ -591,7 +618,7 @@
   </div>
   <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
 </footer>
-  <script src="script.js?v=b01fdd7046"></script>
+  <script src="script.js?v=a21506aa09"></script>
 
 </body>
 </html>
