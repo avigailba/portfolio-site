@@ -1241,6 +1241,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 .cv-cols { border-top: 0.5px solid #ebebeb; padding-top: 48px; display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; }
 .cv-page h2 { font-size: 14px; font-weight: 400; color: #555; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 8px; }
 .cv-page section { margin-bottom: 48px; }
+.cv-divider { border: 0; border-top: 0.5px solid #ebebeb; margin: 32px 0; }
 .cv-page p { font-size: 16px; color: #555; line-height: 1.7; margin-bottom: 4px; }
 .cv-job { margin-bottom: 32px; }
 .cv-job-title { font-size: 16px; font-weight: 600; color: #0a0a0a; line-height: 1.4; margin-bottom: 2px; }

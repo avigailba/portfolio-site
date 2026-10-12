@@ -31,7 +31,7 @@ const SCRIPT_VERSION = assetVersion('script.js');
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const ROOT_PAGE_ID      = '9e31791fdedf4048bb784d0cbae06e51';
 const ABOUT_PAGE_ID     = '36e35a9ccf7a81f6953dcab2aebb27fc';
-const CV_EXPORT_URL     = 'https://docs.google.com/document/d/1HvgKDdU_XvW8u6X23vUb-6-JnLNDaQRSTpAuO-dA-j8/export?format=pdf';
+const CV_EXPORT_URL     = 'https://docs.google.com/document/d/1k96v_RDnLF1MwT3K43FXrcU0St67WObuXRArSz6AqSw/export?format=pdf';
 const CONTACT_PAGE_ID   = '36e35a9ccf7a8188a447fd3e36ee88cd';
 const HOMEPAGE_PAGE_ID  = '37135a9ccf7a81b2a7a7c0a2702d8c98';
 
@@ -743,13 +743,22 @@ async function aboutPage(blocks) {
   const contactBlocks = [];
   const sections = [];
   let currentSection = null;
+  let pendingDivider = null;
   let foundHeading = false;
 
-  for (const block of blocks || []) {
+  const sourceBlocks = blocks || [];
+  for (let i = 0; i < sourceBlocks.length; i++) {
+    const block = sourceBlocks[i];
     if (block.type === 'heading_2') {
       foundHeading = true;
-      currentSection = { title: plainText(block.heading_2.rich_text).trim(), blocks: [] };
+      const title = plainText(block.heading_2.rich_text).trim();
+      currentSection = { title, blocks: pendingDivider ? [pendingDivider] : [] };
+      pendingDivider = null;
       sections.push(currentSection);
+      continue;
+    }
+    if (block.type === 'divider' && /^(key achievements|tools)$/i.test(plainText(sourceBlocks[i + 1]?.heading_2?.rich_text || []).trim())) {
+      pendingDivider = block;
       continue;
     }
     if (!foundHeading && block.type === 'paragraph') {
@@ -802,7 +811,8 @@ async function aboutPage(blocks) {
       }
       if (achievementItems.length) {
         const id = `about-section-${slugify(section.title)}`;
-        achievementsSection = `<section class="cv-achievements" aria-labelledby="${id}"><h2 id="${id}">${escapeAttr(section.title)}</h2><ul class="cv-achievements-list">${achievementItems.join('')}</ul></section>`;
+        const divider = section.blocks.some((block) => block.type === 'divider') ? '<hr class="cv-divider">' : '';
+        achievementsSection = `<section class="cv-achievements" aria-labelledby="${id}">${divider}<h2 id="${id}">${escapeAttr(section.title)}</h2><ul class="cv-achievements-list">${achievementItems.join('')}</ul></section>`;
       }
       continue;
     }
@@ -843,6 +853,8 @@ async function aboutPage(blocks) {
         rendered.push(`<div class="cv-notion-columns">${columnsHtml}</div>`);
       } else if (block.type === 'paragraph' && blockText(block)) {
         rendered.push(paragraphHtml(block));
+      } else if (block.type === 'divider') {
+        rendered.push('<hr class="cv-divider">');
       } else if (['bulleted_list_item', 'numbered_list_item', 'heading_3'].includes(block.type)) {
         rendered.push(await toHtml([block]));
       }
@@ -856,7 +868,10 @@ async function aboutPage(blocks) {
   const summaryHtml = summaryBlocks.map((block) => paragraphHtml(block)).join('');
   const renderSection = (section, index) => {
     const id = `about-section-${slugify(section.title) || index}`;
-    return `<section aria-labelledby="${id}"><h2 id="${id}">${escapeAttr(section.title)}</h2>${section.html}</section>`;
+    const divider = '<hr class="cv-divider">';
+    const hasLeadingDivider = section.html.startsWith(divider);
+    const content = hasLeadingDivider ? section.html.slice(divider.length) : section.html;
+    return `<section aria-labelledby="${id}">${hasLeadingDivider ? divider : ''}<h2 id="${id}">${escapeAttr(section.title)}</h2>${content}</section>`;
   };
   const sideHtml = sideSections.map(renderSection).join('');
   const experienceHtml = experienceSections.map(renderSection).join('');
