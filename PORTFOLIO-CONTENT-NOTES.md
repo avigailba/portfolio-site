@@ -83,7 +83,7 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 
 Status key: TODO, PROPOSED (lines shown, waiting for her word), DONE LOCAL (in Notion and regenerated, not committed), DEPLOYED.
 
-### App Review Platform (slug internal-app-review-system, Notion 71024356b51b4ce8b46c21fa3a442020): DONE LOCAL (deploy requested 2026-10-12)
+### App Review Platform (slug internal-app-review-system, Notion 71024356b51b4ce8b46c21fa3a442020): DEPLOYED 2026-10-12 (live check passed; commits b2fc5b1 and the homepage name fix)
 Renamed from "Internal Reviews System" to avoid the clash with "Reviews Revamp". Slug unchanged.
 - Subtitle: "Ground-up rebuild of Wix App Market’s internal review platform that shortened review cycles."
 - TL;DR (3 columns): "I planned and rebuilt a stale internal review tool with a clearer structure and the features reviewers were missing. I started with interviews and by shadowing Account Managers as they ran reviews, then tested the redesign with them in a bug hunt before launch. Review cycles got shorter, and the tool has been in use since the 2022 launch."
@@ -125,6 +125,7 @@ Renamed from "Internal Reviews System" to avoid the clash with "Reviews Revamp".
 Reviews Revamp, Collections Manager, Payouts Page, Refund Flow, Pricing Page Projects, Submit & Publish Widget, API Keys page, Coupons Page. Also check Development Site Creation and Custom Element Settings.
 
 ## Decisions log
+- 2026-10-12: Deployed. Lesson: the project title is also hardcoded in PROJECT_META in generate.js (feeds the homepage featured card and the More work lists). When a Notion page is renamed, change PROJECT_META title too and grep the generated site for the old name.
 - 2026-10-12: One session per batch is the default. A single project gets its own session only for deep work. Shared files (generate.js, dist/) make parallel sessions risky.
 - 2026-10-12: Internal Review System renamed "App Review Platform".
 - 2026-10-12: No numbers for time to publish exist. Impact stays directional. Tagline trimmed to "review cycles".
