@@ -613,6 +613,51 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
     }
   }
 
+  // Side anchor navigation (left margin, wide screens only). Trial: only pages listed here.
+  // All project pages get the menu. Pages with fewer than three sections get none (nothing to list).
+  const ANCHOR_NAV = { has: () => true };
+  let anchorNavHtml = '';
+  if (contentHtml && ANCHOR_NAV.has(proj.slug)) {
+    const items = [];
+    if (contentHtml.includes('<div class="proj-tldr">')) {
+      contentHtml = contentHtml.replace('<div class="proj-tldr">', '<div class="proj-tldr" id="sec-tldr">');
+      items.push({ id: 'sec-tldr', text: 'TL;DR' });
+    }
+    // h2 sections become numbered items. h3 sub-sections are listed under the h2s named in SUB_SECTIONS.
+    const SUB_SECTIONS = new Set([]); // sub-sections in the menu were tried (Approach: Research, Design principles) and removed at her request
+    let currentH2 = '';
+    // Pages built from numbered feature blocks (h3) with almost no h2 list their h3s as the menu items instead.
+    const useH3 = (contentHtml.match(/<h2>/g) || []).length < 3;
+    contentHtml = contentHtml.replace(/<h([23])>([\s\S]*?)<\/h\1>/g, (m, level, inner) => {
+      const text = inner.replace(/<[^>]+>/g, '').trim();
+      if (!text || text === 'TL;DR') return m;
+      const slug = text.toLowerCase().replace(/&amp;/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      if (level === '2') {
+        currentH2 = text;
+        items.push({ id: 'sec-' + slug, text });
+        return `<h2 id="sec-${slug}">${inner}</h2>`;
+      }
+      if (useH3) {
+        const label = text.replace(/^\d+\.\s*/, '').replace(/\s*\(.*$/, '').trim();
+        items.push({ id: 'sec-' + slug, text: label });
+        return `<h3 id="sec-${slug}">${inner}</h3>`;
+      }
+      if (SUB_SECTIONS.has(currentH2)) {
+        items.push({ id: 'sub-' + slug, text, sub: true });
+        return `<h3 id="sub-${slug}">${inner}</h3>`;
+      }
+      return m;
+    });
+    if (items.length > 2) {
+      let n = 0;
+      const lis = items.map(i => i.sub
+        ? `<li class="pa-sub"><a href="#${i.id}"><span class="pa-label">${i.text}</span></a></li>`
+        : `<li><a href="#${i.id}"><span class="pa-num">${String(++n).padStart(2, '0')}</span><span class="pa-label">${i.text}</span></a></li>`
+      ).join('');
+      anchorNavHtml = `<nav class="proj-anchors" aria-label="On this page"><div class="pa-top"><a class="mob-logo pa-home" href="../index.html"><span class="mob-logo-name">Avigail Bahat</span><span class="mob-logo-role">Senior Product Designer</span></a></div><div class="pa-title" role="button" tabindex="0">${titleCase(proj.title || meta.title || 'Project')}<span class="pa-hint">&uarr; Back to top</span></div><ul>${lis}</ul></nav>`;
+    }
+  }
+
   const title = titleCase(proj.title || meta.title || 'Project');
   const year  = meta.year  || proj.year;
   const CAT_LABELS = { developer: 'Developer tools', monetisation: 'Monetisation', cms: 'CMS', internal: 'Internal tools' };
@@ -671,6 +716,7 @@ var CURRENT_SLUG = '${proj.slug}';
         ${prevProj ? `<a class="proj-nav-btn proj-nav-prev" href="${prevProj.slug}.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> ${prevTitle}</span></a>` : '<span></span>'}
         ${nextProj ? `<a class="proj-nav-btn proj-nav-next" href="${nextProj.slug}.html" aria-label="Next project"><span class="proj-nav-name">${nextTitle} <i class="ti ti-arrow-right"></i></span></a>` : '<span></span>'}
       </div>
+      ${anchorNavHtml}
       <div class="proj-title-sticky" id="proj-title-sticky">
         <div class="proj-tags-m">
           <span class="pm">${year}</span>
