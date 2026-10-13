@@ -64,7 +64,7 @@ const stats = { pages: 0, images: 0, errors: [] };
 // Project metadata: categories, display title overrides, years, featured status
 const PROJECT_META = {
   'ai-credits-wallet':                    { title: 'AI Credits',              subtitle: 'Transparent AI usage billing across Wix\'s developer platform', cats: 'monetisation',          display: 'Monetisation',    year: 2026, featured: true },
-  'app-installation-page-for-developers': { title: 'Installations Page',      subtitle: 'Redesigned the app installation experience end-to-end',          cats: 'developer cms',          display: 'Developer tools', year: 2025, featured: true },
+  'app-installation-page-for-developers': { title: 'Installations Page',      subtitle: 'Designed and shipped installation analytics that gave developers site-level visibility into how their apps were used', cats: 'developer cms',         display: 'Developer tools', year: 2025, featured: true },
   'internal-app-review-system':          { title: 'App Review Platform',   subtitle: 'Replaced a spreadsheet-based review process with a structured tool', cats: 'internal cms',       display: 'Internal tools',  year: 2022, featured: true },
   'developer-sale':                      { title: 'Developer Sale',           subtitle: 'A monetisation campaign tool for app developers',                cats: 'developer monetisation cms', display: 'Monetisation', year: 2024, featured: true },
   'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer cms',          display: 'Developer tools', year: 2024, featured: false },

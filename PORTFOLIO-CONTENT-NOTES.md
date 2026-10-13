@@ -114,15 +114,16 @@ Renamed from "Internal Reviews System" to avoid the clash with "Reviews Revamp".
 - Add a TL;DR. Search Drive for an interview deck first.
 - Caution: this page has a custom layout (credits widget iframe), so check it after the TL;DR is added.
 
-### Installations (slug app-installation-page-for-developers, Notion 31135a9ccf7a80358e3cead5465c89f8): IN PROGRESS (subtitle DONE LOCAL, rest PROPOSED)
-- Opening leads with "I designed and shipped", the problem comes a section later.
-- Roadmap and discoverability lines at the end of Impact duplicate the Bottom line.
-- Fix stray bold space ("apps. **"), "for ex.,", and the filler "actually" in the tagline.
-- Subtitle (DONE LOCAL 2026-10-13, in Notion and page regenerated, not committed): "Designed and shipped installation analytics that gave developers site-level visibility into how their apps were used". Her own original line with a verb added and "actually" dropped. She rejected all invented alternatives.
-- Homepage card subtitle is separate: PROJECT_META in generate.js still says "Redesigned the app installation experience end-to-end". Not changed, ask first.
-- Proposed opening (not applied): "Developers on the Wix App Market had no way to see who installed their apps, so they emailed support for basic usage data. I designed the installation data page and shipped part of it in code, using Cursor and Claude Code to add features and fix bugs, working end to end with engineering through permission levels, PII limits, and API constraints."
-- Code claim is sourced from the page itself: "Joined the implementation team using Cursor and Claude Code to add features and fix bugs" and "Contributed a year selector to the Wix Design System in code". Wording "shipped part of it in code" is deliberate, the page does not show she built all of it.
-- Resolved by dropping both "co-built" and "owned": say what she did.
+### Installations (slug app-installation-page-for-developers, Notion 31135a9ccf7a80358e3cead5465c89f8): DONE LOCAL 2026-10-13 (in Notion and regenerated, not committed, not deployed)
+Restructured to the App Review Platform pattern. Current structure:
+- Subtitle: "Designed and shipped installation analytics that gave developers site-level visibility into how their apps were used" (her original line, verb added, "actually" dropped).
+- TL;DR card, three sentences (one paragraph starting "TL;DR:", the generator makes one column per sentence): the page developers needed and the support emails; mapped the gap with the PM, worked through permission levels and PII limits with engineering, shipped part of it in code; developers who found it used it, feedback positive. She wanted "the developers love it"; not sourced, so "the feedback has been positive".
+- The problem, Process (Research, Design principles, Designing the page, two screens in a 2-column row), Delivery, Impact, Screens, Bottom line (unchanged).
+- Design principles (candidates from her page, she approved): Explain, don't hide. Start from what developers asked for. Legal sets the boundaries (was "Respect the limits"). Let developers shape the view.
+- Removed: old opening paragraph incl. "co-built end-to-end" and the "two user types" line, the whole "Working within constraints" section (incl. the backend and API alignment line, can return as a Delivery bullet), the roadmap and discoverability lines in Impact, "cobbling" (now "building workarounds").
+- Wording: "table" became "page"; "help article" became "documentation"; Figma Make mock validated "with stakeholders and users".
+- Captions: em dashes changed to colons, "Default table" renamed "Default view" (2026-10-13). In-flow screens are Default view and Column customization, both ALSO in Screens as true copies. To duplicate a Notion image: notion-create-file-upload, curl POST the local dist/images file to upload_url, then reference file-upload://<id>. Reusing a notion-file-block link moves the block instead.
+- Open: homepage card subtitle in PROJECT_META is separate from the Notion subtitle. Check it.
 
 ### Developer Sale (slug developer-sale, Notion 17d35a9ccf7a80c69ceafb3f7973485a): TODO
 - Subtitle "drove strong growth" is vague.
@@ -136,8 +137,11 @@ Renamed from "Internal Reviews System" to avoid the clash with "Reviews Revamp".
 Reviews Revamp, Collections Manager, Payouts Page, Refund Flow, Pricing Page Projects, Submit & Publish Widget, API Keys page, Coupons Page. Also check Development Site Creation and Custom Element Settings.
 
 ## Decisions log
+- 2026-10-13: RULE, never delete or lose screens. Every image on a project page must still be on the page after an edit. In Notion, reusing an image's notion-file-block link MOVES the block, it does not copy it, so putting a screen in a new spot empties its old spot. Before and after any image edit, list every caption on the page and confirm none is missing. Do not replace an image to "swap" it without putting the old one back somewhere.
 - 2026-10-13: Voice rule: she does not like marketing-like text. Write plain, factual sentences about what happened and what she did. No sales framing, no hype verbs, no "turned X into Y" style lines unless she picks them herself. Applies to subtitles, openings, Impact and Bottom line on every page.
 - 2026-10-13: Installations: no "first page" wording in the subtitle or opening. She wants it stated that she shipped code.
+- 2026-10-13: Installations restructured to the App Review Platform pattern (see its entry). She rejected every invented subtitle; her own original line with a verb added won. Lesson: start from her wording, not new copy.
+- 2026-10-13: Local preview: port 8765 may be a stale server from an old session serving an old snapshot. Serve dist/ on a fresh port to check changes.
 - 2026-10-13: Presentation mode button restored and the deck content synced to the page (13 slides, principles slide added).
 - 2026-10-13: Design principles section added to App Review Platform under Research (Staff-level interview prep). Role strip declined ("no"). Weaving the principles into the list declined ("no no"). Principles stay as a separate subsection in her wording.
 - 2026-10-12: Deployed. Lesson: the project title is also hardcoded in PROJECT_META in generate.js (feeds the homepage featured card and the More work lists). When a Notion page is renamed, change PROJECT_META title too and grep the generated site for the old name.
