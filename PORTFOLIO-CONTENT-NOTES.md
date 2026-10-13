@@ -91,7 +91,7 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 
 Status key: TODO, PROPOSED (lines shown, waiting for her word), DONE LOCAL (in Notion and regenerated, not committed), DEPLOYED.
 
-### App Review Platform (slug internal-app-review-system, Notion 71024356b51b4ce8b46c21fa3a442020): DEPLOYED 2026-10-12 (live check passed; commits b2fc5b1 and the homepage name fix)
+### App Review Platform (slug internal-app-review-system, Notion 71024356b51b4ce8b46c21fa3a442020): DEPLOYED 2026-10-13 (page, principles, deck and side nav live; live check passed; commit b2b601b)
 Renamed from "Internal Reviews System" to avoid the clash with "Reviews Revamp". Slug unchanged.
 - Subtitle: "Ground-up rebuild of Wix App Market’s internal review platform that shortened review cycles."
 - TL;DR (3 columns): "I planned and rebuilt a stale internal review tool with a clearer structure and the features reviewers were missing. I started with interviews and by shadowing Account Managers as they ran reviews, then tested the redesign with them in a bug hunt before launch. Review cycles got shorter, and the tool has been in use since the 2022 launch."
@@ -101,7 +101,7 @@ Renamed from "Internal Reviews System" to avoid the clash with "Reviews Revamp".
 - Impact: "Review cycles got shorter." first, then Docs exit, in use since 2022 launch even after AI entered the process, the team added features themselves (filters, marking an app premium).
 - Removed: duplicate four-areas bullet, "Cactus", the review-start bullet and rev share bullet.
 - Impact layout as a large statement: skipped, the TL;DR already carries it.
-- Design principles (added 2026-10-13, local, not deployed): four principles in her own words, as a subsection right after Research and before "Deciding on the product areas". Her wording kept, including "publishing is always deliberate" (she confirmed it is true). Overlap with the goal-first list is accepted: principles are the why, the list is the how.
+- Design principles (added 2026-10-13, deployed): four principles in her own words, as a subsection right after Research and before "Deciding on the product areas". Her wording kept, including "publishing is always deliberate" (she confirmed it is true). Overlap with the goal-first list is accepted: principles are the why, the list is the how.
 - Pattern to reuse on the other pages: TL;DR box, goal-first decision list, problem named in the first sentence, claims only from sources.
 
 ### AI Credits (slug ai-credits-wallet, Notion 31135a9ccf7a804caf72da07638205bc): TODO (next, only when she says)
