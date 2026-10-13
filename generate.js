@@ -600,8 +600,9 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
   // Inject "Screens" h2 before the first screen-section h3 (the first h3 immediately
   // followed by a figcaption or proj-img, which marks the transition from process text to screens).
   // Skip pages that already have a Screens heading, have a custom layout, or are numbered-feature pages.
-  const SKIP_SCREENS = new Set(['ai-credits-wallet', 'app-pricing-page-projects']);
-  if (contentHtml && !SKIP_SCREENS.has(proj.slug) && !/>\s*Screens\s*</.test(contentHtml)) {
+  // Pages that keep a "Solution" heading as written in Notion (not renamed to Screens).
+  const SKIP_SCREENS = new Set(['ai-credits-wallet', 'app-pricing-page-projects', 'app-installation-page-for-developers']);
+  if (contentHtml && !SKIP_SCREENS.has(proj.slug) && !/>\s*Screens\s*</.test(contentHtml) && !/<h2>\s*Solution\s*<\/h2>/.test(contentHtml)) {
     if (contentHtml.includes('<h2><strong>Solution</strong></h2>')) {
       contentHtml = contentHtml.replace('<h2><strong>Solution</strong></h2>', '<h2>Screens</h2>');
     } else {

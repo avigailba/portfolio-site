@@ -1,7 +1,7 @@
 # Portfolio content notes (read this first in any content session)
 
 Working memory for improving the portfolio copy. Update it at the end of every session: add decisions, change a project's status, never delete history.
-Last updated: 2026-10-12 (end of the App Review Platform session)
+Last updated: 2026-10-13 (App Review Platform session; page structure standardized)
 
 ## Goal
 Make every project page more impressive for hiring managers and recruiters. Target role: full-time product design role, with AI and code involvement, not Figma-only.
@@ -87,6 +87,63 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 - CV claims missing from pages: "sole designer for 5 years" (Installations, Developer Sale, Internal Reviews), "concept and design to shipped code" (Installations, buried), "shipped across three platforms" (AI Credits, buried, and tagline says "three products"), AI/code (AI Credits only in a caption).
 - The header year on project pages is the project date (App Review Platform shows 2022), not the Notion date. Leave it.
 
+## Standard page structure (use this order on every project page, set 2026-10-13 on App Review Platform)
+All of it is written in Notion. Headings are plain `##` (section) and `###` (subsection). Old names: Process is now Approach plus Solution (the decisions and the key mockups), Impact is now Results and impact. Screens keeps its name and stays at the end.
+
+| # | Heading | What goes in it |
+|---|---|---|
+| 0 | Title, italic subtitle line, hero image | Subtitle states the outcome in one line, no numbers. The hero image is not clickable (automatic). |
+| 1 | `TL;DR:` paragraph (no heading) | Three sentences: what I did, how I got there, the outcome. Starts with "TL;DR:" and is shown as a three-column box. |
+| 2 | `## The problem` | First sentence names the problem. The cause (state loops as loops). The consequence. Ends on what we noticed that the outcome answers. |
+| 3 | `## Approach` | `### Research`: what you did, then the pain points as bullets. `### Design principles`: one bridge line, then the principles in her words. |
+| 4 | `## Solution` | `### Deciding on the product areas`: one line, then the area images, and "Click any image to see it bigger." `### Redesigning the platform`: numbered goal-first list (bold one-word goal, then what was done, priority order, UI system item last), then the 1 or 2 screens that prove the points. |
+| 5 | `## Delivery` | Who you worked with, syncs, testing, bug hunt. Short bullets. |
+| 6 | `## Challenges` | Two or three real difficulties, only from her sources. |
+| 7 | `## Results and impact` | First sentence in bold, then what changed. Directional only, no numbers. |
+| 8 | `## Next steps` | One or two sentences, only facts she gives. |
+| 9 | `## Screens` | All screens, grouped under `###` with short captions. Long groups go in a toggle. Never delete screens. At the end, so a skimmer reaches the results first. |
+| 10 | `## Bottom line` | One or two sentences, personal voice. |
+| auto | Last updated line, More work | Generated. Do not write them. |
+
+Rules for whoever builds a page:
+- Use only facts from the page, her CV, her Drive decks, or what she says. If a section has no source, ask her one question; do not invent. (Role and team: she declined a role strip; name the people in the text only if she gives the facts.)
+- Keep her wording when she writes it herself. After two "no" answers to proposals, ask for her exact line.
+- Write "Wix App Market" in full on first mention so the tooltip appears.
+- Check the page in the local preview at 1440px and 375px, and the checklist below. Do not push without her explicit go.
+- If the project has a presentation deck, keep it in sync in the same turn (App Review Platform has one: dist/projects/internal-review-demo.html).
+
+## Case study checklist (Product Design Case Study Cheatsheet, saved 2026-10-13)
+Use it as a final check on every project page. It is generic advice, so the "Our rules" column wins where they conflict.
+
+**Structure (in order)**
+| Section | What it should answer | On our pages |
+|---|---|---|
+| Summary | Quick overview of what you achieved, summarize the impact | TL;DR card |
+| Problem framing | What is the problem, why does it matter, what data supports it | The problem |
+| Role and team | Your role, what the team looked like | Skip the role strip (declined on App Review). Name the PM, engineering, writers in the text |
+| Approach | Your strategy, any research | Process: Research, Design principles |
+| Challenges | Unexpected challenges with your team | Principles and Delivery. Installations removed its constraints section on purpose |
+| Solution | What you came up with, shown with mockups | Screens |
+| Results and impact | What the results were, actual change in KPIs if you have them | Impact. Directional only |
+| Next steps | What you plan to do next, and why | Often missing. One sentence is enough |
+
+**Ground rules:** create a story. Optimize for scanning. Clear headings. Just enough process. Keep it polished. Quality over quantity.
+
+**Avoid:** design thinking diagrams, many sketches or wireframes, lorem ipsum placeholders, angled device mockups.
+
+**Scan test:** a hiring manager will skim it quickly. Does it pass the scan test?
+
+**Our rules over the cheatsheet**
+- No numbers, percentages or dollar amounts (legal). Ignore "show KPIs".
+- No marketing tone. Plain, factual, first person. Do not copy the "Helping [company] achieve X by Y" headline format.
+- Never delete screens. Too many screens: put them in a toggle, like "Publish flow" on App Review Platform.
+- Format: our site is the high-effort version. Ignore the format ranking.
+
+**Per-page status against the checklist (2026-10-13)**
+- App Review Platform: all sections present as headings (2026-10-13, local): Approach (Research, Design principles), Solution (Deciding on the product areas, Redesigning the platform), Delivery, Challenges, Results and impact, Next steps, Screens (the full gallery, at the end). Final names settled 2026-10-13: "Design" and "Solution" overlapped, and Approach and Process read as synonyms. The deck has Challenges (slide 14, tagged Delivery) and Next steps (slide 16) too. Generator: a plain "Screens" or "Solution" h2 stops the auto-injected "Screens" heading.
+- Installations: Summary, Problem, Approach, Solution, Impact present. Next steps removed (roadmap lines dropped as duplicates), Challenges only in principles, 13 screens (consider a toggle for edge and empty states).
+- Other pages: not audited yet.
+
 ## Project status
 
 Status key: TODO, PROPOSED (lines shown, waiting for her word), DONE LOCAL (in Notion and regenerated, not committed), DEPLOYED.
@@ -123,7 +180,8 @@ Restructured to the App Review Platform pattern. Current structure:
 - Removed: old opening paragraph incl. "co-built end-to-end" and the "two user types" line, the whole "Working within constraints" section (incl. the backend and API alignment line, can return as a Delivery bullet), the roadmap and discoverability lines in Impact, "cobbling" (now "building workarounds").
 - Wording: "table" became "page"; "help article" became "documentation"; Figma Make mock validated "with stakeholders and users".
 - Captions: em dashes changed to colons, "Default table" renamed "Default view" (2026-10-13). In-flow screens are Default view and Column customization, both ALSO in Screens as true copies. To duplicate a Notion image: notion-create-file-upload, curl POST the local dist/images file to upload_url, then reference file-upload://<id>. Reusing a notion-file-block link moves the block instead.
-- Open: homepage card subtitle in PROJECT_META is separate from the Notion subtitle. Check it.
+- NEXT (when she comes back): add the "Behind the scenes" images (Figma Make, Cursor, Server) under "Designing the page", in the same in-flow style as the two screens there. Duplicate them (upload route), do not move them, and keep them in Screens too. Check every caption before and after.
+- Homepage card subtitle: PROJECT_META in generate.js updated to match the Notion subtitle (deployed 2026-10-13, commit 8d3d2cd).
 
 ### Developer Sale (slug developer-sale, Notion 17d35a9ccf7a80c69ceafb3f7973485a): TODO
 - Subtitle "drove strong growth" is vague.
@@ -137,6 +195,7 @@ Restructured to the App Review Platform pattern. Current structure:
 Reviews Revamp, Collections Manager, Payouts Page, Refund Flow, Pricing Page Projects, Submit & Publish Widget, API Keys page, Coupons Page. Also check Development Site Creation and Custom Element Settings.
 
 ## Decisions log
+- 2026-10-13: Installations headings follow the cheatsheet: The problem, Approach, Delivery, Results & Impact, Next steps, Solution, Bottom line. She likes Approach, Solution, Results & Impact, Next steps. App Review Platform still uses Process, Impact, Screens: ask before aligning it. generate.js renames a Solution h2 to Screens, so Installations is in SKIP_SCREENS to keep "Solution". Next steps text comes from the roadmap lines removed earlier (cancellation reasons, deeper filtering, inbox and email tools, discoverability).
 - 2026-10-13: RULE, never delete or lose screens. Every image on a project page must still be on the page after an edit. In Notion, reusing an image's notion-file-block link MOVES the block, it does not copy it, so putting a screen in a new spot empties its old spot. Before and after any image edit, list every caption on the page and confirm none is missing. Do not replace an image to "swap" it without putting the old one back somewhere.
 - 2026-10-13: Voice rule: she does not like marketing-like text. Write plain, factual sentences about what happened and what she did. No sales framing, no hype verbs, no "turned X into Y" style lines unless she picks them herself. Applies to subtitles, openings, Impact and Bottom line on every page.
 - 2026-10-13: Installations: no "first page" wording in the subtitle or opening. She wants it stated that she shipped code.
