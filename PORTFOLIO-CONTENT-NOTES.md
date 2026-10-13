@@ -64,6 +64,14 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 - Only the first occurrence of each term per page gets the tooltip.
 - To add a term, add a key to `TERM_TIPS`. It applies to every page where the phrase appears, so check the other pages.
 
+## Presentation mode (deck) for App Review Platform
+- A separate, hand-edited file: `dist/projects/internal-review-demo.html` (14 slides). It is NOT generated from Notion and generate.js keeps it (`KEEP_PROJECT_FILES`). Edit the file directly and keep it in sync with the Notion page.
+- The "Presentation mode" button under the subtitle links to it (removed and put back on 2026-10-13, she wants it).
+- Order: 1 Cover (title on 3 lines: App / Review / Platform), 2 TL;DR (3 bullets in the deck body style, 17px Inter; the page keeps the 3-column box), 3 The problem, 4 Research (stacked like Principles: text above, 2x2 cards max 760px), 5 Design principles (cards max 760px wide), 6 Scope, 7 to 13 Solution slides, 14 Impact.
+- Synced 2026-10-13: name, subtitle, TL;DR, The problem (with the loop and the long review cycles), Research, principles, Scope intro, Impact. Solution slides were left as they were.
+- Side navigation (2026-10-13), ported from the Queuewe deck (dist/queuewe/index.html): a 170px list on the left, numbered 01 to 13 from each slide's data-label, hidden on the cover, a round menu button and drawer at 1100px and below. New slides get a data-label so they appear in it automatically.
+- When the page changes (Impact, problem, principles, TL;DR), update the deck in the same session.
+
 ## Source of truth for claims
 - CV file: /Users/avigailb/Library/CloudStorage/GoogleDrive-avigailba@gmail.com/My Drive/01 Avigail/Avigail Bahat CV.pdf
 - Interview deck for this project (Hebrew): Google Slides "App Review System - Melio" in her Drive. More decks like it may exist per project: search Drive before writing impact.
@@ -87,12 +95,13 @@ Status key: TODO, PROPOSED (lines shown, waiting for her word), DONE LOCAL (in N
 Renamed from "Internal Reviews System" to avoid the clash with "Reviews Revamp". Slug unchanged.
 - Subtitle: "Ground-up rebuild of Wix App Market’s internal review platform that shortened review cycles."
 - TL;DR (3 columns): "I planned and rebuilt a stale internal review tool with a clearer structure and the features reviewers were missing. I started with interviews and by shadowing Account Managers as they ran reviews, then tested the redesign with them in a bug hunt before launch. Review cycles got shorter, and the tool has been in use since the 2022 launch."
-- The problem: Account Managers wrote reviews in different tools (some Docs, some Sheets); the tool was not updated so no one used it, and nothing got fixed (a loop); no shared history, no visibility between submissions, no consistent handoff.
+- The problem: Account Managers wrote reviews in different tools (some Docs, some Sheets); the tool was stuck in a loop (not updated, so no one used it, and with no one using it, it never got updated); no shared history, no visibility between submissions, no consistent handoff; it ends with "As more and more apps were submitted, we noticed that review cycles were long." so the outcome answers the problem. Use "loop" there, not "cycle", because "review cycles" is the next idea.
 - Process: Research (as bullets of four pain points), one line for the four areas + "Click any image to see it bigger.", 7 goal-first numbered points, two review screens.
 - Delivery: weekly syncs; bug hunt with the finding about the diff in the second review (one bullet).
 - Impact: "Review cycles got shorter." first, then Docs exit, in use since 2022 launch even after AI entered the process, the team added features themselves (filters, marking an app premium).
 - Removed: duplicate four-areas bullet, "Cactus", the review-start bullet and rev share bullet.
 - Impact layout as a large statement: skipped, the TL;DR already carries it.
+- Design principles (added 2026-10-13, local, not deployed): four principles in her own words, as a subsection right after Research and before "Deciding on the product areas". Her wording kept, including "publishing is always deliberate" (she confirmed it is true). Overlap with the goal-first list is accepted: principles are the why, the list is the how.
 - Pattern to reuse on the other pages: TL;DR box, goal-first decision list, problem named in the first sentence, claims only from sources.
 
 ### AI Credits (slug ai-credits-wallet, Notion 31135a9ccf7a804caf72da07638205bc): TODO (next, only when she says)
@@ -105,13 +114,15 @@ Renamed from "Internal Reviews System" to avoid the clash with "Reviews Revamp".
 - Add a TL;DR. Search Drive for an interview deck first.
 - Caution: this page has a custom layout (credits widget iframe), so check it after the TL;DR is added.
 
-### Installations (slug app-installation-page-for-developers, Notion 31135a9ccf7a80358e3cead5465c89f8): TODO
+### Installations (slug app-installation-page-for-developers, Notion 31135a9ccf7a80358e3cead5465c89f8): IN PROGRESS (subtitle DONE LOCAL, rest PROPOSED)
 - Opening leads with "I designed and shipped", the problem comes a section later.
 - Roadmap and discoverability lines at the end of Impact duplicate the Bottom line.
 - Fix stray bold space ("apps. **"), "for ex.,", and the filler "actually" in the tagline.
-- Proposed subtitle: "The first installation data page for Wix App Market developers: who installs their apps, and from where."
-- Proposed opening: "Developers on the Wix App Market had no way to see who installed their apps, so they emailed support for basic usage data. I owned the first installation data page from concept and design to shipped code, working end to end with engineering through permission levels, PII limits, and API constraints."
-- Open: page says "co-built with engineering", CV says "owned from concept to shipped code". She must pick one public wording.
+- Subtitle (DONE LOCAL 2026-10-13, in Notion and page regenerated, not committed): "Designed and shipped installation analytics that gave developers site-level visibility into how their apps were used". Her own original line with a verb added and "actually" dropped. She rejected all invented alternatives.
+- Homepage card subtitle is separate: PROJECT_META in generate.js still says "Redesigned the app installation experience end-to-end". Not changed, ask first.
+- Proposed opening (not applied): "Developers on the Wix App Market had no way to see who installed their apps, so they emailed support for basic usage data. I designed the installation data page and shipped part of it in code, using Cursor and Claude Code to add features and fix bugs, working end to end with engineering through permission levels, PII limits, and API constraints."
+- Code claim is sourced from the page itself: "Joined the implementation team using Cursor and Claude Code to add features and fix bugs" and "Contributed a year selector to the Wix Design System in code". Wording "shipped part of it in code" is deliberate, the page does not show she built all of it.
+- Resolved by dropping both "co-built" and "owned": say what she did.
 
 ### Developer Sale (slug developer-sale, Notion 17d35a9ccf7a80c69ceafb3f7973485a): TODO
 - Subtitle "drove strong growth" is vague.
@@ -125,6 +136,10 @@ Renamed from "Internal Reviews System" to avoid the clash with "Reviews Revamp".
 Reviews Revamp, Collections Manager, Payouts Page, Refund Flow, Pricing Page Projects, Submit & Publish Widget, API Keys page, Coupons Page. Also check Development Site Creation and Custom Element Settings.
 
 ## Decisions log
+- 2026-10-13: Voice rule: she does not like marketing-like text. Write plain, factual sentences about what happened and what she did. No sales framing, no hype verbs, no "turned X into Y" style lines unless she picks them herself. Applies to subtitles, openings, Impact and Bottom line on every page.
+- 2026-10-13: Installations: no "first page" wording in the subtitle or opening. She wants it stated that she shipped code.
+- 2026-10-13: Presentation mode button restored and the deck content synced to the page (13 slides, principles slide added).
+- 2026-10-13: Design principles section added to App Review Platform under Research (Staff-level interview prep). Role strip declined ("no"). Weaving the principles into the list declined ("no no"). Principles stay as a separate subsection in her wording.
 - 2026-10-12: Deployed. Lesson: the project title is also hardcoded in PROJECT_META in generate.js (feeds the homepage featured card and the More work lists). When a Notion page is renamed, change PROJECT_META title too and grep the generated site for the old name.
 - 2026-10-12: One session per batch is the default. A single project gets its own session only for deep work. Shared files (generate.js, dist/) make parallel sessions risky.
 - 2026-10-12: Internal Review System renamed "App Review Platform".

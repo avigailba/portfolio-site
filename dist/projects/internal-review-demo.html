@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Internal Review System: Interview Demo</title>
+  <title>App Review Platform: Interview Demo</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -599,12 +599,44 @@
     .lb-arrow:hover { background: rgba(255,255,255,0.2); }
     .lb-arrow:disabled { opacity: 0.2; cursor: default; }
     .lb-arrow:disabled:hover { background: rgba(255,255,255,0.1); }
-  </style>
+  
+    /* Side navigation (same as the Queuewe deck) */
+    #side-nav { position: fixed; top: 0; left: 0; bottom: 0; width: 170px; border-right: 0.5px solid #ebebeb; background: #fff; z-index: 150; display: flex; flex-direction: column; overflow-y: auto; }
+    #side-title { cursor: pointer; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; color: #0a0a0a; padding: 24px 20px 16px; border-bottom: 0.5px solid #ebebeb; flex-shrink: 0; }
+    #side-list { padding: 8px 0; }
+    .side-item { display: flex; align-items: baseline; gap: 10px; width: 100%; text-align: left; border: none; background: none; cursor: pointer; padding: 9px 20px; font-family: 'Inter', sans-serif; }
+    .side-item:hover { background: #f7f7f7; }
+    .side-num { font-size: 13px; color: #555; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+    .side-label { font-size: 13px; color: #555; line-height: 1.4; text-align: left; }
+    .side-item.active .side-num, .side-item.active .side-label { color: #0a0a0a; font-weight: 500; }
+    #mobile-menu, #mobile-menu-backdrop { display: none; }
+    #deck { position: fixed; top: 0; left: 170px; right: 0; bottom: 0; width: auto; height: auto; }
+    body.has-side #nav, body.has-side #kb-hint { left: calc(50% + 85px); }
+    @media (max-width: 1100px) {
+      #side-nav { display: flex !important; width: min(300px, 84vw); z-index: 320; transform: translateX(-105%); transition: transform 0.22s ease; }
+      #side-nav.mobile-open { transform: translateX(0); }
+      #mobile-menu { position: fixed; display: flex; align-items: center; justify-content: center; top: 12px; left: 14px; z-index: 310; width: 44px; height: 44px; border: 1px solid #e5e5e5; border-radius: 50%; background: #fff; color: #0a0a0a; box-shadow: 0 2px 10px rgba(0,0,0,.08); cursor: pointer; }
+      #mobile-menu svg { width: 20px; height: 20px; }
+      #mobile-menu-backdrop { position: fixed; inset: 0; z-index: 300; background: rgba(10,10,10,.28); }
+      #mobile-menu-backdrop.open { display: block; }
+      #deck { left: 0; }
+      body.has-side #nav, body.has-side #kb-hint { left: 50%; }
+    }
+</style>
 </head>
 <body>
 
 
 <div id="progress"></div>
+<nav id="side-nav" aria-label="Slide list">
+  <div id="side-title">App Review Platform</div>
+  <div id="side-list"></div>
+</nav>
+
+<button id="mobile-menu" type="button" aria-label="Open slide menu" aria-expanded="false" aria-controls="side-nav">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+<button id="mobile-menu-backdrop" type="button" aria-label="Close slide menu"></button>
 <div id="deck">
 
   <!-- ① Cover -->
@@ -616,14 +648,27 @@
           <span class="badge">CMS</span>
           <span class="badge">2022</span>
         </div>
-        <h1 class="cover-h1">Internal Reviews&nbsp;System</h1>
-        <p class="cover-sub">A ground-up rebuild of Wix App Market's internal review platform, built to shorten review cycles and speed up time to&nbsp;publish.</p>
+        <h1 class="cover-h1">App<br>Review<br>Platform</h1>
+        <p class="cover-sub">Ground-up rebuild of Wix App Market’s internal review platform that shortened review&nbsp;cycles.</p>
         <button class="cover-start-btn" id="cover-start">Start</button>
       </div>
       <div class="cover-hero">
         <img src="../images/img-3a335a9ccf7a80439b98d3025148c52b.jpg" alt="The review workspace, showing a report of developer comments organized by path">
       </div>
     </div>
+  </div>
+
+  <!-- TL;DR -->
+  <div class="slide slide-vcenter" data-label="TL;DR">
+    <div class="slide-header">
+      <span class="slide-section">Overview</span>
+    </div>
+    <h2 class="slide-h">TL;DR</h2>
+    <ul style="margin:8px 0 0;padding-left:22px;max-width:720px;list-style:disc;">
+      <li class="slide-body" style="margin:0 0 14px;">I planned and rebuilt a stale internal review tool with a clearer structure and the features reviewers were&nbsp;missing.</li>
+      <li class="slide-body" style="margin:0 0 14px;">I started with interviews and by shadowing Account Managers as they ran reviews, then tested the redesign with them in a bug hunt before&nbsp;launch.</li>
+      <li class="slide-body" style="margin:0 0 14px;">Review cycles got shorter, and the tool has been in use since the 2022&nbsp;launch.</li>
+    </ul>
   </div>
 
   <!-- ② The Problem -->
@@ -634,10 +679,10 @@
     <h2 class="slide-h">The problem</h2>
     <div style="display:flex;gap:56px;align-items:flex-start;flex-wrap:wrap;">
     <div style="flex:1 1 420px;max-width:520px;">
-    <p class="slide-body">Wix App Market's internal review platform is the tool Account Managers use to evaluate and approve apps before they go live, spanning four interconnected product areas.</p>
-    <p class="slide-body" style="margin-top: 18px;">When I joined, the team had stopped using it, and it wasn't updated or fixed. Review work was scattered across personal Google Docs, with no shared history, no visibility between submissions, and no consistent handoffs. <span class="mark">As the team grew and more apps were submitted, that stopped being&nbsp;sustainable.</span></p>
+    <p class="slide-body">Account Managers who review apps for the Wix App Market wrote their reviews in different tools: some used Google Docs, others used Sheets. The internal review tool was stuck in a loop: it wasn't updated, so no one used it, and with no one using it, it never got&nbsp;updated.</p>
+    <p class="slide-body" style="margin-top: 18px;">That meant no shared history, no visibility into what changed between submissions, and no consistent handoff between reviewers. <span class="mark">As more and more apps were submitted, we noticed that review cycles were&nbsp;long.</span></p>
     </div>
-    <div class="img-cell" style="flex:1 1 420px;min-width:0;margin-top:0;">
+    <div class="img-cell" style="flex:1 1 420px;min-width:0;margin-top:0;display:flex;flex-direction:column;gap:8px;grid-row:auto;">
       <img src="../images/figjam-app-review-cycle.png" alt="App review cycle: App submitted, pending review, assigned to an account manager, reviewed and commented on, then either declined (comments sent to developer, who makes changes and resubmits) or approved and published." style="width:100%;display:block;border-radius:6px;border:0.5px solid #ebebeb;cursor:zoom-in;height:auto;flex:none;">
       <span class="img-cap">App review cycle</span>
     </div>
@@ -650,16 +695,10 @@
       <span class="slide-section">Process</span>
     </div>
     <h2 class="slide-h">Research</h2>
-    <div style="display:flex;gap:56px;align-items:flex-start;flex-wrap:wrap;">
-    <div style="flex:1 1 460px;max-width:560px;">
-    <p class="slide-body">Met with Account Managers to walk through the current system, shadowed them running actual reviews, audited the Docs and Sheets they were using instead, and pulled analytics on time to publish and how many resubmissions an app typically needed.</p>
-    <p class="slide-body" style="margin-top: 20px;"><span class="mark">Together, these caused longer review times and slower cycles across the team.</span></p>
-    </div>
-    <div style="flex:1 1 420px;">
-      <p style="margin-bottom:10px;font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.07em;font-family:'Inter',sans-serif;">What surfaced</p>
-      <div class="research-grid">
+    <p class="slide-intro">Met with Account Managers to walk through the current system, shadowed them running reviews, audited the Docs and Sheets they used instead, and pulled analytics on time to publish and resubmissions per&nbsp;app. <span class="mark">Four pain points came out of it.</span></p>
+    <div class="research-grid" style="max-width:760px;">
       <div class="research-card">
-        <h3>Confusing UI in the current system</h3>
+        <h3>A confusing UI</h3>
         <p>The tool's own interface was part of the problem: reviewers found it harder to work in than the spreadsheets they'd moved to instead.</p>
       </div>
       <div class="research-card">
@@ -674,8 +713,33 @@
         <h3>No integrated workflow</h3>
         <p>Reviewing, commenting, and publishing were disconnected steps, not one flow, so context got lost moving between them.</p>
       </div>
-      </div>
     </div>
+  </div>
+
+  <!-- Design principles -->
+  <div class="slide slide-vcenter" data-label="Principles">
+    <div class="slide-header">
+      <span class="slide-section">Process</span>
+    </div>
+    <h2 class="slide-h">Design principles</h2>
+    <p class="slide-intro">Some of the pain points became&nbsp;principles.</p>
+    <div class="research-grid" style="max-width:760px;">
+      <div class="research-card">
+        <h3>Fit the existing workflow</h3>
+        <p>Reviewers were already working in Docs and Sheets, so the platform had to beat their workaround and feel&nbsp;familiar.</p>
+      </div>
+      <div class="research-card">
+        <h3>Make every decision traceable</h3>
+        <p>Every step is logged, and the previous report sits next to the current&nbsp;one.</p>
+      </div>
+      <div class="research-card">
+        <h3>Show what changed</h3>
+        <p>A before and after view lets reviewers focus on the&nbsp;delta.</p>
+      </div>
+      <div class="research-card">
+        <h3>Keep the human in control</h3>
+        <p>Blockers disable publishing, and publishing is always&nbsp;deliberate.</p>
+      </div>
     </div>
   </div>
 
@@ -685,7 +749,7 @@
       <span class="slide-section">Process</span>
     </div>
     <h2 class="slide-h">Deciding on scope</h2>
-    <p class="slide-intro">Before designing any screens, I mapped the product into four areas: the app directory, the app page, the review workspace, and team management. Each one mapped to a gap the research surfaced. I built on Wix's own design system to fix the confusing-UI complaint at the platform level first, before touching any review-specific&nbsp;logic.</p>
+    <p class="slide-intro">I split the product into four areas before designing any screens: the app directory, the app page, the review workspace, and team management. The review workspace was entirely new. Each one mapped to a gap the research surfaced. I built on Wix's own design system to fix the confusing-UI complaint at the platform level first, before touching any review-specific&nbsp;logic.</p>
     <div class="img-grid g4">
       <div class="img-cell">
         <img src="../images/img-39b35a9ccf7a80639d30e7dab00429f6.jpg" alt="All apps">
@@ -865,7 +929,7 @@
       <span class="slide-section">Impact</span>
     </div>
     <h2 class="slide-h">Impact</h2>
-    <p class="impact-stat">The tool is still actively used by Wix's Developer Relations team. <span class="mark">It reduced account manager workload, shortened both the review cycle and time to publish</span>, and made app evaluations faster and more consistent across the team.</p>
+    <p class="slide-body" style="margin-bottom:36px;"><span class="mark">Review cycles got shorter.</span> The team stopped working in Google Docs and moved their reviews into the platform, where anyone with permission can follow an app's full history. It has been in use since the 2022 launch, including after AI entered the review process. The team has since added features themselves, such as more filters on the main page and marking an app as premium, which used to need a developer.</p>
     <div class="bottom-line-block">
       <p>The team had already voted with their feet, doing the actual review work in spreadsheets outside the platform. Success wasn't launching a redesign; it was building something good enough that they'd stop reaching for Google Docs. The tool became their primary review surface, which is the only metric that actually&nbsp;mattered.</p>
     </div>
@@ -911,6 +975,38 @@
     dotsEl.appendChild(d);
   });
 
+  // Side navigation: one item per slide (the cover is the title, so it is skipped)
+  var sideListEl = document.getElementById('side-list');
+  slides.forEach(function (slide, i) {
+    var label = slide.dataset.label || ('Slide ' + (i + 1));
+    var b = document.createElement('button');
+    b.className = 'side-item';
+    if (i === 0) b.style.display = 'none';
+    b.innerHTML = '<span class="side-num">' + String(i).padStart(2, '0') + '</span><span class="side-label">' + label + '</span>';
+    b.addEventListener('click', function () { goTo(i); hideHint(); });
+    sideListEl.appendChild(b);
+  });
+  var sideNav = document.getElementById('side-nav');
+  var mobileMenu = document.getElementById('mobile-menu');
+  var mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
+  function closeMobileMenu() {
+    sideNav.classList.remove('mobile-open');
+    mobileMenuBackdrop.classList.remove('open');
+    mobileMenu.setAttribute('aria-expanded', 'false');
+    mobileMenu.setAttribute('aria-label', 'Open slide menu');
+  }
+  function toggleMobileMenu() {
+    var open = !sideNav.classList.contains('mobile-open');
+    sideNav.classList.toggle('mobile-open', open);
+    mobileMenuBackdrop.classList.toggle('open', open);
+    mobileMenu.setAttribute('aria-expanded', String(open));
+    mobileMenu.setAttribute('aria-label', open ? 'Close slide menu' : 'Open slide menu');
+  }
+  mobileMenu.addEventListener('click', toggleMobileMenu);
+  mobileMenuBackdrop.addEventListener('click', closeMobileMenu);
+  sideListEl.addEventListener('click', function (e) { if (e.target.closest('.side-item')) closeMobileMenu(); });
+  document.getElementById('side-title').addEventListener('click', function () { closeMobileMenu(); goTo(0); });
+
   function goTo(idx) {
     if (idx < 0 || idx >= total) return;
     slides[cur].classList.remove('active');
@@ -928,7 +1024,14 @@
     document.getElementById('nav').style.display = onCover ? 'none' : 'flex';
     document.getElementById('progress').style.display = onCover ? 'none' : 'block';
     if (onCover) hint.classList.add('gone');
+    // side navigation: active item, hidden on the cover, deck shifts right of it on wide screens
+    sideListEl.querySelectorAll('.side-item').forEach(function (b, i) { b.classList.toggle('active', i === cur); });
+    var compact = window.matchMedia('(max-width: 1100px)').matches;
+    sideNav.style.display = (onCover || compact) ? 'none' : 'flex';
+    document.getElementById('deck').style.left = (onCover || compact) ? '0' : '170px';
+    document.body.classList.toggle('has-side', !onCover && !compact);
   }
+  window.addEventListener('resize', function () { goTo(cur); });
 
   document.getElementById('btn-prev').addEventListener('click', function () { goTo(cur - 1); hideHint(); });
   document.getElementById('btn-next').addEventListener('click', function () { goTo(cur + 1); hideHint(); });

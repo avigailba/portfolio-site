@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <link rel="stylesheet" href="../style.css?v=de7ce8e55b">
+  <link rel="stylesheet" href="../style.css?v=4947b10f6f">
 </head>
 <body class="proj-page">
   <header id="site-header">
@@ -64,6 +64,7 @@
           <button class="proj-nav-arr" id="proj-next" aria-label="Next project" onclick="location.href='developer-sale.html'">→</button>
         </div>
         <p class="proj-subtitle-m">Ground-up rebuild of Wix App Market’s internal review platform that shortened review cycles.</p>
+        <div class="proj-deck-wrap"><a class="proj-deck-btn" href="internal-review-demo.html" target="_blank" rel="noopener">Presentation mode ↗</a></div>
         <div class="proj-meta-m">
           <button class="proj-nav-text" aria-label="Previous project" onclick="location.href='app-installation-page-for-developers.html'">← Previous</button>
           <button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='developer-sale.html'">Next →</button>
@@ -75,7 +76,7 @@
 </figure>
 <div class="proj-tldr"><span class="proj-tldr-label">TL;DR</span><div class="proj-tldr-grid" data-cols="3"><p>I planned and rebuilt a stale internal review tool with a clearer structure and the features reviewers were missing.</p><p>I started with interviews and by shadowing Account Managers as they ran reviews, then tested the redesign with them in a bug hunt before launch.</p><p>Review cycles got shorter, and the tool has been in use since the 2022 launch.</p></div></div>
 <h2>The problem</h2>
-<p>Account Managers who review apps for the <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics." aria-label="Wix App Market" aria-describedby="term-tip-1" aria-expanded="false">Wix App Market<span class="ctx-tip-pop" id="term-tip-1" role="tooltip" hidden>Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.</span></span> wrote their reviews in different tools: some used Google Docs, others used Sheets. The internal review tool was no longer updated, so no one used it, and with no one using it, nothing got fixed. That meant no shared history, no visibility into what changed between submissions, and no consistent handoff between reviewers. As more apps were submitted, that stopped being sustainable.</p>
+<p>Account Managers who review apps for the <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics." aria-label="Wix App Market" aria-describedby="term-tip-1" aria-expanded="false">Wix App Market<span class="ctx-tip-pop" id="term-tip-1" role="tooltip" hidden>Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.</span></span> wrote their reviews in different tools: some used Google Docs, others used Sheets. The internal review tool was stuck in a loop: it wasn't updated, so no one used it, and with no one using it, it never got updated. That meant no shared history, no visibility into what changed between submissions, and no consistent handoff between reviewers. As more and more apps were submitted, we noticed that review cycles were long.</p>
 <h2>Process</h2>
 <h3>Research</h3>
 <p>Met with Account Managers to walk through the current system, shadowed them running reviews, audited the Docs and Sheets they used instead, and pulled analytics on time to publish and resubmissions per app.</p>
@@ -85,6 +86,14 @@
   <li>Difficulty writing a consistent review</li>
   <li>Weak information architecture</li>
   <li>No integrated workflow</li>
+</ul>
+<h3>Design principles</h3>
+<p>Some of the pain points became principles.</p>
+<ul>
+  <li>Fit the existing workflow. Reviewers were already working in Docs and Sheets, so the platform had to beat their workaround and feel familiar.</li>
+  <li>Make every decision traceable. Every step is logged, and the previous report sits next to the current one.</li>
+  <li>Show what changed. A before and after view lets reviewers focus on the delta.</li>
+  <li>Keep the human in control. Blockers disable publishing, and publishing is always deliberate.</li>
 </ul>
 <h3>Deciding on the product areas</h3>
 <p>I split the product into four areas before designing any screens, and the review workspace was entirely new. Click any image to see it bigger.</p>
@@ -230,7 +239,7 @@
 <h2>Bottom line</h2>
 <p>The team had already voted with their feet, doing the actual review work in spreadsheets outside the platform. Success wasn't launching a redesign; it was building something good enough that they'd stop reaching for Google Docs. The tool became their primary review surface, which is the only metric that actually mattered.</p>
 
-<p class="proj-updated">Last updated 12 October 2026</p>
+<p class="proj-updated">Last updated 13 October 2026</p>
       </div>
     </main>
     <div class="proj-gutter proj-gutter-right"></div>
@@ -291,7 +300,7 @@
 <script>
 var ALL_PROJECTS = [
   { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'A new AI monetization model that had to work for two types of users, across three products, without becoming two separate systems.', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
-  { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Installation analytics that gave developers site-level visibility into how their apps were actually being used', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
+  { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Designed and shipped installation analytics that gave developers site-level visibility into how their apps were used', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
   { slug: 'internal-app-review-system', title: 'App Review Platform', sub: 'Ground-up rebuild of Wix App Market’s internal review platform that shortened review cycles.', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
   { slug: 'developer-sale', title: 'Developer Sale', sub: 'Sales infrastructure that made market-wide promotions possible and drove strong growth in subscriptions and upgrade revenue', cat: 'Monetisation', cats: 'developer monetisation cms', year: 2024, featured: true },
   { slug: 'app-reviews-revamp', title: 'App Reviews Revamp', sub: 'Cross-app review management system designed to give developers with many apps unified control over their feedback', cat: 'Developer tools', cats: 'developer cms', year: 2024, featured: false },
