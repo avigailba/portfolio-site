@@ -38,7 +38,8 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 4. ALWAYS show her a local preview of the real clickable page: copy dist/ into the session scratchpad, serve it with `python3 -m http.server <port> --directory <copy>`, verify it returns 200, open the page in the browser pane, and say the URL. Do this after every page edit, without being asked. Also check mobile (375px) for anything layout related.
 5. NEVER commit or push without her explicit go, and warn her first (global rule): say what changes on the live site. Deploy runs on push only.
 6. Before committing, `git diff` for edits that are not mine (Codex may edit the same repo). Stage only files for this work.
-7. Notion image blocks cannot be duplicated by reusing the same `notion-file-block://` reference: Notion MOVES the image and leaves empty columns. To show an image twice, upload a copy (notion-create-file-upload, then POST the file with curl, then reference `file-upload://<id>`). Check the original place still has its image after any edit with images.
+7. Backups: before restructuring a Notion page with images, duplicate it (notion-duplicate-page). A duplicate created inside the CMS parent would be published as a project, so MOVE it out immediately (notion-move-pages to the workspace) and title it BACKUP. App Review Platform backup (2026-10-13, before the sections were reordered): https://app.notion.com/p/3f835a9ccf7a815aba62d4a8bee5aae7
+8. Notion image blocks cannot be duplicated by reusing the same `notion-file-block://` reference: Notion MOVES the image and leaves empty columns. To show an image twice, upload a copy (notion-create-file-upload, then POST the file with curl, then reference `file-upload://<id>`). Check the original place still has its image after any edit with images.
 8. Add a numbered list item or sentence into Notion with exact old_str. Fetch the page first if the text may have changed.
 
 ## Site features built (all local, not committed unless noted in the decisions log)
@@ -88,7 +89,7 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 - The header year on project pages is the project date (App Review Platform shows 2022), not the Notion date. Leave it.
 
 ## Standard page structure (use this order on every project page, set 2026-10-13 on App Review Platform)
-All of it is written in Notion. Headings are plain `##` (section) and `###` (subsection). Old names: Process is now Approach plus Solution (the decisions and the key mockups), Impact is now Results and impact. Screens keeps its name and stays at the end.
+All of it is written in Notion. Headings are plain `##` (section) and `###` (subsection). Old names: Process is now Approach plus Solution, Impact is now Results and impact, and the Screens section is now part of Solution.
 
 | # | Heading | What goes in it |
 |---|---|---|
@@ -96,20 +97,22 @@ All of it is written in Notion. Headings are plain `##` (section) and `###` (sub
 | 1 | `TL;DR:` paragraph (no heading) | Three sentences: what I did, how I got there, the outcome. Starts with "TL;DR:" and is shown as a three-column box. |
 | 2 | `## The problem` | First sentence names the problem. The cause (state loops as loops). The consequence. Ends on what we noticed that the outcome answers. |
 | 3 | `## Approach` | `### Research`: what you did, then the pain points as bullets. `### Design principles`: one bridge line, then the principles in her words. |
-| 4 | `## Solution` | `### Deciding on the product areas`: one line, then the area images, and "Click any image to see it bigger." `### Redesigning the platform`: numbered goal-first list (bold one-word goal, then what was done, priority order, UI system item last), then the 1 or 2 screens that prove the points. |
-| 5 | `## Delivery` | Who you worked with, syncs, testing, bug hunt. Short bullets. |
-| 6 | `## Challenges` | Two or three real difficulties, only from her sources. |
-| 7 | `## Results and impact` | First sentence in bold, then what changed. Directional only, no numbers. |
-| 8 | `## Next steps` | One or two sentences, only facts she gives. |
-| 9 | `## Screens` | All screens, grouped under `###` with short captions. Long groups go in a toggle. Never delete screens. At the end, so a skimmer reaches the results first. |
-| 10 | `## Bottom line` | One or two sentences, personal voice. |
+| 4 | `## Delivery` | Who you worked with, syncs, testing, bug hunt. Short bullets. |
+| 5 | `## Challenges` | Two or three real difficulties, only from her sources. |
+| 6 | `## Results and impact` | First sentence in bold, then what changed. Directional only, no numbers. |
+| 7 | `## Next steps` | One or two sentences, only facts she gives. |
+| 8 | `## Solution` | Everything visual, in this order. `### Deciding on the product areas`: one line, the area images, "Click any image to see it bigger." `### Redesigning the platform`: numbered goal-first list (bold one-word goal, then what was done, priority order, UI system item last) and the 1 or 2 screens that prove the points. Then the full screens, grouped under `###` with short captions (long groups in a toggle, never delete screens). No separate "Screens" heading. |
+| 9 | `## Bottom line` | One or two sentences, personal voice. |
 | auto | Last updated line, More work | Generated. Do not write them. |
+
+Why this order (2026-10-13, her call): the story and the result come first, then the long visual section sits last so a skimmer reaches the impact before 20 images. The presentation deck keeps its own order (results at the end).
 
 Rules for whoever builds a page:
 - Use only facts from the page, her CV, her Drive decks, or what she says. If a section has no source, ask her one question; do not invent. (Role and team: she declined a role strip; name the people in the text only if she gives the facts.)
 - Keep her wording when she writes it herself. After two "no" answers to proposals, ask for her exact line.
 - Write "Wix App Market" in full on first mention so the tooltip appears.
 - Check the page in the local preview at 1440px and 375px, and the checklist below. Do not push without her explicit go.
+- Moving image blocks in Notion: do not re-reference an existing image (Notion moves it). Move text blocks, not images, or upload a copy.
 - If the project has a presentation deck, keep it in sync in the same turn (App Review Platform has one: dist/projects/internal-review-demo.html).
 
 ## Case study checklist (Product Design Case Study Cheatsheet, saved 2026-10-13)
@@ -140,7 +143,7 @@ Use it as a final check on every project page. It is generic advice, so the "Our
 - Format: our site is the high-effort version. Ignore the format ranking.
 
 **Per-page status against the checklist (2026-10-13)**
-- App Review Platform: all sections present as headings (2026-10-13, local): Approach (Research, Design principles), Solution (Deciding on the product areas, Redesigning the platform), Delivery, Challenges, Results and impact, Next steps, Screens (the full gallery, at the end). Final names settled 2026-10-13: "Design" and "Solution" overlapped, and Approach and Process read as synonyms. The deck has Challenges (slide 14, tagged Delivery) and Next steps (slide 16) too. Generator: a plain "Screens" or "Solution" h2 stops the auto-injected "Screens" heading.
+- App Review Platform: all sections present as headings (2026-10-13, local): The problem, Approach (Research, Design principles), Delivery, Challenges, Results and impact, Next steps, Solution (decisions, redesign list, and all screens), Bottom line. The deck has Challenges (tagged Delivery) and Next steps too, and keeps results at the end. Generator: a plain "Solution" or "Screens" h2 stops the auto-injected "Screens" heading.
 - Installations: Summary, Problem, Approach, Solution, Impact present. Next steps removed (roadmap lines dropped as duplicates), Challenges only in principles, 13 screens (consider a toggle for edge and empty states).
 - Other pages: not audited yet.
 
