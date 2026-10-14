@@ -63,7 +63,7 @@ const stats = { pages: 0, images: 0, errors: [] };
 
 // Project metadata: categories, display title overrides, years, featured status
 const PROJECT_META = {
-  'ai-credits-wallet':                    { title: 'AI Credits',              subtitle: 'Transparent AI usage billing across Wix\'s developer platform', cats: 'monetisation',          display: 'Monetisation',    year: 2026, featured: true },
+  'ai-credits-wallet':                    { title: 'AI Credits Wallet',        subtitle: 'Transparent AI usage billing across Wix\'s developer platform', cats: 'monetisation',          display: 'Monetisation',    year: 2026, featured: true },
   'app-installation-page-for-developers': { title: 'Installations Page',      subtitle: 'Designed and shipped installation analytics that gave developers site-level visibility into how their apps were used', cats: 'developer cms',         display: 'Developer tools', year: 2025, featured: true },
   'internal-app-review-system':          { title: 'App Review Platform',   subtitle: 'Replaced a spreadsheet-based review process with a structured tool', cats: 'internal cms',       display: 'Internal tools',  year: 2022, featured: true },
   'developer-sale':                      { title: 'Developer Sale',           subtitle: 'A monetisation campaign tool for app developers',                cats: 'developer monetisation cms', display: 'Monetisation', year: 2024, featured: true },
@@ -984,7 +984,7 @@ function designSystemPage(notionConnected) {
     { hex: '#22c55e', name: 'Available', usage: 'Availability dot only' },
   ];
   const typeRows = [
-    { sample: 'AI Credits',                  spec: '54px / 700 / −0.03em / Plus Jakarta Sans', where: 'Project page title (.proj-title-m)',                                  style: 'font-size:54px;font-weight:700;letter-spacing:-0.03em;color:#0a0a0a;line-height:1.1;font-family:Plus Jakarta Sans,sans-serif' },
+    { sample: 'AI Credits Wallet',           spec: '54px / 700 / −0.03em / Plus Jakarta Sans', where: 'Project page title (.proj-title-m)',                                  style: 'font-size:54px;font-weight:700;letter-spacing:-0.03em;color:#0a0a0a;line-height:1.1;font-family:Plus Jakarta Sans,sans-serif' },
     { sample: 'Featured project',            spec: 'clamp(24–40px) / 700 / −0.03em / Plus Jakarta Sans', where: 'Featured project title (.feat-title)',                        style: 'font-size:40px;font-weight:700;letter-spacing:-0.03em;color:#0a0a0a;line-height:1.1;font-family:Plus Jakarta Sans,sans-serif' },
     { sample: 'Design system',               spec: '32px / 700 / −0.02em / Roboto',             where: 'Inner page h1, footer statement, project section headings (.inner-content h1, .footer-statement, .proj-content h2)', style: 'font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a' },
     { sample: 'Senior UX designer.',         spec: '28px / 500 / −0.01em / Plus Jakarta Sans', where: 'Homepage lede (.lede)',                                               style: 'font-size:28px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;font-family:Plus Jakarta Sans,sans-serif' },
@@ -1167,7 +1167,7 @@ function designSystemPage(notionConnected) {
           <div class="ds-comp-block">
             <span class="ds-comp-label">Project nav buttons (prev / next)</span>
             <div class="ds-comp-demo" style="display:flex;gap:48px;align-items:center;">
-              <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> AI Credits</span></a>
+              <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> AI Credits Wallet</span></a>
               <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><span class="proj-nav-name">App Reviews <i class="ti ti-arrow-right"></i></span></a>
             </div>
           </div>
@@ -1290,7 +1290,7 @@ function designSystemPage(notionConnected) {
           <div class="ds-comp-block">
             <span class="ds-comp-label">Featured card (mobile)</span>
             <div class="ds-comp-demo" style="padding:20px 0;border-left:none;border-right:none;border-radius:0;">
-              <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;letter-spacing:-0.03em;line-height:1.08;color:#0a0a0a;margin-bottom:10px;">AI Credits</div>
+              <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;letter-spacing:-0.03em;line-height:1.08;color:#0a0a0a;margin-bottom:10px;">AI Credits Wallet</div>
               <div style="font-size:15px;color:#555;margin-bottom:14px;">AI credits billing system across Business Manager and Wixel</div>
               <a href="#" style="font-size:14px;font-weight:500;color:#2b6cff;text-decoration:none;">View project ↗</a>
             </div>

@@ -792,3 +792,36 @@ if (document.getElementById('playFrame')) {
     if (dx > 0 && current > 0) open(current - 1);
   }, { passive: true });
 })();
+
+// Side anchor navigation: highlight the section currently in view
+(function() {
+  var nav = document.querySelector('.proj-anchors');
+  if (!nav) return;
+  var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+  var heads = links.map(function(a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function update() {
+    var current = 0;
+    heads.forEach(function(h, i) { if (h && h.getBoundingClientRect().top <= 190) current = i; });
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 4) current = heads.length - 1;
+    links.forEach(function(a, i) { a.classList.toggle('active', i === current); a.classList.remove('active-parent'); });
+    // A sub-section being active also marks its parent section as selected
+    var cur = links[current];
+    if (cur && cur.parentNode.classList.contains('pa-sub')) {
+      for (var j = current - 1; j >= 0; j--) {
+        if (!links[j].parentNode.classList.contains('pa-sub')) { links[j].classList.add('active-parent'); break; }
+      }
+    }
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+
+// Side anchor navigation: the project name at the top of the menu scrolls back to the top
+(function() {
+  var t = document.querySelector('.proj-anchors .pa-title');
+  if (!t) return;
+  function top() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  t.addEventListener('click', top);
+  t.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); top(); } });
+})();

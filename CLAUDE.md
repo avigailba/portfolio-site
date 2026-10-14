@@ -209,7 +209,7 @@ Single "About & Contact" link → `about.html`. No separate contact page. `SKIP_
 
 | Page | ID |
 |------|----|
-| AI Credits | 31135a9ccf7a804caf72da07638205bc |
+| AI Credits Wallet | 31135a9ccf7a804caf72da07638205bc |
 | App Installation View | 31135a9ccf7a80358e3cead5465c89f8 |
 | App Reviews Revamp | 31135a9ccf7a80bdad92eff1f90e6ecf |
 | Developer Sale | 17d35a9ccf7a80c69ceafb3f7973485a |

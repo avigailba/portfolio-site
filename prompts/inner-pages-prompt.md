@@ -105,7 +105,7 @@ Apply the sitewide header and footer from `sitewide-components-prompt.md` to all
 
   <p class="section-label">Selected projects</p>
   <div class="cv-projects">
-    <div class="cv-proj-row"><span class="cv-proj-name">AI Credits</span><span class="cv-proj-year">2026</span></div>
+    <div class="cv-proj-row"><span class="cv-proj-name">AI Credits Wallet</span><span class="cv-proj-year">2026</span></div>
     <div class="cv-proj-row"><span class="cv-proj-name">App Installation View</span><span class="cv-proj-year">2025</span></div>
     <div class="cv-proj-row"><span class="cv-proj-name">App Reviews Revamp</span><span class="cv-proj-year">2024</span></div>
     <div class="cv-proj-row"><span class="cv-proj-name">Developer Sale</span><span class="cv-proj-year">2024</span></div>

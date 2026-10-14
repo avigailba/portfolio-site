@@ -116,7 +116,7 @@ Each card has an `onclick` for full-card navigation (corner-to-corner click targ
 
 <div class="feat-grid">
   <div class="feat-card" onclick="window.location.href='/projects/ai-credits.html'">
-    <div class="feat-title">AI Credits</div>
+    <div class="feat-title">AI Credits Wallet</div>
     <div class="feat-sub">Transparent AI usage billing across Wix's developer platform</div>
     <div class="feat-arr">↗</div>
   </div>
@@ -285,7 +285,7 @@ Each card has an `onclick` for full-card navigation (corner-to-corner click targ
   <div class="row" data-cat="developer">
     <span class="num">01</span>
     <div class="rmain">
-      <div class="row-title">AI Credits</div>
+      <div class="row-title">AI Credits Wallet</div>
       <div class="rsub">Transparent AI usage billing across Wix's developer platform</div>
     </div>
     <span class="feat-tag">Featured</span>   <!-- omit for non-featured -->
@@ -366,7 +366,7 @@ Sorted newest first. `data-cat` on `.row` drives the filter (space-separated). F
 
 | # | Title | data-cat | cat-tag label | Year | Featured |
 |---|-------|----------|---------------|------|---------|
-| 01 | AI Credits | developer | Developer tools | 2026 | yes |
+| 01 | AI Credits Wallet | developer | Developer tools | 2026 | yes |
 | 02 | App Installation View | developer | Developer tools | 2025 | yes |
 | 03 | App Reviews Revamp | developer | Developer tools | 2024 | no |
 | 04 | Developer Sale | developer monetisation | Monetisation | 2024 | yes |
@@ -382,7 +382,7 @@ Sorted newest first. `data-cat` on `.row` drives the filter (space-separated). F
 | 14 | App Coupons | monetisation | Monetisation | 2021 | no |
 
 One-line subtitles (`.rsub`):
-- AI Credits: Transparent AI usage billing across Wix's developer platform
+- AI Credits Wallet: Transparent AI usage billing across Wix's developer platform
 - App Installation View: Redesigned the app installation experience end-to-end
 - App Reviews Revamp: Improved app review flows for the Wix App Market
 - Developer Sale: A monetisation campaign tool for app developers

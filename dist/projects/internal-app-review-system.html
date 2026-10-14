@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <link rel="stylesheet" href="../style.css?v=4947b10f6f">
+  <link rel="stylesheet" href="../style.css?v=20e5070b49">
 </head>
 <body class="proj-page">
   <header id="site-header">
@@ -52,6 +52,7 @@
         <a class="proj-nav-btn proj-nav-prev" href="app-installation-page-for-developers.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> Installations Page</span></a>
         <a class="proj-nav-btn proj-nav-next" href="developer-sale.html" aria-label="Next project"><span class="proj-nav-name">Developer Sale <i class="ti ti-arrow-right"></i></span></a>
       </div>
+      <nav class="proj-anchors" aria-label="On this page"><div class="pa-top"><a class="mob-logo pa-home" href="../index.html"><span class="mob-logo-name">Avigail Bahat</span><span class="mob-logo-role">Senior Product Designer</span></a></div><div class="pa-title" role="button" tabindex="0">App Review Platform<span class="pa-hint">&uarr; Back to top</span></div><ul><li><a href="#sec-tldr"><span class="pa-num">01</span><span class="pa-label">TL;DR</span></a></li><li><a href="#sec-the-problem"><span class="pa-num">02</span><span class="pa-label">The problem</span></a></li><li><a href="#sec-approach"><span class="pa-num">03</span><span class="pa-label">Approach</span></a></li><li><a href="#sec-delivery"><span class="pa-num">04</span><span class="pa-label">Delivery</span></a></li><li><a href="#sec-challenges"><span class="pa-num">05</span><span class="pa-label">Challenges</span></a></li><li><a href="#sec-results-and-impact"><span class="pa-num">06</span><span class="pa-label">Results and impact</span></a></li><li><a href="#sec-next-steps"><span class="pa-num">07</span><span class="pa-label">Next steps</span></a></li><li><a href="#sec-solution"><span class="pa-num">08</span><span class="pa-label">Solution</span></a></li><li><a href="#sec-bottom-line"><span class="pa-num">09</span><span class="pa-label">Bottom line</span></a></li></ul></nav>
       <div class="proj-title-sticky" id="proj-title-sticky">
         <div class="proj-tags-m">
           <span class="pm">2022</span>
@@ -74,10 +75,10 @@
         <figure class="proj-img proj-hero">
   <img src="../images/img-3b135a9ccf7a80ea9f57cfaa4494fb64.jpg" alt="" loading="lazy">
 </figure>
-<div class="proj-tldr"><span class="proj-tldr-label">TL;DR</span><div class="proj-tldr-grid" data-cols="3"><p>I planned and rebuilt a stale internal review tool with a clearer structure and the features reviewers were missing.</p><p>I started with interviews and by shadowing Account Managers as they ran reviews, then tested the redesign with them in a bug hunt before launch.</p><p>Review cycles got shorter, and the tool has been in use since the 2022 launch.</p></div></div>
-<h2>The problem</h2>
+<div class="proj-tldr" id="sec-tldr"><span class="proj-tldr-label">TL;DR</span><div class="proj-tldr-grid" data-cols="3"><p>I planned and rebuilt a stale internal review tool with a clearer structure and the features reviewers were missing.</p><p>I started with interviews and by shadowing Account Managers as they ran reviews, then tested the redesign with them in a bug hunt before launch.</p><p>Review cycles got shorter, and the tool has been in use since the 2022 launch.</p></div></div>
+<h2 id="sec-the-problem">The problem</h2>
 <p>Account Managers who review apps for the <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics." aria-label="Wix App Market" aria-describedby="term-tip-1" aria-expanded="false">Wix App Market<span class="ctx-tip-pop" id="term-tip-1" role="tooltip" hidden>Wix App Market is a marketplace where third-party developers publish apps for Wix site owners. Developers manage their apps through the Wix Developer Center, a dashboard covering submissions, reviews, payouts, and analytics.</span></span> wrote their reviews in different tools: some used Google Docs, others used Sheets. The internal review tool was stuck in a loop: it wasn't updated, so no one used it, and with no one using it, it never got updated. That meant no shared history, no visibility into what changed between submissions, and no consistent handoff between reviewers. As more and more apps were submitted, we noticed that review cycles were long.</p>
-<h2>Process</h2>
+<h2 id="sec-approach">Approach</h2>
 <h3>Research</h3>
 <p>Met with Account Managers to walk through the current system, shadowed them running reviews, audited the Docs and Sheets they used instead, and pulled analytics on time to publish and resubmissions per app.</p>
 <p>Four pain points came out of it:</p>
@@ -95,6 +96,22 @@
   <li>Show what changed. A before and after view lets reviewers focus on the delta.</li>
   <li>Keep the human in control. Blockers disable publishing, and publishing is always deliberate.</li>
 </ul>
+<h2 id="sec-delivery">Delivery</h2>
+<ul>
+  <li>Ran weekly syncs with Account Management to align on scope and surface edge cases early.</li>
+  <li>Ran a bug hunt with Account Managers before launch to validate the redesign. It showed that the diff in the second review was not built properly and needed more work.</li>
+</ul>
+<h2 id="sec-challenges">Challenges</h2>
+<ul>
+  <li>Reviewers had already moved to Docs and Sheets, so the platform had to be better than their workaround to win them back.</li>
+  <li>The diff in the second review was not built properly, and the bug hunt is what showed it.</li>
+  <li>Sending the review was still done in a separate <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide." aria-label="Wix" aria-describedby="term-tip-2" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-2" role="tooltip" hidden>Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></span> platform, because the two systems were not connected.</li>
+</ul>
+<h2 id="sec-results-and-impact">Results and impact</h2>
+<p><strong>Review cycles got shorter.</strong> The team stopped working in Google Docs and moved their reviews into the platform, where anyone with permission can follow an app's full history. It has been in use since the 2022 launch, including after AI entered the review process.</p>
+<h2 id="sec-next-steps">Next steps</h2>
+<p>The team has since added features themselves, such as more filters on the main page and marking an app as premium, which used to need a developer.</p>
+<h2 id="sec-solution">Solution</h2>
 <h3>Deciding on the product areas</h3>
 <p>I split the product into four areas before designing any screens, and the review workspace was entirely new. Click any image to see it bigger.</p>
 <div class="col-layout col-4"><div class="col"><figure class="proj-img">
@@ -122,7 +139,7 @@
   <li><strong>Faster:</strong> Changes between submissions show as a before and after column, simple and with nothing new to learn.</li>
   <li><strong>Scale:</strong> One view for all apps at every stage, with search, filters, and status logic built to hold up as submissions grew.</li>
   <li><strong>New status:</strong> Three listing states (Listed, Never Listed, Removed) show each app's market history at a glance.</li>
-  <li><strong>Familiar:</strong> Built on <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide." aria-label="Wix" aria-describedby="term-tip-2" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-2" role="tooltip" hidden>Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></span>'s internal UI system instead of a new visual language, answering the confusing UI complaint from research.</li>
+  <li><strong>Familiar:</strong> Built on Wix's internal UI system instead of a new visual language, answering the confusing UI complaint from research.</li>
 </ol>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
   <figcaption class="proj-caption">Review report - comments organized by path, flagging issues by type and location within the app</figcaption>
@@ -134,14 +151,6 @@
 </figure>
 </div></div>
 <div class="col-layout col-2"><div class="col"></div><div class="col"></div></div>
-<h2>Delivery</h2>
-<ul>
-  <li>Ran weekly syncs with Account Management to align on scope and surface edge cases early.</li>
-  <li>Ran a bug hunt with Account Managers before launch to validate the redesign. It showed that the diff in the second review was not built properly and needed more work.</li>
-</ul>
-<h2>Impact</h2>
-<p><strong>Review cycles got shorter.</strong> The team stopped working in Google Docs and moved their reviews into the platform, where anyone with permission can follow an app's full history. It has been in use since the 2022 launch, including after AI entered the review process. The team has since added features themselves, such as more filters on the main page and marking an app as premium, which used to need a developer.</p>
-<h2>Screens</h2>
 <h3>Apps directory and review queue</h3>
 <p>The full marketplace directory, across all stages</p>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
@@ -236,7 +245,7 @@
   <img src="../images/img-38435a9ccf7a806c83b8c68f5295bd4d.jpg" alt="Viewer role can preview the report but not make any changes" loading="lazy">
 </figure>
 </div></div>
-<h2>Bottom line</h2>
+<h2 id="sec-bottom-line">Bottom line</h2>
 <p>The team had already voted with their feet, doing the actual review work in spreadsheets outside the platform. Success wasn't launching a redesign; it was building something good enough that they'd stop reaching for Google Docs. The tool became their primary review surface, which is the only metric that actually mattered.</p>
 
 <p class="proj-updated">Last updated 13 October 2026</p>
@@ -296,10 +305,10 @@
   </div>
   <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
 </footer>
-  <script src="../script.js?v=a21506aa09"></script>
+  <script src="../script.js?v=7851c40b0b"></script>
 <script>
 var ALL_PROJECTS = [
-  { slug: 'ai-credits-wallet', title: 'AI Credits', sub: 'A new AI monetization model that had to work for two types of users, across three products, without becoming two separate systems.', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
+  { slug: 'ai-credits-wallet', title: 'AI Credits Wallet', sub: 'A new AI monetization model that had to work for two types of users, across three products, without becoming two separate systems.', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
   { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Designed and shipped installation analytics that gave developers site-level visibility into how their apps were used', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
   { slug: 'internal-app-review-system', title: 'App Review Platform', sub: 'Ground-up rebuild of Wix App Market’s internal review platform that shortened review cycles.', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
   { slug: 'developer-sale', title: 'Developer Sale', sub: 'Sales infrastructure that made market-wide promotions possible and drove strong growth in subscriptions and upgrade revenue', cat: 'Monetisation', cats: 'developer monetisation cms', year: 2024, featured: true },

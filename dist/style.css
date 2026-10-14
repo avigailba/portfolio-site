@@ -545,17 +545,21 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   padding-bottom: 28px;
   padding-left: clamp(40px, 20%, 240px);
   padding-right: clamp(40px, 20%, 240px);
-  transition: border-color 0.2s ease, padding 0.2s;
+  border-bottom: 0.5px solid transparent;
+  /* The bottom line is removed at once when the title expands, and appears only after the title has finished shrinking, so it never sweeps through the side menu */
+  transition: border-color 0s, padding 0.2s;
 }
-.proj-title-sticky.condensed { border-bottom: 0.5px solid #ebebeb; }
+.proj-title-sticky.condensed { border-bottom: 0.5px solid #ebebeb; transition: border-color 0.2s ease 0.4s, padding 0.2s; }
 .proj-title-sticky.condensed .proj-meta-m { max-height: 0; opacity: 0; margin-bottom: 0; padding: 0; pointer-events: none; }
-.proj-title-sticky.condensed .proj-subtitle-m { max-height: 0; opacity: 0; margin: 0; pointer-events: none; }
+.proj-title-sticky.condensed .proj-subtitle-m { max-height: 0; opacity: 0; margin: 0 auto; pointer-events: none; }
 /* No single word alone on the last line (widow rule): balance short titles, avoid orphans in body copy */
 .proj-subtitle-m, .feat-sub { text-wrap: balance; }
 .proj-content p, .proj-content li { text-wrap: pretty; }
 .proj-title-sticky.condensed .proj-deck-wrap { max-height: 0; opacity: 0; margin: 0; pointer-events: none; }
 .proj-title-sticky.condensed .proj-title-row { padding-bottom: 0; border-bottom: none; }
-.proj-title-sticky.condensed .proj-title-m { font-size: 22px; }
+.proj-title-sticky.condensed .proj-title-m { font-size: 22px; transform: translateY(-10px); }
+/* On scroll: hide the tags row (year, categories) and move the title up */
+.proj-title-sticky.condensed .proj-tags-m { max-height: 0; opacity: 0; margin: 0; pointer-events: none; }
 
 /* Desktop: arrows hidden, title row is plain block */
 .proj-title-row { display: block; padding-bottom: 0; border-bottom: none; text-align: center; }
@@ -567,7 +571,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   color: #0a0a0a;
   letter-spacing: -0.03em;
   line-height: 1.1;
-  transition: font-size 0.2s;
+  transition: font-size 0.2s, transform 0.2s;
 }
 .proj-subtitle-m { font-size: 20px; font-weight: 500; color: #0a0a0a; margin: 12px auto 0; line-height: 1.4; max-width: 68ch; text-align: center; overflow: hidden; max-height: 80px; transition: max-height 0.25s ease, opacity 0.25s ease, margin 0.25s ease; }
 .proj-deck-wrap { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px; flex-shrink: 0; overflow: hidden; max-height: 40px; opacity: 1; transition: max-height 0.25s ease, opacity 0.25s ease, margin 0.25s ease; }
@@ -593,6 +597,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 .proj-body + .proj-body { margin-top: 16px; }
 .proj-img { width: 100%; border-radius: 8px; margin: 32px auto; overflow: hidden; background: #f5f5f5; }
 .proj-img img { width: 100%; height: auto; display: block; border-radius: 8px; }
+.proj-img:has(> img[alt="Server: mapping out why some fields return empty."]) { width: min(100%, 1100px); }
 /* Notion-generated content */
 .proj-content p { font-size: 16px; color: #555; line-height: 1.7; margin-bottom: 16px; max-width: 800px; }
 /* TL;DR box (variant F, two sentences) */
@@ -735,7 +740,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 .lb-stage { display: flex; align-items: center; gap: 20px; width: 100%; height: 100%; }
 .lb-content { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; min-width: 0; height: 100%; justify-content: center; }
 .lb-img { max-width: 100%; max-height: calc(100vh - 120px); width: auto; height: auto; object-fit: contain; border-radius: 4px; display: block; }
-.lb-caption { font-size: 15px; color: rgba(255,255,255,0.5); text-align: center; line-height: 1.5; }
+.lb-caption { font-size: 15px; color: #fff; text-align: center; line-height: 1.5; }
 .lb-close {
   position: fixed; top: 20px; right: 28px;
   background: none; border: none; color: rgba(255,255,255,0.6);
@@ -1289,3 +1294,35 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 }
 .cv-page h1, .cv-job-title { font-family: 'Plus Jakarta Sans', sans-serif; }
 .cv-page p, .cv-page li, .cv-page h3, .cv-headline { text-wrap: balance; }
+
+/* ── Side anchor navigation (project pages, left margin, wide screens only) ── */
+.proj-anchors { display: none; }
+@media (min-width: 1200px) and (min-height: 820px) {
+  /* Trial: menu is hidden before scroll. After scroll the site header and the title bar hide and the project name moves to the top of the menu. */
+  .proj-anchors { display: block; position: fixed; left: 32px; top: 56px; width: 190px; z-index: 7; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+  html:has(.proj-title-sticky.condensed) .proj-anchors { opacity: 1; pointer-events: auto; }
+  html:has(.proj-anchors):has(.proj-title-sticky.condensed) #site-header { opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0s linear 0.2s; }
+  html:has(.proj-anchors) .proj-title-sticky.condensed { opacity: 0; visibility: hidden; pointer-events: none; }
+  .proj-anchors .pa-top { margin-bottom: 24px; }
+  /* Same logo block as the top bar (mob-logo): name 16px / 500, role 14px grey */
+  .proj-anchors a.mob-logo { display: flex; flex-direction: column; gap: 1px; padding: 0; margin: 0; font-size: inherit; color: inherit; }
+  .proj-anchors a.mob-logo:hover { background: none; color: inherit; }
+  .proj-anchors .pa-title { position: relative; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: #0a0a0a; padding: 0 0 28px; cursor: pointer; }
+  .proj-anchors .pa-hint { position: absolute; left: 0; bottom: 6px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400; letter-spacing: 0; color: #555; opacity: 0; }
+  .proj-anchors .pa-title:hover .pa-hint { opacity: 1; }
+  .proj-anchors ul { list-style: none; margin: 0; padding: 0; }
+  .proj-anchors li { margin: 0; }
+  /* Same style as the App Review Platform deck side navigation: number + label, grey, active dark and 500 */
+  .proj-anchors a { display: flex; align-items: baseline; gap: 10px; padding: 9px 20px; margin-left: -20px; font-size: 14px; line-height: 1.4; color: #555; text-decoration: none; cursor: pointer; }
+  /* Reset the site's top-menu "nav a" styles (radius, transition, black hover, underline) so only the deck behaviour applies */
+  .proj-anchors a { border-radius: 0; transition: none; }
+  .proj-anchors a:hover { background: #f7f7f7; color: #555; }
+  .proj-anchors .pa-num { font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  .proj-anchors .pa-sub a { padding-top: 5px; padding-bottom: 5px; padding-left: 44px; }
+  .proj-anchors a.active, .proj-anchors a.active:hover, .proj-anchors a.active-parent, .proj-anchors a.active-parent:hover { color: #0a0a0a; font-weight: 500; text-decoration: none; }
+  .proj-content h2[id], .proj-content h3[id], .proj-content #sec-tldr { scroll-margin-top: 48px; }
+  /* Previous-project link aligns left with the menu text (x = 32px) */
+  .proj-main:has(.proj-anchors) .proj-side-nav .proj-nav-prev { justify-content: flex-start; padding-left: 32px; }
+  /* Previous / next project links sit at the bottom of the margins, so a long menu never runs into them */
+  .proj-main:has(.proj-anchors) .proj-side-nav .proj-nav-btn { top: auto; bottom: 32px; transform: none; }
+}

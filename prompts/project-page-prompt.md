@@ -200,7 +200,7 @@ Inject this script block at the bottom of each project page, just before `</body
 ```html
 <script>
 var ALL_PROJECTS = [
-  { slug: 'ai-credits',                title: 'AI Credits',                  sub: 'Transparent AI usage billing across Wix\'s developer platform',              cat: 'Developer tools', year: 2026, featured: true  },
+  { slug: 'ai-credits',                title: 'AI Credits Wallet',           sub: 'Transparent AI usage billing across Wix\'s developer platform',              cat: 'Developer tools', year: 2026, featured: true  },
   { slug: 'app-installation-view',     title: 'App Installation View',       sub: 'Redesigned the app installation experience end-to-end',                       cat: 'Developer tools', year: 2025, featured: true  },
   { slug: 'app-reviews-revamp',        title: 'App Reviews Revamp',          sub: 'Improved app review flows for the Wix App Market',                            cat: 'Developer tools', year: 2024, featured: false },
   { slug: 'developer-sale',            title: 'Developer Sale',              sub: 'A monetisation campaign tool for app developers',                             cat: 'Monetisation',    year: 2024, featured: true  },
