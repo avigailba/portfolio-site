@@ -374,15 +374,6 @@
     .sc-btn.primary { background: #0a0a0a; color: #fff; }
     .sc-btn.ghost   { border: 0.5px solid #ccc; color: #555; }
 
-    /* Marker highlight */
-    .mark {
-      background: linear-gradient(120deg, #FFFBEE 0%, #FFFBEE 100%);
-      background-repeat: no-repeat;
-      background-size: 100% 55%;
-      background-position: 0 85%;
-      padding: 0 2px;
-    }
-
     /* Nav arrow tooltips */
     .nav-btn { position: relative; }
     .nav-btn[data-label]::after {
@@ -667,7 +658,7 @@
     <ul style="margin:8px 0 0;padding-left:22px;max-width:720px;list-style:disc;">
       <li class="slide-body" style="margin:0 0 14px;">I planned and rebuilt a stale internal review tool with a clearer structure and the features reviewers were&nbsp;missing.</li>
       <li class="slide-body" style="margin:0 0 14px;">I started with interviews and by shadowing Account Managers as they ran reviews, then tested the redesign with them in a bug hunt before&nbsp;launch.</li>
-      <li class="slide-body" style="margin:0 0 14px;">Review cycles got shorter, and the tool has been in use since the 2022&nbsp;launch.</li>
+      <li class="slide-body" style="margin:0 0 14px;">Review cycles got shorter, and the team has used the tool and added features to it since the 2022&nbsp;launch.</li>
     </ul>
   </div>
 
@@ -677,10 +668,15 @@
       <span class="slide-section">Background</span>
     </div>
     <h2 class="slide-h">The problem</h2>
-    <div style="display:flex;gap:56px;align-items:flex-start;flex-wrap:wrap;">
+    <div style="display:flex;gap:56px;align-items:center;flex-wrap:wrap;">
     <div style="flex:1 1 420px;max-width:520px;">
     <p class="slide-body">Account Managers who review apps for the Wix App Market wrote their reviews in different tools: some used Google Docs, others used Sheets. The internal review tool was stuck in a loop: it wasn't updated, so no one used it, and with no one using it, it never got&nbsp;updated.</p>
-    <p class="slide-body" style="margin-top: 18px;">That meant no shared history, no visibility into what changed between submissions, and no consistent handoff between reviewers. <span class="mark">As more and more apps were submitted, we noticed that review cycles were&nbsp;long.</span></p>
+    <ul class="slide-list">
+      <li>No shared history</li>
+      <li>No visibility into what changed between submissions</li>
+      <li>No consistent handoff between reviewers</li>
+    </ul>
+    <p class="slide-body" style="margin-top: 18px;">As more and more apps were submitted, we noticed that review cycles were&nbsp;long.</p>
     </div>
     <div class="img-cell" style="flex:1 1 420px;min-width:0;margin-top:0;display:flex;flex-direction:column;gap:8px;grid-row:auto;">
       <img src="../images/figjam-app-review-cycle.png" alt="App review cycle: App submitted, pending review, assigned to an account manager, reviewed and commented on, then either declined (comments sent to developer, who makes changes and resubmits) or approved and published." style="width:100%;display:block;border-radius:6px;border:0.5px solid #ebebeb;cursor:zoom-in;height:auto;flex:none;">
@@ -695,23 +691,19 @@
       <span class="slide-section">Approach</span>
     </div>
     <h2 class="slide-h">Research</h2>
-    <p class="slide-intro">Met with Account Managers to walk through the current system, shadowed them running reviews, audited the Docs and Sheets they used instead, and pulled analytics on time to publish and resubmissions per&nbsp;app. <span class="mark">Four pain points came out of it.</span></p>
+    <p class="slide-intro">Met with Account Managers to walk through the current system, shadowed them running reviews, audited the Docs and Sheets they used instead, and pulled analytics on time to publish and resubmissions per app. Four pain points came out of it:</p>
     <div class="research-grid" style="max-width:760px;">
       <div class="research-card">
         <h3>A confusing UI</h3>
-        <p>The tool's own interface was part of the problem: reviewers found it harder to work in than the spreadsheets they'd moved to instead.</p>
       </div>
       <div class="research-card">
         <h3>Difficulty writing a consistent review</h3>
-        <p>With no shared format, every Account Manager wrote reviews differently: comments, structure, and detail varied reviewer to&nbsp;reviewer.</p>
       </div>
       <div class="research-card">
         <h3>Weak information architecture</h3>
-        <p>Submission history, app status, and team details lived in different places, making it hard to find what mattered for a&nbsp;decision.</p>
       </div>
       <div class="research-card">
         <h3>No integrated workflow</h3>
-        <p>Reviewing, commenting, and publishing were disconnected steps, not one flow, so context got lost moving between them.</p>
       </div>
     </div>
   </div>
@@ -722,69 +714,86 @@
       <span class="slide-section">Approach</span>
     </div>
     <h2 class="slide-h">Design principles</h2>
-    <p class="slide-intro">Some of the pain points became&nbsp;principles.</p>
+    <p class="slide-intro">Some of the pain points became principles.</p>
     <div class="research-grid" style="max-width:760px;">
       <div class="research-card">
-        <h3>Fit the existing workflow</h3>
+        <h3>Fit the existing workflow.</h3>
         <p>Reviewers were already working in Docs and Sheets, so the platform had to beat their workaround and feel&nbsp;familiar.</p>
       </div>
       <div class="research-card">
-        <h3>Make every decision traceable</h3>
+        <h3>Make every decision traceable.</h3>
         <p>Every step is logged, and the previous report sits next to the current&nbsp;one.</p>
       </div>
       <div class="research-card">
-        <h3>Show what changed</h3>
-        <p>A before and after view lets reviewers focus on the&nbsp;delta.</p>
+        <h3>Show what changed in the app.</h3>
+        <p>A before and after view lets reviewers focus on the delta.</p>
       </div>
       <div class="research-card">
-        <h3>Keep the human in control</h3>
+        <h3>Keep the account managers in control.</h3>
         <p>Blockers disable publishing, and publishing is always&nbsp;deliberate.</p>
       </div>
     </div>
   </div>
 
-  <!-- ④ Scope + Overview (merged) -->
-  <div class="slide slide-vcenter" data-label="Scope">
+  <!-- ④ Product areas -->
+  <div class="slide slide-vcenter" data-label="Product areas">
     <div class="slide-header">
       <span class="slide-section">Solution</span>
     </div>
-    <h2 class="slide-h">Deciding on scope</h2>
-    <p class="slide-intro">I split the product into four areas before designing any screens: the app directory, the app page, the review workspace, and team management. The review workspace was entirely new. Each one mapped to a gap the research surfaced. I built on Wix's own design system to fix the confusing-UI complaint at the platform level first, before touching any review-specific&nbsp;logic.</p>
+    <h2 class="slide-h">Deciding on the product areas</h2>
+    <p class="slide-intro">I split the product into four areas before designing any screens, and the review workspace was entirely new. Click any image to see it bigger.</p>
     <div class="img-grid g4">
       <div class="img-cell">
-        <img src="../images/img-39b35a9ccf7a80639d30e7dab00429f6.jpg" alt="All apps">
-        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>App directory and queue</strong>Browse, filter, and assign every app across all review stages. <span class="mark">A structural makeover to fix the weak information architecture.</span></span>
+        <img src="../images/img-39b35a9ccf7a80639d30e7dab00429f6.jpg" alt="All apps - Browse, filter, and assign every app">
+        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>All apps</strong>Browse, filter, and assign every app.</span>
       </div>
       <div class="img-cell">
-        <img src="../images/img-39b35a9ccf7a8035852af27e1bc2f0e2.jpg" alt="App page">
-        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>App page</strong>One app's full history, team, and status in a single view. <span class="mark">Closed the integrated-workflow&nbsp;gap.</span></span>
+        <img src="../images/img-39b35a9ccf7a8035852af27e1bc2f0e2.jpg" alt="App page - One app's details, activity, and team">
+        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>App page</strong>One app's details, activity, and team.</span>
       </div>
       <div class="img-cell">
-        <img src="../images/img-39b35a9ccf7a80c799b3f07bc0270576.jpg" alt="Review workspace">
-        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>Review workspace</strong><span class="mark">Built from scratch to replace ad-hoc Google Doc reviews.</span> Made reviews consistent for the first time.</span>
+        <img src="../images/img-39b35a9ccf7a80c799b3f07bc0270576.jpg" alt="New review workspace - Comment, report, then publish or decline">
+        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>New review workspace</strong>Comment, report, then publish or decline.</span>
       </div>
       <div class="img-cell">
-        <img src="../images/img-39b35a9ccf7a8059af6bd4b420b393ae.jpg" alt="Team management">
-        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>Team management</strong>Role-based access and reviewer assignments across the team. <span class="mark">Closes the handoff gap between&nbsp;reviewers.</span></span>
+        <img src="../images/img-39b35a9ccf7a8059af6bd4b420b393ae.jpg" alt="Account managers team - Manage members, roles, and access">
+        <span class="img-cap" style="height:140px;overflow:hidden;"><strong>Account managers team</strong>Manage members, roles, and access.</span>
       </div>
     </div>
   </div>
 
-  <!-- ⑤ Apps Directory -->
-  <div class="slide" data-label="Apps directory">
+  <!-- ⑤ Redesigning the platform -->
+  <div class="slide slide-vcenter" data-label="Redesigning the platform">
     <div class="slide-header">
       <span class="slide-section">Solution</span>
     </div>
-    <h2 class="slide-h">Apps directory & review queue</h2>
-    <p class="slide-intro">The full marketplace directory, across every review stage, with market status, submission status, assignee, and last-change date visible in one row. One structured queue replaced the spreadsheet account managers had built outside the platform to compensate for what the original tool couldn't&nbsp;show.</p>
+    <h2 class="slide-h">Redesigning the platform</h2>
+    <ul class="slide-list">
+      <li><strong>Order.</strong> Every step of an app's submission is logged with who did it.</li>
+      <li><strong>Continuity.</strong> The previous report sits next to the current one, so a resubmission no longer means digging through an old doc.</li>
+      <li><strong>Consistency.</strong> Comments are organized by app path, blockers are flagged inline, and the report is generated automatically.</li>
+      <li><strong>Faster.</strong> Changes between submissions show as a before and after column, simple and with nothing new to learn.</li>
+      <li><strong>Scale.</strong> One view for all apps at every stage, with search, filters, and status logic built to hold up as submissions grew.</li>
+      <li><strong>New status.</strong> Three listing states (Listed, Never Listed, Removed) show each app's market history at a glance.</li>
+      <li><strong>Familiar.</strong> Built on Wix's internal UI system instead of a new visual language, answering the confusing UI complaint from research.</li>
+    </ul>
+  </div>
+
+  <!-- ⑥ Apps Directory -->
+  <div class="slide" data-label="Apps directory and review queue">
+    <div class="slide-header">
+      <span class="slide-section">Solution</span>
+    </div>
+    <h2 class="slide-h">Apps directory and review queue</h2>
+    <p class="slide-intro">The full marketplace directory, across all stages.</p>
     <div class="img-grid g2" style="grid-template-columns: 3fr 2fr;">
       <div class="img-cell">
-        <img src="../images/img-3b050a27424045049837f37c0dbcbb0b.jpg" alt="Apps dashboard">
-        <span class="img-cap"><strong>Dashboard: Status, last change, market status, reviewer</strong><em>The single source of truth reviewers didn't have before.</em></span>
+        <img src="../images/img-3b050a27424045049837f37c0dbcbb0b.jpg" alt="Apps dashboard - list of all apps with status, last change date, market status, app ID, and reviewer">
+        <span class="img-cap"><strong>Apps dashboard</strong>List of all apps with status, last change date, market status, app ID, and reviewer.</span>
       </div>
       <div class="img-cell">
-        <img src="../images/img-bbcd50dd77864ad2be7e03d4f1a45204.jpg" alt="Filters">
-        <span class="img-cap"><strong>Filtering by status and market listing</strong><em>Built to hold up as submission volume grows, not just today's backlog.</em></span>
+        <img src="../images/img-bbcd50dd77864ad2be7e03d4f1a45204.jpg" alt="Filtering the app queue by status and market listing to find specific apps quickly - more filters were added later on">
+        <span class="img-cap">Filtering the app queue by status and market listing to find specific apps quickly - more filters were added later on.</span>
       </div>
     </div>
   </div>
@@ -795,19 +804,19 @@
       <span class="slide-section">Solution</span>
     </div>
     <h2 class="slide-h">App page</h2>
-    <p class="slide-intro">Submission history, team notes, and current status in one place, per app. <span class="mark">What used to be scattered across personal Docs is now centralized here.</span> Every status an app can be in has its own set of actions, so a reviewer never has to go looking for what to do&nbsp;next.</p>
+    <p class="slide-intro">Submission history, team notes, and current status.</p>
     <div class="img-grid" style="grid-template-columns: 2fr 1fr 1fr;">
       <div class="img-cell">
-        <img src="../images/img-6414b62696c949a69686d280fef78e32.jpg" alt="Activity log">
-        <span class="img-cap"><strong>Per-app activity log</strong><em>Answers what Google Docs couldn't: what changed, when, and by&nbsp;whom.</em></span>
+        <img src="../images/img-6414b62696c949a69686d280fef78e32.jpg" alt="Per-app activity log - every status change, reviewer, and internal note tracked chronologically">
+        <span class="img-cap">Per-app activity log - every status change, reviewer, and internal note tracked chronologically.</span>
       </div>
       <div class="img-cell">
-        <img src="../images/img-38435a9ccf7a803ca35ec7a3df5b0825.jpg" alt="App team view">
-        <span class="img-cap"><strong>App team view</strong><em>Who's building it, so a handoff doesn't start from zero.</em></span>
+        <img src="../images/img-38435a9ccf7a803ca35ec7a3df5b0825.jpg" alt="Per-app activity log - app team view">
+        <span class="img-cap">Per-app activity log - app team view.</span>
       </div>
       <div class="img-cell">
-        <img src="../images/img-39b35a9ccf7a804b8217cb08bc0b6874.jpg" alt="All statuses">
-        <span class="img-cap"><strong>All statuses and their actions</strong><em>Every status the app can be in, and what a reviewer can do from there.</em></span>
+        <img src="../images/img-39b35a9ccf7a804b8217cb08bc0b6874.jpg" alt="All statuses and their actions and badges">
+        <span class="img-cap">All statuses and their actions and badges.</span>
       </div>
     </div>
   </div>
@@ -820,36 +829,36 @@
       <span class="slide-title-sm">1 of 2</span>
     </div>
     <h2 class="slide-h">Review workflow</h2>
-    <p class="slide-intro">Commenting, flagging issues, and submitting the review in one place. Unlike the other three areas, this wasn't a redesign: <span class="mark">it's a workspace built entirely from scratch to replace ad-hoc Google Doc reviews</span>, answering the research finding that reviewers had no consistent way to structure a review. On a second submission, the reviewer sees the previous report alongside the new one and can address the issues raised there, all in the same&nbsp;place.</p>
+    <p class="slide-intro">Commenting, flagging issues, and submitting the review in one place.</p>
     <div class="img-grid g2">
       <div class="img-cell">
-        <img src="../images/img-3a335a9ccf7a80439b98d3025148c52b.jpg" alt="Review report">
-        <span class="img-cap"><strong>Review report: Comments organized by path, flagging by type</strong><em>The structure a Google Doc could never enforce.</em></span>
+        <img src="../images/img-3a335a9ccf7a80439b98d3025148c52b.jpg" alt="Review report - comments organized by path, flagging issues by type and location within the app">
+        <span class="img-cap">Review report - comments organized by path, flagging issues by type and location within the app.</span>
       </div>
       <div class="img-cell">
-        <img src="../images/img-3a335a9ccf7a809bbb3fc6600510972e.jpg" alt="Previous activity">
-        <span class="img-cap"><strong>Previous activity tab: Last review surfaced for context</strong><em>On a second submission, the system shows diffs between the previous version and the current one. The reviewer sees what the developer fixed and what they didn't, without leaving the&nbsp;workspace.</em></span>
+        <img src="../images/img-3a335a9ccf7a809bbb3fc6600510972e.jpg" alt="Previous activity tab - all changes and comments from the app's last review, surfaced for context">
+        <span class="img-cap">Previous activity tab - all changes and comments from the app's last review, surfaced for context.</span>
       </div>
     </div>
   </div>
 
   <!-- ⑧ Review workflow part 2 -->
-  <div class="slide" data-label="Adding comments">
+  <div class="slide" data-label="Review workflow (continued)">
     <div class="slide-header">
       <span class="slide-section">Solution</span>
       <div class="slide-sep"></div>
       <span class="slide-title-sm">2 of 2</span>
     </div>
-    <h2 class="slide-h">Adding comments</h2>
-    <p class="slide-intro">Comment types and blocker flags, plus a way to carry forward what wasn't resolved last time. A blocker flag stops the app from going live until the developer addresses it. <span class="mark">Reviewers write once, and the report keeps the structure consistent for&nbsp;them.</span></p>
+    <h2 class="slide-h">Review workflow</h2>
+    <p class="slide-intro">Commenting, flagging issues, and submitting the review in one place.</p>
     <div class="img-grid g2">
       <div class="img-cell">
-        <img src="../images/img-38435a9ccf7a8086a5fcf9625e03c729.jpg" alt="New comment">
-        <span class="img-cap"><strong>Adding a new comment with path, type, and blocker flag</strong><em>A blocker flag stops the app from publishing until it's resolved.</em></span>
+        <img src="../images/img-38435a9ccf7a8086a5fcf9625e03c729.jpg" alt="Adding a new comment to the report - the reviewer selects the path and describes the issue before sending it to the developer and can mark it as a blocker to disable publishing">
+        <span class="img-cap">Adding a new comment to the report - the reviewer selects the path and describes the issue before sending it to the developer and can mark it as a blocker to disable publishing.</span>
       </div>
       <div class="img-cell">
-        <img src="../images/img-39b35a9ccf7a80c8ac0ccd2a5f566729.jpg" alt="Comment types">
-        <span class="img-cap"><strong>All comment types</strong><em>One fixed vocabulary, so severity reads the same across every reviewer.</em></span>
+        <img src="../images/img-39b35a9ccf7a80c8ac0ccd2a5f566729.jpg" alt="All comment types">
+        <span class="img-cap">All comment types.</span>
       </div>
     </div>
   </div>
@@ -862,40 +871,39 @@
       <span class="slide-title-sm">1 of 2</span>
     </div>
     <h2 class="slide-h">Publish flow</h2>
-    <p class="slide-intro">The last step before an app goes live in the marketplace. The workflow pulls in everything from the review, so a reviewer doesn't have to reconstruct context at the moment of decision. <span class="mark">Nothing ships outside the process.</span></p>
+    <p class="slide-intro">The last step before publishing to the marketplace.</p>
     <div class="img-grid g2">
       <div class="img-cell">
         <img src="../images/img-3a335a9ccf7a800395b1eafb4c5fb66d.jpg" alt="Opening publish">
-        <span class="img-cap"><strong>Opening the publish action from the app's more actions menu</strong><em>One entry point, not a separate tool.</em></span>
+        <span class="img-cap">Opening the publish action from the app's more actions menu.</span>
       </div>
       <div class="img-cell">
         <img src="../images/img-38435a9ccf7a802ba183ca8517f87af7.jpg" alt="Published">
-        <span class="img-cap"><strong>App successfully published, marked as "listed"</strong><em>See the full publish flow in the next slide.</em></span>
+        <span class="img-cap">App successfully published to the marketplace and marked as “listed”.</span>
       </div>
     </div>
   </div>
 
   <!-- ⑩ Publish flow part 2 -->
-  <div class="slide" data-label="Publish (continued)">
+  <div class="slide" data-label="Publish flow (continued)">
     <div class="slide-header">
       <span class="slide-section">Solution</span>
       <div class="slide-sep"></div>
       <span class="slide-title-sm">2 of 2</span>
     </div>
-    <h2 class="slide-h">The publish wizard</h2>
-    <p class="slide-intro">Three steps built into the publish action itself: confirming revenue share, attaching the review report, and adding an internal note. A paper trail that used to live in a personal Google Doc now travels with the app automatically, without the reviewer having to copy&nbsp;anything.</p>
+    <h2 class="slide-h">Publish flow</h2>
     <div class="img-grid g3">
       <div class="img-cell">
-        <img src="../images/img-38435a9ccf7a80eeb2a8f65463952fd5.jpg" alt="First publish">
-        <span class="img-cap"><strong>1. Revenue share agreement shown before confirming</strong><em>Surfaced once, at the moment it actually matters.</em></span>
+        <img src="../images/img-38435a9ccf7a80eeb2a8f65463952fd5.jpg" alt="First publish - revenue share agreement shown before confirming">
+        <span class="img-cap">First publish - revenue share agreement shown before confirming.</span>
       </div>
       <div class="img-cell">
-        <img src="../images/img-38435a9ccf7a80738a68efc0d5282683.jpg" alt="Review report attached">
-        <span class="img-cap"><strong>2. Review report attached to the publish action</strong><em>The full review history stays with the decision, not in a separate document. Sending the review itself was still done in a dedicated Wix platform: the connection between the two systems had not been&nbsp;made.</em></span>
+        <img src="../images/img-38435a9ccf7a80738a68efc0d5282683.jpg" alt="Review report attached to the publish action">
+        <span class="img-cap">Review report attached to the publish action.</span>
       </div>
       <div class="img-cell">
-        <img src="../images/img-38435a9ccf7a80ea9288f772303c0370.jpg" alt="Internal note">
-        <span class="img-cap"><strong>3. Adding an internal note before publishing</strong><em>Context for the next reviewer, not just the developer.</em></span>
+        <img src="../images/img-38435a9ccf7a80ea9288f772303c0370.jpg" alt="Adding an internal note before publishing">
+        <span class="img-cap">Adding an internal note before publishing.</span>
       </div>
     </div>
   </div>
@@ -905,28 +913,40 @@
     <div class="slide-header">
       <span class="slide-section">Solution</span>
     </div>
-    <h2 class="slide-h">Team management & roles</h2>
-    <p class="slide-intro">Role-based access for the review team, mapped to actual responsibility. The previous process had no formal access model: anyone could touch anything, and no one had a clear view of who owned which review. This closes that handoff&nbsp;gap.</p>
+    <h2 class="slide-h">Team management and roles</h2>
+    <p class="slide-intro">Role-based access for the review team.</p>
     <div class="img-grid g3">
       <div class="img-cell">
-        <img src="../images/img-77849552a9324b4580d314b3bfc6e966.jpg" alt="Team management">
-        <span class="img-cap"><strong>All review team members, their roles and emails</strong><em>One roster instead of asking around to find out who's who.</em></span>
+        <img src="../images/img-77849552a9324b4580d314b3bfc6e966.jpg" alt="Team management - all users, their roles and emails, with options to add or remove members">
+        <span class="img-cap">Team management - all users, their roles and emails, with options to add or remove members.</span>
       </div>
       <div class="img-cell">
-        <img src="../images/img-12c77f84c928436397cc7844a5773dc9.jpg" alt="Role assignment">
-        <span class="img-cap"><strong>Four role types control what each member can do</strong><em>Access matched to responsibility, not granted by default.</em></span>
+        <img src="../images/img-12c77f84c928436397cc7844a5773dc9.jpg" alt="Role assignment - four role types (Admin, Account Manager, Integration Manager, Viewer) control what each member can do">
+        <span class="img-cap">Role assignment - four role types (Admin, Account Manager, Integration Manager, Viewer) control what each member can do.</span>
       </div>
       <div class="img-cell">
-        <img src="../images/img-38435a9ccf7a806c83b8c68f5295bd4d.jpg" alt="Viewer role">
-        <span class="img-cap"><strong>Viewer role: Preview only, no changes</strong><em>Visibility without the risk of an accidental edit.</em></span>
+        <img src="../images/img-38435a9ccf7a806c83b8c68f5295bd4d.jpg" alt="Viewer role can preview the report but not make any changes">
+        <span class="img-cap">Viewer role can preview the report but not make any changes.</span>
       </div>
     </div>
   </div>
 
-    <!-- Challenges -->
-  <div class="slide slide-vcenter" data-label="Challenges">
+  <!-- Delivery -->
+  <div class="slide slide-vcenter" data-label="Delivery">
     <div class="slide-header">
       <span class="slide-section">Delivery</span>
+    </div>
+    <h2 class="slide-h">Delivery</h2>
+    <ul style="margin:8px 0 0;padding-left:22px;max-width:720px;list-style:disc;">
+      <li class="slide-body" style="margin:0 0 14px;">Ran weekly syncs with Account Management to align on scope and surface edge cases early.</li>
+      <li class="slide-body" style="margin:0 0 14px;">Ran a bug hunt with Account Managers before launch to validate the redesign. It showed that the diff in the second review was not built properly and needed more work.</li>
+    </ul>
+  </div>
+
+  <!-- Challenges -->
+  <div class="slide slide-vcenter" data-label="Challenges">
+    <div class="slide-header">
+      <span class="slide-section">Challenges</span>
     </div>
     <h2 class="slide-h">Challenges</h2>
     <ul style="margin:8px 0 0;padding-left:22px;max-width:720px;list-style:disc;">
@@ -942,7 +962,7 @@
       <span class="slide-section">Results</span>
     </div>
     <h2 class="slide-h">Results and impact</h2>
-    <p class="slide-body" style="margin-bottom:36px;"><span class="mark">Review cycles got shorter.</span> The team stopped working in Google Docs and moved their reviews into the platform, where anyone with permission can follow an app's full history. It has been in use since the 2022 launch, including after AI entered the review process.</p>
+    <p class="slide-body" style="margin-bottom:36px;"><strong>Review cycles got shorter.</strong> The team stopped working in Google Docs and moved their reviews into the platform, where anyone with permission can follow an app's full history. It has been in use since the 2022 launch, including after AI entered the review process.</p>
     <div class="bottom-line-block">
       <p>The team had already voted with their feet, doing the actual review work in spreadsheets outside the platform. Success wasn't launching a redesign; it was building something good enough that they'd stop reaching for Google Docs. The tool became their primary review surface, which is the only metric that actually&nbsp;mattered.</p>
     </div>
