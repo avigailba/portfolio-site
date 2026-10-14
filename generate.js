@@ -565,12 +565,32 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
   // TL;DR box: a Notion paragraph that starts with "TL;DR" becomes a two-column summary box.
   // One column per sentence (up to three): what was done, how it was reached, the outcome.
   if (contentHtml) {
-    contentHtml = contentHtml.replace(/<p>\s*TL;DR:?\s*([\s\S]*?)<\/p>/i, (m, inner) => {
-      let parts = inner.trim().split(/(?<=[.!?])\s+/).filter(Boolean);
+    // Two Notion shapes work: "TL;DR: sentence. sentence. sentence." in one paragraph,
+    // or a "TL;DR" paragraph on its own followed by one paragraph per sentence (up to three).
+    const tldrRe = /<p>\s*TL;DR:?\s*([\s\S]*?)<\/p>/i;
+    const tm = tldrRe.exec(contentHtml);
+    if (tm) {
+      let parts = [];
+      let end = tm.index + tm[0].length;
+      const inner = tm[1].replace(/<br\s*\/?>/g, ' ').trim();
+      if (inner) {
+        parts = inner.split(/(?<=[.!?])\s+/).filter(Boolean);
+      } else {
+        const pRe = /^\s*<p>([\s\S]*?)<\/p>/;
+        let rest = contentHtml.slice(end), pm;
+        while (parts.length < 3 && (pm = pRe.exec(rest)) && pm[1].replace(/<[^>]+>/g, '').trim()) {
+          parts.push(pm[1].trim());
+          end += pm[0].length;
+          rest = contentHtml.slice(end);
+        }
+      }
       if (parts.length > 3) parts = [parts.slice(0, parts.length - 2).join(' '), parts[parts.length - 2], parts[parts.length - 1]];
-      const cols = parts.map(t => `<p>${t}</p>`).join('');
-      return `<div class="proj-tldr"><span class="proj-tldr-label">TL;DR</span><div class="proj-tldr-grid" data-cols="${parts.length}">${cols}</div></div>`;
-    });
+      if (parts.length) {
+        const cols = parts.map(t => `<p>${t}</p>`).join('');
+        const box = `<div class="proj-tldr"><span class="proj-tldr-label">TL;DR</span><div class="proj-tldr-grid" data-cols="${parts.length}">${cols}</div></div>`;
+        contentHtml = contentHtml.slice(0, tm.index) + box + contentHtml.slice(end);
+      }
+    }
   }
   if (contentHtml) contentHtml = injectTooltips(contentHtml);
 
