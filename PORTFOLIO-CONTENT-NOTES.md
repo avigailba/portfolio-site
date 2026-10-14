@@ -1,6 +1,6 @@
 # Portfolio content notes (read this first in any content session)
 
-Working memory for improving the portfolio copy. Update it at the end of every session: add decisions, change a project's status, never delete history.
+Working memory for improving the portfolio copy. Update it at the end of every portfolio work session: add decisions, change a project's status, never delete history.
 Last updated: 2026-10-13 (App Review Platform session; page structure standardized)
 
 ## Goal
@@ -11,11 +11,14 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 - No specific numbers, percentages, or dollar amounts in project content (legal). Use plain directional words. Years and dates are fine.
 - No hype words ("amazing", "strong growth"). Say what happened.
 - No line of copy ends on a single word (English widow rule).
-- First sentence of the opening names the problem. First person.
+
 - Subtitles and captions are short and do not repeat their title.
 - Do not describe screens she did not design. Ask first.
 - Never invent facts. If a claim needs data she has not given, mark it as an open question. Only claim what her sources support (the page, the CV, her Drive decks).
-- She reverses decisions quickly. Do not argue the reversal.
+- She reverses decisions quickly. 
+- She makes many small changes so you should make the change locally and ask if she wants to make more changes or push it. 
+- pushing means she wants it to go live
+- only change things when she asks for it. she may just ask a question
 
 ## How she wants copy written (learned on App Review Platform)
 - Plain and exact beats "important-sounding". She rejected a version with ownership verbs ("Made two structural calls", "I started with the people doing the work") as AI slop. Specific facts (shadowing, Docs audit, weekly syncs, bug hunt) carry the weight.
@@ -65,6 +68,16 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 - Only the first occurrence of each term per page gets the tooltip.
 - To add a term, add a key to `TERM_TIPS`. It applies to every page where the phrase appears, so check the other pages.
 
+## Side menu on project pages (deployed 2026-10-13, commit 468739a)
+- Left margin, fixed, wide screens only (min 1200px wide and 820px tall), hidden on mobile. Built from the page headings in generate.js (ANCHOR_NAV, every project page), styled in style.css (end of file), behaviour in script.js (end of file).
+- Items copy the App Review deck side nav: number and label, grey #555, hover light grey background only (text stays grey), selected #0a0a0a weight 500, no radius, no transition. The site's "nav a" styles are reset for it.
+- Top of the menu: Avigail Bahat with the role line (same style as the top bar, leads home), then the project name in Plus Jakarta Sans (hover shows "Back to top").
+- Before scroll the menu is hidden. After about 104px the site header and the sticky title bar hide and the menu appears. Previous and next project links sit at the bottom of the margins.
+- Pages with fewer than 3 h2 list their h3s instead (App Pricing Page: five numbered features plus Bottom line). Pages with fewer than 3 items get no menu.
+- Tried and removed: sub-sections in the menu (Research, Design principles under Approach).
+- Fixes that apply to every project page: the title's bottom line no longer flashes black, the subtitle no longer jumps left on scroll, the tags row hides on scroll, lightbox captions are white.
+- Not checked in a real wide browser: AI Credits (custom layout) and the thin menus on the older pages.
+
 ## Presentation mode (deck) for App Review Platform
 - A separate, hand-edited file: `dist/projects/internal-review-demo.html` (14 slides). It is NOT generated from Notion and generate.js keeps it (`KEEP_PROJECT_FILES`). Edit the file directly and keep it in sync with the Notion page.
 - The "Presentation mode" button under the subtitle links to it (removed and put back on 2026-10-13, she wants it).
@@ -99,13 +112,13 @@ All of it is written in Notion. Headings are plain `##` (section) and `###` (sub
 | 3 | `## Approach` | `### Research`: what you did, then the pain points as bullets. `### Design principles`: one bridge line, then the principles in her words. |
 | 4 | `## Delivery` | Who you worked with, syncs, testing, bug hunt. Short bullets. |
 | 5 | `## Challenges` | Two or three real difficulties, only from her sources. |
-| 6 | `## Results and impact` | First sentence in bold, then what changed. Directional only, no numbers. |
-| 7 | `## Next steps` | One or two sentences, only facts she gives. |
-| 8 | `## Solution` | Everything visual, in this order. `### Deciding on the product areas`: one line, the area images, "Click any image to see it bigger." `### Redesigning the platform`: numbered goal-first list (bold one-word goal, then what was done, priority order, UI system item last) and the 1 or 2 screens that prove the points. Then the full screens, grouped under `###` with short captions (long groups in a toggle, never delete screens). No separate "Screens" heading. |
+| 6 | `## Solution` | Everything visual, in this order. `### Deciding on the product areas`: one line, the area images, "Click any image to see it bigger." `### Redesigning the platform`: numbered goal-first list (bold one-word goal, then what was done, priority order, UI system item last) and the 1 or 2 screens that prove the points. Then the full screens, grouped under `###` with short captions (long groups in a toggle, never delete screens). No separate "Screens" heading. |
+| 7 | `## Results and impact` | First sentence in bold, then what changed. Directional only, no numbers. |
+| 8 | `## Next steps` | One or two sentences, only facts she gives. |
 | 9 | `## Bottom line` | One or two sentences, personal voice. |
 | auto | Last updated line, More work | Generated. Do not write them. |
 
-Why this order (2026-10-13, her call): the story and the result come first, then the long visual section sits last so a skimmer reaches the impact before 20 images. The presentation deck keeps its own order (results at the end).
+Order (2026-10-13, her call): Results and impact and Next steps are the last sections before Bottom line, after the long Solution section, so they are what a reader ends on. The presentation deck keeps its own order (results at the end).
 
 Rules for whoever builds a page:
 - Use only facts from the page, her CV, her Drive decks, or what she says. If a section has no source, ask her one question; do not invent. (Role and team: she declined a role strip; name the people in the text only if she gives the facts.)
@@ -113,7 +126,7 @@ Rules for whoever builds a page:
 - Write "Wix App Market" in full on first mention so the tooltip appears.
 - Check the page in the local preview at 1440px and 375px, and the checklist below. Do not push without her explicit go.
 - Moving image blocks in Notion: do not re-reference an existing image (Notion moves it). Move text blocks, not images, or upload a copy.
-- If the project has a presentation deck, keep it in sync in the same turn (App Review Platform has one: dist/projects/internal-review-demo.html).
+- If the project has a presentation deck, keep it in sync in the same turn (App Review Platform has one: dist/projects/internal-review-demo.html), and END EVERY PAGE EDIT REPORT with a line saying whether the deck is in sync and listing any differences. She was upset (2026-10-14) that the deck lagged and nobody said so.
 
 ## Case study checklist (Product Design Case Study Cheatsheet, saved 2026-10-13)
 Use it as a final check on every project page. It is generic advice, so the "Our rules" column wins where they conflict.
@@ -164,7 +177,7 @@ Renamed from "Internal Reviews System" to avoid the clash with "Reviews Revamp".
 - Design principles (added 2026-10-13, deployed): four principles in her own words, as a subsection right after Research and before "Deciding on the product areas". Her wording kept, including "publishing is always deliberate" (she confirmed it is true). Overlap with the goal-first list is accepted: principles are the why, the list is the how.
 - Pattern to reuse on the other pages: TL;DR box, goal-first decision list, problem named in the first sentence, claims only from sources.
 
-### AI Credits (slug ai-credits-wallet, Notion 31135a9ccf7a804caf72da07638205bc): TODO (next, only when she says)
+### AI Credits Wallet (slug ai-credits-wallet, Notion 31135a9ccf7a804caf72da07638205bc): TODO (next, only when she says)
 - Opening is third person, run-on with a stray colon.
 - Process lists tasks, not decisions (why two tiers, why collaborator wallet scoped out). Try the goal-first decision list.
 - Impact and Bottom line repeat the same "silence" idea.
@@ -174,17 +187,14 @@ Renamed from "Internal Reviews System" to avoid the clash with "Reviews Revamp".
 - Add a TL;DR. Search Drive for an interview deck first.
 - Caution: this page has a custom layout (credits widget iframe), so check it after the TL;DR is added.
 
-### Installations (slug app-installation-page-for-developers, Notion 31135a9ccf7a80358e3cead5465c89f8): DONE LOCAL 2026-10-13 (in Notion and regenerated, not committed, not deployed)
-Restructured to the App Review Platform pattern. Current structure:
-- Subtitle: "Designed and shipped installation analytics that gave developers site-level visibility into how their apps were used" (her original line, verb added, "actually" dropped).
-- TL;DR card, three sentences (one paragraph starting "TL;DR:", the generator makes one column per sentence): the page developers needed and the support emails; mapped the gap with the PM, worked through permission levels and PII limits with engineering, shipped part of it in code; developers who found it used it, feedback positive. She wanted "the developers love it"; not sourced, so "the feedback has been positive".
-- The problem, Process (Research, Design principles, Designing the page, two screens in a 2-column row), Delivery, Impact, Screens, Bottom line (unchanged).
-- Design principles (candidates from her page, she approved): Explain, don't hide. Start from what developers asked for. Legal sets the boundaries (was "Respect the limits"). Let developers shape the view.
-- Removed: old opening paragraph incl. "co-built end-to-end" and the "two user types" line, the whole "Working within constraints" section (incl. the backend and API alignment line, can return as a Delivery bullet), the roadmap and discoverability lines in Impact, "cobbling" (now "building workarounds").
-- Wording: "table" became "page"; "help article" became "documentation"; Figma Make mock validated "with stakeholders and users".
-- Captions: em dashes changed to colons, "Default table" renamed "Default view" (2026-10-13). In-flow screens are Default view and Column customization, both ALSO in Screens as true copies. To duplicate a Notion image: notion-create-file-upload, curl POST the local dist/images file to upload_url, then reference file-upload://<id>. Reusing a notion-file-block link moves the block instead.
-- NEXT (when she comes back): add the "Behind the scenes" images (Figma Make, Cursor, Server) under "Designing the page", in the same in-flow style as the two screens there. Duplicate them (upload route), do not move them, and keep them in Screens too. Check every caption before and after.
-- Homepage card subtitle: PROJECT_META in generate.js updated to match the Notion subtitle (deployed 2026-10-13, commit 8d3d2cd).
+### Installations (slug app-installation-page-for-developers, Notion 31135a9ccf7a80358e3cead5465c89f8): DEPLOYED 2026-10-13 (commits d9efad1 and 468739a)
+Restructured to the standard. Current structure, in order:
+- Subtitle: "Designed and shipped installation analytics that gave developers site-level visibility into how their apps were used" (her original line, verb added, "actually" dropped; she rejected every invented alternative).
+- TL;DR card, three sentences: the page developers needed and the support emails; mapped the gap with the PM, worked through permission levels and PII limits with engineering, shipped part of it in code; developers who found it used it, feedback positive.
+- The problem. Approach (Research, Design principles: Explain don't hide, Start from what developers asked for, Legal sets the boundaries, Let developers shape the view). Challenges (4 bullets from the page, plus the Server image). Solution (Design, Delivery, The page, Edge and empty states, all 13 screens). Results & Impact (with the two developer quotes as a list). Next steps (from the old roadmap lines). Bottom line (her own sentences about the complaint, deciding fields and the default view, and shipping features with AI tools).
+- Removed on purpose: "co-built end-to-end", "two user types", the Working within constraints section, the old roadmap paragraph in Impact.
+- Screens: Default view and Column customization sit in the first row under Design, and appear again in Screens as uploaded copies. Figma Make and Cursor are the second row. Server sits under Challenges. Nothing was deleted.
+- Open: nothing. Homepage card subtitle matches the Notion subtitle.
 
 ### Developer Sale (slug developer-sale, Notion 17d35a9ccf7a80c69ceafb3f7973485a): TODO
 - Subtitle "drove strong growth" is vague.
