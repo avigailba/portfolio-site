@@ -260,7 +260,7 @@ async function toHtml(blocks, imgPrefix = '') {
             } catch (e) { stats.errors.push(`${fname}: ${e.message}`); }
           }
         }
-        html += `<figure class="proj-img">\n${capHtml ? `  <figcaption class="proj-caption">${capHtml}</figcaption>\n` : ''}  <img src="${escapeAttr(url)}" alt="${escapeAttr(capText)}" loading="lazy">\n</figure>\n`;
+        html += `<figure class="proj-img">\n  <img src="${escapeAttr(url)}" alt="${escapeAttr(capText)}" loading="lazy">\n${capHtml ? `  <figcaption class="proj-caption">${capHtml}</figcaption>\n` : ''}</figure>\n`;
         break;
       }
     }
@@ -1009,7 +1009,7 @@ function designSystemPage(notionConnected) {
     { sample: 'Design system',               spec: '32px / 700 / −0.02em / Roboto',             where: 'Inner page h1, footer statement, project section headings (.inner-content h1, .footer-statement, .proj-content h2)', style: 'font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#0a0a0a' },
     { sample: 'Senior UX designer.',         spec: '28px / 500 / −0.01em / Plus Jakarta Sans', where: 'Homepage lede (.lede)',                                               style: 'font-size:28px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;font-family:Plus Jakarta Sans,sans-serif' },
     { sample: 'I planned and rebuilt a stale internal review tool.', spec: '20px (18px in 3 columns) / 500 / −0.01em / Plus Jakarta Sans', where: 'TL;DR box text (.proj-tldr p)', style: 'font-size:20px;font-weight:500;letter-spacing:-0.01em;color:#0a0a0a;line-height:1.4;font-family:Plus Jakarta Sans,sans-serif' },
-    { sample: 'Transparent AI usage billing across the platform.', spec: '20px / 500 / Roboto', where: 'Project subtitle, content sub-headings, CV role titles (.proj-subtitle, .proj-content h3, .cv-title)', style: 'font-size:20px;font-weight:500;color:#0a0a0a;line-height:1.4' },
+    { sample: 'Transparent AI usage billing across the platform.', spec: '20px / 500 / Roboto (sub-headings in Plus Jakarta Sans)', where: 'Project subtitle, CV role titles (.proj-subtitle, .cv-title). Project sub-headings (.proj-content h3) are Plus Jakarta Sans 20px / 700', style: 'font-size:20px;font-weight:500;color:#0a0a0a;line-height:1.4' },
     { sample: 'Body copy — project content, about, contact, work rows.', spec: '16px / 400 / Roboto / lh 1.7 / #555', where: 'All body and secondary text (.proj-intro, .proj-content p, .proj-body, .row-title, .cv-desc, .cv-years, .contact-intro)', style: 'font-size:16px;color:#555;line-height:1.7' },
     { sample: 'FEATURED WORK · EXPERIENCE',  spec: '14px / 400 / uppercase / 0.07–0.08em',   where: 'Section labels, about page section labels, TL;DR label (.section-label, .more-label, .about-notion h2, .proj-tldr-label)', style: 'font-size:14px;letter-spacing:0.07em;text-transform:uppercase;color:#555' },
     { sample: 'Nav links, years, tags, meta', spec: '14px / 400 / Roboto',                    where: 'Nav links, row meta, tag labels, footer text',                          style: 'font-size:14px;color:#555' },

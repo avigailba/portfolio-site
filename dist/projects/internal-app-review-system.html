@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <link rel="stylesheet" href="../style.css?v=20e5070b49">
+  <link rel="stylesheet" href="../style.css?v=80c4298097">
 </head>
 <body class="proj-page">
   <header id="site-header">
@@ -52,7 +52,7 @@
         <a class="proj-nav-btn proj-nav-prev" href="app-installation-page-for-developers.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> Installations Page</span></a>
         <a class="proj-nav-btn proj-nav-next" href="developer-sale.html" aria-label="Next project"><span class="proj-nav-name">Developer Sale <i class="ti ti-arrow-right"></i></span></a>
       </div>
-      <nav class="proj-anchors" aria-label="On this page"><div class="pa-top"><a class="mob-logo pa-home" href="../index.html"><span class="mob-logo-name">Avigail Bahat</span><span class="mob-logo-role">Senior Product Designer</span></a></div><div class="pa-title" role="button" tabindex="0">App Review Platform<span class="pa-hint">&uarr; Back to top</span></div><ul><li><a href="#sec-tldr"><span class="pa-num">01</span><span class="pa-label">TL;DR</span></a></li><li><a href="#sec-the-problem"><span class="pa-num">02</span><span class="pa-label">The problem</span></a></li><li><a href="#sec-approach"><span class="pa-num">03</span><span class="pa-label">Approach</span></a></li><li><a href="#sec-solution"><span class="pa-num">04</span><span class="pa-label">Solution</span></a></li><li><a href="#sec-delivery"><span class="pa-num">05</span><span class="pa-label">Delivery</span></a></li><li><a href="#sec-challenges"><span class="pa-num">06</span><span class="pa-label">Challenges</span></a></li><li><a href="#sec-results-and-impact"><span class="pa-num">07</span><span class="pa-label">Results and impact</span></a></li><li><a href="#sec-next-steps"><span class="pa-num">08</span><span class="pa-label">Next steps</span></a></li><li><a href="#sec-bottom-line"><span class="pa-num">09</span><span class="pa-label">Bottom line</span></a></li></ul></nav>
+      <nav class="proj-anchors" aria-label="On this page"><div class="pa-top"><a class="mob-logo pa-home" href="../index.html"><span class="mob-logo-name">Avigail Bahat</span><span class="mob-logo-role">Senior Product Designer</span></a></div><div class="pa-title" role="button" tabindex="0">App Review Platform<span class="pa-hint">&uarr; Back to top</span></div><ul><li><a href="#sec-tldr"><span class="pa-num">01</span><span class="pa-label">TL;DR</span></a></li><li><a href="#sec-the-problem"><span class="pa-num">02</span><span class="pa-label">The problem</span></a></li><li><a href="#sec-approach"><span class="pa-num">03</span><span class="pa-label">Approach</span></a></li><li><a href="#sec-solution"><span class="pa-num">04</span><span class="pa-label">Solution</span></a></li><li><a href="#sec-delivery-and-challenges"><span class="pa-num">05</span><span class="pa-label">Delivery &amp; challenges</span></a></li><li><a href="#sec-impact-and-next-steps"><span class="pa-num">06</span><span class="pa-label">Impact &amp; next steps</span></a></li><li><a href="#sec-bottom-line"><span class="pa-num">07</span><span class="pa-label">Bottom line</span></a></li></ul></nav>
       <div class="proj-title-sticky" id="proj-title-sticky">
         <div class="proj-tags-m">
           <span class="pm">2022</span>
@@ -85,7 +85,7 @@
 </ul>
 <p>As more and more apps were submitted, we noticed that review cycles were long.</p>
 <h2 id="sec-approach">Approach</h2>
-<h3>Research</h3>
+<div class="col-layout col-2"><div class="col"><h3>Research</h3>
 <p>Met with Account Managers to walk through the current system, shadowed them running reviews, audited the Docs and Sheets they used instead, and pulled analytics on time to publish and resubmissions per app.</p>
 <p>Four pain points came out of it:</p>
 <ul>
@@ -94,7 +94,7 @@
   <li>Weak information architecture</li>
   <li>No integrated workflow</li>
 </ul>
-<h3>Design principles</h3>
+</div><div class="col"><h3>Design principles</h3>
 <p>Some of the pain points became principles.</p>
 <ul>
   <li>Fit the existing workflow. Reviewers were already working in Docs and Sheets, so the platform had to beat their workaround and feel familiar.</li>
@@ -102,26 +102,8 @@
   <li>Show what changed in the app. A before and after view lets reviewers focus on the delta.</li>
   <li>Keep the account managers in control. Blockers disable publishing, and publishing is always deliberate.</li>
 </ul>
-<h2 id="sec-solution">Solution</h2>
-<h3>Deciding on the product areas</h3>
-<p>I split the product into four areas before designing any screens, and the review workspace was entirely new. Click any image to see it bigger.</p>
-<div class="col-layout col-4"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">All apps - browse, filter and assign every app</figcaption>
-  <img src="../images/img-39b35a9ccf7a80639d30e7dab00429f6.jpg" alt="All apps - browse, filter and assign every app" loading="lazy">
-</figure>
-</div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">App page - one app's details, activity and team</figcaption>
-  <img src="../images/img-39b35a9ccf7a8035852af27e1bc2f0e2.jpg" alt="App page - one app&#39;s details, activity and team" loading="lazy">
-</figure>
-</div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">New review workspace - comment, report, then publish or decline</figcaption>
-  <img src="../images/img-39b35a9ccf7a80c799b3f07bc0270576.jpg" alt="New review workspace - comment, report, then publish or decline" loading="lazy">
-</figure>
-</div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Account Managers team - manage members, roles and access</figcaption>
-  <img src="../images/img-39b35a9ccf7a8059af6bd4b420b393ae.jpg" alt="Account Managers team - manage members, roles and access" loading="lazy">
-</figure>
 </div></div>
+<h2 id="sec-solution">Solution</h2>
 <h3>Redesigning the platform</h3>
 <ol>
   <li><strong>Order:</strong> Every step of an app's submission is logged with who did it.</li>
@@ -132,124 +114,125 @@
   <li><strong>New status:</strong> Three listing states (Listed, Never Listed, Removed) show each app's market history at a glance.</li>
   <li><strong>Familiar:</strong> Built on <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide." aria-label="Wix" aria-describedby="term-tip-2" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-2" role="tooltip" hidden>Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></span>'s internal UI system instead of a new visual language, answering the confusing UI complaint from research.</li>
 </ol>
-<div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Review report - comments grouped by path, with issues flagged by type and location</figcaption>
+<figure class="proj-img">
   <img src="../images/img-98693c59eaed4f0a9c18804be6f0dc60.jpg" alt="Review report - comments grouped by path, with issues flagged by type and location" loading="lazy">
+  <figcaption class="proj-caption">Review report - comments grouped by path, with issues flagged by type and location</figcaption>
+</figure>
+<h3>Deciding on the product areas</h3>
+<p>I split the product into four areas before designing any screens, and the review workspace was entirely new. Click any image to see it bigger.</p>
+<div class="col-layout col-4"><div class="col"><figure class="proj-img">
+  <img src="../images/img-39b35a9ccf7a80639d30e7dab00429f6.jpg" alt="All apps - browse, filter and assign every app" loading="lazy">
+  <figcaption class="proj-caption">All apps - browse, filter and assign every app</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Previous activity - changes and comments from the app's last review, in context</figcaption>
-  <img src="../images/img-cb1ea799db054a96acae4c20549a53aa.jpg" alt="Previous activity - changes and comments from the app&#39;s last review, in context" loading="lazy">
+  <img src="../images/img-39b35a9ccf7a8035852af27e1bc2f0e2.jpg" alt="App page - one app&#39;s details, activity and team" loading="lazy">
+  <figcaption class="proj-caption">App page - one app's details, activity and team</figcaption>
+</figure>
+</div><div class="col"><figure class="proj-img">
+  <img src="../images/img-39b35a9ccf7a80c799b3f07bc0270576.jpg" alt="New review workspace - comment, report, then publish or decline" loading="lazy">
+  <figcaption class="proj-caption">New review workspace - comment, report, then publish or decline</figcaption>
+</figure>
+</div><div class="col"><figure class="proj-img">
+  <img src="../images/img-39b35a9ccf7a8059af6bd4b420b393ae.jpg" alt="Account Managers team - manage members, roles and access" loading="lazy">
+  <figcaption class="proj-caption">Account Managers team - manage members, roles and access</figcaption>
 </figure>
 </div></div>
-<div class="col-layout col-2"><div class="col"></div><div class="col"></div></div>
 <h3>Apps directory and review queue</h3>
 <p>The full marketplace directory, across all stages</p>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Apps dashboard - every app with status, last change, market status, app ID and reviewer</figcaption>
   <img src="../images/img-3b050a27424045049837f37c0dbcbb0b.jpg" alt="Apps dashboard - every app with status, last change, market status, app ID and reviewer" loading="lazy">
+  <figcaption class="proj-caption">Apps dashboard - every app with status, last change, market status, app ID and reviewer</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Filters - narrow the queue by status and market listing (more were added later)</figcaption>
   <img src="../images/img-bbcd50dd77864ad2be7e03d4f1a45204.jpg" alt="Filters - narrow the queue by status and market listing (more were added later)" loading="lazy">
+  <figcaption class="proj-caption">Filters - narrow the queue by status and market listing (more were added later)</figcaption>
 </figure>
 </div></div>
 <h3>App page</h3>
 <p>Submission history, team notes, and current status</p>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Activity log - every status change, reviewer and internal note, in order</figcaption>
   <img src="../images/img-6414b62696c949a69686d280fef78e32.jpg" alt="Activity log - every status change, reviewer and internal note, in order" loading="lazy">
+  <figcaption class="proj-caption">Activity log - every status change, reviewer and internal note, in order</figcaption>
 </figure>
 <figure class="proj-img">
-  <figcaption class="proj-caption">Statuses - each status with its actions and badge</figcaption>
   <img src="../images/img-39b35a9ccf7a804b8217cb08bc0b6874.jpg" alt="Statuses - each status with its actions and badge" loading="lazy">
+  <figcaption class="proj-caption">Statuses - each status with its actions and badge</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Team view - who builds the app, so a handoff does not start from zero</figcaption>
   <img src="../images/img-38435a9ccf7a803ca35ec7a3df5b0825.jpg" alt="Team view - who builds the app, so a handoff does not start from zero" loading="lazy">
+  <figcaption class="proj-caption">Team view - who builds the app, so a handoff does not start from zero</figcaption>
 </figure>
 </div></div>
 <h3>Review workflow</h3>
 <p>Commenting, flagging issues, and submitting the review in one place</p>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Review report - comments grouped by path, with issues flagged by type and location</figcaption>
   <img src="../images/img-3a335a9ccf7a80439b98d3025148c52b.jpg" alt="Review report - comments grouped by path, with issues flagged by type and location" loading="lazy">
+  <figcaption class="proj-caption">Review report - comments grouped by path, with issues flagged by type and location</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Previous activity - changes and comments from the app's last review, in context</figcaption>
   <img src="../images/img-3a335a9ccf7a809bbb3fc6600510972e.jpg" alt="Previous activity - changes and comments from the app&#39;s last review, in context" loading="lazy">
+  <figcaption class="proj-caption">Previous activity - changes and comments from the app's last review, in context</figcaption>
 </figure>
 </div></div>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">New comment - pick the path, describe the issue, and mark it as a blocker to disable publishing</figcaption>
   <img src="../images/img-38435a9ccf7a8086a5fcf9625e03c729.jpg" alt="New comment - pick the path, describe the issue, and mark it as a blocker to disable publishing" loading="lazy">
-</figure>
-<figure class="proj-img">
-  <figcaption class="proj-caption">Comment types - one fixed vocabulary for every reviewer</figcaption>
-  <img src="../images/img-39b35a9ccf7a80c8ac0ccd2a5f566729.jpg" alt="Comment types - one fixed vocabulary for every reviewer" loading="lazy">
+  <figcaption class="proj-caption">New comment - pick the path, describe the issue, and mark it as a blocker to disable publishing</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Existing comment - move a comment the developer has not handled into the new report</figcaption>
-  <img src="../images/img-38435a9ccf7a803fbbebe389d7ce23e4.jpg" alt="Existing comment - move a comment the developer has not handled into the new report" loading="lazy">
+  <img src="../images/img-39b35a9ccf7a80c8ac0ccd2a5f566729.jpg" alt="Comment types - one fixed vocabulary for every reviewer" loading="lazy">
+  <figcaption class="proj-caption">Comment types - one fixed vocabulary for every reviewer</figcaption>
 </figure>
 </div></div>
 <h3>Publish flow</h3>
 <p>The last step before publishing to the marketplace</p>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Publish action - opened from the app's more actions menu</figcaption>
   <img src="../images/img-3a335a9ccf7a800395b1eafb4c5fb66d.jpg" alt="Publish action - opened from the app&#39;s more actions menu" loading="lazy">
+  <figcaption class="proj-caption">Publish action - opened from the app's more actions menu</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">First publish - the revenue share agreement shows before confirming</figcaption>
   <img src="../images/img-38435a9ccf7a80eeb2a8f65463952fd5.jpg" alt="First publish - the revenue share agreement shows before confirming" loading="lazy">
+  <figcaption class="proj-caption">First publish - the revenue share agreement shows before confirming</figcaption>
 </figure>
 </div></div>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Report attached - the review report travels with the publish action</figcaption>
   <img src="../images/img-38435a9ccf7a80738a68efc0d5282683.jpg" alt="Report attached - the review report travels with the publish action" loading="lazy">
+  <figcaption class="proj-caption">Report attached - the review report travels with the publish action</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Internal note - added before publishing</figcaption>
   <img src="../images/img-38435a9ccf7a80ea9288f772303c0370.jpg" alt="Internal note - added before publishing" loading="lazy">
+  <figcaption class="proj-caption">Internal note - added before publishing</figcaption>
 </figure>
 </div></div>
-<div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Publishing - loading state while the app goes live</figcaption>
-  <img src="../images/img-38435a9ccf7a80cb893dd89508d7c2d3.jpg" alt="Publishing - loading state while the app goes live" loading="lazy">
-</figure>
-</div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Published - the app is live and marked as “listed”</figcaption>
+<figure class="proj-img">
   <img src="../images/img-38435a9ccf7a802ba183ca8517f87af7.jpg" alt="Published - the app is live and marked as “listed”" loading="lazy">
+  <figcaption class="proj-caption">Published - the app is live and marked as “listed”</figcaption>
 </figure>
-</div></div>
 <h3>Team management and roles</h3>
 <p>Role-based access for the review team</p>
 <div class="col-layout col-3"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Team - all users, their roles and emails, with add and remove</figcaption>
   <img src="../images/img-77849552a9324b4580d314b3bfc6e966.jpg" alt="Team - all users, their roles and emails, with add and remove" loading="lazy">
+  <figcaption class="proj-caption">Team - all users, their roles and emails, with add and remove</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Roles - four types (Admin, Account Manager, Integration Manager, Viewer) set what each member can do</figcaption>
   <img src="../images/img-12c77f84c928436397cc7844a5773dc9.jpg" alt="Roles - four types (Admin, Account Manager, Integration Manager, Viewer) set what each member can do" loading="lazy">
+  <figcaption class="proj-caption">Roles - four types (Admin, Account Manager, Integration Manager, Viewer) set what each member can do</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Viewer role - can preview the report but not change it</figcaption>
   <img src="../images/img-38435a9ccf7a806c83b8c68f5295bd4d.jpg" alt="Viewer role - can preview the report but not change it" loading="lazy">
+  <figcaption class="proj-caption">Viewer role - can preview the report but not change it</figcaption>
 </figure>
 </div></div>
-<h2 id="sec-delivery">Delivery</h2>
-<ul>
-  <li>Ran weekly syncs with Account Management to align on scope and surface edge cases early.</li>
-  <li>Ran a bug hunt with Account Managers before launch to validate the redesign. It showed that the diff in the second review was not built properly and needed more work.</li>
-</ul>
-<h2 id="sec-challenges">Challenges</h2>
+<h2 id="sec-delivery-and-challenges">Delivery &amp; challenges</h2>
+<p>Ran weekly syncs with Account Management to align on scope and surface edge cases early. Ran a bug hunt with Account Managers before launch to validate the redesign. It showed that the diff in the second review was not built properly and needed more work.</p>
+<h3>Challenges</h3>
 <ul>
   <li>Reviewers had already moved to Docs and Sheets, so the platform had to be better than their workaround to win them back.</li>
   <li>The diff in the second review was not built properly, and the bug hunt is what showed it.</li>
   <li>Sending the review was still done in a separate Wix platform, because the two systems were not connected.</li>
 </ul>
-<h2 id="sec-results-and-impact">Results and impact</h2>
+<h2 id="sec-impact-and-next-steps">Impact &amp; next steps</h2>
 <p><strong>Review cycles got shorter.</strong> The team stopped working in Google Docs and moved their reviews into the platform, where anyone with permission can follow an app's full history. It has been in use since the 2022 launch, including after AI entered the review process.</p>
-<h2 id="sec-next-steps">Next steps</h2>
+<h3>Next steps</h3>
 <p>The team has since added features themselves, such as more filters on the main page and marking an app as premium, which used to need a developer.</p>
 <h2 id="sec-bottom-line">Bottom line</h2>
 <p>The team had already voted with their feet, doing the actual review work in spreadsheets outside the platform. Success wasn't launching a redesign; it was building something good enough that they'd stop reaching for Google Docs. The tool became their primary review surface, which is the only metric that actually mattered.</p>
