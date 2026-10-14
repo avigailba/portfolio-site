@@ -1,7 +1,7 @@
 # Portfolio content notes (read this first in any content session)
 
 Working memory for improving the portfolio copy. Update it at the end of every portfolio work session: add decisions, change a project's status, never delete history.
-Last updated: 2026-10-13 (App Review Platform session; page structure standardized)
+Last updated: 2026-10-14 (final page structure, deck sync, site reference by page type)
 
 ## Goal
 Make every project page more impressive for hiring managers and recruiters. Target role: full-time product design role, with AI and code involvement, not Figma-only.
@@ -33,6 +33,9 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 - Wix App Market: write the full name on first mention so the tooltip appears.
 - For a "wdyt" question: recommendation, then wait. Apply only on her word.
 - A pasted line with no instruction: ask one short question.
+- Replies stay short (her request 2026-10-14): what changed, what is open, one next question.
+- Layout taste: captions below images; sub-headings bold Plus Jakarta Sans; body text in the body font (Jakarta only for titles); plain bullets, no dividers or arrows; no toggles for her screens (she cuts screens herself); yellow boxes only for principles and the seven design points.
+- "mm ok" means yes. "mm no" or "no no" means drop it and do not re-pitch variants.
 
 ## Workflow
 1. Content lives in Notion (Avigail Bahat Portfolio CMS). Page IDs are in CLAUDE.md. ALL content edits go in Notion, never only in generated files.
@@ -43,7 +46,7 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 6. Before committing, `git diff` for edits that are not mine (Codex may edit the same repo). Stage only files for this work.
 7. Backups: before restructuring a Notion page with images, duplicate it (notion-duplicate-page). A duplicate created inside the CMS parent would be published as a project, so MOVE it out immediately (notion-move-pages to the workspace) and title it BACKUP. App Review Platform backup (2026-10-13, before the sections were reordered): https://app.notion.com/p/3f835a9ccf7a815aba62d4a8bee5aae7
 8. Notion image blocks cannot be duplicated by reusing the same `notion-file-block://` reference: Notion MOVES the image and leaves empty columns. To show an image twice, upload a copy (notion-create-file-upload, then POST the file with curl, then reference `file-upload://<id>`). Check the original place still has its image after any edit with images.
-8. Add a numbered list item or sentence into Notion with exact old_str. Fetch the page first if the text may have changed.
+9. Text edits: `update_content` with an exact old_str (fetch first, text may have changed). It CANNOT match uploaded image blocks by their notion-file-block URL ("no matches found"). To move or remove image blocks, take a BACKUP duplicate, fetch the page, and use `replace_content` with the full fetched markdown (keep every notion-file-block source exactly), then compare the image list before and after.
 
 ## Site features built (all local, not committed unless noted in the decisions log)
 ### "Last updated" line
@@ -79,12 +82,12 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 - Not checked in a real wide browser: AI Credits (custom layout) and the thin menus on the older pages.
 
 ## Presentation mode (deck) for App Review Platform
-- A separate, hand-edited file: `dist/projects/internal-review-demo.html` (14 slides). It is NOT generated from Notion and generate.js keeps it (`KEEP_PROJECT_FILES`). Edit the file directly and keep it in sync with the Notion page.
-- The "Presentation mode" button under the subtitle links to it (removed and put back on 2026-10-13, she wants it).
-- Order: 1 Cover (title on 3 lines: App / Review / Platform), 2 TL;DR (3 bullets in the deck body style, 17px Inter; the page keeps the 3-column box), 3 The problem, 4 Research (stacked like Principles: text above, 2x2 cards max 760px), 5 Design principles (cards max 760px wide), 6 Scope, 7 to 13 Solution slides, 14 Impact.
-- Synced 2026-10-13: name, subtitle, TL;DR, The problem (with the loop and the long review cycles), Research, principles, Scope intro, Impact. Solution slides were left as they were.
-- Side navigation (2026-10-13), ported from the Queuewe deck (dist/queuewe/index.html): a 170px list on the left, numbered 01 to 13 from each slide's data-label, hidden on the cover, a round menu button and drawer at 1100px and below. New slides get a data-label so they appear in it automatically.
-- When the page changes (Impact, problem, principles, TL;DR), update the deck in the same session.
+- A separate, hand-edited file: `dist/projects/internal-review-demo.html`. It is NOT generated from Notion; generate.js keeps it (`KEEP_PROJECT_FILES`). Edit it directly and keep it in sync with the Notion page.
+- The "Presentation mode" button under the page subtitle links to it. She wants it.
+- Current order (16 slides, same order as the page): 1 Cover (title on 3 lines), 2 TL;DR (3 bullets, body style), 3 The problem (plain bullets), 4 Research (plain bullets), 5 Principles (yellow boxes), 6 Redesigning the platform (seven yellow boxes, 3 columns, subtitle "The main things we solved in the new product."), 7 Product areas, 8 Apps directory and review queue, 9 App page, 10 and 11 Review workflow, 12 and 13 Publish flow (continued has a subtitle), 14 Team management, 15 Delivery & challenges ("Challenges" is a bold Jakarta sub-title), 16 Impact & next steps (plain Bottom line, tight paragraph spacing).
+- Style: titles Plus Jakarta Sans, body Inter 17px (never Jakarta for body text), plain bullets (no dividers or arrows), yellow `research-card` boxes for principles and the seven points, captions below images, lightbox caption white.
+- Side navigation ported from the Queuewe deck (dist/queuewe/index.html): 170px list, numbered from each slide's `data-label`, hidden on the cover, round menu button and drawer at 1100px and below. New slides need a `data-label`.
+- Known differences from the page: the deck's TL;DR bullets use the earlier wording (page says "internal app review tool" and "the team has used the tool and added features to it since the 2022 launch"); the two removed screens (Existing comment, Publishing loading state) may still be on the deck's Review workflow and Publish flow slides; the deck has no Last updated line or side menu of the page; principle 4 wording should match the page ("Keep the account managers in control").
 
 ## Source of truth for claims
 - CV file: /Users/avigailb/Library/CloudStorage/GoogleDrive-avigailba@gmail.com/My Drive/01 Avigail/Avigail Bahat CV.pdf
@@ -101,32 +104,32 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 - CV claims missing from pages: "sole designer for 5 years" (Installations, Developer Sale, Internal Reviews), "concept and design to shipped code" (Installations, buried), "shipped across three platforms" (AI Credits, buried, and tagline says "three products"), AI/code (AI Credits only in a caption).
 - The header year on project pages is the project date (App Review Platform shows 2022), not the Notion date. Leave it.
 
-## Standard page structure (use this order on every project page, set 2026-10-13 on App Review Platform)
-All of it is written in Notion. Headings are plain `##` (section) and `###` (subsection). Old names: Process is now Approach plus Solution, Impact is now Results and impact, and the Screens section is now part of Solution.
+## Standard page structure (use this order on every project page; final on App Review Platform 2026-10-14)
+All of it is written in Notion. Headings are plain `##` (section) and `###` (sub-heading). Old names: Process is now Approach plus Solution, Impact is now Impact & next steps, the old Screens section lives inside Solution.
 
 | # | Heading | What goes in it |
 |---|---|---|
 | 0 | Title, italic subtitle line, hero image | Subtitle states the outcome in one line, no numbers. The hero image is not clickable (automatic). |
-| 1 | `TL;DR:` paragraph (no heading) | Three sentences: what I did, how I got there, the outcome. Starts with "TL;DR:" and is shown as a three-column box. |
-| 2 | `## The problem` | First sentence names the problem. The cause (state loops as loops). The consequence. Ends on what we noticed that the outcome answers. |
-| 3 | `## Approach` | `### Research`: what you did, then the pain points as bullets. `### Design principles`: one bridge line, then the principles in her words. |
-| 4 | `## Delivery` | Who you worked with, syncs, testing, bug hunt. Short bullets. |
-| 5 | `## Challenges` | Two or three real difficulties, only from her sources. |
-| 6 | `## Solution` | Everything visual, in this order. `### Deciding on the product areas`: one line, the area images, "Click any image to see it bigger." `### Redesigning the platform`: numbered goal-first list (bold one-word goal, then what was done, priority order, UI system item last) and the 1 or 2 screens that prove the points. Then the full screens, grouped under `###` with short captions (long groups in a toggle, never delete screens). No separate "Screens" heading. |
-| 7 | `## Results and impact` | First sentence in bold, then what changed. Directional only, no numbers. |
-| 8 | `## Next steps` | One or two sentences, only facts she gives. |
-| 9 | `## Bottom line` | One or two sentences, personal voice. |
-| auto | Last updated line, More work | Generated. Do not write them. |
+| 1 | `TL;DR:` (no heading) | Three sentences, one per column: what I did, how I got there, the outcome. Either one paragraph starting "TL;DR:" or a "TL;DR" line followed by three paragraphs (the generator handles both). |
+| 2 | `## The problem` | First sentence names the problem. The cause (state loops as loops). The consequence as bullets. Ends on what we noticed that the outcome answers. |
+| 3 | `## Approach` | A two-column block: `### Research` (what you did, then the pain points as bullets) next to `### Design principles` (one bridge line, then the principles in her words). Text only in the columns. |
+| 4 | `## Solution` | Everything visual, in this order: `### Redesigning the platform` (numbered goal-first list, then ONE image, caption says a second tab shows the previous report); `### Deciding on the product areas` (one line, the four area images, "Click any image to see it bigger."); then the full screens grouped under `###` with short captions. Long groups may be toggles (Publish flow and Team management are). She does NOT want more toggles: she removes screens herself. |
+| 5 | `## Delivery & challenges` | One paragraph for delivery (syncs, bug hunt and its finding), then `### Challenges` with two or three bullets. |
+| 6 | `## Impact & next steps` | Bold first sentence, then what changed (directional, no numbers). Then `### Next steps`: one or two sentences, only facts she gives. |
+| 7 | `## Bottom line` | One or two sentences, personal voice. Plain paragraph, not styled as a quote. |
+| auto | Last updated line, More work, side menu | Generated. Do not write them. |
 
-Order (2026-10-13, her call): Results and impact and Next steps are the last sections before Bottom line, after the long Solution section, so they are what a reader ends on. The presentation deck keeps its own order (results at the end).
+Why this order: the story and the result come first, then the long visual section; headings are grouped so the end of the page is not four tiny sections.
 
 Rules for whoever builds a page:
-- Use only facts from the page, her CV, her Drive decks, or what she says. If a section has no source, ask her one question; do not invent. (Role and team: she declined a role strip; name the people in the text only if she gives the facts.)
+- Use only facts from the page, her CV, her Drive decks, or what she says. If a section has no source, ask one question; do not invent. (Role and team: she declined a role strip.)
 - Keep her wording when she writes it herself. After two "no" answers to proposals, ask for her exact line.
 - Write "Wix App Market" in full on first mention so the tooltip appears.
-- Check the page in the local preview at 1440px and 375px, and the checklist below. Do not push without her explicit go.
-- Moving image blocks in Notion: do not re-reference an existing image (Notion moves it). Move text blocks, not images, or upload a copy.
-- If the project has a presentation deck, keep it in sync in the same turn (App Review Platform has one: dist/projects/internal-review-demo.html), and END EVERY PAGE EDIT REPORT with a line saying whether the deck is in sync and listing any differences. She was upset (2026-10-14) that the deck lagged and nobody said so.
+- Captions: `Label - what it shows or lets you do`, lowercase after the hyphen, no trailing period, shown BELOW the image (page and deck).
+- Check the page in the local preview at 1440px and 375px. Do not push without her explicit go, and say what the deploy will make live.
+- Keep replies short: what changed, what is open, one next question.
+- If the project has a presentation deck, keep it in sync in the same turn, and END EVERY PAGE EDIT REPORT with a line saying whether the deck is in sync and what differs.
+- Notion image blocks: see Workflow items 7 and 8.
 
 ## Case study checklist (Product Design Case Study Cheatsheet, saved 2026-10-13)
 Use it as a final check on every project page. It is generic advice, so the "Our rules" column wins where they conflict.
@@ -160,22 +163,238 @@ Use it as a final check on every project page. It is generic advice, so the "Our
 - Installations: Summary, Problem, Approach, Solution, Impact present. Next steps removed (roadmap lines dropped as duplicates), Challenges only in principles, 13 screens (consider a toggle for edge and empty states).
 - Other pages: not audited yet.
 
+## Site reference by page type (moved here from CLAUDE.md on 2026-10-14; this file is now the single place for structure)
+Verified against the generated site on 2026-10-14. Where CLAUDE.md was out of date, this section wins.
+
+### How the site is built
+- Content is written in Notion (parent "Avigail Bahat Portfolio (CMS)"). `node generate.js` (or `node generate.js <slug>`, which still rebuilds everything) fetches it and writes `dist/`. Pushing to `main` runs GitHub Actions, which rebuilds from Notion and deploys to GitHub Pages (avigailba.com).
+- Files: `dist/index.html` (homepage), `dist/about.html` (About, CV and contact), `dist/contact.html` (redirect to About), `dist/design-system.html` (password-gated), `dist/projects/<slug>.html` (one per project), `dist/queuewe/` (separate take-home deck), `style.css` and `script.js` (shared, single files), `generate.js` (generator), `prompts/` (reference).
+- The presentation deck `dist/projects/internal-review-demo.html` is hand-edited and kept by the generator (see "Presentation mode" above).
+
+### Every page
+- Header: sticky, condenses on scroll past 40px (`overflow: hidden` must be on the base `.avail-dot-wrap`, not only on `.scrolled`). Name and title on the left, nav on the right: "Projects" and "About & Contact" (there is no separate contact page; `contact.html` redirects).
+- Footer: black, "Open to new work.", tags, email, LinkedIn, Design system link, "Built using Notion & Claude".
+- Tab titles: `<Page name> | Avigail Bahat` (home: `Avigail Bahat | Senior Product Designer`).
+- Mobile: hamburger opens a slide-in panel; filters become a dropdown.
+
+### Homepage (index.html)
+1. Header.
+2. `.home-band` (80vw band, resets to full width with clamp padding at 960px and below) containing, in order:
+   - Lede (Plus Jakarta Sans 28px / 500). Current text: "I'm a senior product designer with 10+ years at Wix, working across a large B2B platform: App Market, developer tools, and monetization flows for third-party developers." Open: it has no AI or code signal.
+   - Featured work: 4 cards as one-column horizontal rows (title, subtitle directly below, arrow on the right). Order and titles come from `FEAT_ORDER` and `PROJECT_META` in generate.js. Subtitles come from the Notion subtitle line. When a Notion page is renamed, also change its title in `PROJECT_META`.
+   - All work: header with filter buttons (All, Developer, Monetisation, Internal, CMS; a dropdown on mobile), then the project rows (number, title, subtitle on hover, category tag, year, "View"). Rows are an accordion that opens via script.js.
+3. Footer.
+
+### About page (about.html)
+Built by `aboutPage()` from the Notion page "About & Contact" (ID in the table below). Current order: CV head (name, email, LinkedIn, CV download) then Summary, Key Achievements (4 items that mirror the featured projects), Experience (6 entries, year column plus content), Education, Tools. CLAUDE.md's old order (bio, Contact, Education, Experience, Skills) is obsolete. Known stale text: Key Achievements still says "Internal Reviews system" (now "App Review Platform"); the CV title is "Senior Product Designer".
+- Experience uses Notion column layout (year in the first column, content in the rest). The generator turns year lines (`2025→2026`) into `notion-years`, `<strong>Company</strong>` plus a short role into `Company · Role`, and `col-layout` columns into the `.cv-row` / `.cv-col-year` / `.cv-col-content` grid (100px + 1fr, 32px gap).
+- Standalone link paragraphs become contact links (`.about-contact-inline`, 14px / 500, blue, ↗ external or ↓ for Google Docs).
+- Content width 720px (`.about-notion`).
+
+### Project pages (projects/<slug>.html)
+- Content structure: see "Standard page structure" above. Page chrome (generated): title block with year and category tags, subtitle, optional Presentation mode button, left side menu (numbered sections, wide screens), prev/next project links, then content, Last updated line, "More work" (4 other projects as rows).
+- Lightbox: every content image except the hero opens full screen. Mobile: swipe left/right (40px threshold) and tap left/right half to navigate; the bare overlay closes on desktop.
+- Row tokens (`.row`, `.row-wrap`, `.num`, `.row-title`, `.rsub`, `.row-year`, `.row-arr`, `.cat-tag`, `.feat-tag`) are defined once in style.css and shared by the homepage list and the More work rows. Never redefine them per page. `.row-wrap` starts at `max-height: 120px` on project pages and `0` on the homepage.
+- Project page CSS essentials: `.proj-main` padding `0 clamp(40px, 20%, 240px)`; `.proj-content` no max-width; sub-headings (h3) Plus Jakarta Sans 20px / 700; captions below images; hero image not clickable.
+
+### Design system page (design-system.html)
+- Password-gated page generated from arrays in generate.js (`swatches`, `typeRows`, `spacings`, `changelog`, plus hand-written component blocks).
+- Sections in order: Colours, Typography (numbered type scale), Spacing, Components (Desktop and Mobile tabs: Work item row, Filter buttons, Nav links, Project nav buttons, More work CTA, TL;DR box, Lightbox controls, Footer tags, Section label, Hamburger, Slide-in menu, Work row mobile, View buttons, Filter pill and dropdown, Featured card mobile), CSS variable reference, Changelog (newest first).
+- When you add or change a component or style: add the component block, add or edit its type-scale row, add a changelog entry (date, what changed). The same TL;DR component is also specified in her Claude Design system "Avigail Bahat Site" (https://claude.ai/artifact/Wbabefj5U36if6bVvuyfP9, TldrBox, one to three sentences); update both.
+
+### Global design rules (layout, colors, type, writing)
+
+#### Layout
+- **Horizontal padding: `clamp(40px, 20%, 240px)`** on header, footer, inner pages, project pages, more-work section.
+- Homepage uses `.home-band`: `width: 80vw; max-width: 80vw; margin: 0 auto` — contains lede, feat-grid, work-header, and list. At ≤960px resets to `width: 100%` with clamp padding.
+- `.feat-grid` also has `width: 80vw; max-width: 80vw; margin: 0 auto; overflow: hidden` — both the band and grid are 80vw so they share the same left edge. Featured cards are one-column horizontal rows, with the subtitle directly below the title.
+- Inner pages (about, contact): `.inner-content` has `max-width: 720px`. Project pages: `.proj-content` has no max-width (wide layout is intentional).
+
+#### Colors
+- `--ac: #0a0a0a` — primary/accent (text, hover backgrounds)
+- `--border: #ebebeb` — all borders
+- `#555` — **single gray token** for all muted/secondary text: labels, numbers, subtitles, nav links, badges, years, arrows, captions, body copy. Do not use #444, #222, #bbb, #999, #767676, or #888 for text.
+- White: `#fff`
+
+#### Typography
+- **Titles** (`.feat-title`, `.proj-title`, `.lede`, `.footer-statement`): `Plus Jakarta Sans` — weights 300–800
+- **Body/UI** (everything else): `Inter` — weights 300–700
+- Loaded from Google Fonts: `https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap`
+- `-webkit-font-smoothing: antialiased` always on body
+
+#### Writing rules
+- **No em dashes (—)** anywhere in generated copy. Use commas, colons, or periods instead.
+- **No specific numbers, percentages, or dollar amounts** in project content — legal constraint. Use directional language ("grew significantly", "majority of users") instead.
+
+### CSS and script reference (kept verbatim from the old CLAUDE.md)
+
+#### Shared CSS tokens (defined once in style.css)
+
+Row tokens are shared between the homepage list and all project page "More work" sections. Define them **once** in style.css — never redefine per page.
+
+##### Type scale
+- Lede (homepage): `28px`, `font-weight: 500`
+- Logo name: `16px`
+- Nav links: `14px`
+- Section labels: `15px`, uppercase, `color: #555`
+- Featured card title (`.feat-title`): `clamp(24px, 2.5vw, 40px)`, `font-weight: 700`
+- Featured card subtitle (`.feat-sub`): `15px`
+- Row title (`.row-title`): `20px`, `font-weight: 500`
+- Row number (`.num`): `14px`
+- Row year (`.row-year`): `14px`
+- Tags (`.cat-tag`, `.feat-tag`): `15px`, padding `4px 10px`
+- Minimum font size anywhere: `14px`
+
+##### Featured cards grid
+- `.feat-grid`: one column, `width: 80vw; margin: 0 auto;`
+- `.feat-card`: full-width row with the subtitle below the title and an arrow on the right; `padding: 48px clamp(40px, 20vw, 240px)` so its content aligns with the site gutter
+- Mobile: title and subtitle stack vertically
+
+##### All work rows
+- `.row`: `padding: 28px 0`
+- `.row-wrap.open`: `max-height: 120px`
+- `#more-list .row-wrap` (project pages, always open): `max-height: 120px`
+
+```css
+:root { --ac: #0a0a0a; --border: #ebebeb; }
+
+/* Row tokens */
+.row-wrap { overflow: hidden; max-height: 0; transition: max-height 0.28s cubic-bezier(0.4,0,0.2,1); }
+.row-wrap.open { max-height: 120px; }
+.row-wrap.hidden { display: none; }
+.row { display: flex; align-items: center; gap: 10px; padding: 28px 0; border-bottom: 0.5px solid #ebebeb; cursor: pointer; transition: background 0.2s ease, padding 0.2s ease; }
+.row-wrap:first-of-type .row { border-top: 0.5px solid #ebebeb; }
+.row:hover { background: #f7f7f7; padding-left: 8px; padding-right: 8px; }
+.row:hover .rsub { max-height: 40px; opacity: 1; }
+.row:hover .row-arr { opacity: 1; }
+.num { font-size: 14px; font-weight: 500; color: #555; min-width: 22px; flex-shrink: 0; }
+.rmain { flex: 1; min-width: 0; }
+.row-title { font-size: 20px; font-weight: 500; color: #0a0a0a; }
+.rsub { font-size: 14px; color: #555; max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.2s ease, opacity 0.2s ease; margin-top: 1px; white-space: nowrap; text-overflow: ellipsis; }
+.row-year { font-size: 14px; color: #555; flex-shrink: 0; min-width: 36px; text-align: right; }
+.row-arr { font-size: 14px; color: #555; opacity: 0; transition: opacity 0.2s ease; flex-shrink: 0; }
+.cat-tag { font-size: 15px; color: #555; border: 0.5px solid #e0e0e0; border-radius: 3px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0; }
+.feat-tag { font-size: 15px; color: #555; border: 0.5px solid #e0e0e0; border-radius: 3px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0; }
+.section-label { font-size: 15px; color: #555; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 16px; }
+```
+
+Note: on project pages `.row-wrap` starts at `max-height: 120px` (open by default). On the homepage it starts at `0` and opens via the accordion JS.
+
+#### Header script (all pages)
+Sticky, condenses on scroll past 40px. `overflow: hidden` must be on the **base** `.avail-dot-wrap` state (not only on `.scrolled`) to prevent content peeking during transition.
+
+```js
+(function() {
+  var hdr = document.getElementById('site-header');
+  if (!hdr) return;
+  window.addEventListener('scroll', function() {
+    hdr.classList.toggle('scrolled', window.scrollY > 40);
+  });
+})();
+```
+
+#### Project page CSS
+```css
+.proj-main { padding: 0 clamp(40px, 20%, 240px); }
+.proj-content { padding: 56px 0 80px; }
+.proj-title { font-size: 42px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+.proj-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
+.proj-meta-item { font-size: 14px; color: #555; }
+.proj-meta-sep { font-size: 14px; color: #ccc; }
+.proj-intro { font-size: 17px; font-weight: 500; color: #0a0a0a; line-height: 1.6; letter-spacing: -0.01em; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 0.5px solid #ebebeb; }
+.proj-body { font-size: 15px; color: #444; line-height: 1.75; }
+.proj-body + .proj-body { margin-top: 16px; }
+.proj-img { width: 100%; border-radius: 8px; margin: 32px 0; overflow: hidden; background: #f5f5f5; }
+.proj-img img { width: 100%; height: auto; display: block; border-radius: 8px; }
+```
+
+#### Lightbox
+Images in `.proj-content` are clickable and open a full-screen lightbox.
+
+Key CSS values:
+- `.lb-overlay`: `padding: 48px 16px 24px`
+- `.lb-img`: `max-width: 100%; max-height: calc(100vh - 120px); width: auto; height: auto; object-fit: contain;`
+- Mobile (≤600px): `.lb-handle { display: none; }`
+
+Mobile interaction (in script.js):
+- **Swipe**: `touchstart`/`touchend` on `.lb-overlay` — threshold 40px, swipe left = next, swipe right = prev
+- **Tap zones**: when `window.innerWidth < 600`, overlay click uses left/right half of screen to navigate (left half = prev, right half = next) instead of closing
+- Desktop: clicking the bare overlay (`.lb-overlay` itself as target) still closes
+
+#### About page CSS classes
+```css
+.about-notion { max-width: 720px; padding: 56px 0 80px; }
+.about-notion h2 { /* section labels: uppercase, #555 */ }
+.about-notion > p:first-child { /* bio: 18px/500 */ }
+.about-notion .notion-years { font-size: 14px; color: #555; }
+.about-notion p:has(> strong:only-child) { /* company·role line: 16px/600/#0a0a0a */ }
+.about-notion p:has(> em:only-child) { /* project list: 14px/#555 */ }
+/* CV columns */
+.about-notion .cv-row { display: grid; grid-template-columns: 100px 1fr; gap: 0 32px; margin-bottom: 32px; }
+.about-notion .cv-col-year { padding-top: 3px; }
+/* Contact links */
+.about-contact-inline { font-size: 14px; font-weight: 500; color: #2b6cff; text-decoration: none; border: none; padding: 0; }
+```
+
+### Notion page IDs
+
+| Page | ID |
+|------|----|
+| AI Credits Wallet | 31135a9ccf7a804caf72da07638205bc |
+| App Installation View | 31135a9ccf7a80358e3cead5465c89f8 |
+| App Reviews Revamp | 31135a9ccf7a80bdad92eff1f90e6ecf |
+| Developer Sale | 17d35a9ccf7a80c69ceafb3f7973485a |
+| App Collections | da073f156b004fbb87d927849587a28c |
+| Internal App Review System | 71024356b51b4ce8b46c21fa3a442020 |
+| Payouts Page | 0f54649479514c65bc990b4b594d0cb1 |
+| Refund Flow | b103bffdedd247569c67b422c90cfcd3 |
+| App Pricing Page | 17d35a9ccf7a8021b6ebcccd15c1d39d |
+| Submit & Publish Widget | c4b2bd7033384f7792fb167115baac33 |
+| App Coupons | ad5fdda62b7344068e537404e15ee8ad |
+| Custom Element Settings | 9053adab5f3144159fc991711d4e82f7 |
+| API Keys Page | af4b341536b44d5495d067982a1b358c |
+| Development Site Creation | 84911e6052cd480c807e6591b58833a9 |
+| About | 36e35a9ccf7a81f6953dcab2aebb27fc |
+| Contact | 36e35a9ccf7a8188a447fd3e36ee88cd |
+| Homepage (tagline) | 37135a9ccf7a81b2a7a7c0a2702d8c98 |
+
+### Project slugs and categories
+
+| Slug | Category | Year | Featured |
+|------|----------|------|---------|
+| ai-credits-wallet | developer | 2026 | yes |
+| app-installation-view | developer | 2025 | yes |
+| app-reviews-revamp | developer | 2024 | no |
+| developer-sale | developer monetisation | 2024 | yes |
+| app-collections | developer internal | 2024 | no |
+| payouts-page | monetisation | 2023 | no |
+| refund-flow | monetisation | 2023 | no |
+| app-pricing-page | developer monetisation | 2023 | no |
+| internal-app-review | internal | 2022 | yes |
+| submit-publish-widget | developer | 2022 | no |
+| custom-element-settings | cms | 2022 | no |
+| api-keys-page | developer | 2022 | no |
+| development-site-creation | developer | 2021 | no |
+| app-coupons | monetisation | 2021 | no |
+
+### Prompt files (in prompts/, reference only)
+- `homepage-prompt.md` — homepage layout, featured cards, filter, row tokens
+- `project-page-prompt.md` — project page layout, lightbox, more-work section
+- `sitewide-components-prompt.md` — header + footer used on all pages
+- `inner-pages-prompt.md` — About and Contact page layouts
+
 ## Project status
 
 Status key: TODO, PROPOSED (lines shown, waiting for her word), DONE LOCAL (in Notion and regenerated, not committed), DEPLOYED.
 
-### App Review Platform (slug internal-app-review-system, Notion 71024356b51b4ce8b46c21fa3a442020): DEPLOYED 2026-10-13 (page, principles, deck and side nav live; live check passed; commit b2b601b)
-Renamed from "Internal Reviews System" to avoid the clash with "Reviews Revamp". Slug unchanged.
+### App Review Platform (slug internal-app-review-system, Notion 71024356b51b4ce8b46c21fa3a442020): DEPLOYED 2026-10-14 (latest push dfe52db; earlier b2b601b, 235f23a, c755bd1)
+Renamed from "Internal Reviews System" (clashed with "Reviews Revamp"). Slug unchanged. Backups (private, outside the CMS): several BACKUP pages at the Notion workspace root, latest 2026-10-14 before the screens were removed.
 - Subtitle: "Ground-up rebuild of Wix App Market’s internal review platform that shortened review cycles."
-- TL;DR (3 columns): "I planned and rebuilt a stale internal review tool with a clearer structure and the features reviewers were missing. I started with interviews and by shadowing Account Managers as they ran reviews, then tested the redesign with them in a bug hunt before launch. Review cycles got shorter, and the tool has been in use since the 2022 launch."
-- The problem: Account Managers wrote reviews in different tools (some Docs, some Sheets); the tool was stuck in a loop (not updated, so no one used it, and with no one using it, it never got updated); no shared history, no visibility between submissions, no consistent handoff; it ends with "As more and more apps were submitted, we noticed that review cycles were long." so the outcome answers the problem. Use "loop" there, not "cycle", because "review cycles" is the next idea.
-- Process: Research (as bullets of four pain points), one line for the four areas + "Click any image to see it bigger.", 7 goal-first numbered points, two review screens.
-- Delivery: weekly syncs; bug hunt with the finding about the diff in the second review (one bullet).
-- Impact: "Review cycles got shorter." first, then Docs exit, in use since 2022 launch even after AI entered the process, the team added features themselves (filters, marking an app premium).
-- Removed: duplicate four-areas bullet, "Cactus", the review-start bullet and rev share bullet.
-- Impact layout as a large statement: skipped, the TL;DR already carries it.
-- Design principles (added 2026-10-13, deployed): four principles in her own words, as a subsection right after Research and before "Deciding on the product areas". Her wording kept, including "publishing is always deliberate" (she confirmed it is true). Overlap with the goal-first list is accepted: principles are the why, the list is the how.
-- Pattern to reuse on the other pages: TL;DR box, goal-first decision list, problem named in the first sentence, claims only from sources.
+- Page order: TL;DR, The problem, Approach (Research | Design principles), Solution (Redesigning the platform + one image, product areas, screens), Delivery & challenges, Impact & next steps, Bottom line.
+- Screens: 23 images. Removed on purpose at her request: "Existing comment" and "Publishing - loading state". Do not delete screens otherwise.
+- Done and decided: captions rewritten (25, pattern above), principle 4 "Keep the account managers in control" (her wording), challenges and next steps from her sources, bold Jakarta sub-headings, bottom line as plain text.
+- Open: (a) the diff finding appears in both the Delivery paragraph and a Challenges bullet, decide which to drop; (b) TL;DR title in Jakarta bold was previewed, not applied; (c) deck card titles bold Jakarta? not answered; (d) remove the two screens from the deck; (e) she mentioned "c2c" for the columns and never explained it.
+- Pattern to reuse on the other pages: the standard structure above.
 
 ### AI Credits Wallet (slug ai-credits-wallet, Notion 31135a9ccf7a804caf72da07638205bc): TODO (next, only when she says)
 - Opening is third person, run-on with a stray colon.
