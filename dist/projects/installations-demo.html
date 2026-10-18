@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Installations Page: Interview Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: #fff;
+      color: #0a0a0a;
+      overflow: hidden;
+      height: 100dvh;
+      width: 100vw;
+    }
+
+    /* Progress bar */
+    #progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: #0a0a0a;
+      z-index: 200;
+      transition: width 0.3s ease;
+    }
+
+    /* Deck */
+    #deck {
+      width: 100vw;
+      height: 100dvh;
+      position: relative;
+    }
+
+    /* Slides */
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 40px 72px 96px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      overflow-y: auto;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Text-only slides: vertically centered */
+    .slide-vcenter {
+      justify-content: center;
+    }
+
+    /* Slide header */
+    .slide-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-shrink: 0;
+    }
+    .slide-section {
+      font-size: 12px;
+      font-weight: 600;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .slide-sep {
+      width: 1px;
+      height: 12px;
+      background: #ddd;
+    }
+    .slide-title-sm {
+      font-size: 12px;
+      color: #aaa;
+      font-weight: 400;
+    }
+
+    /* Cover slide */
+    .slide-cover {
+      justify-content: center;
+      padding-top: 0;
+      background: linear-gradient(90deg, rgba(78,89,130,0.2) 0%, rgba(202,211,255,0.2) 100%), #ffffff;
+    }
+    .cover-row {
+      display: flex;
+      align-items: center;
+    }
+    .cover-text { flex: 1 1 420px; max-width: 560px; }
+    .cover-hero {
+      position: absolute;
+      top: 110px;
+      right: 0;
+      bottom: 0;
+      width: 54%;
+      border-radius: 16px 0 0 0;
+      overflow: hidden;
+      box-shadow: 0 24px 60px -20px rgba(30, 40, 90, 0.25);
+    }
+    .cover-hero img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+    .cover-badges {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex-shrink: 0;
+    }
+    .badge {
+      font-size: 13px;
+      color: #555;
+      border: 0.5px solid #e0e0e0;
+      border-radius: 3px;
+      padding: 4px 10px;
+      font-family: 'Inter', sans-serif;
+    }
+    .cover-h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(36px, 4.5vw, 64px);
+      font-weight: 700;
+      color: #0a0a0a;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    .cover-sub {
+      font-size: 18px;
+      color: #555;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+    .cover-start-btn {
+      margin-top: 32px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #fff;
+      background: #0a0a0a;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 28px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: opacity 0.15s;
+    }
+    .cover-start-btn:hover { opacity: 0.85; }
+
+    /* Section heading */
+    .slide-h {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(26px, 3vw, 44px);
+      font-weight: 700;
+      color: #0a0a0a;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      flex-shrink: 0;
+    }
+    .slide-intro {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 14px;
+      flex-shrink: 0;
+      line-height: 1.5;
+      max-width: 680px;
+    }
+
+    /* Text content */
+    .slide-body {
+      font-size: 17px;
+      color: #0a0a0a;
+      line-height: 1.75;
+      max-width: 680px;
+    }
+    .slide-body + .slide-body { margin-top: 18px; }
+    .slide-body strong { font-weight: 600; }
+
+    /* Bullet list */
+    .slide-list {
+      list-style: none;
+      max-width: 680px;
+      margin-top: 4px;
+    }
+    .slide-list li {
+      font-size: 17px;
+      color: #0a0a0a;
+      line-height: 1.65;
+      padding: 12px 0 12px 24px;
+      border-bottom: 0.5px solid #ebebeb;
+      position: relative;
+    }
+    .slide-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #aaa;
+    }
+    .slide-list li:first-child { border-top: 0.5px solid #ebebeb; }
+    .slide-list li em { color: #555; font-style: italic; }
+
+    /* Research issue cards */
+    .research-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .research-card {
+      background: #FFFBEE;
+      border: 0.5px solid #ebebeb;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .research-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #0a0a0a;
+      margin-bottom: 8px;
+    }
+    .research-card p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* Image grid */
+    .img-grid {
+      display: grid;
+      column-gap: 16px;
+      row-gap: 10px;
+      flex: 1;
+      min-height: 0;
+      grid-template-rows: 1fr auto;
+    }
+    .img-grid.g2 { grid-template-columns: 1fr 1fr; }
+    .img-grid.g3 { grid-template-columns: 1fr 1fr 1fr; }
+    .img-grid.g4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+    .img-cell {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 2;
+      min-height: 0;
+    }
+    .img-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      border-radius: 6px;
+      border: 0.5px solid #ebebeb;
+      background: #f9f9f9;
+      display: block;
+      cursor: zoom-in;
+      min-height: 0;
+    }
+    .img-cap {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.5;
+      align-self: start;
+    }
+    .img-cap strong {
+      font-weight: 600;
+      color: #0a0a0a;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .img-cap em { font-style: normal; }
+
+    /* Stacked cell — flex context, not part of the outer subgrid */
+    .img-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 0;
+    }
+    .img-stack .img-cell {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 8px;
+    }
+    .img-stack .img-cell img { flex: 1; height: 100%; }
+
+    /* Scope slide — live mini UI mockups */
+    .scope-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      flex: 1;
+      min-height: 0;
+    }
+    .scope-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 0;
+    }
+    .scope-mock {
+      background: #f9f9f9;
+      border: 0.5px solid #ebebeb;
+      border-radius: 6px;
+      padding: 10px;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-family: 'Inter', sans-serif;
+      font-size: 9px;
+    }
+    .sc-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 6px;
+      border-bottom: 0.5px solid #e8e8e8;
+      flex-shrink: 0;
+    }
+    .sc-label { font-size: 9px; font-weight: 600; color: #0a0a0a; }
+    .sc-tabs { display: flex; gap: 3px; flex-shrink: 0; }
+    .sc-tab {
+      font-size: 8px; padding: 2px 7px; border-radius: 2px;
+      color: #888; background: transparent;
+    }
+    .sc-tab.on { background: #0a0a0a; color: #fff; }
+    .sc-row {
+      display: flex; align-items: center; gap: 5px;
+      padding: 4px 0; border-bottom: 0.5px solid #f0f0f0; flex-shrink: 0;
+    }
+    .sc-row:last-of-type { border-bottom: none; }
+    .sc-dot {
+      width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+    }
+    .sc-dot.pending  { background: #f5c842; }
+    .sc-dot.review   { background: #5b8ef0; }
+    .sc-dot.approved { background: #3db060; }
+    .sc-dot.declined { background: #e05050; }
+    .sc-line {
+      height: 6px; background: #e0e0e0; border-radius: 2px; flex: 1; min-width: 0;
+    }
+    .sc-line.short { max-width: 30px; }
+    .sc-line.med   { max-width: 50px; }
+    .sc-pill {
+      font-size: 7.5px; padding: 1px 5px; border-radius: 8px;
+      font-weight: 500; flex-shrink: 0; white-space: nowrap;
+    }
+    .sc-pill.pending  { background: #fff3cc; color: #806000; }
+    .sc-pill.review   { background: #dce8ff; color: #2050b0; }
+    .sc-pill.approved { background: #d4f0dc; color: #1a6030; }
+    .sc-pill.declined { background: #ffe0de; color: #b03030; }
+    .sc-pill.listed   { background: #f0f0f0; color: #555; }
+    .sc-avatar {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: #d8d8d8; flex-shrink: 0;
+    }
+    .sc-input {
+      background: #fff; border: 0.5px solid #ddd; border-radius: 3px;
+      padding: 5px 6px; color: #aaa; font-size: 8px; flex-shrink: 0;
+    }
+    .sc-actions {
+      display: flex; gap: 4px; margin-top: auto; flex-shrink: 0; padding-top: 6px;
+    }
+    .sc-btn {
+      flex: 1; height: 17px; border-radius: 3px; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 8px; font-weight: 500;
+    }
+    .sc-btn.primary { background: #0a0a0a; color: #fff; }
+    .sc-btn.ghost   { border: 0.5px solid #ccc; color: #555; }
+
+    /* Nav arrow tooltips */
+    .nav-btn { position: relative; }
+    .nav-btn[data-label]::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0a0a0a;
+      color: #fff;
+      font-size: 11px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      white-space: nowrap;
+      padding: 4px 8px;
+      border-radius: 4px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+    .nav-btn[data-label]:not(:disabled):hover::after { opacity: 1; }
+
+    /* Impact slide */
+    .impact-stat {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: #0a0a0a;
+      line-height: 1.65;
+      max-width: 640px;
+      margin-bottom: 36px;
+    }
+    .bottom-line-block {
+      border-left: 3px solid #ebebeb;
+      padding-left: 20px;
+      max-width: 640px;
+    }
+    .bottom-line-block p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.75;
+      font-style: italic;
+    }
+
+    /* Navigation */
+    #nav {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 0.5px solid #e8e8e8;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      white-space: nowrap;
+    }
+    .nav-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0a0a0a;
+      font-size: 16px;
+      border-radius: 50%;
+      transition: background 0.15s;
+      font-family: 'Inter', sans-serif;
+      flex-shrink: 0;
+    }
+    .nav-btn:hover { background: #f0f0f0; }
+    .nav-btn:disabled { color: #ccc; cursor: default; }
+    .nav-btn:disabled:hover { background: none; }
+
+    .nav-dots { display: flex; gap: 5px; align-items: center; }
+    .nav-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #ddd;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      border: none;
+      padding: 0;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .nav-dot.active { background: #0a0a0a; transform: scale(1.4); }
+
+    /* Dot tooltip */
+    .nav-dot::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0a0a0a;
+      color: #fff;
+      font-size: 11px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      white-space: nowrap;
+      padding: 4px 8px;
+      border-radius: 4px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+    .nav-dot:hover::after { opacity: 1; }
+
+    .nav-count {
+      font-size: 12px;
+      color: #999;
+      font-weight: 500;
+      min-width: 36px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Keyboard hint */
+    #kb-hint {
+      position: fixed;
+      bottom: 76px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 0.05em;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+    #kb-hint.gone { opacity: 0; }
+
+    /* Lightbox */
+    #lb {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.93);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    #lb.open { opacity: 1; pointer-events: auto; }
+    #lb-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 16px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+      z-index: 1;
+    }
+    #lb-close:hover { background: rgba(255,255,255,0.2); }
+    #lb-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      max-width: calc(100vw - 160px);
+      max-height: calc(100vh - 80px);
+    }
+    #lb-img {
+      max-width: 100%;
+      max-height: calc(100vh - 130px);
+      object-fit: contain;
+      border-radius: 6px;
+      display: block;
+    }
+    #lb-cap {
+      font-size: 13px;
+      color: #fff;
+      text-align: center;
+      line-height: 1.4;
+      white-space: pre-line;
+    }
+    .lb-arrow {
+      width: 44px;
+      height: 44px;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 22px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .lb-arrow:hover { background: rgba(255,255,255,0.2); }
+    .lb-arrow:disabled { opacity: 0.2; cursor: default; }
+    .lb-arrow:disabled:hover { background: rgba(255,255,255,0.1); }
+  
+    /* Side navigation (same as the Queuewe deck) */
+    #side-nav { position: fixed; top: 0; left: 0; bottom: 0; width: 170px; border-right: 0.5px solid #ebebeb; background: #fff; z-index: 150; display: flex; flex-direction: column; overflow-y: auto; }
+    #side-title { cursor: pointer; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; color: #0a0a0a; padding: 24px 20px 16px; border-bottom: 0.5px solid #ebebeb; flex-shrink: 0; }
+    #side-list { padding: 8px 0; }
+    .side-item { display: flex; align-items: baseline; gap: 10px; width: 100%; text-align: left; border: none; background: none; cursor: pointer; padding: 9px 20px; font-family: 'Inter', sans-serif; }
+    .side-item:hover { background: #f7f7f7; }
+    .side-num { font-size: 13px; color: #555; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+    .side-label { font-size: 13px; color: #555; line-height: 1.4; text-align: left; }
+    .side-item.active .side-num, .side-item.active .side-label { color: #0a0a0a; font-weight: 500; }
+    #mobile-menu, #mobile-menu-backdrop { display: none; }
+    #deck { position: fixed; top: 0; left: 170px; right: 0; bottom: 0; width: auto; height: auto; }
+    body.has-side #nav, body.has-side #kb-hint { left: calc(50% + 85px); }
+    @media (max-width: 1100px) {
+      #side-nav { display: flex !important; width: min(300px, 84vw); z-index: 320; transform: translateX(-105%); transition: transform 0.22s ease; }
+      #side-nav.mobile-open { transform: translateX(0); }
+      #mobile-menu { position: fixed; display: flex; align-items: center; justify-content: center; top: 12px; left: 14px; z-index: 310; width: 44px; height: 44px; border: 1px solid #e5e5e5; border-radius: 50%; background: #fff; color: #0a0a0a; box-shadow: 0 2px 10px rgba(0,0,0,.08); cursor: pointer; }
+      #mobile-menu svg { width: 20px; height: 20px; }
+      #mobile-menu-backdrop { position: fixed; inset: 0; z-index: 300; background: rgba(10,10,10,.28); }
+      #mobile-menu-backdrop.open { display: block; }
+      #deck { left: 0; }
+      body.has-side #nav, body.has-side #kb-hint { left: 50%; }
+    }
+</style>
+</head>
+<body>
+
+
+<div id="progress"></div>
+<nav id="side-nav" aria-label="Slide list">
+  <div id="side-title">Installations Page</div>
+  <div id="side-list"></div>
+</nav>
+
+<button id="mobile-menu" type="button" aria-label="Open slide menu" aria-expanded="false" aria-controls="side-nav">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+<button id="mobile-menu-backdrop" type="button" aria-label="Close slide menu"></button>
+<div id="deck">
+
+    <!-- Cover -->
+  <div class="slide slide-cover" data-label="Cover">
+    <div class="cover-row">
+      <div class="cover-text">
+        <div class="cover-badges">
+          <span class="badge">Developer tools</span>
+          <span class="badge">CMS</span>
+          <span class="badge">2025</span>
+        </div>
+        <h1 class="cover-h1">Installations<br>Page</h1>
+        <p class="cover-sub">Designed and shipped installation analytics that gave developers site-level visibility into how their apps were&nbsp;used.</p>
+        <button class="cover-start-btn" id="cover-start">Start</button>
+      </div>
+      <div class="cover-hero">
+        <img src="../images/img-39b35a9ccf7a803e9a4fda9b43b057b8.jpg" alt="The App installations page, showing installation data per developer">
+      </div>
+    </div>
+  </div>
+
+  <!-- TL;DR -->
+  <div class="slide slide-vcenter" data-label="TL;DR">
+    <div class="slide-header">
+      <span class="slide-section">Overview</span>
+    </div>
+    <h2 class="slide-h">TL;DR</h2>
+    <ul style="margin:8px 0 0;padding-left:22px;max-width:720px;list-style:disc;">
+      <li class="slide-body" style="margin:0 0 14px;">I designed a page that developers needed: they had no way to see who installed their apps, so they emailed support for basic usage&nbsp;data.</li>
+      <li class="slide-body" style="margin:0 0 14px;">I mapped the gap with the PM, worked through permission levels and PII limits with engineering, and shipped part of it in&nbsp;code.</li>
+      <li class="slide-body" style="margin:0 0 14px;">Developers who found it used it, and the feedback has been&nbsp;positive.</li>
+    </ul>
+  </div>
+
+  <!-- The problem -->
+  <div class="slide slide-vcenter" data-label="The problem">
+    <div class="slide-header">
+      <span class="slide-section">Background</span>
+    </div>
+    <h2 class="slide-h">The problem</h2>
+    <p class="slide-body">Developers had no visibility into who was installing their apps. It came up in almost every developer interview. They were building workarounds and emailing our support team just to get basic usage data. Customers who contacted them for support often didn't know their site URL or instance ID, so developers kept their own installation&nbsp;records.</p>
+    <p class="slide-body" style="margin-top:18px;">They needed it for:</p>
+    <ul style="margin:8px 0 0;padding-left:22px;max-width:760px;list-style:disc;">
+      <li class="slide-body" style="margin:0 0 12px;">Monitor the app's growth: check install dates to spot patterns and measure&nbsp;marketing</li>
+      <li class="slide-body" style="margin:0 0 12px;">Support users by instance ID: find their email and site URL to give targeted&nbsp;support</li>
+      <li class="slide-body" style="margin:0 0 12px;">Understand the audience: filter by plan, and see who canceled or&nbsp;uninstalled</li>
+    </ul>
+  </div>
+
+  <!-- Research -->
+  <div class="slide slide-vcenter" data-label="Research">
+    <div class="slide-header">
+      <span class="slide-section">Approach</span>
+    </div>
+    <h2 class="slide-h">Research</h2>
+    <p class="slide-intro">The PM and I started by mapping the gap, and user interviews confirmed it was a top pain&nbsp;point.</p>
+    <ul style="margin:8px 0 0;padding-left:22px;max-width:760px;list-style:disc;">
+      <li class="slide-body" style="margin:0 0 12px;">Developers needed this data for user support, marketing, and&nbsp;trends</li>
+      <li class="slide-body" style="margin:0 0 12px;">Almost every developer interview raised&nbsp;it</li>
+      <li class="slide-body" style="margin:0 0 12px;">Developers asked to see installations in an interface, get them by email, and receive them through webhooks, mostly for security, customer support, and&nbsp;marketing</li>
+      <li class="slide-body" style="margin:0 0 12px;">I looked at how Shopify and Apple's App Store Connect handle the same problem for their&nbsp;ecosystems</li>
+    </ul>
+  </div>
+
+  <!-- What developers built themselves -->
+  <div class="slide" data-label="What developers used">
+    <div class="slide-header">
+      <span class="slide-section">Approach</span>
+    </div>
+    <h2 class="slide-h">What developers used instead</h2>
+    <p class="slide-intro">Without a list from Wix, developers built their own. Click any image to see it bigger.</p>
+    <div class="img-grid g3">
+      <div class="img-cell">
+        <img src="../images/ref-dev-admin-table.jpg" alt="Their own admin table">
+        <span class="img-cap"><strong>Their own admin table</strong>Users, plans and status, with filters and CSV export.</span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/ref-support-panel.jpg" alt="A support tool">
+        <span class="img-cap"><strong>A support tool</strong>A customer panel with the shop URL, app, plan and active status.</span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/ref-customer-list.jpg" alt="A customer list">
+        <span class="img-cap"><strong>A customer list</strong>Search by email, filters and CSV export.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Design principles -->
+  <div class="slide slide-vcenter" data-label="Principles">
+    <div class="slide-header">
+      <span class="slide-section">Approach</span>
+    </div>
+    <h2 class="slide-h">Design principles</h2>
+    <p class="slide-intro">Four principles came out of the research and the&nbsp;constraints.</p>
+    <div class="research-grid" style="max-width:760px;">
+      <div class="research-card">
+        <h3>Explain, don't hide.</h3>
+        <p>When data is restricted or missing, a tooltip says why and how to get&nbsp;access.</p>
+      </div>
+      <div class="research-card">
+        <h3>Start from what developers asked for.</h3>
+        <p>The default view comes from the interviews and&nbsp;requests.</p>
+      </div>
+      <div class="research-card">
+        <h3>Legal sets the boundaries.</h3>
+        <p>PII and legal rules decided what could be shown, and to whom, before any&nbsp;layout.</p>
+      </div>
+      <div class="research-card">
+        <h3>Let developers shape the view.</h3>
+        <p>Filters, column customization, and&nbsp;export.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Challenges -->
+  <div class="slide slide-vcenter" data-label="Challenges">
+    <div class="slide-header">
+      <span class="slide-section">Approach</span>
+    </div>
+    <h2 class="slide-h" style="margin-bottom:16px;">Challenges</h2>
+    <div style="display:flex;gap:56px;align-items:center;flex-wrap:wrap;">
+    <div style="flex:1 1 420px;max-width:520px;">
+    <ul style="margin:0;padding-left:22px;max-width:520px;list-style:disc;">
+      <li class="slide-body" style="margin:0 0 12px;">Personal and business emails needed different permission levels, so not every developer could see every&nbsp;field.</li>
+      <li class="slide-body" style="margin:0 0 12px;">The backend APIs decided which fields we could show, and when. Some fields can come back&nbsp;empty.</li>
+      <li class="slide-body" style="margin:0 0 12px;">Some of the data coming back from the server was incorrect, and I caught it during&nbsp;implementation.</li>
+      <li class="slide-body" style="margin:0 0 12px;">The migration was complex enough that we launched with a small controlled&nbsp;rollout.</li>
+      <li class="slide-body" style="margin:0 0 12px;">We wanted to connect the installations list to Wix's contacts product, so developers could filter their users, email them, and set up automations. A technical gap between site-level and account-level data blocked&nbsp;it.</li>
+    </ul>
+    </div>
+    <div class="img-cell" style="flex:1 1 420px;min-width:0;margin-top:0;display:flex;flex-direction:column;gap:8px;grid-row:auto;">
+      <img src="../images/img-39b35a9ccf7a8037bf34df5a0d2e94d9.jpg" alt="Server: mapping out why some fields return empty" style="width:100%;display:block;border-radius:6px;border:0.5px solid #ebebeb;cursor:zoom-in;height:auto;flex:none;">
+      <span class="img-cap">Server: mapping out why some fields return empty</span>
+    </div>
+    </div>
+  </div>
+
+  <!-- Design -->
+  <div class="slide slide-vcenter" data-label="Design">
+    <div class="slide-header">
+      <span class="slide-section">Solution</span>
+    </div>
+    <h2 class="slide-h" style="margin-bottom:16px;">Design</h2>
+    <div style="display:flex;gap:56px;align-items:center;flex-wrap:wrap;">
+    <div style="flex:1 1 420px;max-width:520px;">
+    <ul style="margin:0;padding-left:22px;max-width:520px;list-style:disc;">
+      <li class="slide-body" style="margin:0 0 12px;">Started with a quick mock in Figma Make to validate the direction with stakeholders and&nbsp;users</li>
+      <li class="slide-body" style="margin:0 0 12px;">Designed the page layout, filters, data export, and column customization in&nbsp;Figma</li>
+      <li class="slide-body" style="margin:0 0 12px;">Defined the default view with the user interviews and requests in&nbsp;mind</li>
+      <li class="slide-body" style="margin:0 0 12px;">Handled missing data with contextual tooltips explaining why some data is missing, for example when the user didn't fill out their business&nbsp;name</li>
+    </ul>
+    </div>
+    <div class="img-cell" style="flex:1 1 420px;min-width:0;margin-top:0;display:flex;flex-direction:column;gap:8px;grid-row:auto;">
+      <img src="../images/img-38d35a9ccf7a803ca21de13cfc5ea341.jpg" alt="Figma Make: initial exploration" style="width:auto;max-width:100%;max-height:248px;display:block;border-radius:6px;border:0.5px solid #ebebeb;cursor:zoom-in;height:auto;flex:none;">
+      <span class="img-cap"><strong>Figma Make</strong>Initial exploration.</span>
+    </div>
+    </div>
+  </div>
+
+  <!-- The page -->
+  <div class="slide" data-label="The page">
+    <div class="slide-header">
+      <span class="slide-section">Solution</span>
+    </div>
+    <h2 class="slide-h">The page</h2>
+    <p class="slide-intro">Click any image to see it bigger.</p>
+    <div class="img-grid g2">
+      <div class="img-cell">
+        <img src="../images/img-38d35a9ccf7a800591a1d529b0862701.jpg" alt="Default view">
+        <span class="img-cap"><strong>Default view</strong>Installation data per developer: business name, site URL, instance ID, email, plan, version, install date, rating.</span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-38d35a9ccf7a804c8246c66ff2f47e81.jpg" alt="Column customization">
+        <span class="img-cap"><strong>Column customization</strong>Show, hide, and reorder columns.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full columns and filters -->
+  <div class="slide" data-label="Full columns and filters">
+    <div class="slide-header">
+      <span class="slide-section">Solution</span>
+    </div>
+    <h2 class="slide-h">Full columns and filters</h2>
+    <p class="slide-intro">Every available field, and narrowing the data down.</p>
+    <div class="img-grid g2">
+      <div class="img-cell">
+        <img src="../images/img-35d35a9ccf7a80618de1d098c01b6bfc.jpg" alt="Full columns">
+        <span class="img-cap"><strong>Full columns</strong>Every available field visible at once.</span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-38d35a9ccf7a80b88e07d59c1c053d96.jpg" alt="Filtered view">
+        <span class="img-cap"><strong>Filtered view</strong>Narrow by time range, plan, or other parameters.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIDDEN (not shown in the deck): Behind the scenes
+  <!- Behind the scenes ->
+  <div class="slide" data-label="Behind the scenes">
+    <div class="slide-header">
+      <span class="slide-section">Solution</span>
+    </div>
+    <h2 class="slide-h">Behind the scenes</h2>
+    <p class="slide-intro">From the first mock to the code.</p>
+    <div class="img-grid g2">
+      <div class="img-cell">
+        <img src="../images/img-38d35a9ccf7a803ca21de13cfc5ea341.jpg" alt="Figma Make">
+        <span class="img-cap"><strong>Figma Make</strong>Initial exploration.</span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-36e35a9ccf7a801a8218d179d4accde3.jpg" alt="Cursor">
+        <span class="img-cap"><strong>Cursor</strong>Features added and bugs fixed during implementation.</span>
+      </div>
+    </div>
+  </div>
+  -->
+
+  <!-- Private apps and empty state -->
+  <div class="slide" data-label="Private apps and empty state">
+    <div class="slide-header">
+      <span class="slide-section">Solution</span>
+    </div>
+    <h2 class="slide-h">Private apps and empty state</h2>
+    <p class="slide-intro">What the page shows before there is data to show.</p>
+    <div class="img-grid g2">
+      <div class="img-cell">
+        <img src="../images/img-38d35a9ccf7a80388f85fe2613f8a454.jpg" alt="Private apps">
+        <span class="img-cap"><strong>Private apps</strong>Fewer columns, since some fields do not apply before launch.</span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-38d35a9ccf7a8048b260d2b9ff505655.jpg" alt="Empty state">
+        <span class="img-cap"><strong>Empty state</strong>Shown when a developer has no installations.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Missing and limited data -->
+  <div class="slide" data-label="Missing and limited data">
+    <div class="slide-header">
+      <span class="slide-section">Solution</span>
+    </div>
+    <h2 class="slide-h">Missing and limited data</h2>
+    <p class="slide-intro">How the page explains what it cannot show.</p>
+    <div class="img-grid g2">
+      <div class="img-cell">
+        <img src="../images/img-c512dd07ee9446f9b42e7a2c83d13601.jpg" alt="Inline data-limit tooltip">
+        <span class="img-cap"><strong>Inline data-limit tooltip</strong>Flags which data is excluded and why, without breaking flow.</span>
+      </div>
+      <div class="img-cell">
+        <img src="../images/img-38d35a9ccf7a80d0b9fdec006e47d49a.jpg" alt="Empty columns">
+        <span class="img-cap"><strong>Empty columns</strong>Explains why some data is not showing.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delivery -->
+  <div class="slide slide-vcenter" data-label="Delivery">
+    <div class="slide-header">
+      <span class="slide-section">Delivery</span>
+    </div>
+    <h2 class="slide-h" style="margin-bottom:16px;">Delivery</h2>
+    <div style="display:flex;gap:56px;align-items:center;flex-wrap:wrap;">
+    <div style="flex:1 1 420px;max-width:520px;">
+    <ul style="margin:0;padding-left:22px;max-width:520px;list-style:disc;">
+      <li class="slide-body" style="margin:0 0 12px;">Joined the implementation team, using Cursor and Claude Code to add features and fix&nbsp;bugs</li>
+      <li class="slide-body" style="margin:0 0 12px;">Contributed a year selector to the Wix Design System in code, making it available across the&nbsp;platform</li>
+      <li class="slide-body" style="margin:0 0 12px;">Caught major server-side bugs where the data coming back was&nbsp;incorrect</li>
+      <li class="slide-body" style="margin:0 0 12px;">Led UX writing for the project, including the <a href="https://dev.wix.com/docs/build-apps/manage-your-app/data-and-analytics/app-installations" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">feature's documentation</a>, working closely with technical&nbsp;writers</li>
+      <li class="slide-body" style="margin:0 0 12px;">Launched with a small controlled rollout given the migration complexity. It's live&nbsp;now</li>
+    </ul>
+    </div>
+    <div class="img-cell" style="flex:1 1 420px;min-width:0;margin-top:0;display:flex;flex-direction:column;gap:8px;grid-row:auto;">
+      <img src="../images/img-36e35a9ccf7a801a8218d179d4accde3.jpg" alt="Cursor: features added and bugs fixed during implementation" style="width:auto;max-width:100%;max-height:290px;display:block;border-radius:6px;border:0.5px solid #ebebeb;cursor:zoom-in;height:auto;flex:none;">
+      <span class="img-cap"><strong>Cursor</strong>Features added and bugs fixed during implementation.</span>
+    </div>
+    </div>
+  </div>
+
+  <!-- Results and impact -->
+  <div class="slide slide-vcenter" data-label="Results &amp; impact">
+    <div class="slide-header">
+      <span class="slide-section">Results</span>
+    </div>
+    <h2 class="slide-h">Results &amp; impact</h2>
+    <p class="slide-body" style="margin-bottom:0;">Since opening to all developers, the majority of those who visited the Wix Developer Center and had published apps discovered the page. Of those who saw it, the majority took action, copying data, opening sites, and applying filters. This was after a quiet launch with no&nbsp;promotion.</p>
+    <p class="slide-body" style="margin-top:18px;margin-bottom:8px;"><strong>What developers said:</strong></p>
+    <ul style="margin:8px 0 0;padding-left:22px;max-width:760px;list-style:disc;">
+      <li class="slide-body" style="margin:0 0 12px;">"We already had email sequences hooked on webhooks, but this lets us manually follow up with users, especially for the non-technical team&nbsp;members."</li>
+      <li class="slide-body" style="margin:0 0 12px;">"Very good feature overall, thank&nbsp;you!"</li>
+    </ul>
+  </div>
+
+  <!-- Next steps and bottom line -->
+  <div class="slide slide-vcenter" data-label="Next steps &amp; bottom line">
+    <div class="slide-header">
+      <span class="slide-section">Next steps</span>
+    </div>
+    <h2 class="slide-h">Next steps &amp; bottom line</h2>
+    <p class="slide-body" style="margin-bottom:0;"><strong>Next steps:</strong> The next step was views for the table, so developers can save how they look at their data. The roadmap also included cancellation reasons, deeper filtering, tags and notes for developers, revenue per user, and eventually connecting the page to the inbox and email marketing tools. Not enough developers were exposed to the feature, so making it easier to find was also&nbsp;planned.</p>
+    <h3 style="margin:28px 0 10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;color:#0a0a0a;letter-spacing:-0.01em;">Bottom line</h3>
+    <p class="slide-body" style="margin:0;">The project started with a complaint that came up in almost every interview. My job was to decide which fields developers see and what the default view shows. Later on, I got to ship features myself using AI&nbsp;tools.</p>
+  </div>
+
+  </div><!-- /deck -->
+
+<!-- Lightbox -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button id="lb-close" aria-label="Close">✕</button>
+  <button class="lb-arrow" id="lb-prev" aria-label="Previous image">‹</button>
+  <div id="lb-inner">
+    <img id="lb-img" alt="">
+    <p id="lb-cap"></p>
+  </div>
+  <button class="lb-arrow" id="lb-next" aria-label="Next image">›</button>
+</div>
+
+<p id="kb-hint">← → to navigate</p>
+
+<nav id="nav" role="navigation" aria-label="Slide navigation">
+  <button class="nav-btn" id="btn-prev" aria-label="Previous slide">←</button>
+  <div class="nav-dots" id="nav-dots" aria-hidden="true"></div>
+  <span class="nav-count" id="nav-count" aria-live="polite"></span>
+  <button class="nav-btn" id="btn-next" aria-label="Next slide">→</button>
+</nav>
+
+<script>
+(function () {
+  var slides = Array.from(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var cur = 0;
+
+  // Build dots with tooltips
+  var dotsEl = document.getElementById('nav-dots');
+  slides.forEach(function (slide, i) {
+    var label = slide.dataset.label || ('Slide ' + (i + 1));
+    var d = document.createElement('button');
+    d.className = 'nav-dot';
+    d.setAttribute('aria-label', label);
+    d.dataset.label = label;
+    d.addEventListener('click', function () { goTo(i); });
+    dotsEl.appendChild(d);
+  });
+
+  // Side navigation: one item per slide (the cover is the title, so it is skipped)
+  var sideListEl = document.getElementById('side-list');
+  slides.forEach(function (slide, i) {
+    var label = slide.dataset.label || ('Slide ' + (i + 1));
+    var b = document.createElement('button');
+    b.className = 'side-item';
+    if (i === 0) b.style.display = 'none';
+    b.innerHTML = '<span class="side-num">' + String(i).padStart(2, '0') + '</span><span class="side-label">' + label + '</span>';
+    b.addEventListener('click', function () { goTo(i); hideHint(); });
+    sideListEl.appendChild(b);
+  });
+  var sideNav = document.getElementById('side-nav');
+  var mobileMenu = document.getElementById('mobile-menu');
+  var mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
+  function closeMobileMenu() {
+    sideNav.classList.remove('mobile-open');
+    mobileMenuBackdrop.classList.remove('open');
+    mobileMenu.setAttribute('aria-expanded', 'false');
+    mobileMenu.setAttribute('aria-label', 'Open slide menu');
+  }
+  function toggleMobileMenu() {
+    var open = !sideNav.classList.contains('mobile-open');
+    sideNav.classList.toggle('mobile-open', open);
+    mobileMenuBackdrop.classList.toggle('open', open);
+    mobileMenu.setAttribute('aria-expanded', String(open));
+    mobileMenu.setAttribute('aria-label', open ? 'Close slide menu' : 'Open slide menu');
+  }
+  mobileMenu.addEventListener('click', toggleMobileMenu);
+  mobileMenuBackdrop.addEventListener('click', closeMobileMenu);
+  sideListEl.addEventListener('click', function (e) { if (e.target.closest('.side-item')) closeMobileMenu(); });
+  document.getElementById('side-title').addEventListener('click', function () { closeMobileMenu(); goTo(0); });
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= total) return;
+    slides[cur].classList.remove('active');
+    cur = idx;
+    slides[cur].classList.add('active');
+    slides[cur].scrollTop = 0;
+    dotsEl.querySelectorAll('.nav-dot').forEach(function (d, i) {
+      d.classList.toggle('active', i === cur);
+    });
+    document.getElementById('nav-count').textContent = (cur + 1) + ' / ' + total;
+    document.getElementById('btn-prev').disabled = cur === 0;
+    document.getElementById('btn-next').disabled = cur === total - 1;
+    document.getElementById('progress').style.width = ((cur + 1) / total * 100) + '%';
+    var onCover = cur === 0;
+    document.getElementById('nav').style.display = onCover ? 'none' : 'flex';
+    document.getElementById('progress').style.display = onCover ? 'none' : 'block';
+    if (onCover) hint.classList.add('gone');
+    // side navigation: active item, hidden on the cover, deck shifts right of it on wide screens
+    sideListEl.querySelectorAll('.side-item').forEach(function (b, i) { b.classList.toggle('active', i === cur); });
+    var compact = window.matchMedia('(max-width: 1100px)').matches;
+    sideNav.style.display = (onCover || compact) ? 'none' : 'flex';
+    document.getElementById('deck').style.left = (onCover || compact) ? '0' : '170px';
+    document.body.classList.toggle('has-side', !onCover && !compact);
+  }
+  window.addEventListener('resize', function () { goTo(cur); });
+
+  document.getElementById('btn-prev').addEventListener('click', function () { goTo(cur - 1); hideHint(); });
+  document.getElementById('btn-next').addEventListener('click', function () { goTo(cur + 1); hideHint(); });
+  var startBtn = document.getElementById('cover-start');
+  if (startBtn) startBtn.addEventListener('click', function () { goTo(1); });
+
+  var hint = document.getElementById('kb-hint');
+  var hintGone = false;
+  function hideHint() {
+    if (!hintGone) { hintGone = true; hint.classList.add('gone'); }
+  }
+  setTimeout(hideHint, 4000);
+
+  // ----- Lightbox -----
+  var lb = document.getElementById('lb');
+  var lbImg = document.getElementById('lb-img');
+  var lbCap = document.getElementById('lb-cap');
+  var lbPrev = document.getElementById('lb-prev');
+  var lbNext = document.getElementById('lb-next');
+  var lbImages = [];
+  var lbIdx = 0;
+
+  function openLb(images, startIdx) {
+    lbImages = images;
+    lbIdx = startIdx;
+    showLbImage(lbIdx);
+    lb.classList.add('open');
+  }
+
+  function showLbImage(idx) {
+    var item = lbImages[idx];
+    lbImg.src = item.src;
+    lbImg.alt = item.alt;
+    lbCap.textContent = item.cap;
+    var multi = lbImages.length > 1;
+    lbPrev.style.visibility = multi ? '' : 'hidden';
+    lbNext.style.visibility = multi ? '' : 'hidden';
+    lbPrev.disabled = idx === 0;
+    lbNext.disabled = idx === lbImages.length - 1;
+  }
+
+  function closeLb() { lb.classList.remove('open'); }
+
+  document.querySelectorAll('.img-cell img').forEach(function (img) {
+    img.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var activeSlide = document.querySelector('.slide.active');
+      var imgs = Array.from(activeSlide.querySelectorAll('.img-cell img'));
+      var images = imgs.map(function (el) {
+        var cap = el.closest('.img-cell') && el.closest('.img-cell').querySelector('.img-cap');
+        return { src: el.src, alt: el.alt, cap: cap ? cap.innerText.trim() : '' };
+      });
+      openLb(images, Math.max(0, imgs.indexOf(img)));
+    });
+  });
+
+  document.getElementById('lb-close').addEventListener('click', closeLb);
+  lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+  lbPrev.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (lbIdx > 0) { lbIdx--; showLbImage(lbIdx); }
+  });
+  lbNext.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (lbIdx < lbImages.length - 1) { lbIdx++; showLbImage(lbIdx); }
+  });
+
+  // Unified keyboard handler — lightbox takes priority when open
+  document.addEventListener('keydown', function (e) {
+    if (lb.classList.contains('open')) {
+      if (e.key === 'Escape') { closeLb(); return; }
+      if (e.key === 'ArrowRight') { if (lbIdx < lbImages.length - 1) { lbIdx++; showLbImage(lbIdx); } return; }
+      if (e.key === 'ArrowLeft') { if (lbIdx > 0) { lbIdx--; showLbImage(lbIdx); } return; }
+      return;
+    }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { goTo(cur + 1); hideHint(); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { goTo(cur - 1); hideHint(); }
+  });
+
+  goTo(0);
+})();
+</script>
+</body>
+</html>
