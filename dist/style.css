@@ -322,6 +322,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   white-space: nowrap;
   flex-shrink: 0;
 }
+.cat-tags { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 .feat-tag { font-size: 13px; color: #ccc; padding: 0 4px; white-space: nowrap; flex-shrink: 0; position: relative; cursor: default; }
 .feat-tag::after { content: attr(title); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #0a0a0a; color: #fff; font-size: 12px; font-weight: 400; padding: 4px 8px; border-radius: 4px; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.15s; }
 .feat-tag:hover::after { opacity: 1; }
@@ -621,8 +622,169 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   .proj-content .proj-tldr p + p,
   .proj-content .proj-tldr-grid[data-cols="3"] p + p { padding-left: 0; border-left: none; padding-top: 24px; border-top: 0.5px solid #ebebeb; }
 }
+/* Design principles as numbered cards (layout from the Intuit deck): number, title, sentence, tag */
+.proj-content .proj-rules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 16px 0 8px; align-items: stretch; }
+.proj-content .proj-rules[data-cols="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.proj-content .proj-rules[data-cols="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.proj-content .pr-card { display: flex; flex-direction: column; gap: 8px; padding: 24px; border: 0.5px solid #ebebeb; border-radius: 8px; background: #fff; }
+.proj-content .pr-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 48px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: #0a0a0a; margin-bottom: 8px; }
+.proj-content .pr-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; color: #0a0a0a; margin: 0; max-width: none; }
+.proj-content .pr-text { font-size: 15px; line-height: 1.55; color: #555; margin: 0 0 16px; max-width: none; }
+.proj-content .pr-tag { margin-top: auto; align-self: flex-start; font-size: 14px; letter-spacing: 0.07em; text-transform: uppercase; color: #555; border: 0.5px solid #e0e0e0; border-radius: 999px; padding: 4px 12px; }
+@media (max-width: 1100px) {
+  .proj-content .proj-rules[data-cols="4"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 768px) {
+  .proj-content .proj-rules,
+  .proj-content .proj-rules[data-cols="3"],
+  .proj-content .proj-rules[data-cols="4"] { grid-template-columns: minmax(0, 1fr); }
+}
+/* Section headings written "Label | Title": a small label above a large title (the deck's slide headers) */
+.proj-content .proj-h2 { margin: 96px 0 20px; }
+.proj-content .proj-h2-label { display: block; font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; color: #555; margin-bottom: 8px; }
+.proj-content .proj-h2-title { display: block; font-size: 36px; line-height: 1.15; }
+@media (max-width: 768px) {
+  .proj-content .proj-h2-title { font-size: 28px; }
+}
+/* Screens side by side: every screen sits in the same box (grey behind a smaller one), so captions line up; stacked screens keep a gap */
+.proj-content .col-layout:not(.proj-shot):not(.proj-shot2):not(.proj-prob) .col > figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: contain; background: #f5f5f5; }
+.proj-content .col > figure + figure { margin-top: 32px; }
+/* TL;DR column labels (The problem, Process, The result) */
+.proj-content .proj-tldr-col-label { display: block; font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; color: #555; margin-bottom: 10px; }
+/* Sub-headings written "Label | Title" */
+.proj-content .proj-h3 { margin: 64px 0 16px; max-width: none; }
+.proj-content .proj-h3 .proj-h2-label { margin-bottom: 6px; }
+.proj-content .proj-h3-title { display: block; font-size: 28px; line-height: 1.2; letter-spacing: -0.02em; }
+/* Screen plus explanation (the deck's design slides): image 2/3, text 1/3; two screens with text under each */
+.proj-content .proj-shot { align-items: center; margin: 8px 0 32px; }
+.proj-content .proj-shot > .col:first-child { grid-column: span 8; }
+.proj-content .proj-shot > .col:last-child { grid-column: span 4; }
+.proj-content .proj-shot > .col > figure { margin: 0; }
+.proj-content .proj-shot > .col:last-child ul { padding-left: 20px; margin: 0 0 24px; }
+.proj-content .proj-shot > .col:last-child h3 { margin: 24px 0 8px; padding-top: 24px; border-top: 0.5px solid #ebebeb; font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; color: #555; }
+.proj-content .proj-shot > .col:last-child h3 + p { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; color: #0a0a0a; margin: 0; }
+.proj-content .proj-shot2 { margin: 8px 0 32px; }
+.proj-content .proj-shot2 > .col > figure { margin: 0 0 16px; }
+.proj-content .proj-shot2 > .col ul { padding-left: 20px; margin: 0; }
+@media (max-width: 768px) {
+  .proj-content .proj-shot > .col:first-child,
+  .proj-content .proj-shot > .col:last-child { grid-column: 1 / -1; }
+}
+/* The problem: a statement on the left, rows on the right (layout from the Intuit deck) */
+.proj-content .proj-prob { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 64px; margin: 16px 0 8px; }
+.proj-content .proj-prob .col > p { max-width: none; }
+.proj-content .proj-prob .col > h3 { margin: 0 0 12px; }
+/* Screens under the statement sit side by side, under the paragraphs */
+.proj-content .proj-prob > .col:first-child { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; align-content: start; }
+.proj-content .proj-prob > .col:first-child > p { grid-column: 1 / -1; }
+.proj-content .proj-prob > .col:first-child > figure { grid-column: span 1; margin: 8px 0 0; background: transparent; }
+/* Same box for both screens so their captions line up */
+.proj-content .proj-prob > .col:first-child > figure img { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; object-position: top center; background: #fff; }
+.proj-content .proj-prob .pr-quote { margin: 0 0 16px; color: #0a0a0a; }
+.proj-content .proj-prob .pr-quote cite { display: block; font-style: normal; font-size: 14px; color: #555; margin-top: 6px; }
+@media (max-width: 768px) {
+  .proj-content .proj-prob { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+}
+/* Product areas: a grid of cards (the deck's four product areas slide), on the same 12-column grid */
+.proj-content .proj-areas { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 32px; row-gap: 32px; margin: 16px 0 24px; }
+.proj-content .pa-card { grid-column: span 6; display: flex; flex-direction: column; gap: 8px; padding: 28px; border: 0.5px solid #ebebeb; border-radius: 8px; background: #fff; }
+.proj-content .pa-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; color: #0a0a0a; margin: 0; max-width: none; }
+.proj-content .pa-text { margin: 0; max-width: none; }
+.proj-content .pa-fix { margin: 8px 0 0; max-width: none; font-weight: 600; color: #0a0a0a; }
+@media (max-width: 768px) {
+  .proj-content .pa-card { grid-column: 1 / -1; }
+}
+/* Delivery & challenges: two columns of rows (layout from the Intuit deck) */
+.proj-content .proj-dc { gap: 48px; margin: 16px 0 8px; }
+.proj-content .proj-dc .col > h3 { margin: 0 0 12px; }
+.proj-content .dc-rows { border-top: 0.5px solid #ebebeb; }
+.proj-content .dc-row { margin: 0; max-width: none; padding: 14px 0; border-bottom: 0.5px solid #ebebeb; font-size: 16px; line-height: 1.6; color: #555; }
+.proj-content .dc-row strong { color: #0a0a0a; font-weight: 600; }
+@media (max-width: 768px) {
+  .proj-content .proj-dc { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+}
+/* Results as a lead sentence plus labelled rows (layout from the Intuit deck) */
+.proj-content .proj-results { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; margin: 24px 0 8px; align-items: start; }
+.proj-content .pr-lead { display: flex; flex-direction: column; gap: 24px; }
+.proj-content .pr-headline { margin: 0; max-width: none; }
+.proj-content .pr-more { margin: 0; max-width: none; }
+.proj-content .pr-quote { margin: 0; padding: 0 0 0 20px; border-left: 3px solid #ebebeb; font-size: 16px; line-height: 1.6; color: #555; }
+.proj-content .pr-rows { border-top: 0.5px solid #ebebeb; }
+.proj-content .pr-row { display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-bottom: 0.5px solid #ebebeb; }
+.proj-content .pr-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; color: #0a0a0a; margin: 0; max-width: none; }
+.proj-content .pr-rtext { font-size: 16px; line-height: 1.6; color: #555; margin: 0; max-width: none; }
+@media (max-width: 768px) {
+  .proj-content .proj-results { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+}
+/* AI Credits: the phone screenshot gets a grey box with the same proportions as the Business Manager one beside it, so both align */
+.proj-content .proj-img:has(> img[alt^="Wixel mobile"]) { background: transparent; }
+.proj-content .proj-img:has(> img[alt^="Wixel mobile"]) img { width: 100%; height: auto; aspect-ratio: 2880 / 2642; object-fit: contain; background: #eef1f5; }
+/* AI Credits edge cases: small cards */
+.proj-content .proj-img:has(> img[alt^="Low credits"]),
+.proj-content .proj-img:has(> img[alt^="Error -"]),
+.proj-content .proj-img:has(> img[alt^="Loading -"]) { max-width: 240px; margin-left: 0; margin-right: 0; }
+/* One 12-column grid with one 32px gutter for every column layout on project pages, so column edges line up from one
+   section to the next: 4 equal columns = 3 + 3 + 3 + 3, 3 equal = 4 + 4 + 4, 2 equal = 6 + 6, and the text-plus-rows layouts
+   (The problem 8 + 4, Results 4 + 8) start on the same lines. */
+.proj-content .col-layout,
+.proj-content .proj-rules,
+.proj-content .proj-rules[data-cols="3"],
+.proj-content .proj-rules[data-cols="4"],
+.proj-content .proj-results { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 32px; row-gap: 32px; }
+.proj-content .col-layout.col-1 > .col { grid-column: span 12; }
+.proj-content .col-layout.col-2 > .col { grid-column: span 6; }
+.proj-content .col-layout.col-3 > .col { grid-column: span 4; }
+.proj-content .col-layout.col-4 > .col { grid-column: span 3; }
+.proj-content .proj-prob > .col:first-child { grid-column: span 8; }
+.proj-content .proj-prob > .col:last-child { grid-column: span 4; }
+.proj-content .proj-dc > .col:first-child { grid-column: span 6; }
+.proj-content .proj-dc > .col:last-child { grid-column: span 6; }
+.proj-content .proj-dc-even > .col:first-child { grid-column: span 8; }
+.proj-content .proj-dc-even > .col:last-child { grid-column: span 4; }
+.proj-content .proj-dc-lead > .col:first-child { grid-column: span 4; }
+.proj-content .proj-dc-lead > .col:last-child { grid-column: span 8; }
+.proj-content .proj-results > .pr-lead { grid-column: span 4; }
+.proj-content .proj-results > .pr-rows { grid-column: span 8; }
+.proj-content .proj-rules > .pr-card { grid-column: span 6; }
+.proj-content .proj-rules[data-cols="3"] > .pr-card { grid-column: span 4; }
+.proj-content .proj-rules[data-cols="4"] > .pr-card { grid-column: span 3; }
+@media (max-width: 1100px) {
+  .proj-content .proj-rules[data-cols="4"] { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .proj-content .proj-rules[data-cols="4"] > .pr-card { grid-column: span 6; }
+}
+@media (max-width: 768px) {
+  .proj-content .col-layout > .col,
+  .proj-content .col-layout.col-2 > .col,
+  .proj-content .col-layout.col-3 > .col,
+  .proj-content .col-layout.col-4 > .col,
+  .proj-content .proj-prob > .col:first-child,
+  .proj-content .proj-prob > .col:last-child,
+  .proj-content .proj-dc > .col:first-child,
+  .proj-content .proj-dc > .col:last-child,
+  .proj-content .proj-results > .pr-lead,
+  .proj-content .proj-results > .pr-rows,
+  .proj-content .proj-rules > .pr-card,
+  .proj-content .proj-rules[data-cols="3"] > .pr-card,
+  .proj-content .proj-rules[data-cols="4"] > .pr-card { grid-column: 1 / -1; }
+}
+/* The TL;DR box: the box reaches 40px past the text column on each side, so its text columns start on the same grid lines as everything else */
+@media (min-width: 769px) {
+  .proj-content .proj-tldr { margin: 32px -40px 8px; }
+  .proj-content .proj-tldr-grid,
+  .proj-content .proj-tldr-grid[data-cols="2"],
+  .proj-content .proj-tldr-grid[data-cols="3"] { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 32px; gap: 0 32px; }
+  .proj-content .proj-tldr-grid > p { grid-column: span 6; }
+  .proj-content .proj-tldr-grid[data-cols="1"] > p { grid-column: span 12; }
+  .proj-content .proj-tldr-grid[data-cols="3"] > p { grid-column: span 4; }
+  .proj-content .proj-tldr p + p,
+  .proj-content .proj-tldr-grid[data-cols="3"] p + p { padding-left: 0; border-left: none; position: relative; }
+  .proj-content .proj-tldr p + p::before { content: ''; position: absolute; left: -16px; top: 0; bottom: 0; border-left: 0.5px solid #ebebeb; }
+}
 .proj-content .proj-updated { font-size: 14px; color: #555; line-height: 1.4; margin: 40px 0 0; }
-.proj-content h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -0.02em; color: #0a0a0a; margin: 48px 0 16px; max-width: 800px; }
+.proj-content h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -0.02em; color: #0a0a0a; margin: 96px 0 16px; max-width: 800px; }
+@media (max-width: 768px) {
+  .proj-content h2, .proj-content .proj-h2 { margin-top: 64px; }
+}
 .proj-content h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; color: #0a0a0a; margin: 32px 0 12px; max-width: 800px; }
 /* Tighten the gap between a section heading and the sub-heading or columns right under it */
 .proj-content h2 + h3 { margin-top: 8px; }

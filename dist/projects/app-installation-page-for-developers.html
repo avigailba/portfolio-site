@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <link rel="stylesheet" href="../style.css?v=20e5070b49">
+  <link rel="stylesheet" href="../style.css?v=8d0361e9da">
 </head>
 <body class="proj-page">
   <header id="site-header">
@@ -52,7 +52,7 @@
         <a class="proj-nav-btn proj-nav-prev" href="ai-credits-wallet.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> AI Credits Wallet</span></a>
         <a class="proj-nav-btn proj-nav-next" href="internal-app-review-system.html" aria-label="Next project"><span class="proj-nav-name">App Review Platform <i class="ti ti-arrow-right"></i></span></a>
       </div>
-      <nav class="proj-anchors" aria-label="On this page"><div class="pa-top"><a class="mob-logo pa-home" href="../index.html"><span class="mob-logo-name">Avigail Bahat</span><span class="mob-logo-role">Senior Product Designer</span></a></div><div class="pa-title" role="button" tabindex="0">Installations Page<span class="pa-hint">&uarr; Back to top</span></div><ul><li><a href="#sec-tldr"><span class="pa-num">01</span><span class="pa-label">TL;DR</span></a></li><li><a href="#sec-the-problem"><span class="pa-num">02</span><span class="pa-label">The problem</span></a></li><li><a href="#sec-approach"><span class="pa-num">03</span><span class="pa-label">Approach</span></a></li><li><a href="#sec-challenges"><span class="pa-num">04</span><span class="pa-label">Challenges</span></a></li><li><a href="#sec-solution"><span class="pa-num">05</span><span class="pa-label">Solution</span></a></li><li><a href="#sec-results-and-impact"><span class="pa-num">06</span><span class="pa-label">Results &amp; Impact</span></a></li><li><a href="#sec-next-steps"><span class="pa-num">07</span><span class="pa-label">Next steps</span></a></li><li><a href="#sec-bottom-line"><span class="pa-num">08</span><span class="pa-label">Bottom line</span></a></li></ul></nav>
+      <nav class="proj-anchors" aria-label="On this page"><div class="pa-top"><a class="mob-logo pa-home" href="../index.html"><span class="mob-logo-name">Avigail Bahat</span><span class="mob-logo-role">Senior Product Designer</span></a></div><div class="pa-title" role="button" tabindex="0">Installations Page<span class="pa-hint">&uarr; Back to top</span></div><ul><li><a href="#sec-tldr"><span class="pa-num">01</span><span class="pa-label">TL;DR</span></a></li><li><a href="#sec-the-problem"><span class="pa-num">02</span><span class="pa-label">The problem</span></a></li><li><a href="#sec-approach"><span class="pa-num">03</span><span class="pa-label">Approach</span></a></li><li><a href="#sec-solution"><span class="pa-num">04</span><span class="pa-label">Solution</span></a></li><li><a href="#sec-delivery-and-challenges"><span class="pa-num">05</span><span class="pa-label">Delivery &amp; challenges</span></a></li><li><a href="#sec-results-and-impact"><span class="pa-num">06</span><span class="pa-label">Results &amp; Impact</span></a></li></ul></nav>
       <div class="proj-title-sticky" id="proj-title-sticky">
         <div class="proj-tags-m">
           <span class="pm">2025</span>
@@ -73,117 +73,121 @@
       </div>
       <div class="proj-content">
         <figure class="proj-img proj-hero">
-  <img src="../images/img-39b35a9ccf7a803e9a4fda9b43b057b8.jpg" alt="" loading="lazy">
+  <img src="../images/img-e240cd03f4f6408ba8b4fffed5ad9732.jpg" alt="" loading="lazy">
 </figure>
-<div class="proj-tldr" id="sec-tldr"><span class="proj-tldr-label">TL;DR</span><div class="proj-tldr-grid" data-cols="3"><p>I designed a page that developers needed: they had no way to see who installed their apps, so they emailed support for basic usage data.</p><p>I mapped the gap with the PM, worked through permission levels and PII limits with engineering, and shipped part of it in code.</p><p>Developers who found it used it, and the feedback has been positive.</p></div></div>
-<h2 id="sec-the-problem">The problem</h2>
-<p>Developers had no visibility into who was installing their apps. It came up in almost every developer interview. They were building workarounds and emailing our support team just to get basic usage data. They needed it for user support, for marketing (emails and upsells), and for trends such as which geo their users come from.</p>
-<h2 id="sec-approach">Approach</h2>
-<h3>Research</h3>
-<p>The PM and I started by mapping the gap, and user interviews confirmed it was a top pain point. I also looked at how Shopify and Apple's App Store Connect handle the same problem for their ecosystems.</p>
+<div class="proj-tldr" id="sec-tldr"><span class="proj-tldr-label">TL;DR</span><div class="proj-tldr-grid" data-cols="3"><p><span class="proj-tldr-col-label">The problem</span>I designed a page that developers needed: they had no way to see who installed their apps, so they emailed support for basic usage data.</p><p><span class="proj-tldr-col-label">Process</span>I mapped the gap with the PM, worked through permission levels and PII limits with engineering, and shipped part of it in code.</p><p><span class="proj-tldr-col-label">The result</span>Developers who found it used it, and the feedback has been positive.</p></div></div>
+<h2 id="sec-the-problem" class="proj-h2"><span class="proj-h2-label">The problem</span><span class="proj-h2-title">Developers couldn't see who installed their apps</span></h2>
+<div class="col-layout col-2 proj-prob"><div class="col"><p>Developers built workarounds and emailed our team just to get basic user data.</p>
+<p>It came up in almost every developer interview.</p>
+<blockquote class="pr-quote">“On every install, I create an instance in my database, including the email of the site owner…”<cite>App developer</cite></blockquote>
+<blockquote class="pr-quote">“If we could get more info about WIX users, like Shopify partners dashboard, that would be great…”<cite>Customer support manager</cite></blockquote>
+</div><div class="col"><h3>The problems it caused</h3>
+<div class="dc-rows"><p class="dc-row">No way to support their users</p><p class="dc-row">No way to email or upsell to them</p><p class="dc-row">Basic feature that the competitors had</p><p class="dc-row">Emails to our support team for basic data</p></div>
+</div></div>
+<h2 id="sec-approach" class="proj-h2"><span class="proj-h2-label">Approach</span><span class="proj-h2-title">Most of the work was scoping the table</span></h2>
+<div class="col-layout col-2 proj-dc proj-dc-even"><div class="col"><p>I worked with several teams to organize the data we wanted to show developers.</p>
+<div class="dc-rows"><p class="dc-row"><strong>App Developers.</strong> What they needed to know about their users</p><p class="dc-row"><strong>Account managers.</strong> What content requests they get from app developers</p><p class="dc-row"><strong>Our developers.</strong> What data the server holds</p><p class="dc-row"><strong>Legal.</strong> What we are allowed to show about users</p><p class="dc-row"><strong>Competitors.</strong> Shopify and App Store Connect</p></div>
+</div><div class="col"><figure class="proj-img">
+  <img src="../images/img-df798598e7ea407397242216e53ec9ae.jpg" alt="Example of a workaround - an admin table with filters and CSV export" loading="lazy">
+  <figcaption class="proj-caption">Example of a workaround - an admin table with filters and CSV export</figcaption>
+</figure>
+<figure class="proj-img">
+  <img src="../images/img-b281019e5ccf43629fd236cc2f91e9f2.jpg" alt="Example of a workaround - a support tool showing the customer&#39;s shop data" loading="lazy">
+  <figcaption class="proj-caption">Example of a workaround - a support tool showing the customer's shop data</figcaption>
+</figure>
+</div></div>
 <h3>Design principles</h3>
 <p>Four principles came out of the research and the constraints.</p>
-<ul>
-  <li>Explain, don't hide. When data is restricted or missing, a tooltip says why and how to get access.</li>
-  <li>Start from what developers asked for. The default view comes from the interviews and requests.</li>
-  <li>Legal sets the boundaries. PII and legal rules decided what could be shown, and to whom, before any layout.</li>
-  <li>Let developers shape the view. Filters, column customization, and export.</li>
-</ul>
-<h2 id="sec-challenges">Challenges</h2>
-<ul>
-  <li>Personal and business emails needed different permission levels, so not every developer could see every field.</li>
-  <li>The backend APIs decided which fields we could show, and when. Some fields can come back empty.</li>
-  <li>Some of the data coming back from the server was incorrect, and I caught it during implementation.</li>
-  <li>The migration was complex enough that we launched with a small controlled rollout.</li>
-</ul>
-<figure class="proj-img">
-  <figcaption class="proj-caption"><strong>Server</strong>: mapping out why some fields return empty.</figcaption>
-  <img src="../images/img-39b35a9ccf7a8037bf34df5a0d2e94d9.jpg" alt="Server: mapping out why some fields return empty." loading="lazy">
+<div class="proj-rules" data-cols="4"><div class="pr-card"><span class="pr-num">01</span><p class="pr-title">Explain, don't hide</p><p class="pr-text">When data is restricted or missing, a tooltip says why and how to get access.</p><span class="pr-tag">Clarity</span></div><div class="pr-card"><span class="pr-num">02</span><p class="pr-title">Start from what developers asked for</p><p class="pr-text">The default view comes from the interviews and requests.</p><span class="pr-tag">Relevance</span></div><div class="pr-card"><span class="pr-num">03</span><p class="pr-title">Legal sets the boundaries</p><p class="pr-text">PII and legal rules decided what could be shown, and to whom, before any layout.</p><span class="pr-tag">Compliance</span></div><div class="pr-card"><span class="pr-num">04</span><p class="pr-title">Let developers shape the view</p><p class="pr-text">Filters, column customization, and export.</p><span class="pr-tag">Flexibility</span></div></div>
+<h3 class="proj-h3"><span class="proj-h2-label">Exploration</span><span class="proj-h3-title">Created a quick mock to test the direction</span></h3>
+<div class="col-layout col-2 proj-shot"><div class="col"><figure class="proj-img">
+  <img src="../images/img-a59cc7bd4f844ec98dbbaad62eef6675.jpg" alt="Prototype - a working mock with data, built before the detailed design" loading="lazy">
+  <figcaption class="proj-caption">Prototype - a working mock with data, built before the detailed design</figcaption>
 </figure>
-<h2 id="sec-solution">Solution</h2>
-<h3>Design</h3>
-<ul>
-  <li>Started with a quick mock in Figma Make to validate the direction with stakeholders and users</li>
-  <li>Designed the page layout, filters, data export, and column customization in Figma</li>
-  <li>Defined the default view with the user interviews and requests in mind</li>
-  <li>Handled missing data with contextual tooltips explaining why some data is missing (for example, the user didn’t fill out their business name)</li>
-  <li>Led UX writing for the project, working closely with technical writers and drafting the documentation</li>
+</div><div class="col"><ul>
+  <li><strong>Figma Make.</strong> A working mock with data built before detailed design. <strong>This helped me see how to distribute data and set the default view.</strong></li>
+  <li><strong>Validated</strong> With stakeholders and users before investing in the final layout.</li>
 </ul>
-<div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption"><strong>Default view</strong>: installation data per developer: business name, site URL, instance ID, email, plan, version, install date, rating.</figcaption>
-  <img src="../images/img-38d35a9ccf7a800591a1d529b0862701.jpg" alt="Default view: installation data per developer: business name, site URL, instance ID, email, plan, version, install date, rating." loading="lazy">
-</figure>
-</div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption"><strong>Column customization</strong>: show, hide, and reorder columns.</figcaption>
-  <img src="../images/img-38d35a9ccf7a804c8246c66ff2f47e81.jpg" alt="Column customization: show, hide, and reorder columns." loading="lazy">
-</figure>
 </div></div>
-<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+<h2 id="sec-solution" class="proj-h2"><span class="proj-h2-label">Solution</span><span class="proj-h2-title">A default view developers can customize</span></h2>
+<div class="col-layout col-2 proj-shot"><div class="col"><figure class="proj-img">
+  <img src="../images/img-3951d9cbbd0b4f499e909f1d641aab10.jpg" alt="Default view - installation data per developer, with the default columns" loading="lazy">
+  <figcaption class="proj-caption">Default view - installation data per developer, with the default columns</figcaption>
+</figure>
+</div><div class="col"><ul>
+  <li><strong>Default columns.</strong> Built from the interviews: business name, site URL, email, plan, version, install date and rating.</li>
+  <li><strong>Download csv.</strong> This was also highly requested for developers to use in their own database or export filtered users.</li>
+</ul>
+</div></div>
+<h3 class="proj-h3"><span class="proj-h2-label">Customize the view</span><span class="proj-h3-title">Columns and filters</span></h3>
+<div class="col-layout col-2 proj-shot2"><div class="col"><figure class="proj-img">
+  <img src="../images/img-7a44b3d53d584ea3a26e6971ddcf11b7.jpg" alt="Columns panel - show, hide and reorder the columns" loading="lazy">
+  <figcaption class="proj-caption">Columns panel - show, hide and reorder the columns</figcaption>
+</figure>
+<ul>
+  <li><strong>Always shown.</strong> Business name and site URL.</li>
+  <li><strong>Developers choose the rest.</strong> Instance ID, email, version and install date are on by default.</li>
+</ul>
+</div><div class="col"><figure class="proj-img">
+  <img src="../images/img-461baac553694e38a8c79df8a372e19a.jpg" alt="Filters panel - narrow the table by plan, status, location, version, install date and rating" loading="lazy">
+  <figcaption class="proj-caption">Filters panel - narrow the table by plan, status, location, version, install date and rating</figcaption>
+</figure>
+<ul>
+  <li><strong>Finding specific users.</strong></li>
+</ul>
+</div></div>
+<h3 class="proj-h3"><span class="proj-h2-label">Missing data</span><span class="proj-h3-title">Explaining missing data</span></h3>
+<div class="col-layout col-2 proj-shot"><div class="col"><figure class="proj-img">
+  <img src="../images/img-98fe3bc6f4074d12b74abb03914229b6.jpg" alt="Missing data - a tooltip on the rating column says which reviews are excluded and why" loading="lazy">
+  <figcaption class="proj-caption">Missing data - a tooltip on the rating column says which reviews are excluded and why</figcaption>
+</figure>
+</div><div class="col"><ul>
+  <li><strong>Empty cells.</strong> Developers should know why information is missing, so cells and columns have tooltips that give the reason, for example a review made in the Standalone App Market. I mapped every empty state to a reason, with the server team.</li>
+  <li><strong>Empty state.</strong> Shown when a developer has no installations.</li>
+</ul>
+</div></div>
+<h3>Behind the scenes</h3>
+<div class="col-layout col-3"><div class="col"><figure class="proj-img">
+  <img src="../images/img-c20c344382584718a3d7cda360c4e350.jpg" alt="Figma Make: initial exploration." loading="lazy">
   <figcaption class="proj-caption"><strong>Figma Make</strong>: initial exploration.</figcaption>
-  <img src="../images/img-38d35a9ccf7a803ca21de13cfc5ea341.jpg" alt="Figma Make: initial exploration." loading="lazy">
 </figure>
 </div><div class="col"><figure class="proj-img">
+  <img src="../images/img-0cb6382ff55c4dc2932991d03cb94f6e.jpg" alt="Cursor: features added and bugs fixed during implementation." loading="lazy">
   <figcaption class="proj-caption"><strong>Cursor</strong>: features added and bugs fixed during implementation.</figcaption>
-  <img src="../images/img-36e35a9ccf7a801a8218d179d4accde3.jpg" alt="Cursor: features added and bugs fixed during implementation." loading="lazy">
-</figure>
-</div></div>
-<h3>Delivery</h3>
-<ul>
-  <li>Joined the implementation team using Cursor and Claude Code to add features and fix bugs</li>
-  <li>Contributed a year selector to the <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide." aria-label="Wix" aria-describedby="term-tip-1" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-1" role="tooltip" hidden>Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></span> Design System in code, making it available across the platform</li>
-  <li>Caught major server-side bugs where the data coming back was incorrect</li>
-  <li>Launched with a small controlled rollout given the migration complexity. It's live now</li>
-</ul>
-<h3>The page</h3>
-<figure class="proj-img">
-  <figcaption class="proj-caption"><strong>Default view</strong>: installation data per developer: business name, site URL, instance ID, email, plan, version, install date, rating.</figcaption>
-  <img src="../images/img-5dadf9f09d4c4ec5aadb4fbbccb3ff65.jpg" alt="Default view: installation data per developer: business name, site URL, instance ID, email, plan, version, install date, rating." loading="lazy">
-</figure>
-<div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption"><strong>Column customization</strong>: show, hide, and reorder columns.</figcaption>
-  <img src="../images/img-bd8deb026fa84772ba245cd1366e2580.jpg" alt="Column customization: show, hide, and reorder columns." loading="lazy">
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption"><strong>Full columns</strong>: every available field visible at once.</figcaption>
-  <img src="../images/img-35d35a9ccf7a80618de1d098c01b6bfc.jpg" alt="Full columns: every available field visible at once." loading="lazy">
+  <img src="../images/img-43f6ffa48c3f40679a12c780bf22736d.jpg" alt="Server: mapping out why some fields return empty." loading="lazy">
+  <figcaption class="proj-caption"><strong>Server</strong>: mapping out why some fields return empty.</figcaption>
 </figure>
 </div></div>
-<figure class="proj-img">
-  <figcaption class="proj-caption"><strong>Filtered view</strong>: narrow by time range, plan, or other parameters.</figcaption>
-  <img src="../images/img-38d35a9ccf7a80b88e07d59c1c053d96.jpg" alt="Filtered view: narrow by time range, plan, or other parameters." loading="lazy">
-</figure>
 <h3>Edge &amp; empty states</h3>
-<div class="col-layout col-2"><div class="col"><figure class="proj-img">
+<div class="col-layout col-4"><div class="col"><figure class="proj-img">
+  <img src="../images/img-822706c7be22481cbdd9bbd1a1cc1e47.jpg" alt="Full columns: every available field visible at once." loading="lazy">
+  <figcaption class="proj-caption"><strong>Full columns</strong>: every available field visible at once.</figcaption>
+</figure>
+</div><div class="col"><figure class="proj-img">
+  <img src="../images/img-a4755d16e5674fe49be2a6d5fb4a5798.jpg" alt="Private apps: fewer columns, since some fields don&#39;t apply before launch." loading="lazy">
   <figcaption class="proj-caption"><strong>Private apps</strong>: fewer columns, since some fields don't apply before launch.</figcaption>
-  <img src="../images/img-38d35a9ccf7a80388f85fe2613f8a454.jpg" alt="Private apps: fewer columns, since some fields don&#39;t apply before launch." loading="lazy">
 </figure>
 </div><div class="col"><figure class="proj-img">
+  <img src="../images/img-02b1c37bf8e64d2f882e840a03107544.jpg" alt="Empty state: shown when a developer has no installations." loading="lazy">
   <figcaption class="proj-caption"><strong>Empty state</strong>: shown when a developer has no installations.</figcaption>
-  <img src="../images/img-38d35a9ccf7a8048b260d2b9ff505655.jpg" alt="Empty state: shown when a developer has no installations." loading="lazy">
-</figure>
-</div></div>
-<div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption"><strong>Inline data-limit tooltip</strong>: flags which data is excluded and why, without breaking flow.</figcaption>
-  <img src="../images/img-c512dd07ee9446f9b42e7a2c83d13601.jpg" alt="Inline data-limit tooltip: flags which data is excluded and why, without breaking flow." loading="lazy">
 </figure>
 </div><div class="col"><figure class="proj-img">
+  <img src="../images/img-f2fb01047d354f42934c22ce700dada5.jpg" alt="Empty columns: explains why some data isn&#39;t showing." loading="lazy">
   <figcaption class="proj-caption"><strong>Empty columns</strong>: explains why some data isn't showing.</figcaption>
-  <img src="../images/img-38d35a9ccf7a80d0b9fdec006e47d49a.jpg" alt="Empty columns: explains why some data isn&#39;t showing." loading="lazy">
 </figure>
 </div></div>
-<h2 id="sec-results-and-impact">Results &amp; Impact</h2>
-<p>Since opening to all developers, the majority of those who visited the Wix Developer Center and had published apps discovered the page. Of those who saw it, the majority took action, copying data, opening sites, and applying filters. This was after a quiet launch with no promotion.</p>
-<p>What developers said:</p>
-<ul>
-  <li><em>"We already had email sequences hooked on webhooks, but this lets us manually follow up with users - especially for the non-technical team members."</em></li>
-  <li><em>"Very good feature overall - thank you!"</em></li>
-</ul>
-<h2 id="sec-next-steps">Next steps</h2>
-<p>The roadmap included cancellation reasons, deeper filtering, and eventually connecting the page to the inbox and email marketing tools. Not enough developers were exposed to the feature, so making it easier to find was also planned.</p>
-<h2 id="sec-bottom-line">Bottom line</h2>
-<p>The project started with a complaint that came up in almost every interview. My job was to decide which fields developers see and what the default view shows. Later on, I got to ship features myself using AI tools.</p>
+<h2 id="sec-delivery-and-challenges" class="proj-h2"><span class="proj-h2-label">Delivery &amp; challenges</span><span class="proj-h2-title">Working with the team</span></h2>
+<div class="col-layout col-2 proj-dc"><div class="col"><h3>Process</h3>
+<div class="dc-rows"><p class="dc-row"><strong>My partners.</strong> The PM, developers including the backend developer who owned the data, Legal and a content writer.</p><p class="dc-row"><strong>PRD and scoping.</strong> I worked on planning the product.</p><p class="dc-row"><strong>Joined the development team.</strong> I used Cursor and Claude Code to add features and fix bugs.</p><p class="dc-row"><strong>Documentation writing.</strong> I led it and drafted the <a href="https://dev.wix.com/docs/build-apps/manage-your-app/data-and-analytics/app-installations" target="_blank" rel="noopener">documentation</a> with the technical writers.</p><p class="dc-row"><strong>A design system contribution.</strong> A year selector, built in code and now available across the platform.</p><p class="dc-row"><strong>Saved views.</strong> I shipped them myself, in code.</p></div>
+</div><div class="col"><h3>Challenges</h3>
+<div class="dc-rows"><p class="dc-row"><strong>Incorrect data.</strong> The server returned wrong data, and I caught it during QA.</p><p class="dc-row"><strong>Product handoffs.</strong> Each time the product owner changed, I kept the context.</p><p class="dc-row"><strong>A complex migration.</strong> We launched with a small controlled rollout. It is live now.</p><p class="dc-row"><strong>Export function was harder than expected.</strong> It rolled out later than the rest.</p><p class="dc-row"><strong>Legal and permissions.</strong> Personal emails need a permission and user consent.</p></div>
+</div></div>
+<h2 id="sec-results-and-impact" class="proj-h2"><span class="proj-h2-label">Results &amp; Impact</span><span class="proj-h2-title">Developers adopted the top requested page</span></h2>
+<div class="proj-results"><div class="pr-lead"><p class="pr-headline">Developers got a page per app with filters, column customization, saved views and export, so they no longer need to keep their own installation records.</p><blockquote class="pr-quote">"We already had email sequences hooked on webhooks, but this lets us manually follow up with users - especially for the non-technical team members."</blockquote><blockquote class="pr-quote">"Very good feature overall - thank you!"</blockquote></div><div class="pr-rows"><div class="pr-row"><p class="pr-label">Discovery</p><p class="pr-rtext">Since opening to all developers, the majority of those who visited the <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide." aria-label="Wix" aria-describedby="term-tip-1" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-1" role="tooltip" hidden>Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></span> Developer Center and had published apps discovered the page, through a "New" badge.</p></div><div class="pr-row"><p class="pr-label">Actions</p><p class="pr-rtext">Of those who saw it, the majority took action: copying data, opening sites and applying filters.</p></div><div class="pr-row"><p class="pr-label">No promotion</p><p class="pr-rtext">All of this after a quiet launch.</p></div><div class="pr-row"><p class="pr-label">Next steps</p><p class="pr-rtext">Contacts, an account view and cancellation reasons.</p></div></div></div>
 
-<p class="proj-updated">Last updated 13 October 2026</p>
+<p class="proj-updated">Last updated 22 October 2026</p>
       </div>
     </main>
     <div class="proj-gutter proj-gutter-right"></div>
@@ -243,10 +247,10 @@
   <script src="../script.js?v=7851c40b0b"></script>
 <script>
 var ALL_PROJECTS = [
-  { slug: 'ai-credits-wallet', title: 'AI Credits Wallet', sub: 'A new AI monetization model that had to work for two types of users, across three products, without becoming two separate systems.', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
+  { slug: 'ai-credits-wallet', title: 'AI Credits Wallet', sub: 'One shared credits wallet for free and premium users, across Wix and Wixel.', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
   { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Designed and shipped installation analytics that gave developers site-level visibility into how their apps were used', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
   { slug: 'internal-app-review-system', title: 'App Review Platform', sub: 'Ground-up rebuild of Wix App Market’s internal review platform that shortened review cycles.', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
-  { slug: 'developer-sale', title: 'Developer Sale', sub: 'Sales infrastructure that made market-wide promotions possible and drove strong growth in subscriptions and upgrade revenue', cat: 'Monetisation', cats: 'developer monetisation cms', year: 2024, featured: true },
+  { slug: 'developer-sale', title: 'Developer Sale', sub: 'Sales infrastructure that made market-wide promotions possible and drove strong growth in subscriptions and upgrade revenue', cat: 'Monetisation', cats: 'developer monetisation cms', year: 2024, featured: false },
   { slug: 'app-reviews-revamp', title: 'App Reviews Revamp', sub: 'Cross-app review management system designed to give developers with many apps unified control over their feedback', cat: 'Developer tools', cats: 'developer cms', year: 2024, featured: false },
   { slug: 'app-collections-internal-manager', title: 'App Collections Manager', sub: 'Internal curation tool that replaced manual workflows and scaled App Market collection management across two generation modes', cat: 'Internal tools', cats: 'internal cms', year: 2024, featured: false },
   { slug: 'payouts-page', title: 'Payouts Page', sub: 'The first dedicated payout page for App Market developers, giving them visibility into what they\'d earned and when they\'d get paid.', cat: 'Monetisation', cats: 'monetisation cms', year: 2023, featured: false },

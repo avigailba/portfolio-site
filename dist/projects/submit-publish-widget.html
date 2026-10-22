@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <link rel="stylesheet" href="../style.css?v=20e5070b49">
+  <link rel="stylesheet" href="../style.css?v=8d0361e9da">
 </head>
 <body class="proj-page">
   <header id="site-header">
@@ -87,75 +87,75 @@
   <li>Extended the widget for auto-publishing: published apps making minor changes can skip the full review cycle</li>
 </ul>
 <figure class="proj-img">
-  <figcaption class="proj-caption">The full list of blockers and recommendations — defined collaboratively and mapped to specific app states, audience types, and content checks</figcaption>
   <img src="../images/img-35e35a9ccf7a80a794a7c4860ca192d0.jpg" alt="The full list of blockers and recommendations — defined collaboratively and mapped to specific app states, audience types, and content checks" loading="lazy">
+  <figcaption class="proj-caption">The full list of blockers and recommendations — defined collaboratively and mapped to specific app states, audience types, and content checks</figcaption>
 </figure>
 <h2 id="sec-screens">Screens</h2>
 <p>The widget has three states, each designed for a different moment in the developer's journey.</p>
 <p>The developer starts from the widget view, which they can minimize at any time.</p>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Minimized state — a low-footprint navigation item for developers not actively preparing a submission</figcaption>
   <img src="../images/img-513dc72a6b6c4c5cba21fc1e1dd1547f.jpg" alt="Minimized state — a low-footprint navigation item for developers not actively preparing a submission" loading="lazy">
+  <figcaption class="proj-caption">Minimized state — a low-footprint navigation item for developers not actively preparing a submission</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Widget view with active blockers — submission disabled, with a count of issues to resolve</figcaption>
   <img src="../images/img-dde7cc1784c14b8eac6aafb2a70a203a.jpg" alt="Widget view with active blockers — submission disabled, with a count of issues to resolve" loading="lazy">
+  <figcaption class="proj-caption">Widget view with active blockers — submission disabled, with a count of issues to resolve</figcaption>
 </figure>
 </div></div>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Open panel — blockers tab showing each issue with a direct action to fix it</figcaption>
   <img src="../images/img-0e6736c758ff4bc7bf63a24b3d4dad01.jpg" alt="Open panel — blockers tab showing each issue with a direct action to fix it" loading="lazy">
+  <figcaption class="proj-caption">Open panel — blockers tab showing each issue with a direct action to fix it</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Open panel — zero blockers state, developer can now submit</figcaption>
   <img src="../images/img-7954f9d7b1074c6ea5e8c8eb5a457903.jpg" alt="Open panel — zero blockers state, developer can now submit" loading="lazy">
+  <figcaption class="proj-caption">Open panel — zero blockers state, developer can now submit</figcaption>
 </figure>
 </div></div>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Open panel — recommendations tab with optional improvements the developer can act on or dismiss</figcaption>
   <img src="../images/img-8e936b50862b4d398b68f3768c1817d9.jpg" alt="Open panel — recommendations tab with optional improvements the developer can act on or dismiss" loading="lazy">
+  <figcaption class="proj-caption">Open panel — recommendations tab with optional improvements the developer can act on or dismiss</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Recommendations tab after one item is dismissed</figcaption>
   <img src="../images/img-fadce654ba824929a77a22846f9c2ae9.jpg" alt="Recommendations tab after one item is dismissed" loading="lazy">
+  <figcaption class="proj-caption">Recommendations tab after one item is dismissed</figcaption>
 </figure>
 </div></div>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Widget view — zero blockers, submission enabled</figcaption>
   <img src="../images/img-900cd41e67ad4332ae01ba8c22fd4106.jpg" alt="Widget view — zero blockers, submission enabled" loading="lazy">
+  <figcaption class="proj-caption">Widget view — zero blockers, submission enabled</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Edge case — widget inactive when the app is already under review and no new version is pending</figcaption>
   <img src="../images/img-fe2c4f3608d34b43a054450e2ebb8b14.jpg" alt="Edge case — widget inactive when the app is already under review and no new version is pending" loading="lazy">
+  <figcaption class="proj-caption">Edge case — widget inactive when the app is already under review and no new version is pending</figcaption>
 </figure>
 </div></div>
 <h2 id="sec-iteration-auto-publishing-for-published-apps">Iteration: auto-publishing for published apps</h2>
 <p>After launch, the Developer Relations team flagged a new bottleneck: published apps making minor market listing changes - like updating copy or screenshots - still had to go through a full submission review. To remove that unnecessary friction, I designed an auto-publish path where small changes go live immediately, while significant changes (new permissions, OAuth, extensions) still require a review.</p>
 <p>The widget needed to adapt accordingly. Published apps now see an "Update" widget that routes them based on what they changed.</p>
 <div class="col-layout col-2"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Decision logic — routes developers to auto-publish or submit for review based on the nature of their changes</figcaption>
   <img src="../images/img-17d35a9ccf7a806eaa02ccada8797410.jpg" alt="Decision logic — routes developers to auto-publish or submit for review based on the nature of their changes" loading="lazy">
+  <figcaption class="proj-caption">Decision logic — routes developers to auto-publish or submit for review based on the nature of their changes</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Widget states by app type — how the submission, update, and publish widgets adapt for draft, published, <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide." aria-label="Wix" aria-describedby="term-tip-2" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-2" role="tooltip" hidden>Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></span>, and enterprise apps</figcaption>
-  <img src="../images/img-17d35a9ccf7a80b6b4b1d73ee6f4bde0.jpg" alt="Widget states by app type — how the submission, update, and publish widgets adapt for draft, published, Wix, and enterprise apps" loading="lazy">
+  <img src="../images/img-17d35a9ccf7a80b6b4b1d73ee6f4bde0.jpg" alt="Widget states by app type — how the submission, update, and publish widgets adapt for draft, published, <span class="ctx-tip" role="button" tabindex="0" data-tip="Wix is a website builder and development platform used by millions of businesses and creators worldwide." aria-label="Wix" aria-describedby="term-tip-2" aria-expanded="false">Wix<span class="ctx-tip-pop" id="term-tip-2" role="tooltip" hidden>Wix is a website builder and development platform used by millions of businesses and creators worldwide.</span></span>, and enterprise apps" loading="lazy">
+  <figcaption class="proj-caption">Widget states by app type — how the submission, update, and publish widgets adapt for draft, published, Wix, and enterprise apps</figcaption>
 </figure>
 </div></div>
 <figure class="proj-img">
-  <figcaption class="proj-caption">Full widget states matrix — all submission, update, and publish widget variations across every app lifecycle stage</figcaption>
   <img src="../images/img-35e35a9ccf7a807283c6e208802125ce.jpg" alt="Full widget states matrix — all submission, update, and publish widget variations across every app lifecycle stage" loading="lazy">
+  <figcaption class="proj-caption">Full widget states matrix — all submission, update, and publish widget variations across every app lifecycle stage</figcaption>
 </figure>
 <div class="col-layout col-3"><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Published app — widget default state, no pending changes</figcaption>
   <img src="../images/img-35e35a9ccf7a809a931af1f8c975d875.jpg" alt="Published app — widget default state, no pending changes" loading="lazy">
+  <figcaption class="proj-caption">Published app — widget default state, no pending changes</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Published app — changes saved, no blockers, ready to publish</figcaption>
   <img src="../images/img-35e35a9ccf7a8075aec2f608b9fbc707.jpg" alt="Published app — changes saved, no blockers, ready to publish" loading="lazy">
+  <figcaption class="proj-caption">Published app — changes saved, no blockers, ready to publish</figcaption>
 </figure>
 </div><div class="col"><figure class="proj-img">
-  <figcaption class="proj-caption">Published app — changes saved with active blockers, publishing blocked</figcaption>
   <img src="../images/img-35e35a9ccf7a803bb585f3b5c5f93b68.jpg" alt="Published app — changes saved with active blockers, publishing blocked" loading="lazy">
+  <figcaption class="proj-caption">Published app — changes saved with active blockers, publishing blocked</figcaption>
 </figure>
 </div></div>
 <h2 id="sec-impact">Impact</h2>
@@ -223,10 +223,10 @@
   <script src="../script.js?v=7851c40b0b"></script>
 <script>
 var ALL_PROJECTS = [
-  { slug: 'ai-credits-wallet', title: 'AI Credits Wallet', sub: 'A new AI monetization model that had to work for two types of users, across three products, without becoming two separate systems.', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
+  { slug: 'ai-credits-wallet', title: 'AI Credits Wallet', sub: 'One shared credits wallet for free and premium users, across Wix and Wixel.', cat: 'Monetisation', cats: 'monetisation', year: 2026, featured: true },
   { slug: 'app-installation-page-for-developers', title: 'Installations Page', sub: 'Designed and shipped installation analytics that gave developers site-level visibility into how their apps were used', cat: 'Developer tools', cats: 'developer cms', year: 2025, featured: true },
   { slug: 'internal-app-review-system', title: 'App Review Platform', sub: 'Ground-up rebuild of Wix App Market’s internal review platform that shortened review cycles.', cat: 'Internal tools', cats: 'internal cms', year: 2022, featured: true },
-  { slug: 'developer-sale', title: 'Developer Sale', sub: 'Sales infrastructure that made market-wide promotions possible and drove strong growth in subscriptions and upgrade revenue', cat: 'Monetisation', cats: 'developer monetisation cms', year: 2024, featured: true },
+  { slug: 'developer-sale', title: 'Developer Sale', sub: 'Sales infrastructure that made market-wide promotions possible and drove strong growth in subscriptions and upgrade revenue', cat: 'Monetisation', cats: 'developer monetisation cms', year: 2024, featured: false },
   { slug: 'app-reviews-revamp', title: 'App Reviews Revamp', sub: 'Cross-app review management system designed to give developers with many apps unified control over their feedback', cat: 'Developer tools', cats: 'developer cms', year: 2024, featured: false },
   { slug: 'app-collections-internal-manager', title: 'App Collections Manager', sub: 'Internal curation tool that replaced manual workflows and scaled App Market collection management across two generation modes', cat: 'Internal tools', cats: 'internal cms', year: 2024, featured: false },
   { slug: 'payouts-page', title: 'Payouts Page', sub: 'The first dedicated payout page for App Market developers, giving them visibility into what they\'d earned and when they\'d get paid.', cat: 'Monetisation', cats: 'monetisation cms', year: 2023, featured: false },

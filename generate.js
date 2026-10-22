@@ -66,7 +66,7 @@ const PROJECT_META = {
   'ai-credits-wallet':                    { title: 'AI Credits Wallet',        subtitle: 'Transparent AI usage billing across Wix\'s developer platform', cats: 'monetisation',          display: 'Monetisation',    year: 2026, featured: true },
   'app-installation-page-for-developers': { title: 'Installations Page',      subtitle: 'Designed and shipped installation analytics that gave developers site-level visibility into how their apps were used', cats: 'developer cms',         display: 'Developer tools', year: 2025, featured: true },
   'internal-app-review-system':          { title: 'App Review Platform',   subtitle: 'Replaced a spreadsheet-based review process with a structured tool', cats: 'internal cms',       display: 'Internal tools',  year: 2022, featured: true },
-  'developer-sale':                      { title: 'Developer Sale',           subtitle: 'A monetisation campaign tool for app developers',                cats: 'developer monetisation cms', display: 'Monetisation', year: 2024, featured: true },
+  'developer-sale':                      { title: 'Developer Sale',           subtitle: 'A monetisation campaign tool for app developers',                cats: 'developer monetisation cms', display: 'Monetisation', year: 2024, featured: false },
   'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer cms',          display: 'Developer tools', year: 2024, featured: false },
   'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'internal cms',           display: 'Internal tools',  year: 2024, featured: false },
   'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',       display: 'Monetisation',    year: 2023, featured: false },
@@ -83,7 +83,6 @@ const FEAT_ORDER = [
   'internal-app-review-system',
   'ai-credits-wallet',
   'app-installation-page-for-developers',
-  'developer-sale',
 ];
 
 
@@ -232,11 +231,23 @@ async function toHtml(blocks, imgPrefix = '') {
       }
       case 'column_list': {
         const cols = await fetchBlocks(b.id);
-        const colHtmls = await Promise.all(cols.map(async col => {
+        const colInner = await Promise.all(cols.map(async col => {
           const colBlocks = await fetchBlocks(col.id);
-          return `<div class="col">${await toHtml(colBlocks, imgPrefix)}</div>`;
+          return await toHtml(colBlocks, imgPrefix);
         }));
-        html += `<div class="col-layout col-${cols.length}">${colHtmls.join('')}</div>\n`;
+        // A column holding "Design principles" cards: the cards leave the columns and run full width underneath
+        let rulesHtml = '';
+        const kept = colInner.map(inner => {
+          const r = splitRules(inner);
+          if (!r) return inner;
+          rulesHtml = r.cards;
+          return r.before + r.after;
+        }).filter(inner => !rulesHtml || inner.trim());
+        if (rulesHtml && kept.length === 1) {
+          html += kept[0] + rulesHtml;
+        } else {
+          html += `<div class="col-layout col-${kept.length}">${kept.map(c => `<div class="col">${c}</div>`).join('')}</div>\n${rulesHtml}`;
+        }
         break;
       }
       case 'divider': html += '<hr>\n'; break;
@@ -489,7 +500,8 @@ function indexPage(projects, tagline) {
     const proj = bySlug[slug];
     const title   = proj?.title   || meta?.title   || slug;
     const cats    = meta?.cats    || '';
-    const display = meta?.display || '';
+    const catLabels = { developer: 'Developer tools', monetisation: 'Monetisation', internal: 'Internal tools', cms: 'CMS' };
+    const badges = cats.split(/\s+/).filter(Boolean).map(cat => catLabels[cat] || cat);
     const year    = meta?.year    || proj?.year    || '';
     const summary = proj?.subtitle || proj?.summary || '';
     const featured = meta?.featured || false;
@@ -501,7 +513,7 @@ function indexPage(projects, tagline) {
       ${summary ? `<span class="rsub">${summary}</span>` : ''}
     </div>
     ${featured ? `<span class="feat-tag" title="Featured project">★</span>` : ''}
-    ${display ? `<span class="cat-tag" data-cats="${cats}" data-display="${display}">${display}</span>` : ''}
+    ${badges.length ? `<span class="cat-tags">${badges.map(label => `<span class="cat-tag">${label}</span>`).join('')}</span>` : ''}
     <span class="row-year">${year}</span>
     <span class="row-arr">View ↗</span>
     <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
@@ -542,6 +554,167 @@ function indexPage(projects, tagline) {
   </main>`);
 }
 
+// Design principles as numbered cards (the layout from her Intuit deck).
+// Notion shape: an "h3 Design principles", an optional bridge line, then a list whose items read
+// "**Title** sentence | Tag" (the tag after " | " is optional). The cards run full width, so a
+// two-column "Research | Design principles" block is split: Research stays, the cards go under it.
+function splitRules(html) {
+  const hm = /<h3>\s*(?:<strong>)?\s*Design principles\s*(?:<\/strong>)?\s*<\/h3>\s*/i.exec(html);
+  if (!hm) return null;
+  const afterH = hm.index + hm[0].length;
+  const lm = /<(ul|ol)>([\s\S]*?)<\/\1>\n?/.exec(html.slice(afterH));
+  if (!lm) return null;
+  const between = html.slice(afterH, afterH + lm.index);
+  if (/<h[23]|<figure|<div/.test(between)) return null;
+  const items = [...lm[2].matchAll(/<li>([\s\S]*?)<\/li>/g)].map(m => m[1].trim()).filter(Boolean);
+  if (!items.length) return null;
+  const cards = items.map((raw, i) => {
+    let it = raw, tag = '';
+    const parts = it.split(/\s+\|\s+/);
+    if (parts.length > 1) { tag = parts.pop().replace(/<[^>]+>/g, '').trim(); it = parts.join(' | '); }
+    let title, text;
+    const sm = /^\s*<strong>([\s\S]*?)<\/strong>\s*([\s\S]*)$/.exec(it);
+    if (sm) { title = sm[1]; text = sm[2]; }
+    else { const dm = /^([^.]+?)\.\s+([\s\S]*)$/.exec(it); title = dm ? dm[1] : it; text = dm ? dm[2] : ''; }
+    title = title.replace(/[.:]\s*$/, '').trim();
+    return `<div class="pr-card"><span class="pr-num">${String(i + 1).padStart(2, '0')}</span><p class="pr-title">${title}</p><p class="pr-text">${text.trim()}</p>${tag ? `<span class="pr-tag">${tag}</span>` : ''}</div>`;
+  }).join('');
+  const cardsHtml = `<h3>Design principles</h3>\n${between.trim() ? between : ''}<div class="proj-rules" data-cols="${items.length}">${cards}</div>\n`;
+  return { before: html.slice(0, hm.index), after: html.slice(afterH + lm.index + lm[0].length), cards: cardsHtml };
+}
+
+// Results as a lead sentence plus labelled rows (the layout from her Intuit deck).
+// Notion shape under "Results" or "Impact": a lead paragraph, then a list whose items read "**Label** sentence",
+// optional italic list items as quotes, and the next steps either as an "h3 Next steps" inside the section or
+// as the "h2 Next steps" right after it. The next steps become the last row.
+// Screen-plus-explanation layouts (the deck's design slides). A two-column block whose first column is an image and whose second
+// column starts with a bullet list becomes `proj-shot` (image 2/3, text 1/3, an optional "### The principle in action" block under the bullets).
+// A two-column block whose columns are each an image followed by a bullet list becomes `proj-shot2` (two screens, text under each).
+function markShotLayouts(html) {
+  return html.replace(/<div class="col-layout col-2"><div class="col">([\s\S]*?)<\/div><div class="col">([\s\S]*?)<\/div><\/div>/g, (m, a, b) => {
+    const A = a.trim(), B = b.trim();
+    const imgThenList = /^<figure[\s\S]*?<\/figure>\s*<ul>/;
+    let cls = '';
+    if (/^<figure/.test(A) && /^<ul>/.test(B)) cls = 'proj-shot';
+    else if (imgThenList.test(A) && imgThenList.test(B)) cls = 'proj-shot2';
+    return cls ? `<div class="col-layout col-2 ${cls}"><div class="col">${a}</div><div class="col">${b}</div></div>` : m;
+  });
+}
+
+// Product areas as a grid of cards (the deck's "four product areas" slide). In Notion: an "h3 Product areas" followed by a list whose
+// items read "**Title** what it is | the bold line saying what it fixes". The heading itself is dropped (the section title says it).
+function buildAreaCards(html) {
+  const hm = /<h3>\s*(?:<strong>)?\s*Product areas\s*(?:<\/strong>)?\s*<\/h3>\s*/i.exec(html);
+  if (!hm) return html;
+  const afterH = hm.index + hm[0].length;
+  const lm = /<(ul|ol)>([\s\S]*?)<\/\1>\n?/.exec(html.slice(afterH));
+  if (!lm || lm.index > 0) return html;
+  const items = [...lm[2].matchAll(/<li>([\s\S]*?)<\/li>/g)].map(m => m[1].trim()).filter(Boolean);
+  if (!items.length) return html;
+  const cards = items.map(raw => {
+    let it = raw, fix = '';
+    const parts = it.split(/\s+\|\s+/);
+    if (parts.length > 1) { fix = parts.pop().trim(); it = parts.join(' | '); }
+    const sm = /^\s*<strong>([\s\S]*?)<\/strong>\s*([\s\S]*)$/.exec(it);
+    const title = sm ? sm[1].replace(/[.:]\s*$/, '').trim() : it;
+    const text = sm ? sm[2].trim() : '';
+    return `<div class="pa-card"><p class="pa-title">${title}</p><p class="pa-text">${text}</p>${fix ? `<p class="pa-fix">${fix}</p>` : ''}</div>`;
+  }).join('');
+  return html.slice(0, hm.index) + `<div class="proj-areas">${cards}</div>\n` + html.slice(afterH + lm[0].length);
+}
+
+function buildResults(html) {
+  const hm = /<h2>\s*(?:<strong>)?\s*(?:Results|Impact)[^<]*(?:<\/strong>)?\s*<\/h2>\n?/i.exec(html);
+  if (!hm) return html;
+  const bodyStart = hm.index + hm[0].length;
+  // The section runs to the next h2, or to the first h3 other than "Next steps", or to the first image block
+  const stopRe = /<h2[ >]|<h3>(?!\s*(?:<strong>)?\s*Next steps)|<figure|<div class="col-layout/g;
+  stopRe.lastIndex = bodyStart;
+  const n1 = stopRe.exec(html);
+  let bodyEnd = n1 ? n1.index : html.length;
+  let body = html.slice(bodyStart, bodyEnd);
+  let nextSteps = '';
+  const ns = /<h3>\s*(?:<strong>)?\s*Next steps\s*(?:<\/strong>)?\s*<\/h3>\n?([\s\S]*)$/i.exec(body);
+  if (ns) { nextSteps = ns[1]; body = body.slice(0, ns.index); }
+  else if (n1 && /^<h2[^>]*>\s*(?:<strong>)?\s*Next steps\s*(?:<\/strong>)?\s*<\/h2>/i.test(html.slice(n1.index))) {
+    const h2End = html.indexOf('</h2>', n1.index) + 5;
+    stopRe.lastIndex = h2End;
+    const n2 = stopRe.exec(html);
+    const end2 = n2 ? n2.index : html.length;
+    nextSteps = html.slice(h2End, end2);
+    bodyEnd = end2;
+  }
+  if (/<div|<h3/.test(body) || /<div|<h3/.test(nextSteps)) return html;
+  const lists = [...body.matchAll(/<ul>([\s\S]*?)<\/ul>/g)];
+  if (!lists.length) return html;
+  const lis = lists.flatMap(u => [...u[1].matchAll(/<li>([\s\S]*?)<\/li>/g)].map(m => m[1].trim()));
+  const rowLis = lis.filter(l => l.startsWith('<strong>'));
+  if (!rowLis.length) return html;
+  const quotes = lis.filter(l => l.startsWith('<em>')).map(l => l.replace(/^<em>([\s\S]*)<\/em>$/, '$1'));
+  const paras = [...body.replace(/<ul>[\s\S]*?<\/ul>/g, '').matchAll(/<p>([\s\S]*?)<\/p>/g)].map(m => m[1].trim());
+  const lead = paras.filter(p => !/:$/.test(p.replace(/<[^>]+>/g, '').trim()));
+  if (!lead.length) return html;
+  const rows = rowLis.map(l => {
+    const m = /^<strong>([\s\S]*?)<\/strong>\s*([\s\S]*)$/.exec(l);
+    return `<div class="pr-row"><p class="pr-label">${m[1].replace(/[.:]\s*$/, '')}</p><p class="pr-rtext">${m[2]}</p></div>`;
+  });
+  const nsParas = [...nextSteps.matchAll(/<p>([\s\S]*?)<\/p>/g)].map(m => m[1].trim());
+  if (nsParas.length) rows.push(`<div class="pr-row"><p class="pr-label">Next steps</p><p class="pr-rtext">${nsParas.join('<br><br>')}</p></div>`);
+  const leadHtml = `<p class="pr-headline">${lead[0]}</p>${lead.slice(1).map(p => `<p class="pr-more">${p}</p>`).join('')}` +
+    quotes.map(q => `<blockquote class="pr-quote">${q}</blockquote>`).join('');
+  const out = `<div class="proj-results"><div class="pr-lead">${leadHtml}</div><div class="pr-rows">${rows.join('')}</div></div>\n`;
+  return html.slice(0, bodyStart) + out + html.slice(bodyEnd);
+}
+
+// Delivery & challenges as two columns of rows (the layout from her deck). In Notion: under the h2 a two-column
+// block, "### Process" with a bullet list on one side and "### Challenges" with a bullet list on the other.
+// Each bullet becomes a bordered row; a bold lead in the bullet stays bold.
+// The same two-column rows are used for Approach when it reads "Research process | Pain points" (equal halves, like the deck's discovery slide).
+function buildDeliveryColumns(html) {
+  html = buildRowColumns(html, /<h2>\s*(?:<strong>)?\s*Approach[^<]*(?:<\/strong>)?\s*<\/h2>\n?/i, 'proj-dc proj-dc-even');
+  return buildRowColumns(html, /<h2>\s*(?:<strong>)?\s*Delivery\s*(?:&amp;|and)\s*challenges[^<]*(?:<\/strong>)?\s*<\/h2>\n?/i, 'proj-dc');
+}
+
+function buildRowColumns(html, headingRe, cls) {
+  const hm = headingRe.exec(html);
+  if (!hm) return html;
+  const start = hm.index + hm[0].length;
+  const nextH2 = html.slice(start).search(/<h2[ >]/);
+  const end = nextH2 === -1 ? html.length : start + nextH2;
+  let seg = html.slice(start, end);
+  if (!seg.includes('<div class="col-layout col-2">')) return html;
+  // Only the two-column block turns into rows: anything from a "Design principles" sub-heading on is left alone
+  const cut = seg.search(/<h3>\s*(?:<strong>)?\s*Design principles/i);
+  const head = cut === -1 ? seg : seg.slice(0, cut);
+  const tail = cut === -1 ? '' : seg.slice(cut);
+  // A statement-only first column next to a rows column: the statement takes a third, the rows two thirds
+  const firstCol = head.split('</div><div class="col">')[0];
+  if (cls.includes('proj-dc-even') && !/<ul>/.test(firstCol)) cls = 'proj-dc proj-dc-lead';
+  seg = head.replace('<div class="col-layout col-2">', `<div class="col-layout col-2 ${cls}">`)
+    .replace(/<ul>([\s\S]*?)<\/ul>/g, (m, inner) =>
+      `<div class="dc-rows">${[...inner.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(x => `<p class="dc-row">${x[1].trim()}</p>`).join('')}</div>`) + tail;
+  return html.slice(0, start) + seg + html.slice(end);
+}
+
+// The problem as a statement on the left and a rows list on the right (the layout from her deck). In Notion: under the h2
+// a two-column block, the statement paragraphs on one side and "### What users needed to understand" with a bullet list on the other.
+function buildProblemColumns(html) {
+  const hm = /<h2>\s*(?:<strong>)?\s*The problem[^<]*(?:<\/strong>)?\s*<\/h2>\n?/i.exec(html);
+  if (!hm) return html;
+  const start = hm.index + hm[0].length;
+  const nextH2 = html.slice(start).search(/<h2[ >]/);
+  const end = nextH2 === -1 ? html.length : start + nextH2;
+  let seg = html.slice(start, end);
+  if (!seg.includes('<div class="col-layout col-2">')) return html;
+  // An italic paragraph, optionally followed by plain text on the same line, becomes a quote with its attribution
+  seg = seg.replace('<div class="col-layout col-2">', '<div class="col-layout col-2 proj-prob">')
+    .replace(/<p><em>([\s\S]*?)<\/em>\s*([^<]*)<\/p>/g, (m, q, a) =>
+      `<blockquote class="pr-quote">${q}${a.trim() ? `<cite>${a.trim()}</cite>` : ''}</blockquote>`)
+    .replace(/<ul>([\s\S]*?)<\/ul>/g, (m, inner) =>
+      `<div class="dc-rows">${[...inner.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(x => `<p class="dc-row">${x[1].trim()}</p>`).join('')}</div>`);
+  return html.slice(0, start) + seg + html.slice(end);
+}
+
 function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
   const prefix = '../';
   const meta  = PROJECT_META[proj.slug] || {};
@@ -549,24 +722,26 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
   // Per-slug content post-processing
   let contentHtml = proj.contentHtml;
   if (proj.slug === 'ai-credits-wallet' && contentHtml) {
-    const splitIdx = contentHtml.search(/<figcaption class="proj-caption"|<figure class="proj-img"|<div class="col-layout/);
-    if (splitIdx !== -1) {
-      const before = contentHtml.slice(0, splitIdx);
-      const after  = contentHtml.slice(splitIdx);
-      const h2Idx = before.search(/<h2/);
-      const intro = h2Idx !== -1 ? before.slice(0, h2Idx) : '';
-      const gridLeft = h2Idx !== -1 ? before.slice(h2Idx) : before;
+    // The interactive wallet sits next to the Solution section: the Solution heading, its list and the
+    // "Where users see their credits" bullets go in the left column, the image groups follow full width.
+    const solIdx = contentHtml.search(/<h2[^>]*>\s*(?:<strong>)?\s*Solution[^<]*(?:<\/strong>)?\s*<\/h2>/i);
+    const figRel = solIdx === -1 ? -1 : contentHtml.slice(solIdx).search(/<figure class="proj-img"|<div class="col-layout/);
+    const figIdx = figRel === -1 ? -1 : solIdx + figRel;
+    if (solIdx !== -1 && figIdx > solIdx) {
+      const h3Idx = contentHtml.lastIndexOf('<h3>', figIdx);
+      const cut = h3Idx > solIdx ? h3Idx : figIdx;
       contentHtml =
         `<style>@media(max-width:768px){.cw-widget-col{display:none!important;}.cw-grid{grid-template-columns:1fr!important;}}.cw-grid>div>h2:first-child{margin-top:0;}</style>` +
-        intro +
+        contentHtml.slice(0, solIdx) +
         `<div class="cw-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin:32px 0;">` +
-        `<div>${gridLeft}</div>` +
+        `<div>${contentHtml.slice(solIdx, cut)}</div>` +
         `<figure class="cw-widget-col" style="margin:0;">` +
-                `<iframe src="credits-widget.html" title="Business Manager widget states" style="width:100%;height:580px;border:none;display:block;border-radius:8px;background:#ECECEE;" scrolling="no">` +
+        `<iframe src="credits-widget.html" title="Business Manager widget states" style="width:100%;height:580px;border:none;display:block;border-radius:8px;background:#ECECEE;" scrolling="no">` +
         `Interactive demo showing the AI Credits wallet component across Free, Premium, and Top-up states in Business Manager.` +
         `</iframe>` +
+        `<figcaption class="proj-caption">Use the top selectors to see more wallet states</figcaption>` +
         `</figure></div>` +
-        after;
+        contentHtml.slice(cut);
     }
   }
   // TL;DR box: a Notion paragraph that starts with "TL;DR" becomes a two-column summary box.
@@ -593,11 +768,23 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
       }
       if (parts.length > 3) parts = [parts.slice(0, parts.length - 2).join(' '), parts[parts.length - 2], parts[parts.length - 1]];
       if (parts.length) {
-        const cols = parts.map(t => `<p>${t}</p>`).join('');
+        // Three sentences carry the deck's labels: the problem, the process, the result
+        const TLDR_LABELS = ['The problem', 'Process', 'The result'];
+        const cols = parts.map((t, i) => `<p>${parts.length === 3 ? `<span class="proj-tldr-col-label">${TLDR_LABELS[i]}</span>` : ''}${t}</p>`).join('');
         const box = `<div class="proj-tldr"><span class="proj-tldr-label">TL;DR</span><div class="proj-tldr-grid" data-cols="${parts.length}">${cols}</div></div>`;
         contentHtml = contentHtml.slice(0, tm.index) + box + contentHtml.slice(end);
       }
     }
+  }
+  // Design principles written flat (not in columns) also become cards; Results become a lead plus labelled rows
+  if (contentHtml) {
+    const rules = splitRules(contentHtml);
+    if (rules) contentHtml = rules.before + rules.cards + rules.after;
+    contentHtml = markShotLayouts(contentHtml);
+    contentHtml = buildAreaCards(contentHtml);
+    contentHtml = buildResults(contentHtml);
+    contentHtml = buildDeliveryColumns(contentHtml);
+    contentHtml = buildProblemColumns(contentHtml);
   }
   if (contentHtml) contentHtml = injectTooltips(contentHtml);
 
@@ -629,7 +816,7 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
   // Skip pages that already have a Screens heading, have a custom layout, or are numbered-feature pages.
   // Pages that keep a "Solution" heading as written in Notion (not renamed to Screens).
   const SKIP_SCREENS = new Set(['ai-credits-wallet', 'app-pricing-page-projects', 'app-installation-page-for-developers']);
-  if (contentHtml && !SKIP_SCREENS.has(proj.slug) && !/>\s*Screens\s*</.test(contentHtml) && !/<h2>\s*Solution\s*<\/h2>/.test(contentHtml)) {
+  if (contentHtml && !SKIP_SCREENS.has(proj.slug) && !/>\s*Screens\s*</.test(contentHtml) && !/<h2>\s*Solution[^<]*<\/h2>/.test(contentHtml)) {
     if (contentHtml.includes('<h2><strong>Solution</strong></h2>')) {
       contentHtml = contentHtml.replace('<h2><strong>Solution</strong></h2>', '<h2>Screens</h2>');
     } else {
@@ -656,7 +843,8 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
     // Pages built from numbered feature blocks (h3) with almost no h2 list their h3s as the menu items instead.
     const useH3 = (contentHtml.match(/<h2>/g) || []).length < 3;
     contentHtml = contentHtml.replace(/<h([23])>([\s\S]*?)<\/h\1>/g, (m, level, inner) => {
-      const text = inner.replace(/<[^>]+>/g, '').trim();
+      // A heading written "Label | Title" is listed in the menu by its label only
+      const text = inner.replace(/<[^>]+>/g, '').trim().split(/\s+\|\s+/)[0];
       if (!text || text === 'TL;DR') return m;
       const slug = text.toLowerCase().replace(/&amp;/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
       if (level === '2') {
@@ -683,6 +871,18 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
       ).join('');
       anchorNavHtml = `<nav class="proj-anchors" aria-label="On this page"><div class="pa-top"><a class="mob-logo pa-home" href="../index.html"><span class="mob-logo-name">Avigail Bahat</span><span class="mob-logo-role">Senior Product Designer</span></a></div><div class="pa-title" role="button" tabindex="0">${titleCase(proj.title || meta.title || 'Project')}<span class="pa-hint">&uarr; Back to top</span></div><ul>${lis}</ul></nav>`;
     }
+  }
+
+  // Section headings written "Label | Title" in Notion: a small label above a large title (the deck's slide headers)
+  if (contentHtml) {
+    contentHtml = contentHtml.replace(/<h2( id="[^"]*")?>([^<|]*?)\s+\|\s+([^<]*)<\/h2>/g,
+      (m, id, label, ttl) => `<h2${id || ''} class="proj-h2"><span class="proj-h2-label">${label.trim()}</span><span class="proj-h2-title">${ttl.trim()}</span></h2>`);
+  }
+
+  // Sub-headings written "Label | Title" get the same small label above a title
+  if (contentHtml) {
+    contentHtml = contentHtml.replace(/<h3( id="[^"]*")?>([^<|]*?)\s+\|\s+([^<]*)<\/h3>/g,
+      (m, id, label, ttl) => `<h3${id || ''} class="proj-h3"><span class="proj-h2-label">${label.trim()}</span><span class="proj-h3-title">${ttl.trim()}</span></h3>`);
   }
 
   const title = titleCase(proj.title || meta.title || 'Project');
