@@ -1493,7 +1493,7 @@ body.scrolled .title-block { pointer-events: none; }
     position: fixed;
     left: var(--site-gutter);
     top: 96px;
-    width: min(190px, calc(100vw / 6 - var(--site-gutter) - 16px));
+    width: calc(240px - var(--site-gutter) - 24px);
     z-index: 7;
     opacity: var(--r, 0);
     transform: translateX(calc((1 - var(--r, 0)) * -16px));
