@@ -1511,6 +1511,9 @@ body.scrolled .title-block { pointer-events: none; }
   .toc li { margin: 0; }
   .toc a {
     display: flex;
+    width: fit-content;
+    max-width: calc(100% + 14px);
+    box-sizing: border-box;
     align-items: baseline;
     gap: 6px;
     margin-left: -14px;
