@@ -869,7 +869,7 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
         ? `<li class="pa-sub"><a href="#${i.id}"><span class="pa-label">${i.text}</span></a></li>`
         : `<li><a href="#${i.id}"><span class="pa-num">${String(++n).padStart(2, '0')}</span><span class="pa-label">${i.text}</span></a></li>`
       ).join('');
-      anchorNavHtml = `<nav class="proj-anchors" aria-label="On this page"><div class="pa-top"><a class="mob-logo pa-home" href="../index.html"><span class="mob-logo-name">Avigail Bahat</span><span class="mob-logo-role">Senior Product Designer</span></a></div><div class="pa-title" role="button" tabindex="0">${titleCase(proj.title || meta.title || 'Project')}<span class="pa-hint">&uarr; Back to top</span></div><ul>${lis}</ul></nav>`;
+      anchorNavHtml = `<nav class="toc" aria-label="Contents" inert><span class="toc-title">${titleCase(proj.title || meta.title || 'Project')}</span><ol>${lis}</ol></nav>`;
     }
   }
 
@@ -944,7 +944,7 @@ var CURRENT_SLUG = '${proj.slug}';
         ${nextProj ? `<a class="proj-nav-btn proj-nav-next" href="${nextProj.slug}.html" aria-label="Next project"><span class="proj-nav-name">${nextTitle} <i class="ti ti-arrow-right"></i></span></a>` : '<span></span>'}
       </div>
       ${anchorNavHtml}
-      <div class="proj-title-sticky" id="proj-title-sticky">
+      <div class="title-block proj-title-sticky" id="proj-title-sticky">
         <div class="proj-tags-m">
           <span class="pm">${year}</span>
           <span class="psep">·</span>
@@ -1017,28 +1017,6 @@ var CURRENT_SLUG = '${proj.slug}';
         }
       }, { threshold: 0.1 }).observe(sentinel);
     }
-  } else {
-    var titleEl = sticky.querySelector('.proj-title-m');
-    var hdrEl = document.getElementById('site-header');
-    var R = 110, TITLE_FROM = 54, TITLE_TO = 22, PAD_FROM = 16, PAD_TO = 8;
-    var ticking = false;
-    function lerp(a, b, t){ return a + (b - a) * t; }
-    function ease(t){ return 1 - Math.pow(1 - t, 3); }
-    if (hdrEl && window.ResizeObserver) {
-      new ResizeObserver(function(){ sticky.style.top = hdrEl.offsetHeight + 'px'; }).observe(hdrEl);
-    }
-    function update(){
-      ticking = false;
-      if (hdrEl) sticky.style.top = hdrEl.offsetHeight + 'px';
-      var raw = Math.min(Math.max((window.scrollY - 60) / R, 0), 1);
-      var p = ease(raw);
-      if (titleEl) titleEl.style.fontSize = lerp(TITLE_FROM, TITLE_TO, p) + 'px';
-      sticky.style.paddingTop = lerp(PAD_FROM, PAD_TO, p) + 'px';
-      sticky.style.paddingBottom = lerp(PAD_FROM, PAD_TO, p) + 'px';
-      sticky.classList.toggle('condensed', raw > 0.4);
-    }
-    window.addEventListener('scroll', function(){ if (!ticking){ ticking = true; requestAnimationFrame(update); } }, { passive: true });
-    update();
   }
 })();
 </script>`, '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">\n  ', 'proj-page');

@@ -35,6 +35,11 @@ button { font-family: inherit; }
   padding: 0 clamp(40px, 20%, 240px);
 }
 body.proj-page #site-header { border-bottom: none; }
+/* The project-page top bar stays intact while the title and contents rail animate. */
+body.proj-page #site-header.scrolled .mob-logo-role { max-height: 18px; opacity: 1; }
+@media (min-width: 769px) {
+  body.proj-page #site-header.scrolled .hdr-row { padding-top: 32px; padding-bottom: 32px; }
+}
 .hdr-row {
   display: flex;
   justify-content: space-between;
@@ -785,6 +790,12 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   .proj-content .proj-tldr-grid[data-cols="3"] p + p { padding-left: 0; border-left: none; position: relative; }
   .proj-content .proj-tldr p + p::before { content: ''; position: absolute; left: -16px; top: 0; bottom: 0; border-left: 0.5px solid #ebebeb; }
 }
+@media (min-width: 769px) and (max-width: 1300px) {
+  .proj-content .proj-tldr-grid[data-cols="3"] { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .proj-content .proj-tldr-grid[data-cols="3"] > p { grid-column: 1 / -1; }
+  .proj-content .proj-tldr-grid[data-cols="3"] p + p { padding-top: 24px; border-top: 0.5px solid #ebebeb; }
+  .proj-content .proj-tldr-grid[data-cols="3"] p + p::before { content: none; }
+}
 .proj-content .proj-updated { font-size: 14px; color: #555; line-height: 1.4; margin: 40px 0 0; }
 .proj-content h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -0.02em; color: #0a0a0a; margin: 96px 0 16px; max-width: 800px; }
 @media (max-width: 768px) {
@@ -1466,34 +1477,56 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 .cv-page h1, .cv-job-title { font-family: 'Plus Jakarta Sans', sans-serif; }
 .cv-page p, .cv-page li, .cv-page h3, .cv-headline { text-wrap: balance; }
 
-/* ── Side anchor navigation (project pages, left margin, wide screens only) ── */
-.proj-anchors { display: none; }
-@media (min-width: 1200px) and (min-height: 820px) {
-  /* Trial: menu is hidden before scroll. After scroll the site header and the title bar hide and the project name moves to the top of the menu. */
-  .proj-anchors { display: block; position: fixed; left: 32px; top: 56px; width: 190px; z-index: 7; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
-  html:has(.proj-title-sticky.condensed) .proj-anchors { opacity: 1; pointer-events: auto; }
-  html:has(.proj-anchors):has(.proj-title-sticky.condensed) #site-header { opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0s linear 0.2s; }
-  html:has(.proj-anchors) .proj-title-sticky.condensed { opacity: 0; visibility: hidden; pointer-events: none; }
-  .proj-anchors .pa-top { margin-bottom: 24px; }
-  /* Same logo block as the top bar (mob-logo): name 16px / 500, role 14px grey */
-  .proj-anchors a.mob-logo { display: flex; flex-direction: column; gap: 1px; padding: 0; margin: 0; font-size: inherit; color: inherit; }
-  .proj-anchors a.mob-logo:hover { background: none; color: inherit; }
-  .proj-anchors .pa-title { position: relative; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: #0a0a0a; padding: 0 0 28px; cursor: pointer; }
-  .proj-anchors .pa-hint { position: absolute; left: 0; bottom: 6px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400; letter-spacing: 0; color: #555; opacity: 0; }
-  .proj-anchors .pa-title:hover .pa-hint { opacity: 1; }
-  .proj-anchors ul { list-style: none; margin: 0; padding: 0; }
-  .proj-anchors li { margin: 0; }
-  /* Same style as the App Review Platform deck side navigation: number + label, grey, active dark and 500 */
-  .proj-anchors a { display: flex; align-items: baseline; gap: 10px; padding: 9px 20px; margin-left: -20px; font-size: 14px; line-height: 1.4; color: #555; text-decoration: none; cursor: pointer; }
-  /* Reset the site's top-menu "nav a" styles (radius, transition, black hover, underline) so only the deck behaviour applies */
-  .proj-anchors a { border-radius: 0; transition: none; }
-  .proj-anchors a:hover { background: #f7f7f7; color: #555; }
-  .proj-anchors .pa-num { font-variant-numeric: tabular-nums; flex-shrink: 0; }
-  .proj-anchors .pa-sub a { padding-top: 5px; padding-bottom: 5px; padding-left: 44px; }
-  .proj-anchors a.active, .proj-anchors a.active:hover, .proj-anchors a.active-parent, .proj-anchors a.active-parent:hover { color: #0a0a0a; font-weight: 500; text-decoration: none; }
-  .proj-content h2[id], .proj-content h3[id], .proj-content #sec-tldr { scroll-margin-top: 48px; }
-  /* Previous-project link aligns left with the menu text (x = 32px) */
-  .proj-main:has(.proj-anchors) .proj-side-nav .proj-nav-prev { justify-content: flex-start; padding-left: 32px; }
-  /* Previous / next project links sit at the bottom of the margins, so a long menu never runs into them */
-  .proj-main:has(.proj-anchors) .proj-side-nav .proj-nav-btn { top: auto; bottom: 32px; transform: none; }
+/* ── Scroll linked title and contents rail (project pages) ── */
+.title-block { opacity: calc(1 - var(--t, 0)); transform: translateY(calc(var(--t, 0) * -28px)); }
+body.scrolled .title-block { pointer-events: none; }
+@media (min-width: 769px) {
+  /* Keep the title in normal flow: only its paint changes, so the hero and article never shift. */
+  .title-block { position: relative; top: auto; z-index: auto; }
+}
+.toc { display: none; }
+@media (min-width: 1200px) {
+  .toc {
+    display: block;
+    position: fixed;
+    left: clamp(24px, 2vw, 32px);
+    top: 96px;
+    width: 190px;
+    z-index: 7;
+    opacity: var(--r, 0);
+    transform: translateX(calc((1 - var(--r, 0)) * -16px));
+    pointer-events: none;
+  }
+  body.scrolled .toc { pointer-events: auto; }
+  .toc-title {
+    display: block;
+    margin-bottom: 12px;
+    font: 700 20px/1.3 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.02em;
+    color: #0a0a0a;
+  }
+  .toc ol { position: relative; margin: 0; padding: 0 0 0 14px; list-style: none; }
+  .toc li { margin: 0; }
+  .toc a {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-left: -14px;
+    padding: 6px 14px;
+    font: 400 14px/1.4 Roboto, sans-serif;
+    color: #555;
+    text-decoration: none;
+    border-radius: 0;
+    transition: color .15s ease;
+  }
+  .toc a:hover, .toc a.active { color: #0a0a0a; background: #f5f5f5; }
+  .toc a.active { font-weight: 500; text-decoration: none; }
+  .toc a:focus-visible { outline: 2px solid #0a0a0a; outline-offset: 2px; }
+  .toc .pa-num { font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  .proj-content h2[id], .proj-content h3[id], .proj-content #sec-tldr { scroll-margin-top: 100px; }
+}
+@media (max-width: 1199px) { .title-block { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .title-block, .toc { transform: none; }
+  .toc a { transition: none; }
 }

@@ -165,6 +165,12 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 - Fixes that apply to every project page: the title's bottom line no longer flashes black, the subtitle no longer jumps left on scroll, the tags row hides on scroll, lightbox captions are white.
 - Not checked in a real wide browser: AI Credits (custom layout) and the thin menus on the older pages.
 
+### Scroll-linked title and contents rail (2026-10-26)
+- Replaced the threshold-triggered desktop side menu on generated case studies with a scroll-linked rail. `.title-block` fades and lifts over 250px; `.toc` fades/slides into the left margin shortly after the title starts fading. The selected section is tracked by IntersectionObserver (`-20% 0px -70% 0px`); there is no reading-progress line.
+- Top navigation stays visible. Desktop title remains in normal flow so the hero and TL;DR do not shift. Rail is hidden below 1200px and the title stays visible. Reduced motion disables transforms. TOC anchors remain real links and become keyboard focusable as the rail appears.
+- TOC uses the original 190px rail width, numbered list, and padded selected/hover rows. Its right edge clears the article at 1440px.
+- Code: markup in `generate.js`, styles in `style.css`, scroll behavior in `script.js`.
+
 ## Presentation mode (deck) for App Review Platform
 - A separate, hand-edited file: `dist/projects/internal-review-demo.html`. It is NOT generated from Notion; generate.js keeps it (`KEEP_PROJECT_FILES`). Edit it directly and keep it in sync with the Notion page.
 - The "Presentation mode" button under the page subtitle links to it. She wants it.
@@ -587,3 +593,7 @@ Reviews Revamp, Collections Manager, Payouts Page, Refund Flow, Pricing Page Pro
 - 2026-10-26: Installations screen-plus-bullets layouts (proj-shot) now put the bullet text on the LEFT (cols 1-4) and the screen on the RIGHT (cols 5-12) on desktop; mobile stays screen then text. Selector: `.proj-content .col-layout.proj-shot > .col`. Local only, not pushed.
 - 2026-10-26: Header scroll animation reverted to the pushed version (the softer and no-fade tries were dropped). Text beside screens (proj-shot) is top-aligned so bullets sit right under the section title.
 - 2026-10-26: TL;DR box no longer bleeds past the page margins on desktop (margin -40px removed); its edges match the hero image.
+
+- 2026-10-26: Scroll-linked case-study title and contents rail is implemented in `style.css` and `script.js`; title stays in flow so the article and hero geometry stay unchanged.
+- 2026-10-26: At desktop widths up to 1300px, the three-column TL;DR stacks to keep its sentences readable. The fixed contents rail moves farther left to leave more space before the article.
+- 2026-10-26: Final rail uses the original 190px width and 24–32px viewport offset, with padded selected/hover rows and no progress line.
