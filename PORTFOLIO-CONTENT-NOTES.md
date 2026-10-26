@@ -75,6 +75,8 @@ Row bullets: a bold lead then the sentence, `**Lead.** sentence`. Pipes in Notio
 - The other 11 project pages: NOT converted. The new 12-column grid and equal screen boxes apply to them already, nobody has looked yet.
 - TL;DR boxes: when the TL;DR has exactly three sentences, the generator adds the deck's labels THE PROBLEM, PROCESS, THE RESULT above them (`.proj-tldr-col-label`, 14px uppercase Roboto #555). Write the three sentences in that order (what was wrong, how it was worked, the outcome).
 - 2026-10-22 late: she said "ok" to my recommendation, so the unshipped "Credit-flow mapping" screen was REMOVED from AI Credits (Behind the scenes now shows only the Implementation screen; it is in the Notion backups). Installations Next steps now use the deck: "Contacts, an account view and cancellation reasons." (the page's older roadmap list and the "not enough developers were exposed" line are gone). The other 11 project pages: she said LATER.
+- 2026-10-26, Installations images (LOCAL, not pushed, Notion already changed): hero, Default view, Missing data and Full columns replaced with her newer screenshots (the new Missing data shows two tooltips, so its caption now says "tooltips explain an empty email cell and what the version column includes"); the "Empty columns" screen was removed from Edge & empty states (it duplicated Missing data), so that row has three screens. Page has 14 figures. Preview server now: `python3 nocache_server.py 8793 <copy of dist>` from the scratchpad.
+- 2026-10-26, header scroll transition made more subtle (LOCAL, not pushed, style.css only): every part now eases over 0.45s (was 0.2 to 0.25s), the site header keeps more padding when condensed (22px, was 14px), the project title shrinks to 30px (was 22px) with no upward jump, and on wide screens the header, title bar and side menu cross-fade over 0.45s instead of switching. Change the single value `0.45s cubic-bezier(0.4, 0, 0.2, 1)` in those rules to tune it.
 - (old open line follows) Open: the unshipped "Credit-flow mapping" screen on AI Credits; Installations next steps vs the deck's; a summary of what a push makes live (global rule: warn first, push only on her word).
 
 ## Goal
@@ -581,3 +583,6 @@ Reviews Revamp, Collections Manager, Payouts Page, Refund Flow, Pricing Page Pro
 - 2026-10-12: The hero image (first image, before the first heading) is not clickable on project pages; all other images open the lightbox. AI Credits has no hero image (widget layout).
 - 2026-10-12: Her request to deploy the page. Deploy only after she confirms the warning about what else changes on the live site.
 - 2026-10-12: AI Credits is NOT started automatically. She starts it.
+
+- 2026-10-26: Installations screen-plus-bullets layouts (proj-shot) now put the bullet text on the LEFT (cols 1-4) and the screen on the RIGHT (cols 5-12) on desktop; mobile stays screen then text. Selector: `.proj-content .col-layout.proj-shot > .col`. Local only, not pushed.
+- 2026-10-26: Header scroll animation reverted to the pushed version (the softer and no-fade tries were dropped). Text beside screens (proj-shot) is top-aligned so bullets sit right under the section title.

@@ -656,19 +656,24 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 .proj-content .proj-h3 .proj-h2-label { margin-bottom: 6px; }
 .proj-content .proj-h3-title { display: block; font-size: 28px; line-height: 1.2; letter-spacing: -0.02em; }
 /* Screen plus explanation (the deck's design slides): image 2/3, text 1/3; two screens with text under each */
-.proj-content .proj-shot { align-items: center; margin: 8px 0 32px; }
-.proj-content .proj-shot > .col:first-child { grid-column: span 8; }
-.proj-content .proj-shot > .col:last-child { grid-column: span 4; }
+.proj-content .proj-shot { align-items: start; margin: 8px 0 32px; }
+.proj-content .col-layout.proj-shot > .col:first-child { grid-column: span 8; }
+.proj-content .col-layout.proj-shot > .col:last-child { grid-column: span 4; }
 .proj-content .proj-shot > .col > figure { margin: 0; }
-.proj-content .proj-shot > .col:last-child ul { padding-left: 20px; margin: 0 0 24px; }
-.proj-content .proj-shot > .col:last-child h3 { margin: 24px 0 8px; padding-top: 24px; border-top: 0.5px solid #ebebeb; font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; color: #555; }
-.proj-content .proj-shot > .col:last-child h3 + p { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; color: #0a0a0a; margin: 0; }
+/* Text on the left, screen on the right (the markup keeps the screen first, so the columns swap places on desktop only) */
+@media (min-width: 769px) {
+  .proj-content .col-layout.proj-shot > .col:first-child { grid-column: 5 / span 8; grid-row: 1; }
+  .proj-content .col-layout.proj-shot > .col:last-child { grid-column: 1 / span 4; grid-row: 1; }
+}
+.proj-content .col-layout.proj-shot > .col:last-child ul { padding-left: 20px; margin: 0 0 24px; }
+.proj-content .col-layout.proj-shot > .col:last-child h3 { margin: 24px 0 8px; padding-top: 24px; border-top: 0.5px solid #ebebeb; font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; color: #555; }
+.proj-content .col-layout.proj-shot > .col:last-child h3 + p { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; color: #0a0a0a; margin: 0; }
 .proj-content .proj-shot2 { margin: 8px 0 32px; }
 .proj-content .proj-shot2 > .col > figure { margin: 0 0 16px; }
 .proj-content .proj-shot2 > .col ul { padding-left: 20px; margin: 0; }
 @media (max-width: 768px) {
-  .proj-content .proj-shot > .col:first-child,
-  .proj-content .proj-shot > .col:last-child { grid-column: 1 / -1; }
+  .proj-content .col-layout.proj-shot > .col:first-child,
+  .proj-content .col-layout.proj-shot > .col:last-child { grid-column: 1 / -1; }
 }
 /* The problem: a statement on the left, rows on the right (layout from the Intuit deck) */
 .proj-content .proj-prob { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 64px; margin: 16px 0 8px; }
