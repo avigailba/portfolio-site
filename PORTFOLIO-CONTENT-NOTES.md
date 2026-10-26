@@ -586,3 +586,4 @@ Reviews Revamp, Collections Manager, Payouts Page, Refund Flow, Pricing Page Pro
 
 - 2026-10-26: Installations screen-plus-bullets layouts (proj-shot) now put the bullet text on the LEFT (cols 1-4) and the screen on the RIGHT (cols 5-12) on desktop; mobile stays screen then text. Selector: `.proj-content .col-layout.proj-shot > .col`. Local only, not pushed.
 - 2026-10-26: Header scroll animation reverted to the pushed version (the softer and no-fade tries were dropped). Text beside screens (proj-shot) is top-aligned so bullets sit right under the section title.
+- 2026-10-26: TL;DR box no longer bleeds past the page margins on desktop (margin -40px removed); its edges match the hero image.

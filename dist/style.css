@@ -774,7 +774,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 }
 /* The TL;DR box: the box reaches 40px past the text column on each side, so its text columns start on the same grid lines as everything else */
 @media (min-width: 769px) {
-  .proj-content .proj-tldr { margin: 32px -40px 8px; }
+  .proj-content .proj-tldr { margin: 32px 0 8px; }
   .proj-content .proj-tldr-grid,
   .proj-content .proj-tldr-grid[data-cols="2"],
   .proj-content .proj-tldr-grid[data-cols="3"] { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 32px; gap: 0 32px; }
