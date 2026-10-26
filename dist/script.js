@@ -835,6 +835,18 @@ if (document.getElementById('playFrame')) {
     });
   }
 
+  // A clicked item is selected at once; the scroll observer stays quiet while the
+  // page travels there, so sections passed on the way don't flash as selected.
+  var lockUntil = 0;
+  links.forEach(function(a) {
+    a.addEventListener('click', function() {
+      var target = document.getElementById(a.getAttribute('href').slice(1));
+      if (!target) return;
+      lockUntil = Date.now() + 1200;
+      activate(target);
+    });
+  });
+
   measure();
   update();
   window.addEventListener('scroll', requestUpdate, { passive: true });
@@ -846,7 +858,7 @@ if (document.getElementById('playFrame')) {
   if ('IntersectionObserver' in window) {
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
-        if (!entry.isIntersecting) return;
+        if (!entry.isIntersecting || Date.now() < lockUntil) return;
         activate(entry.target);
       });
     }, { rootMargin: '-20% 0px -70% 0px' });
