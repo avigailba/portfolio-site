@@ -2,7 +2,6 @@
 :root {
   --ac: #0a0a0a;
   --border: #ebebeb;
-  --site-gutter: clamp(24px, 4vw, 64px);
   --sp-1: 4px;  --sp-2: 8px;   --sp-3: 12px; --sp-4: 16px;
   --sp-5: 24px; --sp-6: 32px;  --sp-7: 48px; --sp-8: 64px;
 }
@@ -33,7 +32,7 @@ button { font-family: inherit; }
   background: #fff;
   border-bottom: 0.5px solid transparent;
   transition: border-color 0.25s;
-  padding: 0 var(--site-gutter);
+  padding: 0 clamp(40px, 20%, 240px);
 }
 body.proj-page #site-header { border-bottom: none; }
 /* The project-page top bar stays intact while the title and contents rail animate. */
@@ -99,7 +98,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 
 /* ── Homepage wrapper ────────────────────────────────────── */
 .home-band {
-  padding: 0 var(--site-gutter) 80px;
+  padding: 0 clamp(40px, 20%, 240px) 80px;
 }
 
 /* ── Lede ────────────────────────────────────────────────── */
@@ -133,12 +132,12 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   grid-template-columns: 1fr;
   border-top: 0.5px solid #ebebeb;
   border-bottom: 0.5px solid #ebebeb;
-  margin-left: calc(-1 * var(--site-gutter));
-  margin-right: calc(-1 * var(--site-gutter));
+  margin-left: calc(-1 * clamp(40px, 20vw, 240px));
+  margin-right: calc(-1 * clamp(40px, 20vw, 240px));
   margin-bottom: 56px;
 }
 .feat-card {
-  padding: 48px var(--site-gutter);
+  padding: 48px clamp(40px, 20vw, 240px);
   border-bottom: 0.5px solid #ebebeb;
   cursor: pointer;
   min-width: 0;
@@ -1491,9 +1490,9 @@ body.scrolled .title-block { pointer-events: none; }
   .toc {
     display: block;
     position: fixed;
-    left: var(--site-gutter);
+    left: clamp(24px, 2vw, 32px);
     top: 96px;
-    width: calc(240px - var(--site-gutter) - 24px);
+    width: 190px;
     z-index: 7;
     opacity: var(--r, 0);
     transform: translateX(calc((1 - var(--r, 0)) * -16px));
