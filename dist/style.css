@@ -2,6 +2,7 @@
 :root {
   --ac: #0a0a0a;
   --border: #ebebeb;
+  --site-gutter: clamp(24px, 4vw, 64px);
   --sp-1: 4px;  --sp-2: 8px;   --sp-3: 12px; --sp-4: 16px;
   --sp-5: 24px; --sp-6: 32px;  --sp-7: 48px; --sp-8: 64px;
 }
@@ -32,7 +33,7 @@ button { font-family: inherit; }
   background: #fff;
   border-bottom: 0.5px solid transparent;
   transition: border-color 0.25s;
-  padding: 0 clamp(40px, 20%, 240px);
+  padding: 0 var(--site-gutter);
 }
 body.proj-page #site-header { border-bottom: none; }
 /* The project-page top bar stays intact while the title and contents rail animate. */
@@ -98,18 +99,19 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 
 /* ── Homepage wrapper ────────────────────────────────────── */
 .home-band {
-  padding: 0 clamp(40px, 20%, 240px) 80px;
+  padding: 0 var(--site-gutter) 80px;
 }
 
 /* ── Lede ────────────────────────────────────────────────── */
 .lede {
-  font-size: 28px;
-  font-weight: 500;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(30px, 3.6vw, 48px);
+  font-weight: 600;
   color: #0a0a0a;
-  line-height: 1.4;
-  letter-spacing: -0.01em;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
   padding: 48px 0 56px;
-  max-width: 36ch;
+  max-width: 28ch;
 }
 
 /* ── Section label ───────────────────────────────────────── */
@@ -131,12 +133,12 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   grid-template-columns: 1fr;
   border-top: 0.5px solid #ebebeb;
   border-bottom: 0.5px solid #ebebeb;
-  margin-left: calc(-1 * clamp(40px, 20vw, 240px));
-  margin-right: calc(-1 * clamp(40px, 20vw, 240px));
+  margin-left: calc(-1 * var(--site-gutter));
+  margin-right: calc(-1 * var(--site-gutter));
   margin-bottom: 56px;
 }
 .feat-card {
-  padding: 48px clamp(40px, 20vw, 240px);
+  padding: 48px var(--site-gutter);
   border-bottom: 0.5px solid #ebebeb;
   cursor: pointer;
   min-width: 0;
@@ -166,7 +168,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   font-size: 15px;
   color: #555;
   line-height: 1.5;
-  max-width: 72ch;
+  max-width: none;
 }
 .feat-arr {
   grid-column: 2;
@@ -559,7 +561,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
 .proj-title-sticky.condensed .proj-meta-m { max-height: 0; opacity: 0; margin-bottom: 0; padding: 0; pointer-events: none; }
 .proj-title-sticky.condensed .proj-subtitle-m { max-height: 0; opacity: 0; margin: 0 auto; pointer-events: none; }
 /* No single word alone on the last line (widow rule): balance short titles, avoid orphans in body copy */
-.proj-subtitle-m, .feat-sub { text-wrap: balance; }
+.proj-subtitle-m { text-wrap: balance; }
 .proj-content p, .proj-content li { text-wrap: pretty; }
 .proj-title-sticky.condensed .proj-deck-wrap { max-height: 0; opacity: 0; margin: 0; pointer-events: none; }
 .proj-title-sticky.condensed .proj-title-row { padding-bottom: 0; border-bottom: none; }
@@ -1096,9 +1098,9 @@ nav a.active:hover { color: #fff; text-decoration: none; }
     font-size: 30px; font-weight: 800; letter-spacing: -0.03em;
     line-height: 1.08; min-height: unset;
   }
-  .feat-sub { grid-column: 1; font-size: 15px; }
+  .feat-sub { grid-column: 1 / -1; font-size: 15px; text-wrap: pretty; }
   .feat-arr { display: none; }
-  .feat-foot { display: block; margin-top: 18px; }
+  .feat-foot { display: block; grid-column: 1 / -1; margin-top: 12px; }
 
   /* View buttons */
   .mob-view-btn {
@@ -1169,7 +1171,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
   .footer-bottom { margin-top: 28px; font-size: 13px; }
 
   /* Lede */
-  .lede { font-size: 22px; padding: 28px 0 34px; }
+  .lede { font-size: 28px; line-height: 1.2; max-width: none; padding: 28px 0 34px; }
   .section-label { font-size: 13px; letter-spacing: 0.09em; }
 
   /* Mobile project sticky title */
@@ -1190,7 +1192,7 @@ nav a.active:hover { color: #fff; text-decoration: none; }
     border-bottom: 0.5px solid #ebebeb;
   }
   /* Condensed: arrows appear, title shrinks, meta collapses */
-  .proj-title-sticky.condensed .proj-title-m { font-size: 22px; }
+  .proj-title-sticky.condensed .proj-title-m { font-size: 22px; transform: none; }
   .proj-title-sticky.condensed .proj-title-row { display: flex; align-items: center; gap: 10px; }
   .proj-title-sticky.condensed .proj-nav-next { margin-left: auto; }
   .proj-title-sticky.condensed .proj-nav-arr { display: flex; }
@@ -1489,9 +1491,9 @@ body.scrolled .title-block { pointer-events: none; }
   .toc {
     display: block;
     position: fixed;
-    left: clamp(24px, 2vw, 32px);
+    left: var(--site-gutter);
     top: 96px;
-    width: 190px;
+    width: min(190px, calc(100vw / 6 - var(--site-gutter) - 16px));
     z-index: 7;
     opacity: var(--r, 0);
     transform: translateX(calc((1 - var(--r, 0)) * -16px));

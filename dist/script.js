@@ -807,14 +807,12 @@ if (document.getElementById('playFrame')) {
 
   var root = document.documentElement.style;
   var header = document.getElementById('site-header');
-  var ticking = false;
   var titleStart = 0;
   function measure() {
     titleStart = block.getBoundingClientRect().top + window.scrollY - (header ? header.offsetHeight : 0);
   }
 
   function update() {
-    ticking = false;
     var y = window.scrollY;
     var t = Math.min(1, Math.max(0, (y - titleStart) / 250));
     var r = Math.min(1, Math.max(0, (t - 0.12) / 0.88));
@@ -824,10 +822,11 @@ if (document.getElementById('playFrame')) {
     toc.inert = r <= 0.5;
   }
 
+  // Update straight from the scroll event: the work is a few style writes, and a
+  // requestAnimationFrame hop is never delivered in hidden or throttled panes,
+  // which left the rail at zero opacity and inert.
   function requestUpdate() {
-    if (ticking) return;
-    ticking = true;
-    window.requestAnimationFrame(update);
+    update();
   }
 
   function activate(section) {
