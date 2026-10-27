@@ -1185,7 +1185,7 @@ function designSystemPage(notionConnected) {
     { hex: '#0a0a0a', name: 'Black',     usage: 'Primary text, hover fill, footer bg' },
     { hex: '#555555', name: 'Gray',      usage: 'All secondary text: nav, labels, years, body copy' },
     { hex: '#ffffff', name: 'White',     usage: 'Page background, text on dark' },
-    { hex: '#ebebeb', name: 'Surface / Border', usage: 'Hairline borders, surface backgrounds (--border)' },
+    { hex: '#c4c4c4', name: 'Surface / Border', usage: 'Hairline borders, surface backgrounds (--border)' },
     { hex: '#22c55e', name: 'Available', usage: 'Availability dot only' },
   ];
   const typeRows = [
@@ -1244,7 +1244,7 @@ function designSystemPage(notionConnected) {
   const built = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
   const changelog = [
-    { date: '12 Oct 2026', change: 'TL;DR box added to project pages: 0.5px #ebebeb border, 8px radius, 40px padding, label 14px uppercase #555, one column per sentence (up to three) in Plus Jakarta Sans 500, stacked on mobile' },
+    { date: '12 Oct 2026', change: 'TL;DR box added to project pages: 0.5px #c4c4c4 border, 8px radius, 40px padding, label 14px uppercase #555, one column per sentence (up to three) in Plus Jakarta Sans 500, stacked on mobile' },
     { date: '12 Oct 2026', change: 'Last updated line added under the Bottom line on project pages (14px, #555), dated from the Notion page last edit' },
     { date: '12 Oct 2026', change: 'Browser tab titles use a vertical bar instead of an em dash' },
     { date: '2 Jun 2026', change: 'Project page images now use site padding (clamp(40px, 20%, 240px)) — content aligned with header' },
@@ -1286,7 +1286,7 @@ function designSystemPage(notionConnected) {
     <div style="max-width:300px;width:100%;padding:0 24px;">
       <p style="font-size:15px;color:#555;margin-bottom:20px;text-align:center;">Enter password</p>
       <input id="ds-pw" type="password" placeholder="Password" autocomplete="current-password"
-        style="width:100%;font-size:15px;padding:10px 14px;border:0.5px solid #ebebeb;border-radius:6px;outline:none;font-family:inherit;box-sizing:border-box;margin-bottom:10px;display:block;">
+        style="width:100%;font-size:15px;padding:10px 14px;border:0.5px solid #c4c4c4;border-radius:6px;outline:none;font-family:inherit;box-sizing:border-box;margin-bottom:10px;display:block;">
       <button onclick="dsAuth()"
         style="width:100%;font-size:15px;padding:10px 14px;background:#0a0a0a;color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:inherit;">
         Enter
@@ -1334,7 +1334,7 @@ function designSystemPage(notionConnected) {
             <span class="ds-comp-label">Work item row</span>
             <div class="ds-comp-demo" style="padding:0 24px;">
               <div class="row-wrap open" style="max-height:none;">
-                <div class="row" data-cat="developer" style="border-top:0.5px solid #ebebeb;">
+                <div class="row" data-cat="developer" style="border-top:0.5px solid #c4c4c4;">
                   <span class="num">01</span>
                   <div class="rmain">
                     <span class="row-title">AI Credits Wallet</span>
@@ -1439,16 +1439,16 @@ function designSystemPage(notionConnected) {
               <div style="max-width:300px;padding:20px 24px 24px;background:#fff;">
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
                   <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;color:#0a0a0a;">Avigail Bahat</span>
-                  <button style="width:30px;height:30px;border-radius:8px;border:0.5px solid #ebebeb;display:flex;align-items:center;justify-content:center;font-size:14px;color:#555;background:none;cursor:pointer;">✕</button>
+                  <button style="width:30px;height:30px;border-radius:8px;border:0.5px solid #c4c4c4;display:flex;align-items:center;justify-content:center;font-size:14px;color:#555;background:none;cursor:pointer;">✕</button>
                 </div>
                 <div>
-                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#0a0a0a;border-bottom:0.5px solid #ebebeb;">Home ↗</span>
-                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;border-bottom:0.5px solid #ebebeb;">Work</span>
-                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;border-bottom:0.5px solid #ebebeb;">About</span>
-                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;border-bottom:0.5px solid #ebebeb;">Contact</span>
+                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#0a0a0a;border-bottom:0.5px solid #c4c4c4;">Home ↗</span>
+                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;border-bottom:0.5px solid #c4c4c4;">Work</span>
+                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;border-bottom:0.5px solid #c4c4c4;">About</span>
+                  <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;border-bottom:0.5px solid #c4c4c4;">Contact</span>
                   <span style="display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;padding:10px 0;color:#aaa;">Design system</span>
                 </div>
-                <div style="margin-top:16px;padding-top:16px;border-top:0.5px solid #ebebeb;">
+                <div style="margin-top:16px;padding-top:16px;border-top:0.5px solid #c4c4c4;">
                   <div style="display:flex;justify-content:space-between;font-size:14px;color:#555;padding:7px 0;">avigailba@gmail.com <span>↗</span></div>
                   <div style="display:flex;justify-content:space-between;font-size:14px;color:#555;padding:7px 0;">LinkedIn <span>↗</span></div>
                 </div>
@@ -1459,7 +1459,7 @@ function designSystemPage(notionConnected) {
           <div class="ds-comp-block">
             <span class="ds-comp-label">Work row (mobile)</span>
             <div class="ds-comp-demo" style="padding:0 16px;">
-              <div style="display:flex;align-items:center;gap:10px;padding:14px 0;border-top:0.5px solid #ebebeb;border-bottom:0.5px solid #ebebeb;">
+              <div style="display:flex;align-items:center;gap:10px;padding:14px 0;border-top:0.5px solid #c4c4c4;border-bottom:0.5px solid #c4c4c4;">
                 <span style="font-size:12px;font-weight:500;color:#555;min-width:22px;flex-shrink:0;">01</span>
                 <div style="flex:1;min-width:0;">
                   <span style="display:block;font-size:16px;font-weight:400;color:#0a0a0a;line-height:1.3;">AI Credits Wallet</span>
@@ -1483,7 +1483,7 @@ function designSystemPage(notionConnected) {
             <div class="ds-comp-demo" style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
               <div>
                 <span style="display:block;font-size:11px;color:#555;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Closed</span>
-                <button style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#0a0a0a;padding:7px 13px;border:0.5px solid #ebebeb;border-radius:999px;background:none;cursor:pointer;font-family:inherit;">All projects <span style="font-size:10px;color:#555;">▾</span></button>
+                <button style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#0a0a0a;padding:7px 13px;border:0.5px solid #c4c4c4;border-radius:999px;background:none;cursor:pointer;font-family:inherit;">All projects <span style="font-size:10px;color:#555;">▾</span></button>
               </div>
               <div>
                 <span style="display:block;font-size:11px;color:#555;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Open</span>
@@ -1512,7 +1512,7 @@ function designSystemPage(notionConnected) {
   --ac: #0a0a0a;
 
   /* Borders */
-  --border: #ebebeb;
+  --border: #c4c4c4;
 
   /* Spacing */
   --sp-1: 4px;
