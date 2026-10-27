@@ -41,7 +41,7 @@ Row bullets: a bold lead then the sentence, `**Lead.** sentence`. Pipes in Notio
 - Fonts: **Plus Jakarta Sans** for titles, card numbers and card titles; **Roboto** for everything else. The site loads only these two (older notes said Inter: wrong).
 - Body 16px, `#555`; bold lead in rows `#0a0a0a` 600. Min font size 14px.
 - Section label 14px uppercase, letter-spacing 0.07em, `#555`. h2 title 36px Jakarta 700 (28px on phones). h3 title 28px. Plain h3 20px 700.
-- Cards and boxes: 0.5px `#c4c4c4` border, 8px radius, white. Greys `#f5f5f5` (behind screens). Principle cards: number 48px/700, title 18px/600, text 15px, tag as a 14px uppercase pill. Area cards: title 20px/700.
+- Cards and boxes: 0.5px `#d0d0d0` border, 8px radius, white. Greys `#f5f5f5` (behind screens). Principle cards: number 48px/700, title 18px/600, text 15px, tag as a 14px uppercase pill. Area cards: title 20px/700.
 - Space: one 12-column grid with a 32px gutter. Splits that line up: 6+6, 4+4+4, 3+3+3+3, 8+4, 4+8. Section headings have 96px above (64px on phones). The TL;DR box reaches 40px past the text column so its columns sit on the same lines.
 - Spacing between stacked screens 32px.
 
@@ -132,7 +132,7 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 
 ### TL;DR box
 - In Notion: a paragraph that starts with "TL;DR:" right above "The problem". The generator turns it into a box, one column per sentence (up to three; more than three are grouped into the first column). Stacks on mobile below 768px.
-- Design comes from her Claude Design canvas "TLDR Box", variant F (https://claude.ai/artifact/X2mu6Bduiss86nDbkyXrwL). Label 14px uppercase #555, text Plus Jakarta Sans 500 (20px, 18px in 3 columns), 0.5px #c4c4c4 border, 8px radius, 40px padding.
+- Design comes from her Claude Design canvas "TLDR Box", variant F (https://claude.ai/artifact/X2mu6Bduiss86nDbkyXrwL). Label 14px uppercase #555, text Plus Jakarta Sans 500 (20px, 18px in 3 columns), 0.5px #d0d0d0 border, 8px radius, 40px padding.
 - Three sentences is the default (decided 2026-10-12): what was done, how it was reached, the outcome. Two sentences render as a narrower centered block (760px max).
 - Documented in the site design system page (Components, Typography, changelog) and in her Claude Design system "Avigail Bahat Site" (https://claude.ai/artifact/Wbabefj5U36if6bVvuyfP9, TldrBox spec updated to one to three sentences, version 6).
 - Used so far: App Review Platform only. Add one to each project page as it is worked on.
@@ -310,7 +310,7 @@ Built by `aboutPage()` from the Notion page "About & Contact" (ID in the table b
 
 #### Colors
 - `--ac: #0a0a0a` — primary/accent (text, hover backgrounds)
-- `--border: #c4c4c4` — all borders
+- `--border: #d0d0d0` — all borders
 - `#555` — **single gray token** for all muted/secondary text: labels, numbers, subtitles, nav links, badges, years, arrows, captions, body copy. Do not use #444, #222, #bbb, #999, #767676, or #888 for text.
 - White: `#fff`
 
@@ -354,14 +354,14 @@ Row tokens are shared between the homepage list and all project page "More work"
 - `#more-list .row-wrap` (project pages, always open): `max-height: 120px`
 
 ```css
-:root { --ac: #0a0a0a; --border: #c4c4c4; }
+:root { --ac: #0a0a0a; --border: #d0d0d0; }
 
 /* Row tokens */
 .row-wrap { overflow: hidden; max-height: 0; transition: max-height 0.28s cubic-bezier(0.4,0,0.2,1); }
 .row-wrap.open { max-height: 120px; }
 .row-wrap.hidden { display: none; }
-.row { display: flex; align-items: center; gap: 10px; padding: 28px 0; border-bottom: 0.5px solid #c4c4c4; cursor: pointer; transition: background 0.2s ease, padding 0.2s ease; }
-.row-wrap:first-of-type .row { border-top: 0.5px solid #c4c4c4; }
+.row { display: flex; align-items: center; gap: 10px; padding: 28px 0; border-bottom: 0.5px solid #d0d0d0; cursor: pointer; transition: background 0.2s ease, padding 0.2s ease; }
+.row-wrap:first-of-type .row { border-top: 0.5px solid #d0d0d0; }
 .row:hover { background: #f7f7f7; padding-left: 8px; padding-right: 8px; }
 .row:hover .rsub { max-height: 40px; opacity: 1; }
 .row:hover .row-arr { opacity: 1; }
@@ -371,8 +371,8 @@ Row tokens are shared between the homepage list and all project page "More work"
 .rsub { font-size: 14px; color: #555; max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.2s ease, opacity 0.2s ease; margin-top: 1px; white-space: nowrap; text-overflow: ellipsis; }
 .row-year { font-size: 14px; color: #555; flex-shrink: 0; min-width: 36px; text-align: right; }
 .row-arr { font-size: 14px; color: #555; opacity: 0; transition: opacity 0.2s ease; flex-shrink: 0; }
-.cat-tag { font-size: 15px; color: #555; border: 0.5px solid #c4c4c4; border-radius: 3px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0; }
-.feat-tag { font-size: 15px; color: #555; border: 0.5px solid #c4c4c4; border-radius: 3px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0; }
+.cat-tag { font-size: 15px; color: #555; border: 0.5px solid #d0d0d0; border-radius: 3px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0; }
+.feat-tag { font-size: 15px; color: #555; border: 0.5px solid #d0d0d0; border-radius: 3px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0; }
 .section-label { font-size: 15px; color: #555; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 16px; }
 ```
 
@@ -399,7 +399,7 @@ Sticky, condenses on scroll past 40px. `overflow: hidden` must be on the **base*
 .proj-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
 .proj-meta-item { font-size: 14px; color: #555; }
 .proj-meta-sep { font-size: 14px; color: #ccc; }
-.proj-intro { font-size: 17px; font-weight: 500; color: #0a0a0a; line-height: 1.6; letter-spacing: -0.01em; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 0.5px solid #c4c4c4; }
+.proj-intro { font-size: 17px; font-weight: 500; color: #0a0a0a; line-height: 1.6; letter-spacing: -0.01em; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 0.5px solid #d0d0d0; }
 .proj-body { font-size: 15px; color: #444; line-height: 1.75; }
 .proj-body + .proj-body { margin-top: 16px; }
 .proj-img { width: 100%; border-radius: 8px; margin: 32px 0; overflow: hidden; background: #f5f5f5; }
