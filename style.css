@@ -1525,7 +1525,7 @@ body.about-page #site-header { padding-inline: clamp(40px, 20%, 240px); }
 .cv-contact a { display: inline-flex; align-items: center; gap: 4px; }
 .cv-link-icon { color: #2b6cff; font-size: 13px; }
 .cv-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
-.cv-summary { border-bottom: 0.5px solid #d0d0d0; padding-bottom: 32px; }
+.cv-summary { padding-bottom: 32px; }
 .cv-summary p { max-width: 800px; }
 .cv-col-main, .cv-col-side { min-width: 0; }
 .cv-page h2 { font-size: 14px; font-weight: 400; color: #555; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 8px; }
