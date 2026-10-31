@@ -84,11 +84,11 @@ if (!/href="style\.css\?v=[a-f0-9]{10}"/.test(homepage) ||
     !/src="script\.js\?v=[a-f0-9]{10}"/.test(homepage)) {
   fail(path.join(ROOT, 'index.html'), 'CSS and JavaScript references must be content-versioned');
 }
-const featuredAnchors = (homepage.match(/<a class="feat-card"/g) || []).length;
+const featuredAnchors = (homepage.match(/<a\b[^>]*class="row row-feat"/g) || []).length;
 if (featuredAnchors !== 3) {
   fail(path.join(ROOT, 'index.html'), `expected 3 featured project links, found ${featuredAnchors}`);
 }
-if (/<div class="feat-card"/.test(homepage)) {
+if (/<div class="row row-feat"/.test(homepage)) {
   fail(path.join(ROOT, 'index.html'), 'featured cards must be full anchor elements');
 }
 if (!/aria-controls="mob-panel" aria-expanded="false"/.test(homepage) ||

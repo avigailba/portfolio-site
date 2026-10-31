@@ -324,17 +324,19 @@ function injectTooltips(html) {
   // Process all text content up to the first image block (excludes captions/image HTML)
   const stopRe = /<figcaption class="proj-caption"|<figure class="proj-img"|<div class="col-layout/;
   const stopIdx = html.search(stopRe);
-  const intro = stopIdx > 0 ? html.slice(0, stopIdx) : html;
-  const rest  = stopIdx > 0 ? html.slice(stopIdx) : '';
+  const intro = stopIdx >= 0 ? html.slice(0, stopIdx) : html;
+  const rest  = stopIdx >= 0 ? html.slice(stopIdx) : '';
 
   // Longest terms first so "Wix App Market" matches before "Wix"
   const terms   = Object.keys(TERM_TIPS).sort((a, b) => b.length - a.length);
   const pattern = terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
-  const re      = new RegExp(`\\b(${pattern})\\b`, 'g');
+  // Skip tags and attributes; only visible text can receive tooltip markup.
+  const re      = new RegExp(`<[^>]*>|\\b(${pattern})\\b`, 'g');
 
   const seen = new Set();
   let tipIndex = 0;
   const processed = intro.replace(re, (match) => {
+    if (match.startsWith('<')) return match;
     if (seen.has(match)) return match; // only first occurrence of each term
     seen.add(match);
     const tipText = TERM_TIPS[match];
