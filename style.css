@@ -1659,3 +1659,16 @@ body.scrolled .title-block { pointer-events: none; }
 @media (min-width: 901px) {
   .cv-summary p { max-width: calc(50% - 12px); }
 }
+
+/* TL;DR as grey cards, same style as the About Key Achievements cards */
+.proj-content .proj-tldr { border: 0 !important; background: none !important; padding: 0 !important; border-radius: 0 !important; margin: 32px 0 8px; }
+.proj-content .proj-tldr > * { max-width: none !important; margin-left: 0 !important; margin-right: 0 !important; }
+.proj-content .proj-tldr-label { margin-bottom: 16px; }
+.proj-content .proj-tldr .proj-tldr-grid { gap: 24px !important; }
+.proj-content .proj-tldr .proj-tldr-grid > p,
+.proj-content .proj-tldr .proj-tldr-grid p + p {
+  background: #f5f5f5; border-radius: 8px; padding: 20px !important; border: 0 !important; position: static;
+  font-family: 'Roboto', sans-serif; font-size: 16px !important; font-weight: 400; letter-spacing: 0; line-height: 1.7; color: #555;
+}
+.proj-content .proj-tldr .proj-tldr-grid p + p::before { content: none !important; }
+.proj-content .proj-tldr .proj-tldr-col-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 0; text-transform: none; color: #0a0a0a; line-height: 1.4; margin-bottom: 4px; }
