@@ -499,7 +499,7 @@ function homeAboutSnippet(homepageBlocks, aboutBlocks) {
   const contactText = plainText(contact.paragraph.rich_text).trim();
   const contactArrow = contactText.match(/[↗→←]$/)?.[0] || '';
   const contactLabel = contactArrow ? contactText.slice(0, -1).trim() : contactText;
-  return `<section class="home-about" aria-labelledby="home-about-title">
+  return `<section class="content-card home-about" aria-labelledby="home-about-title">
     <div class="home-about-copy">
       <h2 id="home-about-title">${escapeAttr(plainText(homepageBlocks[start].heading_2.rich_text))}</h2>
       <p>${escapeAttr(plainText(summary.paragraph.rich_text))}</p>
@@ -1123,7 +1123,7 @@ async function aboutPage(blocks) {
       }
       if (achievementItems.length) {
         const id = `about-section-${slugify(section.title)}`;
-        achievementsSection = `<section class="cv-achievements" aria-labelledby="${id}"><h2 id="${id}">${escapeAttr(section.title)}</h2><ul class="cv-achievements-list">${achievementItems.join('')}</ul></section>`;
+        achievementsSection = `<section class="content-card cv-achievements" aria-labelledby="${id}"><h2 id="${id}">${escapeAttr(section.title)}</h2><ul class="cv-achievements-list">${achievementItems.join('')}</ul></section>`;
       }
       continue;
     }
