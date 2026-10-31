@@ -1108,82 +1108,73 @@ async function aboutPage(blocks) {
     return `<li><a href="${escapeAttr(href)}"${external ? ' target="_blank" rel="noopener"' : ''}><span>${labelHtml}</span><span class="cv-link-icon" aria-hidden="true">${icon}</span></a></li>`;
   }).join('');
 
-  const sideSections = [];
-  const experienceSections = [];
-  let achievementsSection = null;
+  // Layout: Summary, Key Achievements cards, Experience grouped by company, Education.
+  // Notion stays the source: Experience rows read "Company - Role" with the years in the first column.
+  const ACH_LINKS = {
+    'ai credits wallet': 'projects/ai-credits-wallet.html',
+    'internal reviews system': 'projects/internal-app-review-system.html',
+    'app installation data': 'projects/app-installation-page-for-developers.html',
+  };
+  const jobs = [];
+  let achievementItems = [];
+  let education = null;
   for (const section of sections) {
-    const isExperience = /^experience$/i.test(section.title);
-    const rendered = [];
-
     if (/^key achievements$/i.test(section.title)) {
       const entries = section.blocks.filter((block) => block.type === 'paragraph' && blockText(block));
-      const achievementItems = [];
       for (let i = 0; i < entries.length; i += 2) {
         const title = blockText(entries[i]);
         const description = entries[i + 1];
-        achievementItems.push(`<li><h3 class="cv-job-title">${escapeAttr(title)}</h3>${description ? paragraphHtml(description) : ''}</li>`);
-      }
-      if (achievementItems.length) {
-        const id = `about-section-${slugify(section.title)}`;
-        achievementsSection = `<section class="content-card content-card-muted cv-achievements" aria-labelledby="${id}"><h2 id="${id}">${escapeAttr(section.title)}</h2><ul class="cv-achievements-list">${achievementItems.join('')}</ul></section>`;
+        const href = ACH_LINKS[title.toLowerCase()];
+        const action = href
+          ? `<a class="cv-view" href="${escapeAttr(href)}" aria-label="View ${escapeAttr(title)}"><span>View</span><span aria-hidden="true">→</span></a>`
+          : '<p class="cv-ach-note">Multiple projects</p>';
+        achievementItems.push(`<li><h3 class="cv-job-title">${escapeAttr(title)}</h3>${description ? paragraphHtml(description) : ''}${action}</li>`);
       }
       continue;
     }
-
+    if (/^tools$/i.test(section.title)) continue;
     for (const block of section.blocks) {
-      if (block.type === 'column_list') {
-        const columns = await fetchBlocks(block.id);
-        const columnBlocks = await Promise.all(columns.map((column) => fetchBlocks(column.id)));
-        const firstColumnText = columnBlocks[0]?.map(blockText).find(Boolean) || '';
-
-        if (/^education$/i.test(firstColumnText)) {
-          const content = columnBlocks.slice(1).flat().filter((item) => blockText(item));
-          sideSections.push({ title: 'Education', html: content.map((item) => paragraphHtml(item)).join('') });
-          continue;
-        }
-
-        if (isExperience) {
-          const year = firstColumnText;
-          const content = columnBlocks.slice(1).flat().filter((item) => blockText(item));
-          const roleLine = content.shift();
-          const roleText = blockText(roleLine || {});
-          const splitAt = roleText.lastIndexOf(' - ');
-          const organization = splitAt >= 0 ? roleText.slice(0, splitAt) : '';
-          const role = splitAt >= 0 ? roleText.slice(splitAt + 3) : roleText;
-          const details = content
-            .filter((item) => !item.paragraph.rich_text.length || !item.paragraph.rich_text.every((part) => part.annotations?.italic))
-            .map((item) => paragraphHtml(item))
-            .join('');
-          rendered.push(`<article class="cv-job">
-            <h3 class="cv-job-title">${escapeAttr(role)}</h3>
-            <p class="cv-job-meta">${organization ? `${escapeAttr(organization)} · ` : ''}<time>${escapeAttr(year)}</time></p>
-            ${details}
-          </article>`);
-          continue;
-        }
-
-        const columnsHtml = columnBlocks.map((items) => `<div>${items.map((item) => paragraphHtml(item)).join('')}</div>`).join('');
-        rendered.push(`<div class="cv-notion-columns">${columnsHtml}</div>`);
-      } else if (block.type === 'paragraph' && blockText(block)) {
-        rendered.push(paragraphHtml(block));
-      } else if (['bulleted_list_item', 'numbered_list_item', 'heading_3'].includes(block.type)) {
-        rendered.push(await toHtml([block]));
+      if (block.type !== 'column_list') continue;
+      const columns = await fetchBlocks(block.id);
+      const columnBlocks = await Promise.all(columns.map((column) => fetchBlocks(column.id)));
+      const firstColumnText = columnBlocks[0]?.map(blockText).find(Boolean) || '';
+      const content = columnBlocks.slice(1).flat().filter((item) => blockText(item));
+      if (/^education$/i.test(firstColumnText)) {
+        const line = blockText(content[0] || {});
+        const comma = line.indexOf(',');
+        education = { degree: comma >= 0 ? line.slice(0, comma).trim() : line, school: comma >= 0 ? line.slice(comma + 1).trim() : '' };
+        continue;
       }
+      if (!/^experience$/i.test(section.title)) continue;
+      const roleText = blockText(content.shift() || {});
+      const splitAt = roleText.lastIndexOf(' - ');
+      jobs.push({
+        years: firstColumnText,
+        org: splitAt >= 0 ? roleText.slice(0, splitAt) : '',
+        role: splitAt >= 0 ? roleText.slice(splitAt + 3) : roleText,
+        details: content.map((item) => paragraphHtml(item)).join(''),
+      });
     }
-    const html = rendered.join('\n');
-    if (!html) continue;
-    if (isExperience) experienceSections.push({ title: section.title, html });
-    else sideSections.push({ title: section.title, html });
   }
 
-  const summaryHtml = summaryBlocks.map((block) => paragraphHtml(block)).join('');
-  const renderSection = (section, index) => {
-    const id = `about-section-${slugify(section.title) || index}`;
-    return `<section aria-labelledby="${id}"><h2 id="${id}">${escapeAttr(section.title)}</h2>${section.html}</section>`;
-  };
-  const sideHtml = sideSections.map(renderSection).join('');
-  const experienceHtml = experienceSections.map(renderSection).join('');
+  const groups = [];
+  for (const job of jobs) {
+    const last = groups[groups.length - 1];
+    if (last && last.org === job.org) last.roles.push(job);
+    else groups.push({ org: job.org, roles: [job] });
+  }
+  const groupsHtml = groups.map((group) => `
+          <div class="xp-group" role="group" aria-label="${escapeAttr(group.org)}">
+            <h3 class="xp-co">${escapeAttr(group.org)}</h3>
+            <div class="xp-roles">${group.roles.map((job) => `
+              <div class="xp-row">
+                <p class="xp-yr"><time>${escapeAttr(job.years)}</time></p>
+                <div class="xp-desc"><h4 class="cv-job-title">${escapeAttr(job.role)}</h4>${job.details}</div>
+              </div>`).join('')}
+            </div>
+          </div>`).join('');
 
+  const summaryHtml = summaryBlocks.map((block) => paragraphHtml(block)).join('');
   return wrap('', 'Avigail Bahat, Senior Product Designer', `
   <main class="inner-main">
     <div class="cv-page">
@@ -1191,15 +1182,10 @@ async function aboutPage(blocks) {
         <h1>Avigail Bahat</h1>
       </header>
       ${summaryHtml ? `<section class="cv-summary" aria-labelledby="cv-summary"><h2 id="cv-summary">Summary</h2>${summaryHtml}<ul class="cv-contact">${contactHtml}</ul></section>` : `<ul class="cv-contact">${contactHtml}</ul>`}
-      ${achievementsSection || ''}
-      <div class="cv-cols">
-        <div class="cv-col-main">
-          ${experienceHtml}
-        </div>
-        <div class="cv-col-side">
-          ${sideHtml}
-        </div>
-      </div>
+      ${achievementItems.length ? `<section class="cv-achievements" aria-labelledby="cv-achievements"><h2 id="cv-achievements">Key Achievements</h2><ul class="cv-achievements-list">${achievementItems.join('')}</ul></section>` : ''}
+      ${groups.length ? `<section class="cv-xp" aria-labelledby="cv-experience"><h2 id="cv-experience">Experience</h2>${groupsHtml}
+      </section>` : ''}
+      ${education ? `<section class="cv-edu" aria-labelledby="cv-education"><h2 id="cv-education">Education</h2><h3 class="cv-job-title">${escapeAttr(education.degree)}</h3>${education.school ? `<p>${escapeAttr(education.school)}</p>` : ''}</section>` : ''}
     </div>
   </main>`, '', '', 'about-page', 'about');
 }
