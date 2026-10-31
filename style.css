@@ -1628,9 +1628,7 @@ body.scrolled .title-block { pointer-events: none; }
 
 /* ── About page: 12-column layout ───────────────────────── */
 @media (min-width: 769px) {
-  body.about-page #site-header,
-  body.about-page .inner-main,
-  body.about-page .site-footer { padding-left: clamp(24px, 6%, 80px); padding-right: clamp(24px, 6%, 80px); }
+  body.about-page .inner-main { padding-left: clamp(24px, 6%, 80px); padding-right: clamp(24px, 6%, 80px); }
 }
 .cv-page .cv-summary { margin-bottom: 0; }
 .cv-summary p { max-width: none; }
