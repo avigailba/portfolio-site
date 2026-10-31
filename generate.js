@@ -1079,8 +1079,7 @@ async function aboutPage(blocks) {
       }
       if (achievementItems.length) {
         const id = `about-section-${slugify(section.title)}`;
-        const divider = section.blocks.some((block) => block.type === 'divider') ? '<hr class="cv-divider">' : '';
-        achievementsSection = `<section class="cv-achievements" aria-labelledby="${id}">${divider}<h2 id="${id}">${escapeAttr(section.title)}</h2><ul class="cv-achievements-list">${achievementItems.join('')}</ul></section>`;
+        achievementsSection = `<section class="cv-achievements" aria-labelledby="${id}"><h2 id="${id}">${escapeAttr(section.title)}</h2><ul class="cv-achievements-list">${achievementItems.join('')}</ul></section>`;
       }
       continue;
     }
@@ -1110,8 +1109,8 @@ async function aboutPage(blocks) {
             .map((item) => paragraphHtml(item))
             .join('');
           rendered.push(`<article class="cv-job">
-            <p class="cv-job-meta">${organization ? `${escapeAttr(organization)} · ` : ''}<time>${escapeAttr(year)}</time></p>
             <h3 class="cv-job-title">${escapeAttr(role)}</h3>
+            <p class="cv-job-meta">${organization ? `${escapeAttr(organization)} · ` : ''}<time>${escapeAttr(year)}</time></p>
             ${details}
           </article>`);
           continue;
@@ -1121,8 +1120,6 @@ async function aboutPage(blocks) {
         rendered.push(`<div class="cv-notion-columns">${columnsHtml}</div>`);
       } else if (block.type === 'paragraph' && blockText(block)) {
         rendered.push(paragraphHtml(block));
-      } else if (block.type === 'divider') {
-        rendered.push('<hr class="cv-divider">');
       } else if (['bulleted_list_item', 'numbered_list_item', 'heading_3'].includes(block.type)) {
         rendered.push(await toHtml([block]));
       }
@@ -1136,10 +1133,7 @@ async function aboutPage(blocks) {
   const summaryHtml = summaryBlocks.map((block) => paragraphHtml(block)).join('');
   const renderSection = (section, index) => {
     const id = `about-section-${slugify(section.title) || index}`;
-    const divider = '<hr class="cv-divider">';
-    const hasLeadingDivider = section.html.startsWith(divider);
-    const content = hasLeadingDivider ? section.html.slice(divider.length) : section.html;
-    return `<section aria-labelledby="${id}">${hasLeadingDivider ? divider : ''}<h2 id="${id}">${escapeAttr(section.title)}</h2>${content}</section>`;
+    return `<section aria-labelledby="${id}"><h2 id="${id}">${escapeAttr(section.title)}</h2>${section.html}</section>`;
   };
   const sideHtml = sideSections.map(renderSection).join('');
   const experienceHtml = experienceSections.map(renderSection).join('');
@@ -1151,16 +1145,18 @@ async function aboutPage(blocks) {
         <h1>Avigail Bahat</h1>
         <ul class="cv-contact">${contactHtml}</ul>
       </header>
-      ${summaryHtml ? `<section aria-labelledby="cv-summary"><h2 id="cv-summary">Summary</h2>${summaryHtml}</section>` : ''}
+      ${summaryHtml ? `<section class="cv-summary" aria-labelledby="cv-summary"><h2 id="cv-summary">Summary</h2>${summaryHtml}</section>` : ''}
       ${achievementsSection || ''}
       <div class="cv-cols">
         <div class="cv-col-main">
           ${experienceHtml}
+        </div>
+        <div class="cv-col-side">
           ${sideHtml}
         </div>
       </div>
     </div>
-  </main>`, '', '', '', 'about');
+  </main>`, '', '', 'about-page', 'about');
 }
 
 function designSystemPage(notionConnected) {
