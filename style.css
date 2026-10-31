@@ -390,6 +390,8 @@ nav .nav-email:focus-visible { outline: 2px solid #0a0a0a; outline-offset: 3px; 
   border-radius: 8px;
 }
 
+.content-card-muted { background: #f7f7f7; border: 0; }
+
 /* Homepage About snippet: board F, Portfolio: More Projects */
 .home-about {
   display: grid;
@@ -1535,7 +1537,7 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
 .cv-head { margin-bottom: 48px; }
 .cv-page h1 { font-size: 48px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 8px; }
 .cv-headline { font-size: 18px; font-weight: 500; color: #555; line-height: 1.5; letter-spacing: -0.01em; margin-bottom: 16px; }
-.cv-contact { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; color: #555; }
+.cv-contact { margin-top: 16px; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; color: #555; }
 .cv-contact a { color: #2b6cff; text-decoration: none; font-weight: 500; }
 .cv-contact a:hover { opacity: 0.75; }
 .cv-contact a { display: inline-flex; align-items: center; gap: 4px; }

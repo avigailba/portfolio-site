@@ -1125,7 +1125,7 @@ async function aboutPage(blocks) {
       }
       if (achievementItems.length) {
         const id = `about-section-${slugify(section.title)}`;
-        achievementsSection = `<section class="content-card cv-achievements" aria-labelledby="${id}"><h2 id="${id}">${escapeAttr(section.title)}</h2><ul class="cv-achievements-list">${achievementItems.join('')}</ul></section>`;
+        achievementsSection = `<section class="content-card content-card-muted cv-achievements" aria-labelledby="${id}"><h2 id="${id}">${escapeAttr(section.title)}</h2><ul class="cv-achievements-list">${achievementItems.join('')}</ul></section>`;
       }
       continue;
     }
@@ -1189,9 +1189,8 @@ async function aboutPage(blocks) {
     <div class="cv-page">
       <header class="cv-head">
         <h1>Avigail Bahat</h1>
-        <ul class="cv-contact">${contactHtml}</ul>
       </header>
-      ${summaryHtml ? `<section class="cv-summary" aria-labelledby="cv-summary"><h2 id="cv-summary">Summary</h2>${summaryHtml}</section>` : ''}
+      ${summaryHtml ? `<section class="cv-summary" aria-labelledby="cv-summary"><h2 id="cv-summary">Summary</h2>${summaryHtml}<ul class="cv-contact">${contactHtml}</ul></section>` : `<ul class="cv-contact">${contactHtml}</ul>`}
       ${achievementsSection || ''}
       <div class="cv-cols">
         <div class="cv-col-main">
