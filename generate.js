@@ -466,7 +466,48 @@ ${extraScript}${analyticsScript}
 
 // ── Pages ────────────────────────────────────────────────────
 
-function indexPage(projects, tagline) {
+function homeAboutSnippet(homepageBlocks, aboutBlocks) {
+  const start = homepageBlocks.findIndex(block => block.type === 'heading_2' && plainText(block.heading_2.rich_text).trim().toLowerCase() === 'about me');
+  if (start < 0) return '';
+  const end = homepageBlocks.findIndex((block, i) => i > start && block.type === 'heading_2');
+  const section = homepageBlocks.slice(start + 1, end < 0 ? undefined : end);
+  const summary = aboutBlocks.find(block => block.type === 'paragraph' && plainText(block.paragraph.rich_text).trim());
+  const contact = section.find(block => block.type === 'paragraph' && block.paragraph.rich_text.some(item => item.href));
+  const facts = section.filter(block => block.type === 'bulleted_list_item');
+  if (!summary || !contact || facts.length !== 3) {
+    throw new Error('Homepage About me needs an About-page summary, a contact link and three facts in Notion');
+  }
+  function localLink(richText) {
+    const href = richText.find(item => item.href)?.href || '';
+    const id = href.replace(/-/g, '').match(/[a-f0-9]{32}/)?.[0];
+    if (id === ABOUT_PAGE_ID) return 'about.html';
+    if (id && NOTION_ID_TO_SLUG[id]) return `projects/${NOTION_ID_TO_SLUG[id]}.html`;
+    return '';
+  }
+  const factHtml = facts.map(block => {
+    const rich = block.bulleted_list_item.rich_text;
+    const text = plainText(rich);
+    const separator = text.indexOf(':');
+    if (separator < 0) throw new Error('Homepage About me facts must use Label: value in Notion');
+    const label = escapeAttr(text.slice(0, separator).trim());
+    const value = escapeAttr(text.slice(separator + 1).trim());
+    const href = localLink(rich);
+    return `<div class="home-about-fact"><dt>${label}</dt><dd>${href ? `<a href="${href}">${value}</a>` : value}</dd></div>`;
+  }).join('');
+  const contactText = plainText(contact.paragraph.rich_text).trim();
+  const contactArrow = contactText.match(/[↗→←]$/)?.[0] || '';
+  const contactLabel = contactArrow ? contactText.slice(0, -1).trim() : contactText;
+  return `<section class="home-about" aria-labelledby="home-about-title">
+    <div class="home-about-copy">
+      <h2 id="home-about-title">${escapeAttr(plainText(homepageBlocks[start].heading_2.rich_text))}</h2>
+      <p>${escapeAttr(plainText(summary.paragraph.rich_text))}</p>
+      <a class="home-about-link" href="${localLink(contact.paragraph.rich_text)}"><span class="link-label">${escapeAttr(contactLabel)}</span> ${escapeAttr(contactArrow)}</a>
+    </div>
+    <dl class="home-about-facts">${factHtml}</dl>
+  </section>`;
+}
+
+function indexPage(projects, tagline, homepageBlocks = [], aboutBlocks = []) {
   tagline = tagline || "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
   const bySlug = {};
   for (const p of projects) bySlug[p.slug] = p;
@@ -503,8 +544,8 @@ function indexPage(projects, tagline) {
       ${summary ? `<span class="rsub">${summary}</span>` : ''}
     </div>
     ${badges.length ? `<span class="cat-tags">${badges.map(label => `<span class="cat-tag">${label}</span>`).join('')}</span>` : ''}
-    <span class="row-arr">View ↗</span>
-    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
+    <span class="row-arr"><span class="link-label">View</span> ↗</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm"><span class="link-label">View</span> ↗</span></div>
   </a>
 </div>`;
   }).join('\n  ');
@@ -536,6 +577,7 @@ function indexPage(projects, tagline) {
         ${listHtml}
       </div>
     </div>
+    ${homeAboutSnippet(homepageBlocks, aboutBlocks)}
   </main>`);
 }
 
@@ -910,8 +952,8 @@ var CURRENT_SLUG = '${proj.slug}';
           '<span class="rsub">' + p.sub + '</span>' +
         '</div>' +
         '<span class="cat-tag">' + p.cat + '</span>' +
-        '<span class="row-arr">View ↗</span>' +
-        '<div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>' +
+        '<span class="row-arr"><span class="link-label">View</span> ↗</span>' +
+        '<div class="mob-row-foot"><span class="mob-view-btn mob-view-sm"><span class="link-label">View</span> ↗</span></div>' +
       '</a>';
     list.appendChild(wrap);
   });
@@ -923,8 +965,8 @@ var CURRENT_SLUG = '${proj.slug}';
     <div class="proj-gutter proj-gutter-left"></div>
     <main class="proj-main">
       <div class="proj-side-nav">
-        ${prevProj ? `<a class="proj-nav-btn proj-nav-prev" href="${prevProj.slug}.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> ${prevTitle}</span></a>` : '<span></span>'}
-        ${nextProj ? `<a class="proj-nav-btn proj-nav-next" href="${nextProj.slug}.html" aria-label="Next project"><span class="proj-nav-name">${nextTitle} <i class="ti ti-arrow-right"></i></span></a>` : '<span></span>'}
+        ${prevProj ? `<a class="proj-nav-btn proj-nav-prev" href="${prevProj.slug}.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> <span class="link-label">${prevTitle}</span></span></a>` : '<span></span>'}
+        ${nextProj ? `<a class="proj-nav-btn proj-nav-next" href="${nextProj.slug}.html" aria-label="Next project"><span class="proj-nav-name"><span class="link-label">${nextTitle}</span> <i class="ti ti-arrow-right"></i></span></a>` : '<span></span>'}
       </div>
       ${anchorNavHtml}
       <div class="title-block proj-title-sticky" id="proj-title-sticky">
@@ -1227,6 +1269,7 @@ function designSystemPage(notionConnected) {
   const built = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
   const changelog = [
+    { date: '31 Oct 2026', change: 'Homepage About me snippet below the project list: title, facts and links from the Notion Homepage page, summary from the first About paragraph. Bordered box with three fact blocks; stacks below 960px with no dividers. About, View and previous/next project links stay blue and underline only their text on hover' },
     { date: '31 Oct 2026', change: 'Homepage: separate featured cards removed; featured projects are the first, bigger rows of the list (.row-feat, Jakarta clamp(24-32px)/700, subtitle always visible). Years and feature stars removed from all rows. Row titles Plus Jakarta Sans 500. Regular rows get random hover colour pairs. Intro Jakarta 500 clamp(28-44px). Footer links and tagline white' },
     { date: '12 Oct 2026', change: 'TL;DR box added to project pages: 0.5px #d0d0d0 border, 8px radius, 40px padding, label 14px uppercase #555, one column per sentence (up to three) in Plus Jakarta Sans 500, stacked on mobile' },
     { date: '12 Oct 2026', change: 'Last updated line added under the Bottom line on project pages (14px, #555), dated from the Notion page last edit' },
@@ -1325,7 +1368,7 @@ function designSystemPage(notionConnected) {
                     <span class="rsub">End-to-end billing transparency for AI usage across the platform</span>
                   </div>
                   <span class="cat-tag">developer</span>
-                  <span class="row-arr">View ↗</span>
+                  <span class="row-arr"><span class="link-label">View</span> ↗</span>
                 </div>
               </div>
             </div>
@@ -1342,7 +1385,7 @@ function designSystemPage(notionConnected) {
                     <span class="rsub">One shared credits wallet for free and premium users, across Wix and Wixel.</span>
                   </div>
                   <span class="cat-tags"><span class="cat-tag">Monetisation</span></span>
-                  <span class="row-arr">View ↗</span>
+                  <span class="row-arr"><span class="link-label">View</span> ↗</span>
                 </div>
               </div>
             </div>
@@ -1372,8 +1415,8 @@ function designSystemPage(notionConnected) {
           <div class="ds-comp-block">
             <span class="ds-comp-label">Project nav buttons (prev / next)</span>
             <div class="ds-comp-demo" style="display:flex;gap:48px;align-items:center;">
-              <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> AI Credits Wallet</span></a>
-              <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><span class="proj-nav-name">App Reviews <i class="ti ti-arrow-right"></i></span></a>
+              <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> <span class="link-label">AI Credits Wallet</span></span></a>
+              <a href="#" class="proj-nav-btn" style="position:static;opacity:1;text-decoration:none;"><span class="proj-nav-name"><span class="link-label">App Reviews</span> <i class="ti ti-arrow-right"></i></span></a>
             </div>
           </div>
 
@@ -1584,6 +1627,7 @@ async function build() {
   const writtenProjectFiles = new Set();
   let tagline = "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
   let aboutBlocks = [];
+  let homepageBlocks = [];
 
   try {
     console.log('Fetching project pages from Notion...');
@@ -1620,8 +1664,8 @@ async function build() {
     }
 
     try {
-      const hpBlocks = await notion.blocks.children.list({ block_id: HOMEPAGE_PAGE_ID });
-      const firstPara = hpBlocks.results.find(b => b.type === 'paragraph');
+      homepageBlocks = await fetchBlocks(HOMEPAGE_PAGE_ID);
+      const firstPara = homepageBlocks.find(b => b.type === 'paragraph');
       if (firstPara) tagline = plainText(firstPara.paragraph.rich_text) || tagline;
     } catch (e) {
       if (STRICT_BUILD) throw e;
@@ -1663,7 +1707,7 @@ async function build() {
   }
 
   for (const [file, html] of [
-    ['index.html',          indexPage(projects, tagline)],
+    ['index.html',          indexPage(projects, tagline, homepageBlocks, aboutBlocks)],
     ['about.html',          await aboutPage(aboutBlocks)],
     ['contact.html',        '<meta http-equiv="refresh" content="0;url=about.html">'],
     ['design-system.html',  designSystemPage(projects.length > 0)],
