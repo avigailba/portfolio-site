@@ -1531,7 +1531,6 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
 }
 
 /* ── CV page ─────────────────────────────────────────────── */
-body.about-page #site-header { padding-inline: clamp(40px, 20%, 240px); }
 .cv-page { padding: 56px 0 80px; }
 .cv-head { margin-bottom: 48px; }
 .cv-page h1 { font-size: 48px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 8px; }
@@ -1559,7 +1558,6 @@ body.about-page #site-header { padding-inline: clamp(40px, 20%, 240px); }
 .cv-notion-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .cv-page ul:not(.cv-contact):not(.cv-achievements-list) { margin: 8px 0 0 20px; font-size: 16px; color: #555; line-height: 1.7; }
 @media (max-width: 768px) {
-  body.about-page #site-header { padding-inline: 20px; }
   .cv-cols { grid-template-columns: 1fr; gap: 0; }
   .cv-achievements-list { grid-template-columns: 1fr; }
 }
