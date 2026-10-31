@@ -377,8 +377,9 @@ function hdr(prefix, current = '') {
       <span class="mob-logo-role">Senior Product Designer</span>
     </a>
     <nav>
-      <a href="${prefix}index.html"${cur('projects')}>Projects</a>
-      <a href="${prefix}about.html"${cur('about')}>About & Contact</a>
+      <a href="${prefix}index.html"${cur('projects')}>Work</a>
+      <a href="${prefix}about.html"${cur('about')}>About</a>
+      <a class="nav-email" href="mailto:avigailba@gmail.com">Email me</a>
     </nav>
     <button class="mob-burger" id="open-menu" aria-label="Open menu" aria-controls="mob-panel" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -392,8 +393,9 @@ function hdr(prefix, current = '') {
     <button class="mob-panel-close" id="mob-panel-close" aria-label="Close">✕</button>
   </div>
   <nav class="mob-panel-nav">
-    <a href="${prefix}index.html" class="mob-panel-link"${cur('projects')}>Projects</a>
-    <a href="${prefix}about.html" class="mob-panel-link"${cur('about')}>About & Contact</a>
+    <a href="${prefix}index.html" class="mob-panel-link"${cur('projects')}>Work</a>
+    <a href="${prefix}about.html" class="mob-panel-link"${cur('about')}>About</a>
+    <a class="nav-email" href="mailto:avigailba@gmail.com">Email me</a>
   </nav>
   <div class="mob-panel-foot">
     <div class="mob-panel-social">

@@ -97,6 +97,22 @@ nav a {
 nav a:hover { background: #0a0a0a; color: #fff; }
 nav a.active { color: #0a0a0a; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
 nav a.active:hover { color: #fff; text-decoration: none; }
+nav .nav-email {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  margin-left: 8px;
+  padding: 10px 16px;
+  border-radius: 5px;
+  background: #0a0a0a;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+nav .nav-email:hover { background: #333; color: #fff; }
+nav .nav-email:focus-visible { outline: 2px solid #0a0a0a; outline-offset: 3px; }
 .hdr-mail { display: flex; align-items: center; color: #555; transition: color 0.13s; margin-left: 4px; }
 .hdr-mail:hover { color: #0a0a0a; }
 
@@ -1138,6 +1154,7 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
     padding: 14px 0; color: #0a0a0a; border-bottom: 0.5px solid #d0d0d0;
     text-decoration: none; text-align: left; transition: opacity 0.15s;
   }
+  .mob-panel-nav .nav-email { align-self: stretch; margin: 16px 0 0; }
   .mob-panel-link.active { font-weight: 700; }
   .mob-panel-link:active { opacity: 0.5; }
   .mob-panel-foot { margin-top: auto; padding-top: 24px; border-top: 0.5px solid #d0d0d0; }
