@@ -39,6 +39,29 @@
   if (list.getBoundingClientRect().top < window.innerHeight - 20) openAll();
 })();
 
+// ── Random hover colors for regular rows ─────────────────────
+// Featured rows keep their category colors; every other row gets a random pair,
+// never the same pair as the row above it.
+(function() {
+  var PAIRS = [
+    ['#2b6cff', '#0ea5e9'], ['#0aa17a', '#00c896'], ['#8b5cf6', '#ec4899'],
+    ['#f4660b', '#ffb000'], ['#e11d48', '#f97316'], ['#0891b2', '#22c55e'],
+    ['#7c3aed', '#2b6cff'], ['#db2777', '#a855f7']
+  ];
+  function paint() {
+    var last = -1;
+    document.querySelectorAll('#all-list .row:not(.row-feat), #more-list .row').forEach(function(row) {
+      var i;
+      do { i = Math.floor(Math.random() * PAIRS.length); } while (i === last && PAIRS.length > 1);
+      last = i;
+      row.style.setProperty('--accent', PAIRS[i][0]);
+      row.style.setProperty('--accent-2', PAIRS[i][1]);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', paint);
+  else paint();
+})();
+
 // ── Filter buttons (homepage) ────────────────────────────────
 function markFirstVisible() {
   var wraps = document.querySelectorAll('#all-list .row-wrap');

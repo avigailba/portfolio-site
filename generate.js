@@ -471,19 +471,7 @@ function indexPage(projects, tagline) {
   const bySlug = {};
   for (const p of projects) bySlug[p.slug] = p;
 
-  // Featured work: one-column horizontal cards
-  const featHtml = FEAT_ORDER.map((slug) => {
-    const meta = PROJECT_META[slug];
-    const subtitle = bySlug[slug]?.subtitle || bySlug[slug]?.summary || meta.subtitle || '';
-    return `<a class="feat-card" href="projects/${slug}.html">
-  <div class="feat-title">${meta.title}</div>
-  ${subtitle ? `<div class="feat-sub">${subtitle}</div>` : ''}
-  <div class="feat-arr">↗</div>
-  <div class="feat-foot">
-    <span class="mob-view-btn">View project <span>↗</span></span>
-  </div>
-</a>`;
-  }).join('\n  ');
+  // Featured projects are the big rows at the top of the list (see row-feat below)
 
   // Full list: Notion insertion order (PROJECT_META key order)
   const metaSlugs = Object.keys(PROJECT_META);
@@ -506,16 +494,15 @@ function indexPage(projects, tagline) {
     const year    = meta?.year    || proj?.year    || '';
     const summary = proj?.subtitle || proj?.summary || '';
     const featured = meta?.featured || false;
-    return `<div class="row-wrap" data-cat="${cats}">
-  <a href="projects/${slug}.html" class="row" data-cat="${cats}">
+    const featCls = featured ? ' row-feat' : '';
+    return `<div class="row-wrap${featCls}" data-cat="${cats}">
+  <a href="projects/${slug}.html" class="row${featCls}" data-cat="${cats}">
     <span class="num">${String(i + 1).padStart(2, '0')}</span>
     <div class="rmain">
       <span class="row-title">${title}</span>
       ${summary ? `<span class="rsub">${summary}</span>` : ''}
     </div>
-    ${featured ? `<span class="feat-tag" title="Featured project">★</span>` : ''}
     ${badges.length ? `<span class="cat-tags">${badges.map(label => `<span class="cat-tag">${label}</span>`).join('')}</span>` : ''}
-    <span class="row-year">${year}</span>
     <span class="row-arr">View ↗</span>
     <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>
   </a>
@@ -525,9 +512,6 @@ function indexPage(projects, tagline) {
   return wrap('', 'Avigail Bahat | Senior Product Designer', `
   <main class="home-band">
     <p class="lede">${tagline}</p>
-    <div id="home-work" class="feat-grid">
-      ${featHtml}
-    </div>
     <div class="home-allwork" id="home-allwork">
       <div class="work-header">
         <div class="filters">
@@ -925,9 +909,7 @@ var CURRENT_SLUG = '${proj.slug}';
           '<span class="row-title">' + p.title + '</span>' +
           '<span class="rsub">' + p.sub + '</span>' +
         '</div>' +
-        (p.featured ? '<span class="feat-tag" title="Featured project">★</span>' : '') +
         '<span class="cat-tag">' + p.cat + '</span>' +
-        '<span class="row-year">' + p.year + '</span>' +
         '<span class="row-arr">View ↗</span>' +
         '<div class="mob-row-foot"><span class="mob-view-btn mob-view-sm">View ↗</span></div>' +
       '</a>';
@@ -1245,6 +1227,7 @@ function designSystemPage(notionConnected) {
   const built = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
   const changelog = [
+    { date: '31 Oct 2026', change: 'Homepage: separate featured cards removed; featured projects are the first, bigger rows of the list (.row-feat, Jakarta clamp(24-32px)/700, subtitle always visible). Years and feature stars removed from all rows. Row titles Plus Jakarta Sans 500. Regular rows get random hover colour pairs. Intro Jakarta 500 clamp(28-44px). Footer links and tagline white' },
     { date: '12 Oct 2026', change: 'TL;DR box added to project pages: 0.5px #d0d0d0 border, 8px radius, 40px padding, label 14px uppercase #555, one column per sentence (up to three) in Plus Jakarta Sans 500, stacked on mobile' },
     { date: '12 Oct 2026', change: 'Last updated line added under the Bottom line on project pages (14px, #555), dated from the Notion page last edit' },
     { date: '12 Oct 2026', change: 'Browser tab titles use a vertical bar instead of an em dash' },
@@ -1342,7 +1325,23 @@ function designSystemPage(notionConnected) {
                     <span class="rsub">End-to-end billing transparency for AI usage across the platform</span>
                   </div>
                   <span class="cat-tag">developer</span>
-                  <span class="row-year">2026</span>
+                  <span class="row-arr">View ↗</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-comp-block">
+            <span class="ds-comp-label">Featured row (homepage)</span>
+            <div class="ds-comp-demo" style="padding:0 24px;">
+              <div class="row-wrap open row-feat">
+                <div class="row row-feat" data-cat="monetisation" style="border-top:0.5px solid #d0d0d0;">
+                  <span class="num">01</span>
+                  <div class="rmain">
+                    <span class="row-title">AI Credits Wallet</span>
+                    <span class="rsub">One shared credits wallet for free and premium users, across Wix and Wixel.</span>
+                  </div>
+                  <span class="cat-tags"><span class="cat-tag">Monetisation</span></span>
                   <span class="row-arr">View ↗</span>
                 </div>
               </div>

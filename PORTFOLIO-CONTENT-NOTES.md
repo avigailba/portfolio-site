@@ -66,7 +66,7 @@ Row bullets: a bold lead then the sentence, `**Lead.** sentence`. Pipes in Notio
 - Preview: serve a COPY of `dist/` with `scratchpad/nocache_server.py <port> <dir>` (Cache-Control: no-store). Plain `python3 -m http.server` let her Chrome show old pages. Give her the new port. Check at 1440px and 375px.
 - Pasted chat images are only sometimes saved on disk (`.../images/N.png`); if missing, ask her to send the file again.
 - generate.js: shared helper functions sit above `projectPage` (`splitRules`, `buildAreaCards`, `buildResults`, `buildRowColumns`/`buildDeliveryColumns`, `buildProblemColumns`, `markShotLayouts`); the AI Credits widget block is at the top of `projectPage`. A heading written `Label | Title` is turned into spans at the end of `projectPage`, AFTER the side menu is built; any regex that looks for a section heading must allow text after the label (`[^<]*`).
-- Homepage: three featured cards (Developer Sale was un-featured on 2026-10-22).
+- Homepage: no separate featured section since 2026-10-31. Featured projects (`featured: true` in PROJECT_META) render as the first, bigger rows of the project list (`.row-feat`). Developer Sale was un-featured on 2026-10-22.
 
 ### Where each page stands (all LOCAL, not pushed)
 - App Review Platform: fully converted (problem with old-tool screens and flowchart, Approach rows, three principles, product area cards, delivery, results). 21 figures.
@@ -278,9 +278,8 @@ Verified against the generated site on 2026-10-14. Where CLAUDE.md was out of da
 ### Homepage (index.html)
 1. Header.
 2. `.home-band` (80vw band, resets to full width with clamp padding at 960px and below) containing, in order:
-   - Lede (Plus Jakarta Sans 28px / 500). Current text: "I'm a senior product designer with 10+ years at Wix, working across a large B2B platform: App Market, developer tools, and monetization flows for third-party developers." Open: it has no AI or code signal.
-   - Featured work: 4 cards as one-column horizontal rows (title, subtitle directly below, arrow on the right). Order and titles come from `FEAT_ORDER` and `PROJECT_META` in generate.js. Subtitles come from the Notion subtitle line. When a Notion page is renamed, also change its title in `PROJECT_META`.
-   - All work: header with filter buttons (All, Developer, Monetisation, Internal, CMS; a dropdown on mobile), then project rows (number, title, subtitle on hover, every category badge, year, "View"). Rows are an accordion that opens via script.js.
+   - Lede (Plus Jakarta Sans 500, clamp(28px, 3vw, 44px), max-width 960px, 16px top padding). Current text: "I'm a senior product designer with 10+ years at Wix, working across a large B2B platform: App Market, developer tools, and monetization flows for third-party developers." Open: it has no AI or code signal.
+   - All work: header with filter buttons (All, Developer, Monetisation, Internal, CMS; a dropdown on mobile), then project rows (number, title, subtitle on hover, every category badge, "View"; no year, no star). Featured projects are the first rows and are bigger (`.row-feat`: Jakarta title, subtitle always visible); they filter like any other row. List order is PROJECT_META key order (`FEAT_ORDER` is no longer used). Regular rows get a random hover colour pair on load (script.js); featured rows keep their category colours. Rows are an accordion that opens via script.js. When a Notion page is renamed, also change its title in `PROJECT_META`.
 3. Footer.
 
 ### About page (about.html)
@@ -304,7 +303,7 @@ Built by `aboutPage()` from the Notion page "About & Contact" (ID in the table b
 
 #### Layout
 - **Horizontal padding: `clamp(40px, 20%, 240px)`** on header, footer, inner pages, project pages, more-work section.
-- Homepage uses `.home-band`: `width: 80vw; max-width: 80vw; margin: 0 auto` — contains lede, feat-grid, work-header, and list. At ≤960px resets to `width: 100%` with clamp padding.
+- Homepage uses `.home-band`: `width: 80vw; max-width: 80vw; margin: 0 auto` — contains lede, work-header, and list (no feat-grid since 2026-10-31). At ≤960px resets to `width: 100%` with clamp padding.
 - `.feat-grid` also has `width: 80vw; max-width: 80vw; margin: 0 auto; overflow: hidden` — both the band and grid are 80vw so they share the same left edge. Featured cards are one-column horizontal rows, with the subtitle directly below the title.
 - Inner pages (about, contact): `.inner-content` has `max-width: 720px`. Project pages: `.proj-content` has no max-width (wide layout is intentional).
 
@@ -598,3 +597,4 @@ Reviews Revamp, Collections Manager, Payouts Page, Refund Flow, Pricing Page Pro
 - 2026-10-26: At desktop widths up to 1300px, the three-column TL;DR stacks to keep its sentences readable. The fixed contents rail moves farther left to leave more space before the article.
 - 2026-10-26: Final rail uses the original 190px width and 24–32px viewport offset, with padded selected/hover rows and no progress line.
 - 2026-10-26 (local, not pushed): Side rail (.toc) root cause: its scroll update waited on requestAnimationFrame, which never fires in hidden or throttled panes, so --r stayed 0 and the rail stayed inert; it now updates straight from the scroll event. Rail, logo, menu and homepage content share --site-gutter. Homepage intro is Jakarta 600 at clamp(30px,3.6vw,48px) (28px mobile). Featured subtitles: no max-width, no balance wrapping, full width on mobile. Mobile condensed title no longer has translateY(-10px), so it centres with the prev/next arrows.
+- 2026-10-31 (pushed): Homepage redesign so visitors see there are more projects above the fold. Separate featured cards removed; featured projects are the first, bigger rows of the list (no Featured label; she tried cards, a "+9" strip and a "3 of 12" label and rejected them). Years and stars removed from all rows, including More work on project pages (featured projects show there as regular rows). Row titles Plus Jakarta Sans 500; regular rows get random hover colours; featured hover lifts the title 2px only; `text-wrap: pretty` on featured subtitles and the intro. Intro lighter and smaller (Jakarta 500, up to 44px). Footer links, arrows and tagline are white. Lede text itself (Notion) unchanged. Design exploration: her Design canvas "Portfolio: More Projects".
