@@ -832,7 +832,9 @@ if (document.getElementById('playFrame')) {
   var header = document.getElementById('site-header');
   var titleStart = 0;
   function measure() {
-    titleStart = block.getBoundingClientRect().top + window.scrollY - (header ? header.offsetHeight : 0);
+    var headerHeight = header ? header.offsetHeight : 0;
+    root.setProperty('--site-header-height', headerHeight + 'px');
+    titleStart = block.getBoundingClientRect().top + window.scrollY - headerHeight;
   }
 
   function update() {
@@ -875,7 +877,9 @@ if (document.getElementById('playFrame')) {
   window.addEventListener('scroll', requestUpdate, { passive: true });
   window.addEventListener('resize', function() { measure(); requestUpdate(); }, { passive: true });
   if (window.ResizeObserver) {
-    new ResizeObserver(function() { measure(); requestUpdate(); }).observe(document.querySelector('.proj-content'));
+    var resizeObserver = new ResizeObserver(function() { measure(); requestUpdate(); });
+    resizeObserver.observe(document.querySelector('.proj-content'));
+    if (header) resizeObserver.observe(header);
   }
 
   if ('IntersectionObserver' in window) {

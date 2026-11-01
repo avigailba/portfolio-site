@@ -1584,7 +1584,7 @@ body.scrolled .title-block { pointer-events: none; }
     display: block;
     position: fixed;
     left: clamp(24px, 2vw, 32px);
-    top: 96px;
+    top: calc(var(--site-header-height, 102px) + 16px);
     width: 190px;
     z-index: 7;
     opacity: var(--r, 0);
