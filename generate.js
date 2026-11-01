@@ -701,12 +701,12 @@ function buildResults(html) {
 // block, "### Process" with a bullet list on one side and "### Challenges" with a bullet list on the other.
 // Each bullet becomes a bordered row; a bold lead in the bullet stays bold.
 // The same two-column rows are used for Approach when it reads "Research process | Pain points" (equal halves, like the deck's discovery slide).
-function buildDeliveryColumns(html) {
-  html = buildRowColumns(html, /<h2>\s*(?:<strong>)?\s*Approach[^<]*(?:<\/strong>)?\s*<\/h2>\n?/i, 'proj-dc proj-dc-even');
-  return buildRowColumns(html, /<h2>\s*(?:<strong>)?\s*Delivery\s*(?:&amp;|and)\s*challenges[^<]*(?:<\/strong>)?\s*<\/h2>\n?/i, 'proj-dc');
+function buildDeliveryColumns(html, approachBullets = false, approachEqual = false, deliveryBullets = false) {
+  html = buildRowColumns(html, /<h2>\s*(?:<strong>)?\s*Approach[^<]*(?:<\/strong>)?\s*<\/h2>\n?/i, approachEqual ? 'proj-dc' : 'proj-dc proj-dc-even', approachBullets);
+  return buildRowColumns(html, /<h2>\s*(?:<strong>)?\s*Delivery\s*(?:&amp;|and)\s*challenges[^<]*(?:<\/strong>)?\s*<\/h2>\n?/i, 'proj-dc', deliveryBullets);
 }
 
-function buildRowColumns(html, headingRe, cls) {
+function buildRowColumns(html, headingRe, cls, preserveBullets = false) {
   const hm = headingRe.exec(html);
   if (!hm) return html;
   const start = hm.index + hm[0].length;
@@ -722,14 +722,14 @@ function buildRowColumns(html, headingRe, cls) {
   const firstCol = head.split('</div><div class="col">')[0];
   if (cls.includes('proj-dc-even') && !/<ul>/.test(firstCol)) cls = 'proj-dc proj-dc-lead';
   seg = head.replace('<div class="col-layout col-2">', `<div class="col-layout col-2 ${cls}">`)
-    .replace(/<ul>([\s\S]*?)<\/ul>/g, (m, inner) =>
+    .replace(/<ul>([\s\S]*?)<\/ul>/g, (m, inner) => preserveBullets ? m :
       `<div class="dc-rows">${[...inner.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(x => `<p class="dc-row">${x[1].trim()}</p>`).join('')}</div>`) + tail;
   return html.slice(0, start) + seg + html.slice(end);
 }
 
 // The problem as a statement on the left and a rows list on the right (the layout from her deck). In Notion: under the h2
 // a two-column block, the statement paragraphs on one side and "### What users needed to understand" with a bullet list on the other.
-function buildProblemColumns(html) {
+function buildProblemColumns(html, statementLead = false, preserveBullets = false, gallery = false) {
   const hm = /<h2>\s*(?:<strong>)?\s*The problem[^<]*(?:<\/strong>)?\s*<\/h2>\n?/i.exec(html);
   if (!hm) return html;
   const start = hm.index + hm[0].length;
@@ -738,10 +738,14 @@ function buildProblemColumns(html) {
   let seg = html.slice(start, end);
   if (!seg.includes('<div class="col-layout col-2">')) return html;
   // An italic paragraph, optionally followed by plain text on the same line, becomes a quote with its attribution
-  seg = seg.replace('<div class="col-layout col-2">', '<div class="col-layout col-2 proj-prob">')
+  if (gallery) {
+    seg = seg.replace(/<div class="col-layout col-2"><div class="col">([\s\S]*?)(<figure[\s\S]*?)<\/div><div class="col">([\s\S]*?)<\/div><\/div>/,
+      (m, copy, figures, problems) => `<div class="col-layout col-2"><div class="col"><div class="proj-prob-copy">${copy}${problems}</div>${figures}</div></div>`);
+  }
+  seg = seg.replace('<div class="col-layout col-2">', `<div class="col-layout col-2 proj-prob${statementLead ? ' proj-prob-lead' : ''}${gallery ? ' proj-prob-gallery' : ''}">`)
     .replace(/<p><em>([\s\S]*?)<\/em>\s*([^<]*)<\/p>/g, (m, q, a) =>
       `<blockquote class="pr-quote">${q}${a.trim() ? `<cite>${a.trim()}</cite>` : ''}</blockquote>`)
-    .replace(/<ul>([\s\S]*?)<\/ul>/g, (m, inner) =>
+    .replace(/<ul>([\s\S]*?)<\/ul>/g, (m, inner) => preserveBullets ? m :
       `<div class="dc-rows">${[...inner.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(x => `<p class="dc-row">${x[1].trim()}</p>`).join('')}</div>`);
   return html.slice(0, start) + seg + html.slice(end);
 }
@@ -764,7 +768,7 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
       contentHtml =
         `<style>@media(max-width:768px){.cw-widget-col{display:none!important;}.cw-grid{grid-template-columns:1fr!important;}}.cw-grid>div>h2:first-child{margin-top:0;}</style>` +
         contentHtml.slice(0, solIdx) +
-        `<div class="cw-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin:32px 0;">` +
+        `<div class="cw-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;">` +
         `<div>${contentHtml.slice(solIdx, cut)}</div>` +
         `<figure class="cw-widget-col" style="margin:0;">` +
         `<iframe src="credits-widget.html" title="Business Manager widget states" style="width:100%;height:580px;border:none;display:block;border-radius:8px;background:#ECECEE;" scrolling="no">` +
@@ -812,10 +816,18 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
     const rules = splitRules(contentHtml);
     if (rules) contentHtml = rules.before + rules.cards + rules.after;
     contentHtml = markShotLayouts(contentHtml);
+    if (proj.slug === 'app-installation-page-for-developers') {
+      contentHtml = contentHtml.replaceAll('class="col-layout col-2 proj-shot"', 'class="col-layout col-2 proj-shot proj-shot-half"');
+    }
     contentHtml = buildAreaCards(contentHtml);
     contentHtml = buildResults(contentHtml);
-    contentHtml = buildDeliveryColumns(contentHtml);
-    contentHtml = buildProblemColumns(contentHtml);
+    contentHtml = buildDeliveryColumns(contentHtml,
+      ['app-installation-page-for-developers', 'internal-app-review-system', 'ai-credits-wallet'].includes(proj.slug),
+      proj.slug === 'internal-app-review-system',
+      ['app-installation-page-for-developers', 'internal-app-review-system'].includes(proj.slug));
+    contentHtml = buildProblemColumns(contentHtml, proj.slug === 'ai-credits-wallet',
+      ['app-installation-page-for-developers', 'ai-credits-wallet', 'internal-app-review-system'].includes(proj.slug),
+      proj.slug === 'internal-app-review-system');
   }
   if (contentHtml) contentHtml = injectTooltips(contentHtml);
 
@@ -914,6 +926,14 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
   if (contentHtml) {
     contentHtml = contentHtml.replace(/<h3( id="[^"]*")?>([^<|]*?)\s+\|\s+([^<]*)<\/h3>/g,
       (m, id, label, ttl) => `<h3${id || ''} class="proj-h3"><span class="proj-h2-label">${label.trim()}</span><span class="proj-h3-title">${ttl.trim()}</span></h3>`);
+    const subsectionTitles = new Set(['Design principles']);
+    if (proj.slug === 'ai-credits-wallet') {
+      subsectionTitles.add('Where users see their credits');
+      subsectionTitles.add('Behind the scenes');
+    }
+    contentHtml = contentHtml.replace(/<h3( id="[^"]*")?>([^<]*)<\/h3>/g,
+      (m, id, title) => subsectionTitles.has(title.trim())
+        ? `<h3${id || ''} class="proj-h3"><span class="proj-h3-title">${title.trim()}</span></h3>` : m);
   }
 
   const title = titleCase(proj.title || meta.title || 'Project');
@@ -991,7 +1011,7 @@ var CURRENT_SLUG = '${proj.slug}';
           ${nextProj ? `<button class="proj-nav-text proj-nav-text-next" aria-label="Next project" onclick="location.href='${nextProj.slug}.html'">Next →</button>` : ''}
         </div>
       </div>
-      <div class="proj-content">
+      <div class="proj-content" data-project="${proj.slug}">
         ${contentHtml}
       </div>
     </main>

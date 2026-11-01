@@ -734,7 +734,9 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
   .proj-content .proj-rules[data-cols="4"] { grid-template-columns: minmax(0, 1fr); }
 }
 /* Section headings written "Label | Title": a small label above a large title (the deck's slide headers) */
-.proj-content .proj-h2 { margin: 96px 0 20px; }
+.proj-content { --project-section-gap: 120px; }
+.proj-content .proj-h2 { margin: var(--project-section-gap) 0 20px; }
+.proj-content .cw-grid { margin: var(--project-section-gap) 0 32px; }
 .proj-content .proj-h2-label { display: block; font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; color: #555; margin-bottom: 8px; }
 .proj-content .proj-h2-title { display: block; font-size: 36px; line-height: 1.15; }
 @media (max-width: 768px) {
@@ -747,7 +749,7 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
 .proj-content .proj-tldr-col-label { display: block; font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; color: #555; margin-bottom: 10px; }
 /* Sub-headings written "Label | Title" */
 .proj-content .proj-h3 { margin: 64px 0 16px; max-width: none; }
-.proj-content .proj-h3 .proj-h2-label { margin-bottom: 6px; }
+.proj-content .proj-h3 .proj-h2-label { display: none; }
 .proj-content .proj-h3-title { display: block; font-size: 28px; line-height: 1.2; letter-spacing: -0.02em; }
 /* Screen plus explanation (the deck's design slides): image 2/3, text 1/3; two screens with text under each */
 .proj-content .proj-shot { align-items: start; margin: 8px 0 32px; }
@@ -758,6 +760,8 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
 @media (min-width: 769px) {
   .proj-content .col-layout.proj-shot > .col:first-child { grid-column: 5 / span 8; grid-row: 1; }
   .proj-content .col-layout.proj-shot > .col:last-child { grid-column: 1 / span 4; grid-row: 1; }
+  .proj-content .col-layout.proj-shot-half > .col:first-child { grid-column: 7 / span 6; }
+  .proj-content .col-layout.proj-shot-half > .col:last-child { grid-column: 1 / span 6; }
 }
 .proj-content .col-layout.proj-shot > .col:last-child ul { padding-left: 20px; margin: 0 0 24px; }
 .proj-content .col-layout.proj-shot > .col:last-child h3 { margin: 24px 0 8px; padding-top: 24px; border-top: 0.5px solid #d0d0d0; font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; color: #555; }
@@ -790,6 +794,9 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
 .proj-content .pa-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; color: #0a0a0a; margin: 0; max-width: none; }
 .proj-content .pa-text { margin: 0; max-width: none; }
 .proj-content .pa-fix { margin: 8px 0 0; max-width: none; font-weight: 600; color: #0a0a0a; }
+@media (min-width: 1101px) {
+  .proj-content .pa-card { grid-column: span 3; }
+}
 @media (max-width: 768px) {
   .proj-content .pa-card { grid-column: 1 / -1; }
 }
@@ -836,12 +843,28 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
 .proj-content .col-layout.col-4 > .col { grid-column: span 3; }
 .proj-content .proj-prob > .col:first-child { grid-column: span 8; }
 .proj-content .proj-prob > .col:last-child { grid-column: span 4; }
+.proj-content .proj-prob-lead > .col:first-child { grid-column: span 4; }
+.proj-content .proj-prob-lead > .col:last-child { grid-column: span 8; }
+@media (min-width: 769px) {
+  .proj-content .proj-prob-gallery > .col:first-child { grid-column: 1 / -1; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 32px; }
+  .proj-content .proj-prob-gallery .proj-prob-copy { grid-column: span 6; min-width: 0; }
+  .proj-content .proj-prob-gallery > .col:first-child > figure { grid-column: span 3; margin-top: 0; }
+}
+@media (max-width: 768px) {
+  .proj-content .proj-prob-gallery > .col:first-child { display: block; }
+  .proj-content .proj-prob-gallery > .col:first-child > figure { margin-top: 24px; }
+}
 .proj-content .proj-dc > .col:first-child { grid-column: span 6; }
 .proj-content .proj-dc > .col:last-child { grid-column: span 6; }
 .proj-content .proj-dc-even > .col:first-child { grid-column: span 8; }
 .proj-content .proj-dc-even > .col:last-child { grid-column: span 4; }
 .proj-content .proj-dc-lead > .col:first-child { grid-column: span 4; }
 .proj-content .proj-dc-lead > .col:last-child { grid-column: span 8; }
+@media (min-width: 769px) {
+  .proj-content[data-project="app-installation-page-for-developers"] .proj-dc-even > .col { grid-column: span 6; }
+  .proj-content[data-project="app-installation-page-for-developers"] .proj-dc-even > .col:last-child { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; align-content: start; }
+  .proj-content[data-project="app-installation-page-for-developers"] .proj-dc-even > .col:last-child > figure { min-width: 0; margin: 0; }
+}
 .proj-content .proj-results > .pr-lead { grid-column: span 4; }
 .proj-content .proj-results > .pr-rows { grid-column: span 8; }
 .proj-content .proj-rules > .pr-card { grid-column: span 6; }
@@ -886,9 +909,10 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
   .proj-content .proj-tldr-grid[data-cols="3"] p + p::before { content: none; }
 }
 .proj-content .proj-updated { font-size: 14px; color: #555; line-height: 1.4; margin: 40px 0 0; }
-.proj-content h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -0.02em; color: #0a0a0a; margin: 96px 0 16px; max-width: 800px; }
+.proj-content h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -0.02em; color: #0a0a0a; margin: var(--project-section-gap) 0 16px; max-width: 800px; }
+.proj-content[data-project="app-installation-page-for-developers"] #sec-the-problem { max-width: none; }
 @media (max-width: 768px) {
-  .proj-content h2, .proj-content .proj-h2 { margin-top: 64px; }
+  .proj-content { --project-section-gap: 80px; }
 }
 .proj-content h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; color: #0a0a0a; margin: 32px 0 12px; max-width: 800px; }
 /* Tighten the gap between a section heading and the sub-heading or columns right under it */
