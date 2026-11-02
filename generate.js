@@ -840,6 +840,11 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
     contentHtml = buildProblemColumns(contentHtml, proj.slug === 'ai-credits-wallet',
       ['app-installation-page-for-developers', 'ai-credits-wallet', 'internal-app-review-system'].includes(proj.slug),
       proj.slug === 'internal-app-review-system');
+    if (proj.slug === 'internal-app-review-system') {
+      contentHtml = contentHtml.replace(
+        /(<h2>(?:<strong>)?[^<]*(?:<\/strong>)?<\/h2>)\s*(<div class="col-layout col-2 proj-prob proj-prob-gallery"><div class="col"><div class="proj-prob-copy">)/,
+        '$2$1\n');
+    }
   }
   if (contentHtml) contentHtml = injectTooltips(contentHtml);
 
