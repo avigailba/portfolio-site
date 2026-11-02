@@ -716,6 +716,25 @@ if (document.getElementById('playFrame')) {
   window.addEventListener('resize', function() { closeAll(); }, { passive: true });
 })();
 
+// Project image placeholders. Cached images appear immediately; lazy images
+// keep their placeholder until their own request finishes.
+(function() {
+  document.querySelectorAll('.proj-content .proj-img > img').forEach(function(img) {
+    if (img.complete) return;
+    var figure = img.parentElement;
+    function finish() {
+      figure.classList.remove('is-loading');
+      figure.removeAttribute('aria-busy');
+      img.removeEventListener('load', finish);
+      img.removeEventListener('error', finish);
+    }
+    img.addEventListener('load', finish);
+    img.addEventListener('error', finish);
+    figure.classList.add('is-loading');
+    figure.setAttribute('aria-busy', 'true');
+  });
+})();
+
 // ── Lightbox (project pages) ─────────────────────────────────
 (function() {
   var lb = document.getElementById('lightbox');

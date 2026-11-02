@@ -20,6 +20,7 @@ const path = require('path');
 const crypto = require('crypto');
 const https = require('https');
 const http = require('http');
+const { imageSizeFromFile } = require('image-size/fromFile');
 
 function assetVersion(file) {
   return crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname, file))).digest('hex').slice(0, 10);
@@ -63,9 +64,9 @@ const stats = { pages: 0, images: 0, errors: [] };
 
 // Project metadata: categories, display title overrides, years, featured status
 const PROJECT_META = {
-  'ai-credits-wallet':                    { title: 'AI Credits Wallet',        subtitle: 'Transparent AI usage billing across Wix\'s developer platform', cats: 'monetisation',          display: 'Monetisation',    year: 2026, featured: true },
   'app-installation-page-for-developers': { title: 'Installations Page',      subtitle: 'Designed and shipped installation analytics that gave developers site-level visibility into how their apps were used', cats: 'developer cms',         display: 'Developer tools', year: 2025, featured: true },
   'internal-app-review-system':          { title: 'App Review Platform',   subtitle: 'Replaced a spreadsheet-based review process with a structured tool', cats: 'internal cms',       display: 'Internal tools',  year: 2022, featured: true },
+  'ai-credits-wallet':                    { title: 'AI Credits Wallet',        subtitle: 'Transparent AI usage billing across Wix\'s developer platform', cats: 'monetisation',          display: 'Monetisation',    year: 2026, featured: true },
   'developer-sale':                      { title: 'Developer Sale',           subtitle: 'A monetisation campaign tool for app developers',                cats: 'developer monetisation cms', display: 'Monetisation', year: 2024, featured: false },
   'app-reviews-revamp':                  { title: 'App Reviews Revamp',           cats: 'developer cms',          display: 'Developer tools', year: 2024, featured: false },
   'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'internal cms',           display: 'Internal tools',  year: 2024, featured: false },
@@ -80,9 +81,9 @@ const PROJECT_META = {
 
 // Featured rows shown on homepage (in order)
 const FEAT_ORDER = [
+  'app-installation-page-for-developers',
   'internal-app-review-system',
   'ai-credits-wallet',
-  'app-installation-page-for-developers',
 ];
 
 
@@ -271,7 +272,16 @@ async function toHtml(blocks, imgPrefix = '') {
             } catch (e) { stats.errors.push(`${fname}: ${e.message}`); }
           }
         }
-        html += `<figure class="proj-img">\n  <img src="${escapeAttr(url)}" alt="${escapeAttr(capText)}" loading="lazy">\n${capHtml ? `  <figcaption class="proj-caption">${capHtml}</figcaption>\n` : ''}</figure>\n`;
+        let dimensions = '';
+        if (url.startsWith(`${imgPrefix}images/`)) {
+          try {
+            const { width, height } = await imageSizeFromFile(path.join(IMAGES, path.basename(url)));
+            dimensions = ` width="${width}" height="${height}"`;
+          } catch (e) {
+            console.warn(`Could not read image dimensions for ${path.basename(url)}: ${e.message}`);
+          }
+        }
+        html += `<figure class="proj-img">\n  <img src="${escapeAttr(url)}" alt="${escapeAttr(capText)}"${dimensions} loading="lazy">\n${capHtml ? `  <figcaption class="proj-caption">${capHtml}</figcaption>\n` : ''}</figure>\n`;
         break;
       }
     }
@@ -518,8 +528,8 @@ function indexPage(projects, tagline, homepageBlocks = [], aboutBlocks = []) {
 
   // Featured projects are the big rows at the top of the list (see row-feat below)
 
-  // Full list: Notion insertion order (PROJECT_META key order)
-  const metaSlugs = Object.keys(PROJECT_META);
+  // Featured projects first, followed by the remaining metadata order.
+  const metaSlugs = [...FEAT_ORDER, ...Object.keys(PROJECT_META).filter(slug => !FEAT_ORDER.includes(slug))];
   // When Notion is unavailable projects is empty — fall back to all known slugs
   const allSlugs = projects.length > 0
     ? metaSlugs.filter(s => bySlug[s] && !SKIP_SLUGS.has(s))
@@ -703,7 +713,7 @@ function buildResults(html) {
 // The same two-column rows are used for Approach when it reads "Research process | Pain points" (equal halves, like the deck's discovery slide).
 function buildDeliveryColumns(html, approachBullets = false, approachEqual = false, deliveryBullets = false) {
   html = buildRowColumns(html, /<h2>\s*(?:<strong>)?\s*Approach[^<]*(?:<\/strong>)?\s*<\/h2>\n?/i, approachEqual ? 'proj-dc' : 'proj-dc proj-dc-even', approachBullets);
-  return buildRowColumns(html, /<h2>\s*(?:<strong>)?\s*Delivery\s*(?:&amp;|and)\s*challenges[^<]*(?:<\/strong>)?\s*<\/h2>\n?/i, 'proj-dc', deliveryBullets);
+  return buildRowColumns(html, /<h2>\s*(?:<strong>)?\s*Delivery(?:\s*(?:&amp;|and)\s*challenges)?[^<]*(?:<\/strong>)?\s*<\/h2>\n?/i, 'proj-dc', deliveryBullets);
 }
 
 function buildRowColumns(html, headingRe, cls, preserveBullets = false) {
@@ -817,7 +827,9 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
     if (rules) contentHtml = rules.before + rules.cards + rules.after;
     contentHtml = markShotLayouts(contentHtml);
     if (proj.slug === 'app-installation-page-for-developers') {
-      contentHtml = contentHtml.replaceAll('class="col-layout col-2 proj-shot"', 'class="col-layout col-2 proj-shot proj-shot-half"');
+      contentHtml = contentHtml.replace(
+        /(<h([23])>(?:<strong>)?[^<]*(?:<\/strong>)?<\/h\2>)\s*(<div class="col-layout col-2 proj-shot"><div class="col">[\s\S]*?<\/div><div class="col">)/g,
+        '$3$1\n');
     }
     contentHtml = buildAreaCards(contentHtml);
     contentHtml = buildResults(contentHtml);
@@ -934,6 +946,10 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
     contentHtml = contentHtml.replace(/<h3( id="[^"]*")?>([^<]*)<\/h3>/g,
       (m, id, title) => subsectionTitles.has(title.trim())
         ? `<h3${id || ''} class="proj-h3"><span class="proj-h3-title">${title.trim()}</span></h3>` : m);
+  }
+
+  if (proj.slug === 'ai-credits-wallet' && contentHtml) {
+    contentHtml = contentHtml.replace('One wallet skeleton, two tiers, three platforms', 'One wallet skeleton, two tiers, three&nbsp;platforms');
   }
 
   const title = titleCase(proj.title || meta.title || 'Project');
@@ -1655,6 +1671,10 @@ async function build() {
     if (STRICT_BUILD && stats.errors.length) {
       throw new Error(`Failed to download ${stats.errors.length} project image(s)`);
     }
+
+    // Keep previous/next navigation in the same featured order as the homepage.
+    const featuredRank = new Map(FEAT_ORDER.map((slug, index) => [slug, index]));
+    projects.sort((a, b) => (featuredRank.get(a.slug) ?? FEAT_ORDER.length) - (featuredRank.get(b.slug) ?? FEAT_ORDER.length));
 
     for (const p of projects) subtitleMap[p.slug] = p.subtitle;
 
