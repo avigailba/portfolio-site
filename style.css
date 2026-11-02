@@ -890,11 +890,17 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
   .proj-content .proj-prob-gallery > .col:first-child { grid-column: 1 / -1; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 32px; }
   .proj-content .proj-prob-gallery .proj-prob-copy { grid-column: span 6; min-width: 0; }
   .proj-content .proj-prob-gallery > .col:first-child > figure { grid-column: span 3; margin-top: 0; }
-  .proj-content[data-project="internal-app-review-system"] .proj-prob-gallery .proj-prob-copy,
-  .proj-content[data-project="internal-app-review-system"] .proj-prob-gallery > .col:first-child > figure { grid-column: span 4; }
+  .proj-content[data-project="internal-app-review-system"] .proj-prob-gallery > .col:first-child { row-gap: 32px; }
+  .proj-content[data-project="internal-app-review-system"] .proj-prob-gallery .proj-prob-copy { grid-column: 1 / span 8; grid-row: 1 / span 2; }
+  .proj-content[data-project="internal-app-review-system"] .proj-prob-gallery > .col:first-child > figure { grid-column: 9 / span 4; margin: 0; }
 }
+.proj-content[data-project="internal-app-review-system"] .proj-prob-gallery > .col:first-child > figure img { aspect-ratio: auto; }
 .proj-content[data-project="internal-app-review-system"] .proj-prob-copy > h2:first-child { margin: 0 0 20px; }
 .proj-content[data-project="internal-app-review-system"] .proj-prob-gallery { margin-top: var(--project-section-gap); }
+.proj-content[data-project="internal-app-review-system"] > h3:not(.proj-h3) { margin-top: 80px; }
+@media (max-width: 768px) {
+  .proj-content[data-project="internal-app-review-system"] > h3:not(.proj-h3) { margin-top: 64px; }
+}
 @media (max-width: 768px) {
   .proj-content .proj-prob-gallery > .col:first-child { display: block; }
   .proj-content .proj-prob-gallery > .col:first-child > figure { margin-top: 24px; }
