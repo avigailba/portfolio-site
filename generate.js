@@ -418,36 +418,29 @@ function hdr(prefix, current = '') {
 
 function ftr(prefix = '') {
   return `<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-left">
-      <p class="footer-statement">Open to new work.</p>
-      <div class="footer-tags">
-        <span class="ftag">Developer tools</span>
-        <span class="ftag">AI products</span>
-        <span class="ftag">Complex systems</span>
-        <span class="ftag">B2B SaaS</span>
-        <span class="ftag">Platform design</span>
-        <span class="ftag">Marketplace</span>
-        <span class="ftag">Design systems</span>
-        <span class="ftag">Developer experience</span>
-        <span class="ftag">Monetisation</span>
-        <span class="ftag">Internal tools</span>
-      </div>
-      <p class="footer-tagline">Based in Tel Aviv · Open to opportunities</p>
+  <div class="footer-grid">
+    <div class="ft-main">
+      <h2 class="ft-big">Avigail Bahat</h2>
+      <p class="ft-sum">Senior Product Designer designing developer platforms, monetization, and AI products. I'm hands-on with code through AI tools and work closely with product and engineering.</p>
+      <ul class="ft-tags" aria-label="Areas of focus"><li>Developer tools</li><li>AI products</li><li>Complex systems</li><li>B2B SaaS</li><li>Platform design</li><li>Marketplace</li><li>Design systems</li><li>Developer experience</li><li>Monetisation</li><li>Internal tools</li></ul>
+      <a class="ft-link" href="${prefix}about.html"><span>Read more</span><span aria-hidden="true">↗</span></a>
     </div>
-    <div class="footer-right">
-      <a href="mailto:avigailba@gmail.com" class="footer-link">
-        <span>avigailba@gmail.com</span><span class="footer-arr" aria-hidden="true">↗</span>
-      </a>
-      <a href="https://www.linkedin.com/in/avigailbahat/" class="footer-link">
-        <span>LinkedIn</span><span class="footer-arr" aria-hidden="true">↗</span>
-      </a>
-      <a href="${prefix}design-system.html" class="footer-link">
-        <span>Design system</span><span class="footer-arr" aria-hidden="true">↗</span>
-      </a>
+    <div class="ft-facts">
+      <div>
+        <h2 class="ft-label">Experience</h2>
+        <div class="ft-xp"><p class="ft-big">10+ years</p><p class="ft-sm">Wix</p></div><div class="ft-xp"><p class="ft-big">5 years</p><p class="ft-sm">Sole designer</p><p class="ft-sm">Wix Developer Center</p></div><div class="ft-xp"><p class="ft-big">4 years</p><p class="ft-sm">Founding designer</p><p class="ft-sm">Wix ADI</p></div>
+      </div>
+      <div class="ft-contact">
+        <h2 class="ft-label">Contact</h2>
+        <div class="ft-links">
+          <a class="ft-link" href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span aria-hidden="true">↗</span></a>
+          <a class="ft-link" href="https://www.linkedin.com/in/avigailbahat/"><span>LinkedIn</span><span aria-hidden="true">↗</span></a>
+          <a class="ft-link" href="${prefix}Avigail%20Bahat%20CV.pdf"><span>Download CV</span><span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion &amp; Claude.</div>
+  <div class="footer-bottom">© 2026 Avigail Bahat. Built using Notion, Codex &amp; Claude.</div>
 </footer>`;
 }
 
@@ -591,7 +584,6 @@ function indexPage(projects, tagline, homepageBlocks = [], aboutBlocks = []) {
         ${listHtml}
       </div>
     </div>
-    ${homeAboutSnippet(homepageBlocks, aboutBlocks)}
   </main>`);
 }
 
