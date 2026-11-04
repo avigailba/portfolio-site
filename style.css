@@ -36,7 +36,7 @@ button { font-family: inherit; }
 }
 /* Home and About: the top bar is transparent while scrolling (desktop); project pages keep the white bar */
 @media (min-width: 769px) {
-  body:not(.proj-page) #site-header { background: transparent; }
+  body:not(.proj-page) #site-header { background: linear-gradient(to bottom, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.8) 55%, rgba(255,255,255,0) 100%); }
 }
 body.proj-page #site-header {
   border-bottom: none;
@@ -1713,3 +1713,7 @@ body.scrolled .title-block { pointer-events: none; }
   .proj-content .proj-prob .col > p,
   .proj-content .proj-prob-copy > p { max-width: 100%; }
 }
+
+/* About page: the contents rail is always visible (no title block to scroll away) */
+.toc.about-toc { opacity: 1; transform: none; pointer-events: auto; }
+.cv-page h2[id], .cv-page #cv-contact { scroll-margin-top: 100px; }

@@ -1208,13 +1208,25 @@ async function aboutPage(blocks) {
           </div>`).join('');
 
   const summaryHtml = summaryBlocks.map((block) => paragraphHtml(block)).join('');
+  // Contents rail (same look as project pages), one entry per section that exists
+  const tocItems = [
+    summaryHtml ? ['cv-summary', 'Summary'] : null,
+    contactHtml ? ['cv-contact', 'Contact info'] : null,
+    achievementItems.length ? ['cv-achievements', 'Key achievements'] : null,
+    groups.length ? ['cv-experience', 'Experience'] : null,
+    education ? ['cv-education', 'Education'] : null,
+  ].filter(Boolean);
+  const aboutToc = tocItems.length > 2
+    ? `<nav class="toc about-toc" aria-label="Contents"><span class="toc-title">About</span><ol>${tocItems.map(([id, label], i) => `<li><a href="#${id}"><span class="pa-num">${String(i + 1).padStart(2, '0')}</span><span class="pa-label">${label}</span></a></li>`).join('')}</ol></nav>`
+    : '';
   return wrap('', 'Avigail Bahat, Senior Product Designer', `
+  ${aboutToc}
   <main class="inner-main">
     <div class="cv-page">
       <header class="cv-head">
         <h1>Avigail Bahat</h1>
       </header>
-      ${summaryHtml ? `<section class="cv-summary" aria-labelledby="cv-summary"><h2 id="cv-summary">Summary</h2>${summaryHtml}<ul class="cv-contact">${contactHtml}</ul></section>` : `<ul class="cv-contact">${contactHtml}</ul>`}
+      ${summaryHtml ? `<section class="cv-summary" aria-labelledby="cv-summary"><h2 id="cv-summary">Summary</h2>${summaryHtml}<ul class="cv-contact" id="cv-contact">${contactHtml}</ul></section>` : `<ul class="cv-contact" id="cv-contact">${contactHtml}</ul>`}
       ${achievementItems.length ? `<section class="cv-achievements" aria-labelledby="cv-achievements"><h2 id="cv-achievements">Key Achievements</h2><ul class="cv-achievements-list">${achievementItems.join('')}</ul></section>` : ''}
       ${groups.length ? `<section class="cv-xp" aria-labelledby="cv-experience"><h2 id="cv-experience">Experience</h2>${groupsHtml}
       </section>` : ''}

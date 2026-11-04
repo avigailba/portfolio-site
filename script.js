@@ -917,3 +917,33 @@ if (document.getElementById('playFrame')) {
   });
   activate(current);
 })();
+
+
+// About page contents rail: highlight the section in view, select a clicked item at once
+(function() {
+  var toc = document.querySelector('.about-toc');
+  if (!toc) return;
+  var links = Array.prototype.slice.call(toc.querySelectorAll('a[href^="#"]'));
+  var sections = links.map(function(a) { return document.getElementById(a.getAttribute('href').slice(1)); }).filter(Boolean);
+  if (!sections.length) return;
+  var lockUntil = 0;
+  function activate(section) {
+    links.forEach(function(a) { a.classList.toggle('active', a.getAttribute('href') === '#' + section.id); });
+  }
+  links.forEach(function(a) {
+    a.addEventListener('click', function() {
+      var target = document.getElementById(a.getAttribute('href').slice(1));
+      if (!target) return;
+      lockUntil = Date.now() + 1200;
+      activate(target);
+    });
+  });
+  function update() {
+    if (Date.now() < lockUntil) return;
+    var current = sections[0];
+    sections.forEach(function(s) { if (s.getBoundingClientRect().top <= window.innerHeight * 0.3) current = s; });
+    activate(current);
+  }
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+})();
