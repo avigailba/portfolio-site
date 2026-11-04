@@ -1211,7 +1211,7 @@ async function aboutPage(blocks) {
   // Contents rail (same look as project pages), one entry per section that exists
   const tocItems = [
     summaryHtml ? ['cv-summary', 'Summary'] : null,
-    contactHtml ? ['cv-contact', 'Contact info'] : null,
+    contactHtml ? ['cv-contact', 'Contact'] : null,
     achievementItems.length ? ['cv-achievements', 'Key achievements'] : null,
     groups.length ? ['cv-experience', 'Experience'] : null,
     education ? ['cv-education', 'Education'] : null,
@@ -1226,7 +1226,8 @@ async function aboutPage(blocks) {
       <header class="cv-head">
         <h1>Avigail Bahat</h1>
       </header>
-      ${summaryHtml ? `<section class="cv-summary" aria-labelledby="cv-summary"><h2 id="cv-summary">Summary</h2>${summaryHtml}<ul class="cv-contact" id="cv-contact">${contactHtml}</ul></section>` : `<ul class="cv-contact" id="cv-contact">${contactHtml}</ul>`}
+      ${summaryHtml ? `<section class="cv-summary" aria-labelledby="cv-summary"><h2 id="cv-summary">Summary</h2>${summaryHtml}</section>` : ''}
+      ${contactHtml ? `<section class="cv-contact-section" aria-labelledby="cv-contact"><h2 id="cv-contact">Contact</h2><ul class="cv-contact">${contactHtml}</ul></section>` : ''}
       ${achievementItems.length ? `<section class="cv-achievements" aria-labelledby="cv-achievements"><h2 id="cv-achievements">Key Achievements</h2><ul class="cv-achievements-list">${achievementItems.join('')}</ul></section>` : ''}
       ${groups.length ? `<section class="cv-xp" aria-labelledby="cv-experience"><h2 id="cv-experience">Experience</h2>${groupsHtml}
       </section>` : ''}
