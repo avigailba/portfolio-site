@@ -412,7 +412,7 @@ nav .nav-email:focus-visible { outline: 2px solid #0a0a0a; outline-offset: 3px; 
 .ft-contact { padding-left: 24px; }
 .ft-links { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
 .ft-link { display: inline-flex; gap: 4px; font: 400 14px/1.5 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; color: #fff; }
-.ft-link:hover span:first-child { text-decoration: underline; text-underline-offset: 3px; }
+.ft-link span:first-child { text-decoration: underline; text-underline-offset: 3px; }
 /* arrow sits right after the label, same as the View buttons */
 .ft-contact .ft-link { display: block; padding: 8px 0; }
 .ft-more { display: inline; }
