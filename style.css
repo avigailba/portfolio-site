@@ -34,6 +34,10 @@ button { font-family: inherit; }
   transition: border-color 0.25s;
   padding: 0 clamp(24px, 2vw, 32px);
 }
+/* Home and About: the top bar is transparent while scrolling (desktop); project pages keep the white bar */
+@media (min-width: 769px) {
+  body:not(.proj-page) #site-header { background: transparent; }
+}
 body.proj-page #site-header {
   border-bottom: none;
   padding-left: clamp(24px, 2vw, 32px);
