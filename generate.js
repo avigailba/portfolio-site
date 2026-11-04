@@ -551,8 +551,8 @@ function indexPage(projects, tagline, homepageBlocks = [], aboutBlocks = []) {
       ${summary ? `<span class="rsub">${summary}</span>` : ''}
     </div>
     ${badges.length ? `<span class="cat-tags">${badges.map(label => `<span class="cat-tag">${label}</span>`).join('')}</span>` : ''}
-    <span class="row-arr"><span class="link-label">View</span> ↗</span>
-    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm"><span class="link-label">View</span> ↗</span></div>
+    <span class="row-arr"><span class="link-label">View</span> →</span>
+    <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm"><span class="link-label">View</span> →</span></div>
   </a>
 </div>`;
   }).join('\n  ');
@@ -989,8 +989,8 @@ var CURRENT_SLUG = '${proj.slug}';
           '<span class="rsub">' + p.sub + '</span>' +
         '</div>' +
         '<span class="cat-tag">' + p.cat + '</span>' +
-        '<span class="row-arr"><span class="link-label">View</span> ↗</span>' +
-        '<div class="mob-row-foot"><span class="mob-view-btn mob-view-sm"><span class="link-label">View</span> ↗</span></div>' +
+        '<span class="row-arr"><span class="link-label">View</span> →</span>' +
+        '<div class="mob-row-foot"><span class="mob-view-btn mob-view-sm"><span class="link-label">View</span> →</span></div>' +
       '</a>';
     list.appendChild(wrap);
   });
@@ -1212,7 +1212,7 @@ async function aboutPage(blocks) {
   const moreRows = Object.entries(PROJECT_META)
     .filter(([slug]) => !SKIP_SLUGS.has(slug))
     .slice(0, 4)
-    .map(([slug, m], i) => `<div class="row-wrap open" data-cat="${m.cats}"><a href="projects/${slug}.html" class="row" data-cat="${m.cats}"><span class="num">${String(i + 1).padStart(2, '0')}</span><div class="rmain"><span class="row-title">${escapeAttr(m.title)}</span><span class="rsub">${escapeAttr(m.subtitle || '')}</span></div><span class="cat-tag">${escapeAttr(m.display)}</span><span class="row-arr"><span class="link-label">View</span> ↗</span><div class="mob-row-foot"><span class="mob-view-btn mob-view-sm"><span class="link-label">View</span> ↗</span></div></a></div>`)
+    .map(([slug, m], i) => `<div class="row-wrap open" data-cat="${m.cats}"><a href="projects/${slug}.html" class="row" data-cat="${m.cats}"><span class="num">${String(i + 1).padStart(2, '0')}</span><div class="rmain"><span class="row-title">${escapeAttr(m.title)}</span><span class="rsub">${escapeAttr(m.subtitle || '')}</span></div><span class="cat-tag">${escapeAttr(m.display)}</span><span class="row-arr"><span class="link-label">View</span> →</span><div class="mob-row-foot"><span class="mob-view-btn mob-view-sm"><span class="link-label">View</span> →</span></div></a></div>`)
     .join('');
   const aboutMoreWork = `<section class="more-section">
     <div class="more-inner">
@@ -1415,7 +1415,7 @@ function designSystemPage(notionConnected) {
                     <span class="rsub">End-to-end billing transparency for AI usage across the platform</span>
                   </div>
                   <span class="cat-tag">developer</span>
-                  <span class="row-arr"><span class="link-label">View</span> ↗</span>
+                  <span class="row-arr"><span class="link-label">View</span> →</span>
                 </div>
               </div>
             </div>
@@ -1432,7 +1432,7 @@ function designSystemPage(notionConnected) {
                     <span class="rsub">One shared credits wallet for free and premium users, across Wix and Wixel.</span>
                   </div>
                   <span class="cat-tags"><span class="cat-tag">Monetisation</span></span>
-                  <span class="row-arr"><span class="link-label">View</span> ↗</span>
+                  <span class="row-arr"><span class="link-label">View</span> →</span>
                 </div>
               </div>
             </div>

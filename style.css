@@ -1023,8 +1023,8 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
 .more-label { font-size: 14px; color: #555; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 16px; }
 /* already 14px — unified with section-label */
 .more-cta { display: flex; justify-content: flex-end; padding-top: 16px; padding-bottom: 64px; }
-.more-cta-link { font-size: 15px; font-weight: 500; color: #0a0a0a; text-decoration: none; transition: opacity 0.15s; }
-.more-cta-link:hover { opacity: 0.45; }
+.more-cta-link { font-size: 14px; font-weight: 400; color: #2b6cff; text-decoration: none; }
+.more-cta-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* ── Lightbox ────────────────────────────────────────────── */
 .lb-overlay {
