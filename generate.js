@@ -1217,7 +1217,7 @@ async function aboutPage(blocks) {
     education ? ['cv-education', 'Education'] : null,
   ].filter(Boolean);
   const aboutToc = tocItems.length > 2
-    ? `<nav class="toc about-toc" aria-label="Contents"><span class="toc-title">About &amp; Contact</span><ol>${tocItems.map(([id, label], i) => `<li><a href="#${id}"><span class="pa-num">${String(i + 1).padStart(2, '0')}</span><span class="pa-label">${label}</span></a></li>`).join('')}</ol></nav>`
+    ? `<nav class="toc about-toc" aria-label="Contents"><span class="toc-title">About</span><ol>${tocItems.map(([id, label], i) => `<li><a href="#${id}"><span class="pa-num">${String(i + 1).padStart(2, '0')}</span><span class="pa-label">${label}</span></a></li>`).join('')}</ol></nav>`
     : '';
   return wrap('', 'Avigail Bahat, Senior Product Designer', `
   ${aboutToc}
