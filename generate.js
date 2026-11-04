@@ -1002,8 +1002,8 @@ var CURRENT_SLUG = '${proj.slug}';
     <div class="proj-gutter proj-gutter-left"></div>
     <main class="proj-main">
       <div class="proj-side-nav">
-        ${prevProj ? `<a class="proj-nav-btn proj-nav-prev" href="${prevProj.slug}.html" aria-label="Previous project"><span class="proj-nav-name"><i class="ti ti-arrow-left"></i> <span class="link-label">${prevTitle}</span></span></a>` : '<span></span>'}
-        ${nextProj ? `<a class="proj-nav-btn proj-nav-next" href="${nextProj.slug}.html" aria-label="Next project"><span class="proj-nav-name"><span class="link-label">${nextTitle}</span> <i class="ti ti-arrow-right"></i></span></a>` : '<span></span>'}
+        ${prevProj ? `<a class="proj-nav-btn proj-nav-prev" href="${prevProj.slug}.html" aria-label="Previous project"><span class="proj-nav-name">← <span class="link-label">${prevTitle}</span></span></a>` : '<span></span>'}
+        ${nextProj ? `<a class="proj-nav-btn proj-nav-next" href="${nextProj.slug}.html" aria-label="Next project"><span class="proj-nav-name"><span class="link-label">${nextTitle}</span> →</span></a>` : '<span></span>'}
       </div>
       ${anchorNavHtml}
       <div class="title-block proj-title-sticky" id="proj-title-sticky">

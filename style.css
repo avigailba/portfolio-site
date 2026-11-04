@@ -551,9 +551,9 @@ nav .nav-email:focus-visible { outline: 2px solid #0a0a0a; outline-offset: 3px; 
 .proj-nav-btn:hover { opacity: 1; }
 .proj-nav-btn:hover .link-label { text-decoration: underline; text-underline-offset: 3px; }
 .proj-nav-name {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
-  color: #2563eb;
+  color: #2b6cff;
   line-height: 1.5;
   display: inline-block;
   transition: transform 0.2s ease, color 0.15s ease;
