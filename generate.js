@@ -824,18 +824,32 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
         '$3$1\n');
     }
     contentHtml = buildAreaCards(contentHtml);
-    contentHtml = buildResults(contentHtml);
-    contentHtml = buildDeliveryColumns(contentHtml,
-      ['app-installation-page-for-developers', 'internal-app-review-system', 'ai-credits-wallet'].includes(proj.slug),
-      proj.slug === 'internal-app-review-system',
-      ['app-installation-page-for-developers', 'internal-app-review-system'].includes(proj.slug));
-    contentHtml = buildProblemColumns(contentHtml, proj.slug === 'ai-credits-wallet',
-      ['app-installation-page-for-developers', 'ai-credits-wallet', 'internal-app-review-system'].includes(proj.slug),
-      proj.slug === 'internal-app-review-system');
-    if (proj.slug === 'internal-app-review-system') {
-      contentHtml = contentHtml.replace(
-        /(<h2>(?:<strong>)?[^<]*(?:<\/strong>)?<\/h2>)\s*(<div class="col-layout col-2 proj-prob proj-prob-gallery"><div class="col"><div class="proj-prob-copy">)/,
-        '$2$1\n');
+    if (proj.slug === 'developer-sale') {
+      // Plain bullets, no divider rows: the Problem and Approach column blocks are 2/3 + 1/3 (`proj-split`)
+      contentHtml = contentHtml.replace(/(<h2>\s*(?:<strong>)?\s*(?:The problem|Approach)[^<]*(?:<\/strong>)?\s*<\/h2>\n?)<div class="col-layout col-2">/gi,
+        '$1<div class="col-layout col-2 proj-split">');
+      // Solution: the screen on one half, the section title and text on the other (title written inside the second column in Notion)
+      contentHtml = contentHtml.replace(/<div class="col-layout col-2">(<div class="col"><figure[\s\S]*?<\/figure>\s*<\/div><div class="col"><h2)/,
+        '<div class="col-layout col-2 proj-shot">$1');
+      // Impact as a lead plus labelled rows; the screen after the next steps goes inside the rows column
+      contentHtml = buildResults(contentHtml);
+      contentHtml = contentHtml.replace(/(<div class="pr-row"><p class="pr-label">Next steps<\/p>[\s\S]*?<\/div>)<\/div><\/div>\n(\s*<figure class="proj-img">[\s\S]*?<\/figure>\n)/,
+        '$1<div class="pr-shot">$2</div></div></div>\n');
+      contentHtml = buildDeliveryColumns(contentHtml, true, false, true);
+    } else {
+      contentHtml = buildResults(contentHtml);
+      contentHtml = buildDeliveryColumns(contentHtml,
+        ['app-installation-page-for-developers', 'internal-app-review-system', 'ai-credits-wallet'].includes(proj.slug),
+        proj.slug === 'internal-app-review-system',
+        ['app-installation-page-for-developers', 'internal-app-review-system'].includes(proj.slug));
+      contentHtml = buildProblemColumns(contentHtml, proj.slug === 'ai-credits-wallet',
+        ['app-installation-page-for-developers', 'ai-credits-wallet', 'internal-app-review-system'].includes(proj.slug),
+        proj.slug === 'internal-app-review-system');
+      if (proj.slug === 'internal-app-review-system') {
+        contentHtml = contentHtml.replace(
+          /(<h2>(?:<strong>)?[^<]*(?:<\/strong>)?<\/h2>)\s*(<div class="col-layout col-2 proj-prob proj-prob-gallery"><div class="col"><div class="proj-prob-copy">)/,
+          '$2$1\n');
+    }
     }
   }
   if (contentHtml) contentHtml = injectTooltips(contentHtml);
@@ -936,6 +950,7 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
     contentHtml = contentHtml.replace(/<h3( id="[^"]*")?>([^<|]*?)\s+\|\s+([^<]*)<\/h3>/g,
       (m, id, label, ttl) => `<h3${id || ''} class="proj-h3"><span class="proj-h2-label">${label.trim()}</span><span class="proj-h3-title">${ttl.trim()}</span></h3>`);
     const subsectionTitles = new Set(['Design principles']);
+    if (proj.slug === 'developer-sale') ['Design decisions', 'Creating, joining and managing sales', 'How a sale shows to buyers'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'ai-credits-wallet') {
       subsectionTitles.add('Where users see their credits');
       subsectionTitles.add('Behind the scenes');

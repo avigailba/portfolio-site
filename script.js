@@ -864,6 +864,13 @@ if (document.getElementById('playFrame')) {
     root.setProperty('--r', r.toFixed(3));
     document.body.classList.toggle('scrolled', r > 0.5);
     toc.inert = r <= 0.5;
+    // The rail rides up with the page once the footer would reach it, so it never overlaps the footer
+    var footer = document.querySelector('.site-footer');
+    if (footer) {
+      var railBottom = (header ? header.offsetHeight : 0) + 16 + toc.offsetHeight;
+      var lift = Math.max(0, railBottom + 16 - footer.getBoundingClientRect().top);
+      root.setProperty('--toc-lift', lift.toFixed(1) + 'px');
+    }
   }
 
   // Update straight from the scroll event: the work is a few style writes, and a
