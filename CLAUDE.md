@@ -10,7 +10,7 @@ A static portfolio site for Avigail Bahat, Senior Product Designer. Content is w
 - No specific numbers, percentages or dollar amounts in project content (legal). Use directional words.
 - One muted gray for secondary text: `#555`. Borders `#ebebeb`. Accent `#0a0a0a`.
 - Titles in Plus Jakarta Sans, body and UI in Roboto (the site loads only these two; project sub-headings are Jakarta bold). Minimum font size 14px.
-- Project pages follow the deck-style system: see "DECK-STYLE PAGE SYSTEM" at the top of `PORTFOLIO-CONTENT-NOTES.md` before building or changing a page (layout shapes, Notion pitfalls, preview server).
+- Project pages follow the page system: see "PROJECT PAGE SYSTEM" at the top of `PORTFOLIO-CONTENT-NOTES.md` before building or changing a page (layout shapes, Notion pitfalls, preview server).
 - Content edits live in Notion, never only in the generated files.
 - Show a local preview and wait for her go before any commit or push. Say what a deploy will make live.
 - Never delete screens unless she asks. Back up a Notion page before restructuring one with images.

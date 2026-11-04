@@ -1,26 +1,26 @@
 # Portfolio content notes (read this first in any content session)
 
 Working memory for improving the portfolio copy. Update it at the end of every portfolio work session: add decisions, change a project's status, never delete history.
-Last updated: 2026-11-04 (no orphans rule added; added the recipe for a new agent; older sections marked superseded; earlier: deck-style page system on App Review Platform, Installations and AI Credits)
+Last updated: 2026-11-04 (the Intuit deck is no longer the reference: the four redesigned pages are; plain bullets except Impact; learned block added to the recipe; Developer Sale pushed)
 
-> **START HERE for any new page: the section "RECIPE FOR A NEW AGENT" right below, then "DECK-STYLE PAGE SYSTEM".** It overrides older parts of this file (the "Standard page structure" table, the goal-first numbered list rule, the Bottom line, Inter as body font). Older sections are kept as history.
+> **START HERE for any new page: the section "RECIPE FOR A NEW AGENT" right below, then "PROJECT PAGE SYSTEM" (called DECK-STYLE PAGE SYSTEM before 2026-11-04).** It overrides older parts of this file (the "Standard page structure" table, the goal-first numbered list rule, the Bottom line, Inter as body font, presentation decks). Older sections are kept as history.
 
 ## RECIPE FOR A NEW AGENT: build or rework a project page from this file (written 2026-11-04)
 Goal: another agent, with only this file and her CLAUDE.md, can design a project page the way she wants. Follow the steps in order. Where an older section below disagrees with the DECK-STYLE PAGE SYSTEM section, the DECK-STYLE section wins.
 
 ### 0. Read order and inputs
-1. `CLAUDE.md` (short hard rules), then this recipe, then "DECK-STYLE PAGE SYSTEM" below, then fetch ONE converted page from Notion as the exact markup example: App Review Platform (`71024356b51b4ce8b46c21fa3a442020`) or AI Credits (`31135a9ccf7a804caf72da07638205bc`).
-2. You need: the project name and slug (table "Project slugs and categories"), its Notion page ID (table "Notion page IDs"), and its slides in her Intuit deck (https://claude.ai/artifact/QAgonQkDu6qAyyNnAp5Fws). No deck slides for that project, or a project she has not named? Ask her ONE question and wait. The 11 unconverted pages are LATER by her word: do not start one unasked.
+1. `CLAUDE.md` (short hard rules), then this recipe, then "PROJECT PAGE SYSTEM" below, then fetch ONE of the four redesigned pages from Notion as the exact markup example (see "Reference pages" in that section). Pick the one whose layout is closest to what you are building.
+2. You need: the project name and slug (table "Project slugs and categories"), its Notion page ID (table "Notion page IDs"), and her sources for the project (the Notion page itself, her CV, Drive files such as PDFs and decks, Figma links, screenshots she sends). The Intuit portfolio deck is NOT the reference any more. Missing a source, or a project she has not named? Ask her ONE question and wait. The 11 unconverted pages are LATER by her word: do not start one unasked.
 
 ### 1. Steps
 1. **Backup.** Duplicate the Notion page, move the copy to the workspace root (never leave it under the CMS: it would be published), title it `BACKUP <name> <date>`.
 2. **Fetch** the page. Note every image ref (`notion-file-block://...`). Never retype an id by hand; copy it.
-3. **Map the deck to the page.** Titles come from the deck slide titles. Labels are the site's section names (The problem, Approach, Solution, Delivery & challenges, Impact & next steps). Use the deck's wording, fixing grammar only. If the deck and the old page disagree, ask her (short answers come back).
+3. **Plan the page from the reference pages and her sources.** Use the site section labels (The problem, Approach, Solution, Delivery & challenges, Impact & next steps). Each section gets a short plain title written from what her sources say (`## Label | Title`); mark the titles as unconfirmed in your report, she changes them. Use her wording, fixing grammar only. If two sources disagree, ask her (short answers come back).
 4. **Write the content in Notion** in the shapes of the table "Notion shape -> what the generator builds". Text and captions: `update_content`. Moving, adding or removing images: `replace_content` with the FULL page, every image ref exactly as fetched, `file-upload://<id>` for new uploads. Never a partial page.
-5. **Screens.** Take them from the deck (newer than the old page). Download via the Artifact tool `read` with `path: <blob id>`, convert webp with `sips -s format png`, upload to Notion (steps in "Working method and pitfalls"). Every image except the hero gets a caption `Label - what it shows`. Crop or blur customer names, emails and shop URLs.
+5. **Screens.** Take them from her sources (newest first): screenshots she sends, Figma, PDFs in Drive. Chat images are only sometimes saved to disk: if a file is missing, ask her to send it again. Convert webp with `sips -s format png`, crop with `sips --cropOffset <y> <x> -c <h> <w>`, upload to Notion (steps in "Working method and pitfalls"). Every image except the hero gets a caption `Label - what it shows`. Crop customer names, emails and shop URLs; paint over third-party names with the background colour only when she has not said no blur.
 6. **Generate** with `node generate.js <slug>` and read the output for errors. A failed image download means a remote (amazonaws) URL in the HTML: rerun until every `<img src>` is `../images/...`.
 7. **Preview** on a fresh port with the no-cache server (see pitfalls). Check at 1440px and 375px.
-8. **Report** in a few lines: what changed, what differs from the deck, what is open, ONE next question. Then wait. Do not commit or push without her explicit go, and say what the deploy will make live (it rebuilds every page from Notion, including anyone else's work in progress).
+8. **Report** in a few lines: what changed, what differs from the reference pages, what is open, ONE next question. Then wait. Do not commit or push without her explicit go, and say what the deploy will make live (it rebuilds every page from Notion, including anyone else's work in progress).
 9. **Update this file** before you stop: project status, decisions log, anything you learned.
 
 ### 2. Notion skeleton (shapes only; copy exact markup from the reference page)
@@ -29,19 +29,19 @@ Goal: another agent, with only this file and her CLAUDE.md, can design a project
 <date mention>
 ![](hero image)                         (no caption, not clickable)
 TL;DR: Sentence on what was wrong. Sentence on how it was worked. Sentence on the outcome.
-## The problem | <deck slide title>
+## The problem | <short title>
 <columns> left: statement paragraphs (+ old-tool images) | right: ### <Rows heading> then bullets </columns>
-## Approach | <deck slide title>
+## Approach | <short title>
 <columns> one of three shapes: rows 2/3 + 1/3, statement + images, or statement 1/3 + rows 2/3 </columns>
 ### Design principles
 <one bridge line>
 - **Title** one sentence | Tag
-## Solution | <deck slide title>
+## Solution | <short title>
 <columns> one screen | bullets (optional ### The principle in action) </columns>   (or two screens with text under each)
 <columns of captioned images, 2 to 4 across>
 ## Delivery & challenges | Working with the team
 <columns> ### Process + bullets | ### Challenges + bullets </columns>
-## Impact & next steps | <deck results title>
+## Impact & next steps | <short title>
 <lead paragraph>
 - **Label** sentence            (italic bullets are quotes)
 ### Next steps
@@ -71,29 +71,39 @@ No Bottom line. The Last updated line, the side menu (it lists only the labels b
 - After two "no" answers to proposals, stop proposing and ask for her exact line. A pasted screenshot after a question is not an answer: restate what you think it means in one line first.
 - Keep every message short: what changed, what is open, one question. "mm ok" means yes; "mm no" or "no no" means drop it.
 
+### 4b. Learned on Developer Sale (2026-11-04)
+- **Local first.** She wants to see a change in the local preview before Notion is edited. Prototype by editing the generated `dist/projects/<slug>.html` (the next `node generate.js` overwrites it, so keep a copy), show it, then write the same content to Notion, teach the generator the layout, rebuild and compare the rebuilt page with the prototype (list the headings and layout classes of both).
+- **Sync before you start.** Run `git fetch` and `git status -sb`. This folder was once 44 commits behind GitHub. Stash, `git pull --ff-only`, re-apply with `git apply --3way`, then `npm install` (new packages appear).
+- **Going live.** She says "make it live" after the warning. Notion first (the deploy rebuilds from Notion), rebuild locally and compare, commit only the files you changed, push. Nothing to commit because only Notion changed? `gh workflow run deploy.yml` (the workflow has `workflow_dispatch`). Every deploy rebuilds every page.
+- **No deck for the project.** Ask for her source files, write plain section titles, say they are unconfirmed.
+- **Tools on her Mac.** No PIL and no poppler (`pdftoppm`). Render and search PDF pages with a small Swift PDFKit script, crop with `sips`, paint over text with a Swift CoreGraphics script (sample the background colour next to it). A 347-page PDF is searched by text first, then only the hit pages are rendered.
+- **Orphans.** Check in the browser pane with a script that walks every paragraph, list item and caption and counts the words on the last line, at 1440px and 375px; `text-wrap: balance` is on titles, captions and the TL;DR.
+- **Shared code.** A fix in `script.js` or `style.css` goes live on every project page (the contents rail lifting above the footer did). Say so before pushing.
+- **Short messages.** A bare "figmas" or "dev sale" or a screenshot with no text: say in one line what you think it means and ask one question.
+
 ### 5. Where things stand on 2026-11-04
-- Converted to the deck-style system (see "Where each page stands" in the next section): App Review Platform, Installations, AI Credits Wallet. Their changes are LOCAL until she says push.
+- Converted to the page system (see "Where each page stands" in the next section): App Review Platform, Installations, AI Credits Wallet. Their changes are LOCAL until she says push.
 - Not converted: the other 11 project pages, by her word later. The 12-column grid and equal screen boxes already apply to them.
 - Homepage, About and design-system page structure: see "Site reference by page type" further down.
 
-## DECK-STYLE PAGE SYSTEM (2026-10-22): how to build the next page
-Her Intuit portfolio deck ("Intuit Portfolio Presentation", Claude Slides artifact https://claude.ai/artifact/QAgonQkDu6qAyyNnAp5Fws, also a PDF in Drive) is the design reference. She wants every project page to read like the deck: same section titles, same layouts, same wording. Content still lives in Notion; the generator (`generate.js`) turns Notion shapes into components; the CSS is at the end of the project-page block in `style.css`.
+## PROJECT PAGE SYSTEM (2026-10-22, called DECK-STYLE PAGE SYSTEM until 2026-11-04): how to build the next page
+The four redesigned pages (App Review Platform, Installations, AI Credits Wallet, Developer Sale) are the design reference; her Intuit portfolio deck inspired the layouts but is no longer the source. She wants every project page to follow the same section order, the same layouts and the same plain wording. Content still lives in Notion; the generator (`generate.js`) turns Notion shapes into components; the CSS is at the end of the project-page block in `style.css`.
 
 ### Page order (no Bottom line any more)
 1. Italic subtitle, date mention, hero image (no caption, not clickable).
 2. `TL;DR: sentence. sentence. sentence.` (one paragraph, three columns in a box).
-3. `## The problem | <deck slide title>`
-4. `## Approach | <deck slide title>` with `### Design principles` inside it as cards, plus an optional `### Exploration | ...` screen.
-5. `## Solution | <deck slide title>` with the screens.
+3. `## The problem | <short title>`
+4. `## Approach | <short title>` with `### Design principles` inside it as cards, plus an optional `### Exploration | ...` screen.
+5. `## Solution | <short title>` with the screens.
 6. `## Delivery & challenges | Working with the team`
-7. `## Impact & next steps | <deck results title>` (App Review, AI Credits) or `## Results & Impact | ...` followed by `## Next steps` (Installations).
+7. `## Impact & next steps | <short title>` (App Review, AI Credits) or `## Results & Impact | ...` followed by `## Next steps` (Installations).
 The "Last updated" line, side menu and More work are generated. The side menu lists the labels only (text before the " | ").
 
 ### Notion shape -> what the generator builds
 | In Notion | Result |
 |---|---|
 | `## Label \| Title` | small uppercase label above a large title (`.proj-h2`) |
-| `### Label \| Title` | same, smaller (`.proj-h3`), used for deck sub-slides |
+| `### Label \| Title` | same, smaller (`.proj-h3`), used for sub-sections |
 | Problem: columns, left = statement paragraphs (plus images), right = `### Rows heading` + bullets | `proj-prob`: statement 2/3 (body style), rows 1/3. Images placed in the left column sit side by side under the text |
 | Approach: columns `### Research process` bullets \| `### Pain points` bullets | rows, 2/3 + 1/3 (`proj-dc-even`, App Review) |
 | Approach: columns, left = statement + bullets, right = `### Heading` + images | rows 2/3 + images 1/3 (Installations) |
@@ -108,6 +118,18 @@ The "Last updated" line, side menu and More work are generated. The side menu li
 | Widget (AI Credits only) | injected by generate.js next to the Solution list, caption "Use the top selectors to see more wallet states" |
 Row bullets: a bold lead then the sentence, `**Lead.** sentence`. Pipes in Notion text show as `\|` when fetched; that is normal.
 
+### Bullets or dividers (her rule, 2026-11-04)
+Plain native bullets in The problem, Approach and Delivery (no divider rows). Divider rows only in Impact (`proj-results`: a lead plus labelled rows, Next steps as the last row). In generate.js plain bullets are opt-in per slug: the flags of `buildDeliveryColumns(html, approachBullets, approachEqual, deliveryBullets)` and `buildProblemColumns(html, statementLead, preserveBullets, gallery)` in `projectPage` list the slugs; the older default still builds divider rows for the 11 unconverted pages. Developer Sale has its own branch (`proj-split`).
+
+### Reference pages (the four redesigned projects)
+| Page | Notion ID | Use it as the example for |
+|---|---|---|
+| App Review Platform | 71024356b51b4ce8b46c21fa3a442020 | Problem with screens in the left column, Approach in two columns plus principle cards, product area cards, many screen groups under title-only h3s, 3-up screen rows, Process and Challenges, results rows |
+| Installations | 31135a9ccf7a80358e3cead5465c89f8 | `proj-shot` and `proj-shot2` (text and screen), a heading written inside the text column, quotes in Problem and Impact, edge cases 3-up, the labels "Delivery" and "Results & Impact" |
+| AI Credits Wallet | 31135a9ccf7a804caf72da07638205bc | the interactive widget beside Solution, statement 1/3 + rows 2/3, principle cards under the widget |
+| Developer Sale | 17d35a9ccf7a80c69ceafb3f7973485a | a project with no deck: Approach as one paragraph plus a 3-up screen row, Solution title and text in one half with a screen in the other (the `## Solution` heading written inside the second column), title-only h3 subsections, a 4-column screen row, a screen inside the Impact rows under Next steps (`.pr-shot`), plain-bullet Delivery |
+Page-specific layout lives in `projectPage` slug branches and in CSS scoped with `.proj-content[data-project="<slug>"]` (end of style.css). Say so when you add one: it must not leak to other pages. Title-only h3s are listed per slug in `subsectionTitles`; `### Label | Title` gives a small label above the title instead.
+
 ### Look (tokens)
 - Fonts: **Plus Jakarta Sans** for titles, card numbers and card titles; **Roboto** for everything else. The site loads only these two (older notes said Inter: wrong).
 - Body 16px, `#555`; bold lead in rows `#0a0a0a` 600. Min font size 14px.
@@ -119,16 +141,16 @@ Row bullets: a bold lead then the sentence, `**Lead.** sentence`. Pipes in Notio
 ### Screens and captions
 - Every image except the hero has a caption: `Label - what it shows` (older captions use a bold label and a colon, also fine). No em dashes, no trailing period needed, lowercase after the hyphen. Write captions from what the screen shows, never invent features (the OLD review tool had no comments).
 - Equal boxes for screens in a row; do not fight it with per-image CSS.
-- Use deck screens (they are newer). Download from the deck artifact with the Artifact tool `read` + `path: <blob id>` (saved under the scratchpad), convert webp to png with `sips -s format png`, upload to Notion (below).
+- Use her newest screens (screenshots she sends, Figma, PDFs in Drive). If a chat image is not saved on disk, ask her to send the file again. Convert webp to png with `sips -s format png`, upload to Notion (below).
 - Privacy: crop or blur customer names, emails and shop URLs. The workaround screenshots on Installations are cropped on purpose.
-- No numbers or percentages in copy (a number inside a screenshot is fine). The deck's "5 major apps" and "21 apps" were left out.
+- No numbers or percentages in copy (a number inside a screenshot is fine). App counts and similar figures from her sources are left out.
 
 ### Content rules learned
 - No orphans: see Hard rules. Check every heading, caption and bullet at 1440px and 375px before reporting.
-- Titles come from the deck slide titles; labels stay the site's section names (Approach, Solution, Delivery & challenges), not the deck's ("Discovery", "The design").
-- Use the deck's wording, fixing only grammar. Do not describe things the deck does not say (collaborator wallet stays out of Solution, "5 credits" left out).
-- If the deck and the page disagree, ask her; she answers short ("saved views shipped by me", "upgrade rate improved").
-- She prefers the deck layout every time she compares ("the deck is better"): when in doubt, copy the slide.
+- Labels are the site's section names (Approach, Solution, Delivery & challenges); the titles are short plain descriptions written from her sources and shown to her as unconfirmed.
+- Use her wording, fixing only grammar. Do not describe things her sources do not say (collaborator wallet stays out of Solution, "5 credits" left out).
+- If two sources disagree, ask her; she answers short ("saved views shipped by me", "upgrade rate improved").
+- When in doubt, copy the layout of the closest reference page.
 
 ### Working method and pitfalls (read these)
 - Notion tools: `update_content` can change text and image CAPTIONS (match the caption text), but cannot match or move image blocks and cannot match text containing the bar character reliably (`## Approach | ...` is auto-corrected, fine). Moving, adding, removing images = `replace_content` with the FULL page, every image ref exactly as fetched (`notion-file-block://...`) or `file-upload://<id>` for new uploads. NEVER send a partial page to `replace_content` (it wiped the Installations page once; recovered from the last full text and the image cache in `dist/images`). Fetch first, edit the fetched text, send all of it.
