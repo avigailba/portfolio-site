@@ -428,7 +428,7 @@ function ftr(prefix = '') {
     <div class="ft-facts">
       <div>
         <h2 class="ft-label">Experience</h2>
-        <div class="ft-xp"><p class="ft-big">10+ years</p><p class="ft-sm">Wix</p></div><div class="ft-xp"><p class="ft-big">5 years</p><p class="ft-sm">Sole designer</p><p class="ft-sm">Wix Developer Center</p></div><div class="ft-xp"><p class="ft-big">4 years</p><p class="ft-sm">Founding designer</p><p class="ft-sm">Wix ADI</p></div>
+        <div class="ft-xp"><p class="ft-big">10+ years</p><p class="ft-sm">Product designer</p><p class="ft-sm">Wix.com</p></div><div class="ft-xp"><p class="ft-big">5 years</p><p class="ft-sm">Sole designer</p><p class="ft-sm">Wix Developer Center</p></div><div class="ft-xp"><p class="ft-big">4 years</p><p class="ft-sm">Founding designer</p><p class="ft-sm">Wix ADI</p></div>
       </div>
       <div class="ft-contact">
         <h2 class="ft-label">Contact</h2>
