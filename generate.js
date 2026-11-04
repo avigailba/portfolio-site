@@ -433,9 +433,9 @@ function ftr(prefix = '') {
       <div class="ft-contact">
         <h2 class="ft-label">Contact</h2>
         <div class="ft-links">
-          <a class="ft-link" href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span aria-hidden="true">↗</span></a>
-          <a class="ft-link" href="https://www.linkedin.com/in/avigailbahat/"><span>LinkedIn</span><span aria-hidden="true">↗</span></a>
-          <a class="ft-link" href="${prefix}Avigail%20Bahat%20CV.pdf"><span>Download CV</span><span aria-hidden="true">↓</span></a>
+          <a class="ft-link" href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span></a>
+          <a class="ft-link" href="https://www.linkedin.com/in/avigailbahat/"><span>LinkedIn</span></a>
+          <a class="ft-link" href="${prefix}Avigail%20Bahat%20CV.pdf"><span>Download CV</span></a>
         </div>
       </div>
     </div>
