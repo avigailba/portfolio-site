@@ -1716,4 +1716,4 @@ body.scrolled .title-block { pointer-events: none; }
 
 /* About page: the contents rail is always visible (no title block to scroll away) */
 .toc.about-toc { opacity: 1; transform: none; pointer-events: auto; }
-.cv-page h2[id] { scroll-margin-top: 100px; }
+.cv-page h2[id], #cv-work { scroll-margin-top: 100px; }

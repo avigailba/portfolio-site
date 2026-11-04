@@ -1208,6 +1208,20 @@ async function aboutPage(blocks) {
           </div>`).join('');
 
   const summaryHtml = summaryBlocks.map((block) => paragraphHtml(block)).join('');
+  // More work: same component as project pages (rows from the project list, "See all work" link)
+  const moreRows = Object.entries(PROJECT_META)
+    .filter(([slug]) => !SKIP_SLUGS.has(slug))
+    .slice(0, 4)
+    .map(([slug, m], i) => `<div class="row-wrap open" data-cat="${m.cats}"><a href="projects/${slug}.html" class="row" data-cat="${m.cats}"><span class="num">${String(i + 1).padStart(2, '0')}</span><div class="rmain"><span class="row-title">${escapeAttr(m.title)}</span><span class="rsub">${escapeAttr(m.subtitle || '')}</span></div><span class="cat-tag">${escapeAttr(m.display)}</span><span class="row-arr"><span class="link-label">View</span> ↗</span><div class="mob-row-foot"><span class="mob-view-btn mob-view-sm"><span class="link-label">View</span> ↗</span></div></a></div>`)
+    .join('');
+  const aboutMoreWork = `<section class="more-section">
+    <div class="more-inner">
+      <p class="more-label" id="cv-work">More work</p>
+      <div id="more-list">${moreRows}</div>
+      <div class="more-cta"><a href="index.html" class="more-cta-link">See all work →</a></div>
+    </div>
+  </section>`;
+
   // Contents rail (same look as project pages), one entry per section that exists
   const tocItems = [
     summaryHtml ? ['cv-summary', 'Summary'] : null,
@@ -1215,6 +1229,7 @@ async function aboutPage(blocks) {
     achievementItems.length ? ['cv-achievements', 'Key achievements'] : null,
     groups.length ? ['cv-experience', 'Experience'] : null,
     education ? ['cv-education', 'Education'] : null,
+    ['cv-work', 'Work'],
   ].filter(Boolean);
   const aboutToc = tocItems.length > 2
     ? `<nav class="toc about-toc" aria-label="Contents"><span class="toc-title">About</span><ol>${tocItems.map(([id, label], i) => `<li><a href="#${id}"><span class="pa-num">${String(i + 1).padStart(2, '0')}</span><span class="pa-label">${label}</span></a></li>`).join('')}</ol></nav>`
@@ -1233,7 +1248,8 @@ async function aboutPage(blocks) {
       </section>` : ''}
       ${education ? `<section class="cv-edu" aria-labelledby="cv-education"><h2 id="cv-education">Education</h2><h3 class="cv-job-title">${escapeAttr(education.degree)}</h3>${education.school ? `<p>${escapeAttr(education.school)}</p>` : ''}</section>` : ''}
     </div>
-  </main>`, '', '', 'about-page', 'about');
+  </main>
+  ${aboutMoreWork}`, '', '', 'about-page', 'about');
 }
 
 function designSystemPage(notionConnected) {
