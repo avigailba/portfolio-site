@@ -1216,7 +1216,7 @@ async function aboutPage(blocks) {
     .join('');
   const aboutMoreWork = `<section class="more-section">
     <div class="more-inner">
-      <p class="more-label" id="cv-work">More work</p>
+      <p class="more-label" id="cv-work">Work</p>
       <div id="more-list">${moreRows}</div>
       <div class="more-cta"><a href="index.html" class="more-cta-link">See all work →</a></div>
     </div>
