@@ -423,7 +423,7 @@ function ftr(prefix = '') {
       <h2 class="ft-big">Avigail Bahat</h2>
       <p class="ft-sum">Senior Product Designer designing developer platforms, monetization, and AI products. I'm hands-on with code through AI tools and work closely with product and engineering.</p>
       <ul class="ft-tags" aria-label="Areas of focus"><li>Developer tools</li><li>AI products</li><li>Complex systems</li><li>B2B SaaS</li><li>Platform design</li><li>Marketplace</li><li>Design systems</li><li>Developer experience</li><li>Monetisation</li><li>Internal tools</li></ul>
-      <a class="ft-link ft-more" href="${prefix}about.html"><span>Read more</span> ↗</a>
+      <a class="ft-link ft-more" href="${prefix}about.html"><span>Read more</span> →</a>
     </div>
     <div class="ft-facts">
       <div>
@@ -434,7 +434,7 @@ function ftr(prefix = '') {
         <h2 class="ft-label">Contact</h2>
         <div class="ft-links">
           <a class="ft-link" href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span> ↗</a>
-          <a class="ft-link" href="https://www.linkedin.com/in/avigailbahat/"><span>LinkedIn</span> ↗</a>
+          <a class="ft-link" href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noopener"><span>LinkedIn</span> ↗</a>
           <a class="ft-link" href="${prefix}Avigail%20Bahat%20CV.pdf"><span>Download CV</span> ↓</a>
         </div>
       </div>
