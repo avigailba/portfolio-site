@@ -1,9 +1,9 @@
 # Portfolio content notes (read this first in any content session)
 
 Working memory for improving the portfolio copy. Update it at the end of every portfolio work session: add decisions, change a project's status, never delete history.
-Last updated: 2026-11-04 (added the recipe for a new agent; older sections marked superseded; earlier: deck-style page system on App Review Platform, Installations and AI Credits)
+Last updated: 2026-11-04 (no orphans rule added; added the recipe for a new agent; older sections marked superseded; earlier: deck-style page system on App Review Platform, Installations and AI Credits)
 
-> **START HERE for any new page: the section "RECIPE FOR A NEW AGENT" right below, then "DECK-STYLE PAGE SYSTEM".** It overrides older parts of this file (the "Standard page structure" table, the goal-first numbered list rule, the Bottom line, Inter as body font, presentation decks). Older sections are kept as history.
+> **START HERE for any new page: the section "RECIPE FOR A NEW AGENT" right below, then "DECK-STYLE PAGE SYSTEM".** It overrides older parts of this file (the "Standard page structure" table, the goal-first numbered list rule, the Bottom line, Inter as body font). Older sections are kept as history.
 
 ## RECIPE FOR A NEW AGENT: build or rework a project page from this file (written 2026-11-04)
 Goal: another agent, with only this file and her CLAUDE.md, can design a project page the way she wants. Follow the steps in order. Where an older section below disagrees with the DECK-STYLE PAGE SYSTEM section, the DECK-STYLE section wins.
@@ -57,7 +57,7 @@ No Bottom line. The Last updated line, the side menu (it lists only the labels b
 - Screens sit in equal 3:2 boxes; no per-image CSS fights; nothing deleted unless she asked (say so if a screen is dropped).
 - Fonts: Plus Jakarta Sans for titles and card numbers and titles, Roboto for everything else. Min 14px. `#555` for secondary text.
 - Privacy pass done on every screenshot.
-- Preview checked at 1440px and 375px: no overlap, no one-word last lines, side menu shows the labels, hero not clickable, lightbox opens the others.
+- Preview checked at 1440px and 375px: no overlap, NO ORPHANS (no one-word last lines anywhere), side menu shows the labels, hero not clickable, lightbox opens the others.
 - `generate.js` ran clean, all images are local files.
 - "Wix App Market" written in full on first mention (tooltip); product names as she writes them.
 - Status and decisions written into this file.
@@ -124,6 +124,7 @@ Row bullets: a bold lead then the sentence, `**Lead.** sentence`. Pipes in Notio
 - No numbers or percentages in copy (a number inside a screenshot is fine). The deck's "5 major apps" and "21 apps" were left out.
 
 ### Content rules learned
+- No orphans: see Hard rules. Check every heading, caption and bullet at 1440px and 375px before reporting.
 - Titles come from the deck slide titles; labels stay the site's section names (Approach, Solution, Delivery & challenges), not the deck's ("Discovery", "The design").
 - Use the deck's wording, fixing only grammar. Do not describe things the deck does not say (collaborator wallet stays out of Solution, "5 credits" left out).
 - If the deck and the page disagree, ask her; she answers short ("saved views shipped by me", "upgrade rate improved").
@@ -157,6 +158,7 @@ Row bullets: a bold lead then the sentence, `**Lead.** sentence`. Pipes in Notio
 Make every project page more impressive for hiring managers and recruiters. Target role: full-time product design role, with AI and code involvement, not Figma-only.
 
 ## Hard rules (from CLAUDE.md and Avigail)
+- **No orphans** (her preference, 2026-11-04): never leave one word alone on the last line of a heading, subtitle, caption, bullet or paragraph, at 1440px and 375px. The CSS already balances titles and subtitles (`text-wrap: balance`) and tidies body text (`text-wrap: pretty`). If a line still ends on one word, join the last two words with a non-breaking space (`&nbsp;`) or reword slightly; do not change the meaning.
 - No em dashes or en dashes in any copy, captions included. Use a comma, colon, period, or a plain " - " like the other captions on the page.
 - No specific numbers, percentages, or dollar amounts in project content (legal). Use plain directional words. Years and dates are fine.
 - No hype words ("amazing", "strong growth"). Say what happened.
@@ -245,24 +247,6 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 - TOC uses the original 190px rail width, numbered list, and padded selected/hover rows. Its right edge clears the article at 1440px.
 - Code: markup in `generate.js`, styles in `style.css`, scroll behavior in `script.js`.
 
-## Presentation mode (deck) for App Review Platform
-> LEGACY. Hand-built decks are no longer the model: the page itself now reads like her Intuit deck. The App Review button and file still exist (`PROJECT_DECKS` in generate.js); do not build or update a deck for another project unless she asks. Installations' deck is switched off.
-
-- A separate, hand-edited file: `dist/projects/internal-review-demo.html`. It is NOT generated from Notion; generate.js keeps it (`KEEP_PROJECT_FILES`). Edit it directly and keep it in sync with the Notion page.
-- The "Presentation mode" button under the page subtitle links to it. She wants it.
-- Current order (16 slides, same order as the page): 1 Cover (title on 3 lines), 2 TL;DR (3 bullets, body style), 3 The problem (plain bullets), 4 Research (plain bullets), 5 Principles (yellow boxes), 6 Redesigning the platform (seven yellow boxes, 3 columns, subtitle "The main things we solved in the new product."), 7 Product areas, 8 Apps directory and review queue, 9 App page, 10 and 11 Review workflow, 12 and 13 Publish flow (continued has a subtitle), 14 Team management, 15 Delivery & challenges ("Challenges" is a bold Jakarta sub-title), 16 Impact & next steps (plain Bottom line, tight paragraph spacing).
-- Style: titles Plus Jakarta Sans, body Inter 17px (never Jakarta for body text), plain bullets (no dividers or arrows), yellow `research-card` boxes for principles and the seven points, captions below images, lightbox caption white.
-- Side navigation ported from the Queuewe deck (dist/queuewe/index.html): 170px list, numbered from each slide's `data-label`, hidden on the cover, round menu button and drawer at 1100px and below. New slides need a `data-label`.
-- Known differences from the page: the deck's TL;DR bullets use the earlier wording (page says "internal app review tool" and "the team has used the tool and added features to it since the 2022 launch"); the two removed screens (Existing comment, Publishing loading state) may still be on the deck's Review workflow and Publish flow slides; the deck has no Last updated line or side menu of the page; principle 4 wording should match the page ("Keep the account managers in control").
-
-## Presentation mode (deck) for Installations Page (built 2026-10-15, LOCAL, not committed). SWITCHED OFF 2026-10-18: she does not want a presentation mode for Installations for now. The button is off (entry commented out in PROJECT_DECKS in generate.js) and the deck file is kept but must NOT be committed or pushed unless she asks. It holds unblurred third-party screenshots (customer emails, shop URLs) on the 'What developers used instead' slide.
-- File: `dist/projects/installations-demo.html`. Hand-edited like the App Review deck: it is not generated from Notion, generate.js keeps it (`KEEP_PROJECT_FILES`), and the "Presentation mode" button comes from `PROJECT_DECKS` in generate.js (slug to deck file; both decks are listed there).
-- Built by copying the App Review deck (internal-review-demo.html) so the CSS, side nav, dots, lightbox and keyboard behaviour are identical. Only the slides and the side-nav title changed. Do not restyle it on its own; change both decks together.
-- 14 slides, in order: Cover (hero image, badges, title on two lines), TL;DR (3 bullets), The problem, Research, Principles (4 cards), Challenges (list plus the Server image), Design, The page (Default view, Column customization), Full columns and filters, Behind the scenes (Figma Make, Cursor), Edge and empty states (4 images), Delivery, Results & impact (with the two developer quotes), Next steps & bottom line.
-- Copy is taken word for word from the Notion page. No numbers, no em dashes. When the page changes, change the deck in the same turn.
-- Checked at 1440 x 900: no slide overflows and no caption overlaps an image. Not checked: 375px and the 1100px side-nav breakpoint (inherited from the App Review deck).
-- To add another deck: copy an existing deck, replace the slides, add the file to KEEP_PROJECT_FILES and an entry to PROJECT_DECKS.
-
 ## Source of truth for claims
 - CV file: /Users/avigailb/Library/CloudStorage/GoogleDrive-avigailba@gmail.com/My Drive/01 Avigail/Avigail Bahat CV.pdf
 - Interview deck for this project (Hebrew): Google Slides "App Review System - Melio" in her Drive. More decks like it may exist per project: search Drive before writing impact.
@@ -301,10 +285,9 @@ Rules for whoever builds a page:
 - Use only facts from the page, her CV, her Drive decks, or what she says. If a section has no source, ask one question; do not invent. (Role and team: she declined a role strip.)
 - Keep her wording when she writes it herself. After two "no" answers to proposals, ask for her exact line.
 - Write "Wix App Market" in full on first mention so the tooltip appears.
-- Captions: `Label - what it shows or lets you do`, lowercase after the hyphen, no trailing period, shown BELOW the image (page and deck).
+- Captions: `Label - what it shows or lets you do`, lowercase after the hyphen, no trailing period, shown BELOW the image.
 - Check the page in the local preview at 1440px and 375px. Do not push without her explicit go, and say what the deploy will make live.
 - Keep replies short: what changed, what is open, one next question.
-- If the project has a presentation deck, keep it in sync in the same turn, and END EVERY PAGE EDIT REPORT with a line saying whether the deck is in sync and what differs.
 - Notion image blocks: see Workflow items 7 and 8.
 
 ## Case study checklist (Product Design Case Study Cheatsheet, saved 2026-10-13)
@@ -345,7 +328,6 @@ Verified against the generated site on 2026-10-14. Where CLAUDE.md was out of da
 ### How the site is built
 - Content is written in Notion (parent "Avigail Bahat Portfolio (CMS)"). `node generate.js` (or `node generate.js <slug>`, which still rebuilds everything) fetches it and writes `dist/`. Pushing to `main` runs GitHub Actions, which rebuilds from Notion and deploys to GitHub Pages (avigailba.com).
 - Files: `dist/index.html` (homepage), `dist/about.html` (About, CV and contact), `dist/contact.html` (redirect to About), `dist/design-system.html` (password-gated), `dist/projects/<slug>.html` (one per project), `dist/queuewe/` (separate take-home deck), `style.css` and `script.js` (shared, single files), `generate.js` (generator), `prompts/` (reference).
-- The presentation deck `dist/projects/internal-review-demo.html` is hand-edited and kept by the generator (see "Presentation mode" above).
 
 ### Every page
 - Header: sticky, condenses on scroll past 40px (`overflow: hidden` must be on the base `.avail-dot-wrap`, not only on `.scrolled`). Name and title on the left, nav on the right: "Projects" and "About & Contact" (there is no separate contact page; `contact.html` redirects).
@@ -367,7 +349,7 @@ Built by `aboutPage()` from the Notion page "About & Contact" (ID in the table b
 - Content width 720px (`.about-notion`).
 
 ### Project pages (projects/<slug>.html)
-- Content structure: see "Standard page structure" above. Page chrome (generated): title block with year and category tags, subtitle, optional Presentation mode button, left side menu (numbered sections, wide screens), prev/next project links, then content, Last updated line, "More work" (4 other projects as rows).
+- Content structure: see "Standard page structure" above. Page chrome (generated): title block with year and category tags, subtitle, left side menu (numbered sections, wide screens), prev/next project links, then content, Last updated line, "More work" (4 other projects as rows).
 - Lightbox: every content image except the hero opens full screen. Mobile: swipe left/right (40px threshold) and tap left/right half to navigate; the bare overlay closes on desktop.
 - Row tokens (`.row`, `.row-wrap`, `.num`, `.row-title`, `.rsub`, `.row-year`, `.row-arr`, `.cat-tag`, `.feat-tag`) are defined once in style.css and shared by the homepage list and the More work rows. Never redefine them per page. `.row-wrap` starts at `max-height: 120px` on project pages and `0` on the homepage.
 - Project page CSS essentials: `.proj-main` padding `0 clamp(40px, 20%, 240px)`; `.proj-content` no max-width; sub-headings (h3) Plus Jakarta Sans 20px / 700; captions below images; hero image not clickable.
@@ -672,7 +654,6 @@ Reviews Revamp, Collections Manager, Payouts Page, Refund Flow, Pricing Page Pro
 - 2026-10-13: Installations: no "first page" wording in the subtitle or opening. She wants it stated that she shipped code.
 - 2026-10-13: Installations restructured to the App Review Platform pattern (see its entry). She rejected every invented subtitle; her own original line with a verb added won. Lesson: start from her wording, not new copy.
 - 2026-10-13: Local preview: port 8765 may be a stale server from an old session serving an old snapshot. Serve dist/ on a fresh port to check changes.
-- 2026-10-13: Presentation mode button restored and the deck content synced to the page (13 slides, principles slide added).
 - 2026-10-13: Design principles section added to App Review Platform under Research (Staff-level interview prep). Role strip declined ("no"). Weaving the principles into the list declined ("no no"). Principles stay as a separate subsection in her wording.
 - 2026-10-12: Deployed. Lesson: the project title is also hardcoded in PROJECT_META in generate.js (feeds the homepage featured card and the More work lists). When a Notion page is renamed, change PROJECT_META title too and grep the generated site for the old name.
 - 2026-10-12: One session per batch is the default. A single project gets its own session only for deep work. Shared files (generate.js, dist/) make parallel sessions risky.
@@ -683,7 +664,6 @@ Reviews Revamp, Collections Manager, Payouts Page, Refund Flow, Pricing Page Pro
 - 2026-10-12: Last updated line from the Notion edit date, on project pages only.
 - 2026-10-12: "Click any image to see it bigger" line added before the first image group.
 - 2026-10-12: Widow rule enforced in CSS, not by tuning copy: `text-wrap: balance` on subtitles, `text-wrap: pretty` on project body paragraphs and list items (checked at 375, 477 and 1440px: no single word on a last line).
-- 2026-10-12: "Presentation mode" button removed from App Review Platform (it was the only page with it). The deck page internal-review-demo.html still exists but nothing links to it.
 - 2026-10-12: The hero image (first image, before the first heading) is not clickable on project pages; all other images open the lightbox. AI Credits has no hero image (widget layout).
 - 2026-10-12: Her request to deploy the page. Deploy only after she confirms the warning about what else changes on the live site.
 - 2026-10-12: AI Credits is NOT started automatically. She starts it.
