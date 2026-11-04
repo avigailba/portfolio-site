@@ -938,6 +938,18 @@ if (document.getElementById('playFrame')) {
       activate(target);
     });
   });
+  // Line the rail's title up with the page title, then let it stick under the header once the page scrolls past
+  var h1 = document.querySelector('.cv-page h1');
+  var hdr = document.getElementById('site-header');
+  function place() {
+    if (!h1) return;
+    var base = h1.getBoundingClientRect().top + window.scrollY + 4;
+    var min = (hdr ? hdr.offsetHeight : 102) + 16;
+    toc.style.top = Math.max(base - window.scrollY, min) + 'px';
+  }
+  place();
+  window.addEventListener('scroll', place, { passive: true });
+  window.addEventListener('resize', place, { passive: true });
   function update() {
     if (Date.now() < lockUntil) return;
     var current = sections[0];
