@@ -423,7 +423,7 @@ function ftr(prefix = '') {
       <h2 class="ft-big">Avigail Bahat</h2>
       <p class="ft-sum">Senior Product Designer designing developer platforms, monetization, and AI products. I'm hands-on with code through AI tools and work closely with product and engineering.</p>
       <ul class="ft-tags" aria-label="Areas of focus"><li>Developer tools</li><li>AI products</li><li>Complex systems</li><li>B2B SaaS</li><li>Platform design</li><li>Marketplace</li><li>Design systems</li><li>Developer experience</li><li>Monetisation</li><li>Internal tools</li></ul>
-      <a class="ft-link" href="${prefix}about.html"><span>Read more</span><span aria-hidden="true">↗</span></a>
+      <a class="ft-link ft-more" href="${prefix}about.html"><span>Read more</span> ↗</a>
     </div>
     <div class="ft-facts">
       <div>
