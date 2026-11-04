@@ -1,9 +1,80 @@
 # Portfolio content notes (read this first in any content session)
 
 Working memory for improving the portfolio copy. Update it at the end of every portfolio work session: add decisions, change a project's status, never delete history.
-Last updated: 2026-10-22 (deck-style page system built on App Review Platform, Installations and AI Credits, all LOCAL and not pushed)
+Last updated: 2026-11-04 (added the recipe for a new agent; older sections marked superseded; earlier: deck-style page system on App Review Platform, Installations and AI Credits)
 
-> **START HERE for any new page: the section "DECK-STYLE PAGE SYSTEM" right below.** It overrides older parts of this file (the "Standard page structure" table, the goal-first numbered list rule, the Bottom line, Inter as body font, presentation decks). Older sections are kept as history.
+> **START HERE for any new page: the section "RECIPE FOR A NEW AGENT" right below, then "DECK-STYLE PAGE SYSTEM".** It overrides older parts of this file (the "Standard page structure" table, the goal-first numbered list rule, the Bottom line, Inter as body font, presentation decks). Older sections are kept as history.
+
+## RECIPE FOR A NEW AGENT: build or rework a project page from this file (written 2026-11-04)
+Goal: another agent, with only this file and her CLAUDE.md, can design a project page the way she wants. Follow the steps in order. Where an older section below disagrees with the DECK-STYLE PAGE SYSTEM section, the DECK-STYLE section wins.
+
+### 0. Read order and inputs
+1. `CLAUDE.md` (short hard rules), then this recipe, then "DECK-STYLE PAGE SYSTEM" below, then fetch ONE converted page from Notion as the exact markup example: App Review Platform (`71024356b51b4ce8b46c21fa3a442020`) or AI Credits (`31135a9ccf7a804caf72da07638205bc`).
+2. You need: the project name and slug (table "Project slugs and categories"), its Notion page ID (table "Notion page IDs"), and its slides in her Intuit deck (https://claude.ai/artifact/QAgonQkDu6qAyyNnAp5Fws). No deck slides for that project, or a project she has not named? Ask her ONE question and wait. The 11 unconverted pages are LATER by her word: do not start one unasked.
+
+### 1. Steps
+1. **Backup.** Duplicate the Notion page, move the copy to the workspace root (never leave it under the CMS: it would be published), title it `BACKUP <name> <date>`.
+2. **Fetch** the page. Note every image ref (`notion-file-block://...`). Never retype an id by hand; copy it.
+3. **Map the deck to the page.** Titles come from the deck slide titles. Labels are the site's section names (The problem, Approach, Solution, Delivery & challenges, Impact & next steps). Use the deck's wording, fixing grammar only. If the deck and the old page disagree, ask her (short answers come back).
+4. **Write the content in Notion** in the shapes of the table "Notion shape -> what the generator builds". Text and captions: `update_content`. Moving, adding or removing images: `replace_content` with the FULL page, every image ref exactly as fetched, `file-upload://<id>` for new uploads. Never a partial page.
+5. **Screens.** Take them from the deck (newer than the old page). Download via the Artifact tool `read` with `path: <blob id>`, convert webp with `sips -s format png`, upload to Notion (steps in "Working method and pitfalls"). Every image except the hero gets a caption `Label - what it shows`. Crop or blur customer names, emails and shop URLs.
+6. **Generate** with `node generate.js <slug>` and read the output for errors. A failed image download means a remote (amazonaws) URL in the HTML: rerun until every `<img src>` is `../images/...`.
+7. **Preview** on a fresh port with the no-cache server (see pitfalls). Check at 1440px and 375px.
+8. **Report** in a few lines: what changed, what differs from the deck, what is open, ONE next question. Then wait. Do not commit or push without her explicit go, and say what the deploy will make live (it rebuilds every page from Notion, including anyone else's work in progress).
+9. **Update this file** before you stop: project status, decisions log, anything you learned.
+
+### 2. Notion skeleton (shapes only; copy exact markup from the reference page)
+```
+*Italic subtitle: one line, the outcome, no numbers*
+<date mention>
+![](hero image)                         (no caption, not clickable)
+TL;DR: Sentence on what was wrong. Sentence on how it was worked. Sentence on the outcome.
+## The problem | <deck slide title>
+<columns> left: statement paragraphs (+ old-tool images) | right: ### <Rows heading> then bullets </columns>
+## Approach | <deck slide title>
+<columns> one of three shapes: rows 2/3 + 1/3, statement + images, or statement 1/3 + rows 2/3 </columns>
+### Design principles
+<one bridge line>
+- **Title** one sentence | Tag
+## Solution | <deck slide title>
+<columns> one screen | bullets (optional ### The principle in action) </columns>   (or two screens with text under each)
+<columns of captioned images, 2 to 4 across>
+## Delivery & challenges | Working with the team
+<columns> ### Process + bullets | ### Challenges + bullets </columns>
+## Impact & next steps | <deck results title>
+<lead paragraph>
+- **Label** sentence            (italic bullets are quotes)
+### Next steps
+<one or two sentences, only facts she gives>
+```
+No Bottom line. The Last updated line, the side menu (it lists only the labels before the " | ") and More work are generated.
+
+### 3. Definition of done (check all before you report)
+- Order and labels exactly as above; nothing between them; no Bottom line.
+- TL;DR is exactly three sentences, in the order problem, process, result (the generator adds the three small labels only then).
+- Every image except the hero has a caption in the `Label - what it shows` pattern, no em or en dashes, no invented features.
+- No numbers, percentages or dollar amounts in the copy (a number inside a screenshot is fine). No hype words. First person where it is her work.
+- Screens sit in equal 3:2 boxes; no per-image CSS fights; nothing deleted unless she asked (say so if a screen is dropped).
+- Fonts: Plus Jakarta Sans for titles and card numbers and titles, Roboto for everything else. Min 14px. `#555` for secondary text.
+- Privacy pass done on every screenshot.
+- Preview checked at 1440px and 375px: no overlap, no one-word last lines, side menu shows the labels, hero not clickable, lightbox opens the others.
+- `generate.js` ran clean, all images are local files.
+- "Wix App Market" written in full on first mention (tooltip); product names as she writes them.
+- Status and decisions written into this file.
+
+### 4. Hard-learned don'ts
+- Do not send a partial page to `replace_content`; do not move images by re-referencing them in `update_content`.
+- Do not serve the preview with plain `http.server` (her Chrome shows old pages): use `scratchpad/nocache_server.py`.
+- Do not invent facts, features or numbers. Her wording goes in as written; flag concerns after.
+- Do not add toggles; she cuts screens herself. Do not style plain statements as quotes.
+- Do not change shared CSS or `generate.js` without saying it affects every project page. Do not stage files you did not change; another agent may be editing the same repo and Notion (diff before staging; the working tree may hold its work in progress).
+- After two "no" answers to proposals, stop proposing and ask for her exact line. A pasted screenshot after a question is not an answer: restate what you think it means in one line first.
+- Keep every message short: what changed, what is open, one question. "mm ok" means yes; "mm no" or "no no" means drop it.
+
+### 5. Where things stand on 2026-11-04
+- Converted to the deck-style system (see "Where each page stands" in the next section): App Review Platform, Installations, AI Credits Wallet. Their changes are LOCAL until she says push.
+- Not converted: the other 11 project pages, by her word later. The 12-column grid and equal screen boxes already apply to them.
+- Homepage, About and design-system page structure: see "Site reference by page type" further down.
 
 ## DECK-STYLE PAGE SYSTEM (2026-10-22): how to build the next page
 Her Intuit portfolio deck ("Intuit Portfolio Presentation", Claude Slides artifact https://claude.ai/artifact/QAgonQkDu6qAyyNnAp5Fws, also a PDF in Drive) is the design reference. She wants every project page to read like the deck: same section titles, same layouts, same wording. Content still lives in Notion; the generator (`generate.js`) turns Notion shapes into components; the CSS is at the end of the project-page block in `style.css`.
@@ -175,6 +246,8 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 - Code: markup in `generate.js`, styles in `style.css`, scroll behavior in `script.js`.
 
 ## Presentation mode (deck) for App Review Platform
+> LEGACY. Hand-built decks are no longer the model: the page itself now reads like her Intuit deck. The App Review button and file still exist (`PROJECT_DECKS` in generate.js); do not build or update a deck for another project unless she asks. Installations' deck is switched off.
+
 - A separate, hand-edited file: `dist/projects/internal-review-demo.html`. It is NOT generated from Notion; generate.js keeps it (`KEEP_PROJECT_FILES`). Edit it directly and keep it in sync with the Notion page.
 - The "Presentation mode" button under the page subtitle links to it. She wants it.
 - Current order (16 slides, same order as the page): 1 Cover (title on 3 lines), 2 TL;DR (3 bullets, body style), 3 The problem (plain bullets), 4 Research (plain bullets), 5 Principles (yellow boxes), 6 Redesigning the platform (seven yellow boxes, 3 columns, subtitle "The main things we solved in the new product."), 7 Product areas, 8 Apps directory and review queue, 9 App page, 10 and 11 Review workflow, 12 and 13 Publish flow (continued has a subtitle), 14 Team management, 15 Delivery & challenges ("Challenges" is a bold Jakarta sub-title), 16 Impact & next steps (plain Bottom line, tight paragraph spacing).
@@ -206,6 +279,8 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 - The header year on project pages is the project date (App Review Platform shows 2022), not the Notion date. Leave it.
 
 ## Standard page structure (use this order on every project page; final on App Review Platform 2026-10-14)
+> SUPERSEDED by "DECK-STYLE PAGE SYSTEM" (page order, no Bottom line, deck shapes). Kept as history. The generic rules below it (facts only from her sources, short replies, preview before push) still hold.
+
 All of it is written in Notion. Headings are plain `##` (section) and `###` (sub-heading). Old names: Process is now Approach plus Solution, Impact is now Impact & next steps, the old Screens section lives inside Solution.
 
 | # | Heading | What goes in it |
@@ -318,7 +393,7 @@ Built by `aboutPage()` from the Notion page "About & Contact" (ID in the table b
 
 #### Typography
 - **Titles** (`.feat-title`, `.proj-title`, `.lede`, `.footer-statement`): `Plus Jakarta Sans` — weights 300–800
-- **Body/UI** (everything else): `Inter` — weights 300–700
+- **Body/UI** (everything else): `Roboto` (CORRECTED 2026-11-04: the site loads only Plus Jakarta Sans and Roboto; the old note said Inter)
 - Loaded from Google Fonts: `https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap`
 - `-webkit-font-smoothing: antialiased` always on body
 
