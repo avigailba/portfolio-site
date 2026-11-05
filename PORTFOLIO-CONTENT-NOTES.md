@@ -9,6 +9,7 @@ Last updated: 2026-11-04 (the Intuit deck is no longer the reference: the four r
 Goal: another agent, with only this file and her CLAUDE.md, can design a project page the way she wants. Follow the steps in order. Where an older section below disagrees with the DECK-STYLE PAGE SYSTEM section, the DECK-STYLE section wins.
 
 ### 0. Read order and inputs
+0. Helper scripts live in `tools/` (see `tools/README.md`): no-cache preview server, PDF page render and search, screenshot cover-up. Use them instead of rewriting them; `sips` handles image crops.
 1. `CLAUDE.md` (short hard rules), then this recipe, then "PROJECT PAGE SYSTEM" below, then fetch ONE of the four redesigned pages from Notion as the exact markup example (see "Reference pages" in that section). Pick the one whose layout is closest to what you are building.
 2. You need: the project name and slug (table "Project slugs and categories"), its Notion page ID (table "Notion page IDs"), and her sources for the project (the Notion page itself, her CV, Drive files such as PDFs and decks, Figma links, screenshots she sends). The Intuit portfolio deck is NOT the reference any more. Missing a source, or a project she has not named? Ask her ONE question and wait. The 11 unconverted pages are LATER by her word: do not start one unasked.
 
@@ -34,7 +35,7 @@ TL;DR: Sentence on what was wrong. Sentence on how it was worked. Sentence on th
 ## Approach | <short title>
 <columns> one of three shapes: bullets 2/3 + 1/3, statement + images, or statement 1/3 + bullets 2/3 </columns>
    OR (no columns) one paragraph, then a row of 2 to 4 captioned screens   (Developer Sale)
-### Design principles          (optional: Developer Sale has none because there was no source; never invent principles)
+### Design principles          (optional: the agent may DRAFT principles from the page's own facts, but must show them to her and get her OK before they go into Notion; never add them silently)
 <one bridge line>
 - **Title** one sentence | Tag
 ## Solution | <short title>
