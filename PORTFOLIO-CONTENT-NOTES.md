@@ -1,7 +1,7 @@
 # Portfolio content notes (read this first in any content session)
 
 Working memory for improving the portfolio copy. Update it at the end of every portfolio work session: add decisions, change a project's status, never delete history.
-Last updated: 2026-11-04 (the Intuit deck is no longer the reference: the four redesigned pages are; plain bullets except Impact; learned block added to the recipe; Developer Sale pushed)
+Last updated: 2026-11-05 (App Reviews Revamp became AI Review Reporting: fifth redesigned page, Notion applied, NOT pushed; new rule: section title inside its column; lessons in 'Learned on AI Review Reporting')
 
 > **START HERE for any new page: the section "RECIPE FOR A NEW AGENT" right below, then "PROJECT PAGE SYSTEM" (called DECK-STYLE PAGE SYSTEM before 2026-11-04).** It overrides older parts of this file (the "Standard page structure" table, the goal-first numbered list rule, the Bottom line, Inter as body font, presentation decks). Older sections are kept as history.
 
@@ -40,6 +40,7 @@ TL;DR: Sentence on what was wrong. Sentence on how it was worked. Sentence on th
 - **Title** one sentence | Tag
 ## Solution | <short title>
 <columns> one screen | bullets (optional ### The principle in action) </columns>   (or two screens with text under each)
+   OR (AI Review Reporting): screen 2/3 first column + `## Label | Title`, paragraph and `### Design decisions` bullets in the 1/3 column; the screen top lines up with the section label
    OR, equal halves (Developer Sale): <columns 50/50> left: one captioned screen | right: the `## Solution | <short title>` heading written INSIDE this column, a paragraph, `### Design decisions` and bullets </columns>
 ### <title-only sub-section>      (add the title to `subsectionTitles` in generate.js, or write `### Label | Title`)
 <columns of captioned images, 2 to 4 across>
@@ -133,6 +134,8 @@ Plain native bullets in The problem, Approach and Delivery (no divider rows). Di
 | Installations | 31135a9ccf7a80358e3cead5465c89f8 | `proj-shot` and `proj-shot2` (text and screen), a heading written inside the text column, quotes in Problem and Impact, edge cases 3-up, the labels "Delivery" and "Results & Impact" |
 | AI Credits Wallet | 31135a9ccf7a804caf72da07638205bc | the interactive widget beside Solution, statement 1/3 + rows 2/3, principle cards under the widget |
 | Developer Sale | 17d35a9ccf7a80c69ceafb3f7973485a | a project with no deck: Approach as one paragraph plus a 3-up screen row, Solution title and text in one half with a screen in the other (the `## Solution` heading written inside the second column), title-only h3 subsections, a 4-column screen row, a screen inside the Impact rows under Next steps (`.pr-shot`), plain-bullet Delivery |
+| AI Review Reporting | 31135a9ccf7a80bdad92eff1f90e6ecf | a small, unshipped project with no deck: The problem as half text + two old screens, Approach and Solution as screen 2/3 + title and text in the third, a 3-up screen row under a title-only h3, Delivery as one line plus Challenges |
+
 Page-specific layout lives in `projectPage` slug branches and in CSS scoped with `.proj-content[data-project="<slug>"]` (end of style.css). Say so when you add one: it must not leak to other pages. Title-only h3s are listed per slug in `subsectionTitles`; `### Label | Title` gives a small label above the title instead.
 
 ### Look (tokens)
@@ -186,6 +189,7 @@ Make every project page more impressive for hiring managers and recruiters. Targ
 
 ## Hard rules (from CLAUDE.md and Avigail)
 - **Always give her the local link** (her rule, 2026-11-05): every time you change something locally, end the reply with the preview URL of the page you changed (for example http://localhost:8801/projects/developer-sale.html), and make sure the server is running and serving the latest copy. Restart it if you copied dist again.
+- **Title inside its column** (her rule, 2026-11-05): in any column layout (third + two thirds, halves, 4 + 8) the section title (`## Label | Title`) is written INSIDE the text column, never above the block, so it wraps within that column. Keep the title short enough for a third (a few words). The h2 and any `### Design decisions` inside a `proj-shot` text column need scoped CSS (title style, not the small uppercase label); copy the `developer-sale` rules under `.proj-content[data-project="<slug>"]`, or the heading renders as a small uppercase label (the Reviews Revamp glitch).
 - **No orphans** (her preference, 2026-11-04): never leave one word alone on the last line of a heading, subtitle, caption, bullet or paragraph, at 1440px and 375px. The CSS already balances titles and subtitles (`text-wrap: balance`) and tidies body text (`text-wrap: pretty`). If a line still ends on one word, join the last two words with a non-breaking space (`&nbsp;`) or reword slightly; do not change the meaning.
 - No em dashes or en dashes in any copy, captions included. Use a comma, colon, period, or a plain " - " like the other captions on the page.
 - No specific numbers, percentages, or dollar amounts in project content (legal). Use plain directional words. Years and dates are fine.
@@ -527,7 +531,7 @@ Mobile interaction (in script.js):
 |------|----|
 | AI Credits Wallet | 31135a9ccf7a804caf72da07638205bc |
 | App Installation View | 31135a9ccf7a80358e3cead5465c89f8 |
-| App Reviews Revamp | 31135a9ccf7a80bdad92eff1f90e6ecf |
+| AI Review Reporting (was Reviews Revamp / App Reviews Revamp) | 31135a9ccf7a80bdad92eff1f90e6ecf |
 | Developer Sale | 17d35a9ccf7a80c69ceafb3f7973485a |
 | App Collections | da073f156b004fbb87d927849587a28c |
 | Internal App Review System | 71024356b51b4ce8b46c21fa3a442020 |
@@ -549,7 +553,7 @@ Mobile interaction (in script.js):
 |------|----------|------|---------|
 | ai-credits-wallet | developer | 2026 | yes |
 | app-installation-view | developer | 2025 | yes |
-| app-reviews-revamp | developer | 2024 | no |
+| app-reviews-revamp (title now AI Review Reporting) | developer | 2024 | no |
 | developer-sale | developer monetisation | 2024 | yes |
 | app-collections | developer internal | 2024 | no |
 | payouts-page | monetisation | 2023 | no |
@@ -645,8 +649,29 @@ Restructured to the deck-style order, built from Notion like the three featured 
 - Lesson: `replace_content` with image refs reused from the page scrambled the block order once (first attempt); a second full send with `allow_async: false` fixed it, then check the fetched order. Chat images are only sometimes saved to disk: if one is missing, ask her to send the file again.
 - Open: the CV says "sole designer", the page now says "I worked with the product team and developers" (no "led the end-to-end UX" line); TL;DR third sentence and the "Developer sales" row still say "kept growing after launch" while she said sales continue "ever since"; Design principles has no source; Delivery & challenges is thin (she gave only product and developers); billing cycle tooltip ("Save extra ... on yearly plans") exists in the PDF page 118 but not on the page; the PDF is "App market dev center and package picker sale ux ui & research.pdf" (347 pages, Google Drive Wix/Projects/Sales): pages 114 to 116 and 118 to 120 are the package picker and cycle states, page 309 is a 2022 grey wireframe of the App Market homepage (not used).
 
+### AI Review Reporting (slug app-reviews-revamp, Notion 31135a9ccf7a80bdad92eff1f90e6ecf, was "Reviews Revamp"): DONE LOCAL 2026-11-05 (Notion applied and rebuilt, NOT committed or pushed)
+Rebuilt from a thin page into the page system; no deck exists (the old Drive hits were code and JSON). Source: her answers in chat, her Figma file "Reviews Page - Developers Apps" (key nGODMGLCz7FsHcfNA8RidF, about 40 pages) and screenshots she pasted. BACKUP: "BACKUP Reviews Revamp 2026-11-05 (before AI Review Reporting)" at the Notion workspace root (has the dashboard, per-app menu and All reviews screens, and the old Bottom line).
+- Story (her reframe): the project is about REPORTING. Developers had no way to flag spam or inappropriate reviews (they emailed the account managers, who removed them manually); we wanted AI to go over reviews and say whether one is spam or advertising; she used the opportunity for a small redesign; the key insight was the review as a modal that can show up anywhere (Wix App Market, maybe others). Aggregation across a developer's apps was a parallel direction, kept to one line in The problem ("not covered here"). Not shipped because no developers were available (before AI tools, she could not build it). The account managers decide whether a flagged review stays.
+- Page, in order: subtitle "A reporting flow with AI spam detection", TL;DR, The problem (half text with title inside + two old screens side by side, level with the first paragraph), Approach (decision matrix 2/3 + title and text in the right third), Solution (Report flow screen 2/3 + title, text and Design decisions in the third), "The new review modal" (3 screens: Reply state, View-only state, Missing reason), Delivery (one line + Challenges), Impact & next steps. 8 screens plus hero.
+- Cut at her request (still in the backup and her Figma): reviews dashboard, per-app menu, All reviews tab (aggregation), Filters panel and Filters applied, both empty states, General error, Report approved, Report declined.
+- Generator: its own `app-reviews-revamp` branch in `projectPage` (plain bullets, no builders; Problem block rebuilt into `proj-half proj-quarters`; Approach and Solution marked `proj-shot` when the screen is the first column and the h2 sits in the second). PROJECT_META title is "AI Review Reporting" and the Notion title was renamed to match. Scoped CSS is the last block of style.css under `[data-project="app-reviews-revamp"]`. Only this page is affected.
+- Open: she was unsure about the Impact sentence and the TL;DR result wording at the start (now: not shipped because we were missing developers, but it set the direction for how reviews and AI detection could work); the subtitle and all section titles are mine and she accepted them one by one; the Figma mock names (Kendall Roy, JamesJones, Jessica Lang) are left visible on purpose, she said Figma names are fine; whether to show this project at all (she doubted it, then chose reporting as the spine because it is AI related).
+
+### Learned on AI Review Reporting (2026-11-05): where these notes were unclear or wrong
+- **The skeleton put section titles above the block.** Her rule: in any column layout the `## Label | Title` goes INSIDE the text column, and the screen aligns to the label (Solution), not to the paragraph. Fixed in the Hard rules and the skeleton note below.
+- **Default builders turn bullets into divider rows** for any slug that is not opted in. A page with its own shapes needs its own `projectPage` branch that skips `buildResults`, `buildDeliveryColumns` and `buildProblemColumns` (as developer-sale does), otherwise Problem and Approach bullets become `dc-rows`.
+- **`replace_content` keeps the OLD caption of a reused image block**, ignores the caption you send, and once moved two lines to the top of the page. Send the full page a second time with the refs exactly as fetched (uploaded images come back as new `notion-file-block://` refs, use those on the resend) and check the fetched text before generating.
+- **The recipe says "fetch her sources from Drive".** The Drive search matches code, JSON and old generated HTML for generic words ("reviews"). Search by exact deck title and exclude `application/json` and `.map`. For a project with no deck, her chat answers are the source: ask short questions and write what she says.
+- **Her messages arrive cut off** ("Does that", "the title!", "Like the previous design of the"). The next message often completes it. Restate what you think she meant in one line and ask once; do not build on a guess for long. Pasted screenshots are saved as `/private/tmp/claude-501/<project path>/<session>/images/N.ext` (not in the scratchpad), a new N each time.
+- **"Never delete screens" has an exception:** she cut 10 screens here by saying so. Say which ones went and that they stay in the backup.
+- **Words she dislikes repeating**: "report" (24 uses came down to 7), "Building the logic around reporting", "mostly independent" in both title and line. Run a word-count pass on the page's key verbs before showing it. She also rejects invented causality ("adding reporting meant redesigning it": it was her choice) and "nobody had asked for": ask what the reason actually was.
+- **Preview tip:** the browser pane does not reload when only the hash changes; add `?v=N`. Lazy images do not load when the pane is hidden: set `loading='eager'` in a script before measuring.
+- **Shared-looking CSS is not shared**: `.proj-shot` text-column headings render as the small uppercase label unless the slug has scoped rules (the "Design decisions glitch"). Copy the three developer-sale heading rules for every slug that uses `proj-shot` with an h2 or h3 in the text column.
+- **She asks for mobile**: check 375px and one-word last lines before saying a page is ready (a heading lost its last word once). A script that counts words on the last line works at both widths.
+- **Optional line:** "Click any image to see it bigger." is optional now; she removed it here.
+
 ### Remaining projects (batch 2): TODO, same audit
-Reviews Revamp, Collections Manager, Payouts Page, Refund Flow, Pricing Page Projects, Submit & Publish Widget, API Keys page, Coupons Page. Also check Development Site Creation and Custom Element Settings.
+Collections Manager, Payouts Page, Refund Flow, Pricing Page Projects, Submit & Publish Widget, API Keys page, Coupons Page. Also check Development Site Creation and Custom Element Settings.
 
 ## Decisions log
 - 2026-11-01: Before publishing, moved App Review's problem list directly below its paragraphs in the left half, with both old-tool images alongside. Product-area cards now use four columns above 1100px, two on smaller desktops/tablets, one on mobile.
