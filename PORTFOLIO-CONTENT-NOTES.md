@@ -18,7 +18,7 @@ Goal: another agent, with only this file and her CLAUDE.md, can design a project
 3. **Plan the page from the reference pages and her sources.** Use the site section labels (The problem, Approach, Solution, Delivery & challenges, Impact & next steps). Each section gets a short plain title written from what her sources say (`## Label | Title`); mark the titles as unconfirmed in your report, she changes them. Use her wording, fixing grammar only. If two sources disagree, ask her (short answers come back).
 4. **Write the content in Notion** in the shapes of the table "Notion shape -> what the generator builds". Text and captions: `update_content`. Moving, adding or removing images: `replace_content` with the FULL page, every image ref exactly as fetched, `file-upload://<id>` for new uploads. Never a partial page.
 5. **Screens.** Take them from her sources (newest first): screenshots she sends, Figma, PDFs in Drive. Chat images are only sometimes saved to disk: if a file is missing, ask her to send it again. Convert webp with `sips -s format png`, crop with `sips --cropOffset <y> <x> -c <h> <w>`, upload to Notion (steps in "Working method and pitfalls"). Every image except the hero gets a caption `Label - what it shows`. Crop customer names, emails and shop URLs; paint over third-party names with the background colour only when she has not said no blur.
-6. **Generate** with `node generate.js <slug>` and read the output for errors. A failed image download means a remote (amazonaws) URL in the HTML: rerun until every `<img src>` is `../images/...`.
+6. **Opt the page in, then generate.** Plain bullets and each layout are opt-in per slug in `projectPage` (generate.js, the block right after `buildAreaCards`): add the slug to the lists passed to `buildDeliveryColumns` (Approach bullets, Delivery bullets) and `buildProblemColumns` (keep bullets); without that the older default builds divider rows. A page that needs another shape gets its own branch (copy the `developer-sale` one) and CSS scoped with `.proj-content[data-project="<slug>"]`; say that you touched shared files. Making plain bullets the default for every page would also change the 11 unconverted pages: ask her first. Then run `node generate.js <slug>` and read the output for errors. A failed image download means a remote (amazonaws) URL in the HTML: rerun until every `<img src>` is `../images/...`.
 7. **Preview** on a fresh port with the no-cache server (see pitfalls). Check at 1440px and 375px.
 8. **Report** in a few lines: what changed, what differs from the reference pages, what is open, ONE next question. Then wait. Do not commit or push without her explicit go, and say what the deploy will make live (it rebuilds every page from Notion, including anyone else's work in progress).
 9. **Update this file** before you stop: project status, decisions log, anything you learned.
@@ -32,20 +32,24 @@ TL;DR: Sentence on what was wrong. Sentence on how it was worked. Sentence on th
 ## The problem | <short title>
 <columns> left: statement paragraphs (+ old-tool images) | right: ### <Rows heading> then bullets </columns>
 ## Approach | <short title>
-<columns> one of three shapes: rows 2/3 + 1/3, statement + images, or statement 1/3 + rows 2/3 </columns>
-### Design principles
+<columns> one of three shapes: bullets 2/3 + 1/3, statement + images, or statement 1/3 + bullets 2/3 </columns>
+   OR (no columns) one paragraph, then a row of 2 to 4 captioned screens   (Developer Sale)
+### Design principles          (optional: Developer Sale has none because there was no source; never invent principles)
 <one bridge line>
 - **Title** one sentence | Tag
 ## Solution | <short title>
 <columns> one screen | bullets (optional ### The principle in action) </columns>   (or two screens with text under each)
+   OR, equal halves (Developer Sale): <columns 50/50> left: one captioned screen | right: the `## Solution | <short title>` heading written INSIDE this column, a paragraph, `### Design decisions` and bullets </columns>
+### <title-only sub-section>      (add the title to `subsectionTitles` in generate.js, or write `### Label | Title`)
 <columns of captioned images, 2 to 4 across>
 ## Delivery & challenges | Working with the team
 <columns> ### Process + bullets | ### Challenges + bullets </columns>
 ## Impact & next steps | <short title>
 <lead paragraph>
-- **Label** sentence            (italic bullets are quotes)
+- **Label** sentence            (italic bullets are quotes; Impact is the ONE place with divider rows)
 ### Next steps
 <one or two sentences, only facts she gives>
+<optional screen right after the Next steps text: it sits inside the rows column>   (Developer Sale `.pr-shot`)
 ```
 No Bottom line. The Last updated line, the side menu (it lists only the labels before the " | ") and More work are generated.
 
@@ -104,19 +108,19 @@ The "Last updated" line, side menu and More work are generated. The side menu li
 |---|---|
 | `## Label \| Title` | small uppercase label above a large title (`.proj-h2`) |
 | `### Label \| Title` | same, smaller (`.proj-h3`), used for sub-sections |
-| Problem: columns, left = statement paragraphs (plus images), right = `### Rows heading` + bullets | `proj-prob`: statement 2/3 (body style), rows 1/3. Images placed in the left column sit side by side under the text |
-| Approach: columns `### Research process` bullets \| `### Pain points` bullets | rows, 2/3 + 1/3 (`proj-dc-even`, App Review) |
-| Approach: columns, left = statement + bullets, right = `### Heading` + images | rows 2/3 + images 1/3 (Installations) |
-| Approach: columns, left = statement only, right = `### Heading` + bullets | statement 1/3 + rows 2/3 (`proj-dc-lead`, AI Credits) |
+| Problem: columns, left = statement paragraphs (plus images), right = `### Rows heading` + bullets | `proj-prob`: statement 2/3 (body style), plain bullets 1/3. Images placed in the left column sit side by side under the text |
+| Approach: columns `### Research process` bullets \| `### Pain points` bullets | plain bullets, 2/3 + 1/3 (`proj-dc-even`, App Review) |
+| Approach: columns, left = statement + bullets, right = `### Heading` + images | bullets 2/3 + images 1/3 (Installations) |
+| Approach: columns, left = statement only, right = `### Heading` + bullets | statement 1/3 + plain bullets 2/3 (`proj-dc-lead`, AI Credits) |
 | `### Design principles`, a bridge line, then bullets `**Title** sentence \| Tag` | numbered cards, full width, 3 or 4 across (2x2 under 1100px, 1 column on phones) |
 | `### Product areas`, bullets `**Title** what it is \| bold line` | 2x2 area cards (App Review) |
 | Solution: columns, left = one image, right = bullets (optional `### The principle in action` + a paragraph) | screen 2/3 + text 1/3 (`proj-shot`) |
 | Solution: columns, each = image then bullets | two screens with text under each (`proj-shot2`) |
 | Columns of images with captions (2, 3 or 4) | equal 3:2 boxes, smaller screens sit on grey so captions line up |
-| Delivery: columns `### Process` bullets \| `### Challenges` bullets | rows, half and half (`proj-dc`) |
+| Delivery: columns `### Process` bullets \| `### Challenges` bullets | plain bullets, half and half (`proj-dc`) |
 | Impact: lead paragraph, bullets `**Label** sentence`, italic bullets = quotes, `### Next steps` (or a `## Next steps` after) | lead 1/3 + labelled rows 2/3, Next steps is the last row (`proj-results`) |
 | Widget (AI Credits only) | injected by generate.js next to the Solution list, caption "Use the top selectors to see more wallet states" |
-Row bullets: a bold lead then the sentence, `**Lead.** sentence`. Pipes in Notion text show as `\|` when fetched; that is normal.
+Bullets (and Impact rows): a bold lead then the sentence, `**Lead.** sentence`. In this table "rows" means the Impact rows only; everywhere else the list is a plain bullet list (see "Bullets or dividers" below). Pipes in Notion text show as `\|` when fetched; that is normal.
 
 ### Bullets or dividers (her rule, 2026-11-04)
 Plain native bullets in The problem, Approach and Delivery (no divider rows). Divider rows only in Impact (`proj-results`: a lead plus labelled rows, Next steps as the last row). In generate.js plain bullets are opt-in per slug: the flags of `buildDeliveryColumns(html, approachBullets, approachEqual, deliveryBullets)` and `buildProblemColumns(html, statementLead, preserveBullets, gallery)` in `projectPage` list the slugs; the older default still builds divider rows for the 11 unconverted pages. Developer Sale has its own branch (`proj-split`).
