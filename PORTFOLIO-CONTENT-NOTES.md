@@ -16,7 +16,7 @@ Goal: another agent, with only this file and her CLAUDE.md, can design a project
 ### 1. Steps
 1. **Backup.** Duplicate the Notion page, move the copy to the workspace root (never leave it under the CMS: it would be published), title it `BACKUP <name> <date>`.
 2. **Fetch** the page. Note every image ref (`notion-file-block://...`). Never retype an id by hand; copy it.
-3. **Plan the page from the reference pages and her sources.** Use the site section labels (The problem, Approach, Solution, Delivery & challenges, Impact & next steps). Each section gets a short plain title written from what her sources say (`## Label | Title`); mark the titles as unconfirmed in your report, she changes them. Use her wording, fixing grammar only. If two sources disagree, ask her (short answers come back).
+3. **Plan the page from the reference pages and her sources.** Use the site section labels (The problem, Approach, Solution, Delivery, Impact & next steps). Each section gets a short plain title written from what her sources say (`## Label | Title`); mark the titles as unconfirmed in your report, she changes them. Use her wording, fixing grammar only. If two sources disagree, ask her (short answers come back).
 4. **Write the content in Notion** in the shapes of the table "Notion shape -> what the generator builds". Text and captions: `update_content`. Moving, adding or removing images: `replace_content` with the FULL page, every image ref exactly as fetched, `file-upload://<id>` for new uploads. Never a partial page.
 5. **Screens.** Take them from her sources (newest first): screenshots she sends, Figma, PDFs in Drive. Chat images are only sometimes saved to disk: if a file is missing, ask her to send it again. Convert webp with `sips -s format png`, crop with `sips --cropOffset <y> <x> -c <h> <w>`, upload to Notion (steps in "Working method and pitfalls"). Every image except the hero gets a caption `Label - what it shows`. Crop customer names, emails and shop URLs; paint over third-party names with the background colour only when she has not said no blur.
 6. **Opt the page in, then generate.** Plain bullets and each layout are opt-in per slug in `projectPage` (generate.js, the block right after `buildAreaCards`): add the slug to the lists passed to `buildDeliveryColumns` (Approach bullets, Delivery bullets) and `buildProblemColumns` (keep bullets); without that the older default builds divider rows. A page that needs another shape gets its own branch (copy the `developer-sale` one) and CSS scoped with `.proj-content[data-project="<slug>"]`; say that you touched shared files. Making plain bullets the default for every page would also change the 11 unconverted pages: ask her first. Then run `node generate.js <slug>` and read the output for errors. A failed image download means a remote (amazonaws) URL in the HTML: rerun until every `<img src>` is `../images/...`.
@@ -43,7 +43,7 @@ TL;DR: Sentence on what was wrong. Sentence on how it was worked. Sentence on th
    OR, equal halves (Developer Sale): <columns 50/50> left: one captioned screen | right: the `## Solution | <short title>` heading written INSIDE this column, a paragraph, `### Design decisions` and bullets </columns>
 ### <title-only sub-section>      (add the title to `subsectionTitles` in generate.js, or write `### Label | Title`)
 <columns of captioned images, 2 to 4 across>
-## Delivery & challenges | Working with the team
+## Delivery | Working with the team
 <columns> ### Process + bullets | ### Challenges + bullets </columns>
 ## Impact & next steps | <short title>
 <lead paragraph>
@@ -100,7 +100,7 @@ The four redesigned pages (App Review Platform, Installations, AI Credits Wallet
 3. `## The problem | <short title>`
 4. `## Approach | <short title>` with `### Design principles` inside it as cards, plus an optional `### Exploration | ...` screen.
 5. `## Solution | <short title>` with the screens.
-6. `## Delivery & challenges | Working with the team`
+6. `## Delivery | Working with the team`
 7. `## Impact & next steps | <short title>` (App Review, AI Credits) or `## Results & Impact | ...` followed by `## Next steps` (Installations).
 The "Last updated" line, side menu and More work are generated. The side menu lists the labels only (text before the " | ").
 
@@ -152,7 +152,7 @@ Page-specific layout lives in `projectPage` slug branches and in CSS scoped with
 
 ### Content rules learned
 - No orphans: see Hard rules. Check every heading, caption and bullet at 1440px and 375px before reporting.
-- Labels are the site's section names (Approach, Solution, Delivery & challenges); the titles are short plain descriptions written from her sources and shown to her as unconfirmed.
+- Labels are the site's section names (Approach, Solution, Delivery); the titles are short plain descriptions written from her sources and shown to her as unconfirmed.
 - Use her wording, fixing only grammar. Do not describe things her sources do not say (collaborator wallet stays out of Solution, "5 credits" left out).
 - If two sources disagree, ask her; she answers short ("saved views shipped by me", "upgrade rate improved").
 - When in doubt, copy the layout of the closest reference page.
@@ -185,6 +185,7 @@ Page-specific layout lives in `projectPage` slug branches and in CSS scoped with
 Make every project page more impressive for hiring managers and recruiters. Target role: full-time product design role, with AI and code involvement, not Figma-only.
 
 ## Hard rules (from CLAUDE.md and Avigail)
+- **Always give her the local link** (her rule, 2026-11-05): every time you change something locally, end the reply with the preview URL of the page you changed (for example http://localhost:8801/projects/developer-sale.html), and make sure the server is running and serving the latest copy. Restart it if you copied dist again.
 - **No orphans** (her preference, 2026-11-04): never leave one word alone on the last line of a heading, subtitle, caption, bullet or paragraph, at 1440px and 375px. The CSS already balances titles and subtitles (`text-wrap: balance`) and tidies body text (`text-wrap: pretty`). If a line still ends on one word, join the last two words with a non-breaking space (`&nbsp;`) or reword slightly; do not change the meaning.
 - No em dashes or en dashes in any copy, captions included. Use a comma, colon, period, or a plain " - " like the other captions on the page.
 - No specific numbers, percentages, or dollar amounts in project content (legal). Use plain directional words. Years and dates are fine.
@@ -301,7 +302,7 @@ All of it is written in Notion. Headings are plain `##` (section) and `###` (sub
 | 2 | `## The problem` | First sentence names the problem. The cause (state loops as loops). The consequence as bullets. Ends on what we noticed that the outcome answers. |
 | 3 | `## Approach` | A two-column block: `### Research` (what you did, then the pain points as bullets) next to `### Design principles` (one bridge line, then the principles in her words). Text only in the columns. |
 | 4 | `## Solution` | Everything visual, in this order: `### Redesigning the platform` (numbered goal-first list, then ONE image, caption says a second tab shows the previous report); `### Deciding on the product areas` (one line, the four area images, "Click any image to see it bigger."); then the full screens grouped under `###` with short captions. Long groups may be toggles (Publish flow and Team management are). She does NOT want more toggles: she removes screens herself. |
-| 5 | `## Delivery & challenges` | One paragraph for delivery (syncs, bug hunt and its finding), then `### Challenges` with two or three bullets. |
+| 5 | `## Delivery` | One paragraph for delivery (syncs, bug hunt and its finding), then `### Challenges` with two or three bullets. |
 | 6 | `## Impact & next steps` | Bold first sentence, then what changed (directional, no numbers). Then `### Next steps`: one or two sentences, only facts she gives. |
 | 7 | `## Bottom line` | One or two sentences, personal voice. Plain paragraph, not styled as a quote. |
 | auto | Last updated line, More work, side menu | Generated. Do not write them. |
@@ -723,3 +724,5 @@ Reviews Revamp, Collections Manager, Payouts Page, Refund Flow, Pricing Page Pro
 - 2026-11-02 App Review trial (local preview): Problem text and title now use the left half; the two old-tool screenshots stack in the right half with a 32px gap and their natural aspect ratios. Mobile keeps text first, then both images. Simplified the Review workspace card in Notion to “Built from scratch to replace the Google Doc manual reviews.” Simplified Review team management to “Role-based access: the manager assigns apps and oversees reviews.” Preview: http://localhost:18973/projects/internal-app-review-system.html?preview=stacked#sec-the-problem . This layout trial has not been published.
 - 2026-11-02 App Review trial adjusted: Copy and its heading use eight columns (two thirds); stacked screenshots use the remaining four columns (one third). Natural screenshot ratios and 32px vertical gap retained. Verified at 375px, 1440px and 1920px. Preview: http://localhost:18973/projects/internal-app-review-system.html?preview=two-thirds#sec-the-problem . Still local only.
 - 2026-11-02 App Review approval: She requested publishing the two-thirds copy / one-third stacked screenshots layout and the two shortened card descriptions. Added 80px top spacing before direct section h3 headings (submission process, directory, app page, review workflow, publish flow and team management), reduced to 64px on phones. Nested headings and principle cards retain their spacing. Layout and copy checks pass at 375px, 1440px and 1920px; site validation passes.
+
+- 2026-11-05 (Developer Sale, local): the section label is now "Delivery" (was "Delivery & challenges"); the Challenges column stays inside it. Recipe lines updated to the new label. The other project pages in Notion still say "Delivery & challenges" until she says to rename them. The generator accepts both. Applied in Notion 2026-11-05 (backup "BACKUP Developer Sale 2026-11-05 (before App Market row and Delivery label)" at the workspace root). Also: the App Market screen joined the screens row (5 images, 4 across, the fifth wraps; Notion columns block with 5 columns renders `col-5`), and Impact has the lead on top with the rows left and the mockup right (CSS only).

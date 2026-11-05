@@ -822,7 +822,8 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
 .proj-content .col-layout.col-1 > .col { grid-column: span 12; }
 .proj-content .col-layout.col-2 > .col { grid-column: span 6; }
 .proj-content .col-layout.col-3 > .col { grid-column: span 4; }
-.proj-content .col-layout.col-4 > .col { grid-column: span 3; }
+.proj-content .col-layout.col-4 > .col,
+.proj-content .col-layout.col-5 > .col { grid-column: span 3; }
 .proj-content .proj-prob > .col:first-child { grid-column: span 8; }
 .proj-content .proj-prob > .col:last-child { grid-column: span 4; }
 .proj-content .proj-prob-lead > .col:first-child { grid-column: span 4; }
@@ -882,6 +883,7 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
   .proj-content .col-layout.col-2 > .col,
   .proj-content .col-layout.col-3 > .col,
   .proj-content .col-layout.col-4 > .col,
+  .proj-content .col-layout.col-5 > .col,
   .proj-content .proj-prob > .col:first-child,
   .proj-content .proj-prob > .col:last-child,
   .proj-content .proj-dc > .col:first-child,
@@ -940,7 +942,7 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
 .col-layout { display: grid; gap: 16px; margin: 24px 0; align-items: start; }
 .col-2 { grid-template-columns: 1fr 1fr; }
 .col-3 { grid-template-columns: 1fr 1fr 1fr; }
-.col-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.col-4, .col-5 { grid-template-columns: 1fr 1fr 1fr 1fr; }
 .col figure { margin: 0; }
 .col img { width: 100%; }
 .callout {
@@ -1410,7 +1412,7 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
   .more-inner { padding-top: 40px; }
 
   /* Images */
-  .col-2, .col-3, .col-4 { grid-template-columns: 1fr; }
+  .col-2, .col-3, .col-4, .col-5 { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   .hdr-row { padding: 0; }
@@ -1740,4 +1742,14 @@ body.scrolled .title-block { pointer-events: none; }
 @media (min-width: 769px) {
   .proj-content[data-project="developer-sale"] .col-layout.proj-shot > .col:first-child { grid-column: 7 / span 6; grid-row: 1; }
   .proj-content[data-project="developer-sale"] .col-layout.proj-shot > .col:last-child { grid-column: 1 / span 6; grid-row: 1; }
+}
+/* Developer Sale Impact: rows in the left half (the lead sentence sits under Participation), the screen in the right half */
+.proj-content[data-project="developer-sale"] .proj-results > .pr-rows { grid-column: 1 / -1; }
+.proj-content[data-project="developer-sale"] .pr-after { margin-top: 12px; }
+.proj-content[data-project="developer-sale"] .pr-rows { border-top: 0; }
+.proj-content[data-project="developer-sale"] .pr-rows > .pr-row:first-child { padding-top: 0; }
+@media (min-width: 769px) {
+  .proj-content[data-project="developer-sale"] .pr-rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; align-items: start; border-top: 0; }
+  .proj-content[data-project="developer-sale"] .pr-rows > .pr-row { grid-column: 1; }
+  .proj-content[data-project="developer-sale"] .pr-rows > .pr-shot { grid-column: 2; grid-row: 1 / span 5; margin-top: 0; }
 }

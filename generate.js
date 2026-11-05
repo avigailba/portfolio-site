@@ -835,6 +835,9 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
       contentHtml = buildResults(contentHtml);
       contentHtml = contentHtml.replace(/(<div class="pr-row"><p class="pr-label">Next steps<\/p>[\s\S]*?<\/div>)<\/div><\/div>\n(\s*<figure class="proj-img">[\s\S]*?<\/figure>\n)/,
         '$1<div class="pr-shot">$2</div></div></div>\n');
+      // Impact: the lead sentence moves under the Participation row, so the rows take the left half and the screen the right half
+      contentHtml = contentHtml.replace(/<div class="proj-results"><div class="pr-lead"><p class="pr-headline">([\s\S]*?)<\/p><\/div><div class="pr-rows">(<div class="pr-row"><p class="pr-label">[^<]*<\/p><p class="pr-rtext">[\s\S]*?<\/p>)/,
+        '<div class="proj-results"><div class="pr-rows">$2<p class="pr-rtext pr-after">$1</p>');
       contentHtml = buildDeliveryColumns(contentHtml, true, false, true);
     } else {
       contentHtml = buildResults(contentHtml);
