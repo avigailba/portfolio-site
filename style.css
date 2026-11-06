@@ -1802,6 +1802,7 @@ body.scrolled .title-block { pointer-events: none; }
   margin: -0.12em 0 -0.24em;
 }
 .hd-slot > .hd-w { grid-area: 1 / 1; transform-origin: 50% 50%; }
+.hd-slot { transition: opacity 0.25s ease; }
 .hd-slot > .hd-next { transform: translateY(150%); }
 .hd-measure { position: absolute; visibility: hidden; white-space: nowrap; font-weight: 600; pointer-events: none; }
 /* Tablet and phone: the sentence wraps like normal text and the bold phrases swap with a short fade (script.js) */

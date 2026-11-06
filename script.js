@@ -969,11 +969,12 @@ if (document.getElementById('playFrame')) {
 
 // Homepage hero word drum: the bold role on line 1 rolls, then the bold phrase after "working".
 // The old phrase rolls out of one edge, flattening, while the new one rolls in from the other.
-// Wide screens: drum roll. Narrow screens: short fade (the sentence wraps there). Reduced motion: no change at all.
+// Wide screens: drum roll. Narrow screens: short fade (the sentence wraps there). Reduced motion: short fade everywhere.
 (function() {
   var hero = document.querySelector('.hero-drum');
   if (!hero) return;
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  // Reduced motion: the words still change, but with a soft fade instead of the roll
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var steps;
   try { steps = JSON.parse(hero.getAttribute('data-steps')); } catch (e) { return; }
   if (!steps || steps.length < 2) return;
@@ -998,7 +999,7 @@ if (document.getElementById('playFrame')) {
   function roll(key, to) {
     var s = slots[key];
     if (!s) return;
-    if (narrow()) { fade(s, to); return; }
+    if (calm || narrow()) { fade(s, to); return; }
     var from = s.cur.textContent;
     var w0 = widthOf(from), w1 = widthOf(to);
     var sign = DIR[key];
