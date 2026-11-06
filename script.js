@@ -966,3 +966,69 @@ if (document.getElementById('playFrame')) {
   update();
   window.addEventListener('scroll', update, { passive: true });
 })();
+
+// Homepage hero word drum: the bold role on line 1 rolls, then the bold phrase after "working".
+// The old phrase rolls out of one edge, flattening, while the new one rolls in from the other.
+// Wide screens: drum roll. Narrow screens: short fade (the sentence wraps there). Reduced motion: no change at all.
+(function() {
+  var hero = document.querySelector('.hero-drum');
+  if (!hero) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var steps;
+  try { steps = JSON.parse(hero.getAttribute('data-steps')); } catch (e) { return; }
+  if (!steps || steps.length < 2) return;
+  var slots = {};
+  Array.prototype.forEach.call(hero.querySelectorAll('.hd-slot'), function(el) {
+    slots[el.getAttribute('data-slot')] = { el: el, cur: el.children[0], next: el.children[1] };
+  });
+  var measure = document.createElement('span');
+  measure.className = 'hd-measure';
+  hero.appendChild(measure);
+  function widthOf(text) { measure.textContent = text; return measure.getBoundingClientRect().width; }
+  function narrow() { return window.matchMedia('(max-width: 900px)').matches; }
+  function ease(p) { return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; }
+  var SPEED = 750, GAP = 850, HOLD = 3000;
+  // r rolls downward, l rolls upward, so the two lines move against each other
+  var DIR = { r: 1, l: -1 };
+
+  function fade(s, to) {
+    s.el.style.opacity = '0';
+    setTimeout(function() { s.cur.textContent = to; s.el.style.opacity = '1'; }, 260);
+  }
+  function roll(key, to) {
+    var s = slots[key];
+    if (!s) return;
+    if (narrow()) { fade(s, to); return; }
+    var from = s.cur.textContent;
+    var w0 = widthOf(from), w1 = widthOf(to);
+    var sign = DIR[key];
+    s.next.textContent = to;
+    var start = null;
+    function frame(t) {
+      if (start === null) start = t;
+      var p = Math.min(1, (t - start) / SPEED);
+      var e = ease(p);
+      s.cur.style.transform = 'translateY(' + (sign * 135 * e) + '%) scaleY(' + (1 - 0.85 * e) + ')';
+      s.next.style.transform = 'translateY(' + (-sign * 135 * (1 - e)) + '%) scaleY(' + (0.15 + 0.85 * e) + ')';
+      s.el.style.width = (w0 + (w1 - w0) * e) + 'px';
+      if (p < 1) { requestAnimationFrame(frame); return; }
+      s.cur.textContent = to;
+      s.cur.style.transform = '';
+      s.next.textContent = '';
+      s.next.style.transform = '';
+      s.el.style.width = '';
+    }
+    requestAnimationFrame(frame);
+  }
+  var n = 0;
+  function tick() {
+    var from = steps[n];
+    n = (n + 1) % steps.length;
+    var to = steps[n];
+    var at = 0;
+    if (from.r !== to.r) { roll('r', to.r); at = GAP; }
+    if (from.l !== to.l) setTimeout(function() { roll('l', to.l); }, at);
+    setTimeout(tick, HOLD + SPEED + at);
+  }
+  setTimeout(tick, 2500);
+})();

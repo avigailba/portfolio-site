@@ -122,7 +122,7 @@ nav .nav-email:focus-visible { outline: 2px solid #0a0a0a; outline-offset: 3px; 
 
 /* ── Homepage wrapper ────────────────────────────────────── */
 .home-band {
-  padding: 0 clamp(40px, 20%, 240px) 80px;
+  padding: 0 48px 80px;
 }
 
 /* ── Lede ────────────────────────────────────────────────── */
@@ -1775,3 +1775,43 @@ body.scrolled .title-block { pointer-events: none; }
   .proj-content[data-project="app-reviews-revamp"] .proj-quarters > .proj-right { margin-top: 32px; }
 }
 @media (max-width: 700px) { .proj-content[data-project="app-reviews-revamp"] .proj-pair { grid-template-columns: 1fr; } }
+
+/* ── Homepage hero: word drum (design: "Hero · Giga + word drum") ──
+   Grey words stay; the two bold phrases roll like a drum, one after the other (script.js).
+   The size is set so the longest line (about 17.2em) fits between the 48px homepage margins, up to 72px. */
+.hero-drum {
+  margin: 0 0 104px;
+  padding: 56px 0 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(30px, calc((100vw - 96px) / 17.6), 72px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  color: #555;
+}
+.hd-line { white-space: nowrap; }
+/* Each rolling phrase sits in a window a line tall, with room above and below so tall letters and descenders are never cut */
+.hd-slot {
+  display: inline-grid;
+  vertical-align: baseline;
+  white-space: nowrap;
+  color: #0a0a0a;
+  font-weight: 600;
+  overflow: hidden;
+  padding: 0.12em 0 0.24em;
+  margin: -0.12em 0 -0.24em;
+}
+.hd-slot > .hd-w { grid-area: 1 / 1; transform-origin: 50% 50%; }
+.hd-slot > .hd-next { transform: translateY(150%); }
+.hd-measure { position: absolute; visibility: hidden; white-space: nowrap; font-weight: 600; pointer-events: none; }
+/* Tablet and phone: the sentence wraps like normal text and the bold phrases swap with a short fade (script.js) */
+@media (max-width: 900px) {
+  /* min-height keeps the list below from jumping when a longer phrase wraps onto an extra line */
+  .hero-drum { font-size: 30px; padding-top: 24px; margin-bottom: 56px; min-height: 5.6em; }
+  .hd-line { white-space: normal; }
+  .hd-slot { display: inline; overflow: visible; white-space: normal; padding: 0; margin: 0; transition: opacity 0.25s ease; }
+  .hd-slot > .hd-next { display: none; }
+}
+@media (max-width: 400px) {
+  .hero-drum { font-size: 28px; }
+}

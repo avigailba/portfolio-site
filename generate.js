@@ -514,6 +514,41 @@ function homeAboutSnippet(homepageBlocks, aboutBlocks) {
   </section>`;
 }
 
+// Homepage hero: the intro sentence with two parts that roll like a drum (design: "Hero · Giga + word drum").
+// Content lives in Notion, Homepage page, under "## Hero":
+//   paragraphs = the lines of the sentence, with {role} and {focus} where the rolling parts go
+//   bullets    = one per step, "role | focus" (the first one is what shows without motion and what screen readers read)
+// Grey words stay; the bold role and the bold focus roll, one after the other (script.js).
+// Without a Hero section the homepage falls back to the plain tagline.
+function heroFromNotion(homepageBlocks = []) {
+  const start = homepageBlocks.findIndex(b => b.type === 'heading_2' && plainText(b.heading_2.rich_text).trim().toLowerCase() === 'hero');
+  if (start < 0) return null;
+  const end = homepageBlocks.findIndex((b, i) => i > start && /^heading_/.test(b.type));
+  const section = homepageBlocks.slice(start + 1, end < 0 ? undefined : end);
+  const lines = section.filter(b => b.type === 'paragraph').map(b => plainText(b.paragraph.rich_text).trim()).filter(Boolean);
+  const steps = section.filter(b => b.type === 'bulleted_list_item')
+    .map(b => plainText(b.bulleted_list_item.rich_text).split('|').map(x => x.trim()))
+    .filter(parts => parts.length === 2 && parts[0] && parts[1])
+    .map(([r, l]) => ({ r, l }));
+  if (!lines.length || !steps.length) return null;
+  return { lines, steps };
+}
+function heroDrum(hero, tagline) {
+  if (!hero) return `<p class="lede">${tagline}</p>`;
+  const s = hero.steps[0];
+  const slot = (key, text) => `<span class="hd-slot" data-slot="${key}"><span class="hd-w">${escapeAttr(text)}</span><span class="hd-w hd-next"></span></span>`;
+  const fill = (line, withSlots) => {
+    const parts = line.split(/(\{role\}|\{focus\})/);
+    return parts.map(p => p === '{role}' ? (withSlots ? slot('r', s.r) : s.r) : p === '{focus}' ? (withSlots ? slot('l', s.l) : s.l) : (withSlots ? escapeAttr(p) : p)).join('');
+  };
+  const label = hero.lines.map(l => fill(l, false)).join(' ');
+  const body = hero.lines.map(l => `<span class="hd-line">${fill(l, true)}</span>`).join('<br>\n      ');
+  const data = JSON.stringify(hero.steps).replace(/&/g, '&amp;').replace(/'/g, '&#39;');
+  return `<h1 class="hero-drum" aria-label="${escapeAttr(label)}" data-steps='${data}'>
+      <span aria-hidden="true">${body}</span>
+    </h1>`;
+}
+
 function indexPage(projects, tagline, homepageBlocks = [], aboutBlocks = []) {
   tagline = tagline || "Senior UX designer. I like the problems that need a whiteboard. I've spent my career building tools - for developers, for internal teams, and for end users.";
   const bySlug = {};
@@ -559,7 +594,7 @@ function indexPage(projects, tagline, homepageBlocks = [], aboutBlocks = []) {
 
   return wrap('', 'Avigail Bahat | Senior Product Designer', `
   <main class="home-band">
-    <p class="lede">${tagline}</p>
+    ${heroDrum(heroFromNotion(homepageBlocks), tagline)}
     <div class="home-allwork" id="home-allwork">
       <div class="work-header">
         <div class="filters">
