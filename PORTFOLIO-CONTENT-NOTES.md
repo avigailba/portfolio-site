@@ -756,3 +756,6 @@ Collections Manager, Payouts Page, Refund Flow, Pricing Page Projects, Submit & 
 - 2026-11-06 (pushed): With Reduce Motion on, the hero phrases fade instead of staying still (she has it on, so she saw no change at first). Everyone else gets the drum roll.
 - 2026-11-08 (pushed): Top bar and mobile menu in Plus Jakarta Sans (name, subtitle, nav, Email me); name Bold 700. Open: top bar padding (~30px) vs homepage 48px margins; possible trim of font weights to 400/500/700.
 - 2026-11-08 (pushed): Top bar side padding 48px on all pages (desktop), matching the homepage margins and the prev/next links on project pages. Mobile stays 20px.
+
+- 2026-11-08 (local): Replaced the root and dist CV PDF with the supplied attachment. Both copies match the attachment byte for byte. Site checks report existing missing images, stale generated CSS/JS, homepage featured-link count and image-alt markup issues; no site code changed. Not committed or published.
+- 2026-11-08 (local, supersedes the PDF replacement above): Both About and footer CV links now use the shared CV_EXPORT_URL Google Docs PDF export. Restored the archived repository PDFs; future CV updates come from Google Docs. Footer opens the export in a new tab with rel=noopener, matching About. Not committed or published.

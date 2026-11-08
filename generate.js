@@ -435,7 +435,7 @@ function ftr(prefix = '') {
         <div class="ft-links">
           <a class="ft-link" href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span> ↗</a>
           <a class="ft-link" href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noopener"><span>LinkedIn</span> ↗</a>
-          <a class="ft-link" href="${prefix}Avigail%20Bahat%20CV.pdf"><span>Download CV</span> ↓</a>
+          <a class="ft-link" href="${CV_EXPORT_URL}" target="_blank" rel="noopener"><span>Download CV</span> ↓</a>
         </div>
       </div>
     </div>
@@ -1842,7 +1842,7 @@ async function build() {
     console.log('  ✓ projects/credits-widget.html');
   }
 
-  // Include the current PDF linked from the About and CV page.
+  // Keep the archived PDF available at its existing URL; CV links use Google Docs.
   const cvSrc = path.join(__dirname, 'Avigail Bahat CV.pdf');
   if (fs.existsSync(cvSrc)) {
     fs.copyFileSync(cvSrc, path.join(DIST, 'Avigail Bahat CV.pdf'));
