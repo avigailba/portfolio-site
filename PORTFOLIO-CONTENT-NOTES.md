@@ -1,7 +1,7 @@
 # Portfolio content notes (read this first in any content session)
 
 Working memory for improving the portfolio copy. Update it at the end of every portfolio work session: add decisions, change a project's status, never delete history.
-Last updated: 2026-11-09 (Collections Manager rebuilt, local only; subtitle and tag change on AI Review Reporting, local only; App Reviews Revamp became AI Review Reporting: fifth redesigned page, Notion applied, PUSHED and live; new rule: section title inside its column; lessons in 'Learned on AI Review Reporting')
+Last updated: 2026-11-09 (Payouts Page rebuilt and pushed 2026-11-09; Collections Manager rebuilt, local only; subtitle and tag change on AI Review Reporting, local only; App Reviews Revamp became AI Review Reporting: fifth redesigned page, Notion applied, PUSHED and live; new rule: section title inside its column; lessons in 'Learned on AI Review Reporting')
 
 > **START HERE for any new page: the section "RECIPE FOR A NEW AGENT" right below, then "PROJECT PAGE SYSTEM" (called DECK-STYLE PAGE SYSTEM before 2026-11-04).** It overrides older parts of this file (the "Standard page structure" table, the goal-first numbered list rule, the Bottom line, Inter as body font, presentation decks). Older sections are kept as history.
 
@@ -698,8 +698,17 @@ BACKUP: "BACKUP Collections Manager 2026-11-09" at the Notion workspace root. So
 - **Her messages arrive in bursts while I work.** Read all of them before applying; several were one idea in pieces (name, nav alignment, nav buttons).
 - **Do not invent**: "App Market team still able to help" slipped into my first draft and had to go. Every sentence needs a source in her chat, the deck, the Figma or the old Notion text.
 
+### Payouts Page (slug payouts-page, Notion 0f54649479514c65bc990b4b594d0cb1): REBUILT 2026-11-09, PUSHED (generator and CSS rode in commit 130d1fb, the page itself is Notion; deploy rebuilds it)
+BACKUP: "BACKUP Payouts Page 2026-11-09 (before restructure)" at the Notion workspace root. Sources: her chat (no payouts page before: developers got a monthly email, asked account managers, or used their own CMS), the PDF "Payout Stats.pdf" (Drive Wix/Projects, 15 pages: product spec, wireframe, account manager feedback session 3/6/20, market research on Apollo, Shopify Partners, Wix Affiliate dashboards), Figma "Payouts" (rxJ6gOjB1G2f7I8M8SR904, not read in detail; pages Main, Transactions, Empty states, Download data, Refund flow).
+- The early wireframe (PDF page 3, used as the Approach screen) was made by the PRODUCT team, not her: caption and text say so. Never present it as hers.
+- Page: TL;DR, The problem (flat text + What was missing bullets), Approach (wireframe 2/3 + title, text, account manager requests in the third), Solution (dashboard 2/3 + Design decisions), Transactions and exports (3 screens), Handling different states (4 screens), Delivery (one line, no Challenges: none given), Impact (lead + three rows, no Next steps: none given). Old Bottom line removed. All 8 old screens kept.
+- Generator: shares the `app-reviews-revamp` branch in `projectPage` (slug added to the list), subsection titles, nbsp on two titles and on "account managers." for orphans, scoped CSS selector extended with the slug. Only this page is affected.
+- Left out on purpose: the spec's tooltips, default time frame and the dollar and 10K benchmark (numbers, and not confirmed as shipped).
+- Round 2 (her review, same day): wireframe cropped to the content (top bar and dark sidebar removed, rendered at 2x from the PDF); Approach is 50/50 (class `proj-shot-half`, scoped CSS); Solution says the view is divided into two tabs; the duplicate "Download data" screen was removed (same image as Export modal, stays in the backup), so Transactions and exports has two screens; "Handling different states" renamed "Empty states"; sub-sections have 40px above (was 64px); Delivery has a Challenges bullet (the export was very difficult: ask what made it hard); the Wix Design System graph component is in the TL;DR and the Impact row (she made the component); Impact row links to the Refund Flow page.
+- Open: section titles are mine and unconfirmed; date (Notion says 2020, PROJECT_META says 2023); Challenges and Next steps have no source; whether the account manager requests all shipped; the Figma file has newer screens that were not compared.
+
 ### Remaining projects (batch 2): TODO, same audit
-Payouts Page, Refund Flow, Pricing Page Projects, Submit & Publish Widget, API Keys page, Coupons Page. Also check Development Site Creation and Custom Element Settings.
+Refund Flow, Pricing Page Projects, Submit & Publish Widget, API Keys page, Coupons Page. Also check Development Site Creation and Custom Element Settings.
 
 ## Decisions log
 - 2026-11-01: Before publishing, moved App Review's problem list directly below its paragraphs in the left half, with both old-tool images alongside. Product-area cards now use four columns above 1100px, two on smaller desktops/tablets, one on mobile.
