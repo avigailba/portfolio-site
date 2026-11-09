@@ -573,8 +573,8 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
 .proj-side-nav .proj-nav-prev { left: 0; right: calc(100vw - clamp(40px, 20vw, 240px)); }
 .proj-side-nav .proj-nav-next { left: calc(100vw - clamp(40px, 20vw, 240px)); right: 0; }
 /* Prev/next labels line up with the top bar: the left label starts where the logo starts, the right label ends where Email me ends */
-.proj-side-nav .proj-nav-prev { justify-content: flex-start; padding-left: clamp(24px, 2vw, 32px); }
-.proj-side-nav .proj-nav-next { justify-content: flex-end; padding-right: clamp(24px, 2vw, 32px); }
+.proj-side-nav .proj-nav-prev { justify-content: flex-start; padding-left: 48px; }
+.proj-side-nav .proj-nav-next { justify-content: flex-end; padding-right: 48px; }
 /* ── Project page sticky title ────────────────────────────── */
 .proj-title-sticky {
   position: sticky;
@@ -1616,7 +1616,7 @@ body.scrolled .title-block { pointer-events: none; }
     left: 0;
     top: calc(var(--site-header-height, 102px) + 16px - var(--toc-lift, 0px));
     width: clamp(40px, 20vw, 240px);
-    padding-inline: clamp(24px, 2vw, 32px);
+    padding-inline: 48px 16px; /* left edge matches the top bar (48px) */
     z-index: 7;
     opacity: var(--r, 0);
     transform: translateX(calc((1 - var(--r, 0)) * -16px));
