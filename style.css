@@ -38,6 +38,8 @@ button { font-family: inherit; }
 /* Home and About: the top bar is transparent while scrolling (desktop); project pages keep the white bar */
 @media (min-width: 769px) {
   body:not(.proj-page) #site-header { background: linear-gradient(to bottom, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.8) 55%, rgba(255,255,255,0) 100%); }
+  /* Homepage: solid white bar when scrolling (About keeps the fade) */
+  body:has(.home-band) #site-header { background: #fff; }
 }
 body.proj-page #site-header {
   border-bottom: none;

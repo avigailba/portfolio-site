@@ -681,6 +681,9 @@ BACKUP: "BACKUP Collections Manager 2026-11-09" at the Notion workspace root. So
 - Open: the section titles are mine and unconfirmed; the Statistics concept is described only from its old caption; the original subtitle ("replaced manual workflows") is kept; deck numbers (counts of collections and categories) were left out on purpose.
 - Learned: `update_content` that moves an image row keeps the OLD captions and leaves an empty `<columns>` behind, so remove the empty block and rewrite the captions with a second `update_content`. Em dashes in old captions have to be replaced. A title in the 1/3 column can leave one word on its own line: shorten it.
 
+### Homepage top bar (2026-11-09)
+- On scroll the homepage top bar is a solid white bar (`body:has(.home-band) #site-header { background: #fff }`, desktop). About keeps the white-to-transparent fade; project pages already had a white bar. Mobile (375px) was already solid white and sticky: no change needed, checked. Not pushed yet when written.
+
 ### Remaining projects (batch 2): TODO, same audit
 Payouts Page, Refund Flow, Pricing Page Projects, Submit & Publish Widget, API Keys page, Coupons Page. Also check Development Site Creation and Custom Element Settings.
 
