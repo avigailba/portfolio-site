@@ -68,7 +68,7 @@ const PROJECT_META = {
   'internal-app-review-system':          { title: 'App Review Platform',   subtitle: 'Replaced a spreadsheet-based review process with a structured tool', cats: 'internal cms',       display: 'Internal tools',  year: 2022, featured: true },
   'ai-credits-wallet':                    { title: 'AI Credits Wallet',        subtitle: 'Transparent AI usage billing across Wix\'s developer platform', cats: 'monetisation',          display: 'Monetisation',    year: 2026, featured: true },
   'developer-sale':                      { title: 'Developer Sale',           subtitle: 'A monetisation campaign tool for app developers',                cats: 'developer monetisation cms', display: 'Monetisation', year: 2024, featured: false },
-  'app-reviews-revamp':                  { title: 'AI Review Reporting',           cats: 'developer cms',          display: 'Developer tools', year: 2024, featured: false },
+  'app-reviews-revamp':                  { title: 'AI Review Reporting',           cats: 'developer',          display: 'Developer tools', year: 2024, featured: false },
   'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'internal cms',           display: 'Internal tools',  year: 2024, featured: false },
   'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',       display: 'Monetisation',    year: 2023, featured: false },
   'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
@@ -409,8 +409,8 @@ function hdr(prefix, current = '') {
   </nav>
   <div class="mob-panel-foot">
     <div class="mob-panel-social">
-      <a href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span class="mob-arr" aria-hidden="true">↗</span></a>
-      <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span class="mob-arr" aria-hidden="true">↗</span></a>
+      <a href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span><span class="mob-arr" aria-hidden="true">↗︎</span></a>
+      <a href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span class="mob-arr" aria-hidden="true">↗︎</span></a>
     </div>
   </div>
 </aside>`;
@@ -433,8 +433,8 @@ function ftr(prefix = '') {
       <div class="ft-contact">
         <h2 class="ft-label">Contact</h2>
         <div class="ft-links">
-          <a class="ft-link" href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span> ↗</a>
-          <a class="ft-link" href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noopener"><span>LinkedIn</span> ↗</a>
+          <a class="ft-link" href="mailto:avigailba@gmail.com"><span>avigailba@gmail.com</span> ↗︎</a>
+          <a class="ft-link" href="https://www.linkedin.com/in/avigailbahat/" target="_blank" rel="noopener"><span>LinkedIn</span> ↗︎</a>
           <a class="ft-link" href="${CV_EXPORT_URL}" target="_blank" rel="noopener"><span>Download CV</span> ↓</a>
         </div>
       </div>
@@ -874,10 +874,10 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
       contentHtml = contentHtml.replace(/<div class="proj-results"><div class="pr-lead"><p class="pr-headline">([\s\S]*?)<\/p><\/div><div class="pr-rows">(<div class="pr-row"><p class="pr-label">[^<]*<\/p><p class="pr-rtext">[\s\S]*?<\/p>)/,
         '<div class="proj-results"><div class="pr-rows">$2<p class="pr-rtext pr-after">$1</p>');
       contentHtml = buildDeliveryColumns(contentHtml, true, false, true);
-    } else if (proj.slug === 'app-reviews-revamp') {
+    } else if (['app-reviews-revamp', 'app-collections-internal-manager'].includes(proj.slug)) {
       // Plain bullets everywhere (no builders). Problem: title and text in the left half, the two old screens side by side in the
       // right half, level with the first paragraph (the title is written INSIDE the first Notion column).
-      contentHtml = contentHtml.replace(/<div class="col-layout col-2"><div class="col">(<h2[^>]*>[\s\S]*?<\/h2>\n?)([\s\S]*?)<\/div><div class="col">(<figure[\s\S]*?<\/figure>\s*<figure[\s\S]*?<\/figure>)\s*<\/div><\/div>/,
+      if (proj.slug === 'app-reviews-revamp') contentHtml = contentHtml.replace(/<div class="col-layout col-2"><div class="col">(<h2[^>]*>[\s\S]*?<\/h2>\n?)([\s\S]*?)<\/div><div class="col">(<figure[\s\S]*?<\/figure>\s*<figure[\s\S]*?<\/figure>)\s*<\/div><\/div>/,
         (m, h2, body, figs) => {
           const [a, b] = figs.match(/<figure[\s\S]*?<\/figure>/g);
           return `<div class="col-layout col-2 proj-half proj-quarters"><div class="col proj-left">${h2}<div class="proj-body">${body}</div></div><div class="col proj-right"><div class="proj-pair"><div>${a}</div><div>${b}</div></div></div></div>`;
@@ -885,6 +885,17 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
       // Approach and Solution: the screen takes the first 2/3, the title and text sit in the last third (title written inside that column)
       contentHtml = contentHtml.replace(/<div class="col-layout col-2">(<div class="col"><figure[\s\S]*?<\/figure>\s*<\/div><div class="col"><h2)/g,
         '<div class="col-layout col-2 proj-shot">$1');
+      if (proj.slug === 'app-collections-internal-manager') {
+        // Problem and Approach: their two screens sit side by side in the 2/3 column
+        contentHtml = contentHtml.replace(/(<div class="col-layout col-2 proj-shot"><div class="col">)(<figure[\s\S]*?<\/figure>)\s*(<figure[\s\S]*?<\/figure>)\s*(<\/div><div class="col"><h2)/g,
+          '$1<div class="proj-pair"><div>$2</div><div>$3</div></div>$4');
+        // Problem, Approach, Solution: title above the text, the screens start level with the first paragraph (not the title)
+        contentHtml = contentHtml.replace(/<div class="col-layout col-2 proj-shot"><div class="col">([\s\S]*?)<\/div><div class="col">(<h2[^>]*>[\s\S]*?<\/h2>\n?)([\s\S]*?)<\/div><\/div>/g,
+          (m, fig, h2, body) => `<div class="col-layout col-2 proj-shot proj-para"><div class="col proj-fig">${fig}</div><div class="col proj-text">${h2}<div class="proj-body">${body}</div></div></div>`);
+        // Impact: same idea, text in the left half and the screen in the right half level with the first paragraph
+        contentHtml = contentHtml.replace(/<div class="col-layout col-2">(<div class="col">)(<h2[^>]*>(?:<strong>)?Impact[\s\S]*?<\/h2>\n?)([\s\S]*?)<\/div><div class="col">(<figure[\s\S]*?<\/figure>)\s*<\/div><\/div>/,
+          (m, c, h2, body, fig) => `<div class="col-layout col-2 proj-half proj-quarters"><div class="col proj-left">${h2}<div class="proj-body">${body}</div></div><div class="col proj-right">${fig}</div></div>`);
+      }
     } else {
       contentHtml = buildResults(contentHtml);
       contentHtml = buildDeliveryColumns(contentHtml,
@@ -1001,6 +1012,7 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
     const subsectionTitles = new Set(['Design principles']);
     if (proj.slug === 'developer-sale') ['Design decisions', 'Creating, joining and managing sales', 'How a sale shows to buyers'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'app-reviews-revamp') ['Design decisions', 'The new review modal'].forEach(t => subsectionTitles.add(t));
+    if (proj.slug === 'app-collections-internal-manager') ['Design decisions', 'What was missing', 'Creating a collection', 'Managing a collection', 'Next steps'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'ai-credits-wallet') {
       subsectionTitles.add('Where users see their credits');
       subsectionTitles.add('Behind the scenes');
@@ -1010,6 +1022,7 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
         ? `<h3${id || ''} class="proj-h3"><span class="proj-h3-title">${title.trim()}</span></h3>` : m);
   }
   if (proj.slug === 'app-reviews-revamp' && contentHtml) contentHtml = contentHtml.replace('>The new review modal<', '>The new review&nbsp;modal<');
+  if (proj.slug === 'app-collections-internal-manager' && contentHtml) contentHtml = contentHtml.replace('>Only one team could manage collections<', '>Only one team could manage&nbsp;collections<');
 
   if (proj.slug === 'ai-credits-wallet' && contentHtml) {
     contentHtml = contentHtml.replace('One wallet skeleton, two tiers, three platforms', 'One wallet skeleton, two tiers, three&nbsp;platforms');

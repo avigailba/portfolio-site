@@ -795,7 +795,8 @@ if (document.getElementById('playFrame')) {
       if (e.clientX < window.innerWidth / 2) { if (current > 0) open(current - 1); }
       else { if (current < images.length - 1) open(current + 1); }
     } else {
-      if (e.target === lb) close();
+      // Desktop: a click on the dark area around the image (overlay, stage or content wrapper) closes it
+      if (e.target === lb || e.target.classList.contains('lb-stage') || e.target.classList.contains('lb-content')) close();
     }
   });
   lbPrev.addEventListener('click', function(e) { e.stopPropagation(); if (current > 0) open(current - 1); });
