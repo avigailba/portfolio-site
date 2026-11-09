@@ -874,7 +874,7 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
       contentHtml = contentHtml.replace(/<div class="proj-results"><div class="pr-lead"><p class="pr-headline">([\s\S]*?)<\/p><\/div><div class="pr-rows">(<div class="pr-row"><p class="pr-label">[^<]*<\/p><p class="pr-rtext">[\s\S]*?<\/p>)/,
         '<div class="proj-results"><div class="pr-rows">$2<p class="pr-rtext pr-after">$1</p>');
       contentHtml = buildDeliveryColumns(contentHtml, true, false, true);
-    } else if (['app-reviews-revamp', 'app-collections-internal-manager', 'payouts-page'].includes(proj.slug)) {
+    } else if (['app-reviews-revamp', 'app-collections-internal-manager', 'payouts-page', 'refund-flow'].includes(proj.slug)) {
       // Plain bullets everywhere (no builders). Problem: title and text in the left half, the two old screens side by side in the
       // right half, level with the first paragraph (the title is written INSIDE the first Notion column).
       if (proj.slug === 'app-reviews-revamp') contentHtml = contentHtml.replace(/<div class="col-layout col-2"><div class="col">(<h2[^>]*>[\s\S]*?<\/h2>\n?)([\s\S]*?)<\/div><div class="col">(<figure[\s\S]*?<\/figure>\s*<figure[\s\S]*?<\/figure>)\s*<\/div><\/div>/,
@@ -1014,6 +1014,7 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
     if (proj.slug === 'app-reviews-revamp') ['Design decisions', 'The new review modal'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'app-collections-internal-manager') ['Design decisions', 'What was missing', 'Creating a collection', 'Managing a collection', 'Next steps'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'payouts-page') ['How developers got their data', 'What developers asked for', 'Design decisions', 'Transactions and exports', 'Empty states', 'Challenges', 'Next steps'].forEach(t => subsectionTitles.add(t));
+    if (proj.slug === 'refund-flow') ['What had to be decided', 'Design decisions', 'The flow, step by step', 'Closer look at the modal', 'Challenges', 'Next steps'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'ai-credits-wallet') {
       subsectionTitles.add('Where users see their credits');
       subsectionTitles.add('Behind the scenes');
@@ -1304,6 +1305,8 @@ async function aboutPage(blocks) {
     </div>
   </section>`;
 
+  const didYouKnow = sections.find((s) => /^did you know/i.test(s.title));
+  const didYouKnowHtml = didYouKnow ? didYouKnow.blocks.filter((b) => b.type === 'paragraph' && blockText(b)).map((b) => paragraphHtml(b)).join('') : '';
   // Contents rail (same look as project pages), one entry per section that exists
   const tocItems = [
     summaryHtml ? ['cv-summary', 'Summary'] : null,
@@ -1311,6 +1314,7 @@ async function aboutPage(blocks) {
     achievementItems.length ? ['cv-achievements', 'Key achievements'] : null,
     groups.length ? ['cv-experience', 'Experience'] : null,
     education ? ['cv-education', 'Education'] : null,
+    didYouKnowHtml ? ['cv-dyk', 'Did you know?'] : null,
     ['cv-work', 'Work'],
   ].filter(Boolean);
   const aboutToc = tocItems.length > 2
@@ -1329,6 +1333,7 @@ async function aboutPage(blocks) {
       ${groups.length ? `<section class="cv-xp" aria-labelledby="cv-experience"><h2 id="cv-experience">Experience</h2>${groupsHtml}
       </section>` : ''}
       ${education ? `<section class="cv-edu" aria-labelledby="cv-education"><h2 id="cv-education">Education</h2><h3 class="cv-job-title">${escapeAttr(education.degree)}</h3>${education.school ? `<p>${escapeAttr(education.school)}</p>` : ''}</section>` : ''}
+      ${didYouKnowHtml ? `<section class="cv-edu" aria-labelledby="cv-dyk"><h2 id="cv-dyk">Did you know?</h2>${didYouKnowHtml}</section>` : ''}
     </div>
   </main>
   ${aboutMoreWork}`, '', '', 'about-page', 'about');

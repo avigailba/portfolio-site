@@ -1,7 +1,7 @@
 # Portfolio content notes (read this first in any content session)
 
 Working memory for improving the portfolio copy. Update it at the end of every portfolio work session: add decisions, change a project's status, never delete history.
-Last updated: 2026-11-09 (Payouts Page rebuilt and pushed 2026-11-09; Collections Manager rebuilt, local only; subtitle and tag change on AI Review Reporting, local only; App Reviews Revamp became AI Review Reporting: fifth redesigned page, Notion applied, PUSHED and live; new rule: section title inside its column; lessons in 'Learned on AI Review Reporting')
+Last updated: 2026-11-09 (Refund Flow rebuilt, local only; Payouts Page rebuilt and pushed 2026-11-09; Collections Manager rebuilt, local only; subtitle and tag change on AI Review Reporting, local only; App Reviews Revamp became AI Review Reporting: fifth redesigned page, Notion applied, PUSHED and live; new rule: section title inside its column; lessons in 'Learned on AI Review Reporting')
 
 > **START HERE for any new page: the section "RECIPE FOR A NEW AGENT" right below, then "PROJECT PAGE SYSTEM" (called DECK-STYLE PAGE SYSTEM before 2026-11-04).** It overrides older parts of this file (the "Standard page structure" table, the goal-first numbered list rule, the Bottom line, Inter as body font, presentation decks). Older sections are kept as history.
 
@@ -705,9 +705,18 @@ BACKUP: "BACKUP Payouts Page 2026-11-09 (before restructure)" at the Notion work
 - Generator: shares the `app-reviews-revamp` branch in `projectPage` (slug added to the list), subsection titles, nbsp on two titles and on "account managers." for orphans, scoped CSS selector extended with the slug. Only this page is affected.
 - Left out on purpose: the spec's tooltips, default time frame and the dollar and 10K benchmark (numbers, and not confirmed as shipped).
 - Round 2 (her review, same day): wireframe cropped to the content (top bar and dark sidebar removed, rendered at 2x from the PDF); Approach is 50/50 (class `proj-shot-half`, scoped CSS); Solution says the view is divided into two tabs; the duplicate "Download data" screen was removed (same image as Export modal, stays in the backup), so Transactions and exports has two screens; "Handling different states" renamed "Empty states"; sub-sections have 40px above (was 64px); Delivery has a Challenges bullet (the export was very difficult: ask what made it hard); the Wix Design System graph component is in the TL;DR and the Impact row (she made the component); Impact row links to the Refund Flow page.
-- Open: section titles are mine and unconfirmed; date (Notion says 2020, PROJECT_META says 2023); Challenges and Next steps have no source; whether the account manager requests all shipped; the Figma file has newer screens that were not compared.
+- Open: section titles are mine and unconfirmed; date set to 2020 in PROJECT_META on 2026-11-09 (she said "probably 2020", local until pushed); Challenges and Next steps have no source; whether the account manager requests all shipped; the Figma file has newer screens that were not compared.
+
+### Refund Flow (slug refund-flow, Notion b103bffdedd247569c67b422c90cfcd3): REBUILT 2026-11-09, LOCAL ONLY (not committed, not pushed)
+BACKUP: "BACKUP Refund Flow 2026-11-09 (before restructure)" at the Notion workspace root. Sources: the old Notion text, her Payouts notes, Figma "Payouts" (rxJ6gOjB1G2f7I8M8SR904), page "Refund flow" (0:9632) and "Refund errors" (952:137058), read with get_metadata and get_screenshot.
+- Page: TL;DR, The problem (flat text), Approach (text + What had to be decided bullets), Solution (refund form screen 2/3 + Design decisions), The flow step by step (6 screens, 3-up twice: the 5 old screens kept + new Review the request), Edge cases (Missing details, Server error), Delivery (one line + Challenges from her old Bottom line), Impact (lead + 3 rows). Old Bottom line removed; its ideas live in Challenges.
+- New screens are cropped to the modal; the site name in the review screen is painted over (the Site value is blank). Copy has no numbers: the "3 business days" and "24 hours" in the notice are only inside the screenshot.
+- Generator: slug added to the `app-reviews-revamp` branch list, subsection titles, `.proj-h3` 40px, scoped CSS `:is(...)` lists extended. Only this page is affected.
+- Notion pitfall: replace_content moved the `## Delivery` heading to the top of the page and kept the OLD captions (with em dashes) on image blocks it recognised; fixed with update_content. Always fetch after replace_content.
+- Open: section titles are mine and unconfirmed; the Figma modal screens are newer than the old Confirm screen (both kept); the problem text is thin (no source says how refunds were handled before); Figma has more screens not used (cancel variant, loader, empty and zero amount errors, success banner); date (Notion 2021, PROJECT_META 2023).
 
 ### Remaining projects (batch 2): TODO, same audit
+Refund Flow is done (see above).
 Refund Flow, Pricing Page Projects, Submit & Publish Widget, API Keys page, Coupons Page. Also check Development Site Creation and Custom Element Settings.
 
 ## Decisions log
