@@ -874,7 +874,7 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
       contentHtml = contentHtml.replace(/<div class="proj-results"><div class="pr-lead"><p class="pr-headline">([\s\S]*?)<\/p><\/div><div class="pr-rows">(<div class="pr-row"><p class="pr-label">[^<]*<\/p><p class="pr-rtext">[\s\S]*?<\/p>)/,
         '<div class="proj-results"><div class="pr-rows">$2<p class="pr-rtext pr-after">$1</p>');
       contentHtml = buildDeliveryColumns(contentHtml, true, false, true);
-    } else if (['app-reviews-revamp', 'app-collections-internal-manager'].includes(proj.slug)) {
+    } else if (['app-reviews-revamp', 'app-collections-internal-manager', 'payouts-page'].includes(proj.slug)) {
       // Plain bullets everywhere (no builders). Problem: title and text in the left half, the two old screens side by side in the
       // right half, level with the first paragraph (the title is written INSIDE the first Notion column).
       if (proj.slug === 'app-reviews-revamp') contentHtml = contentHtml.replace(/<div class="col-layout col-2"><div class="col">(<h2[^>]*>[\s\S]*?<\/h2>\n?)([\s\S]*?)<\/div><div class="col">(<figure[\s\S]*?<\/figure>\s*<figure[\s\S]*?<\/figure>)\s*<\/div><\/div>/,
@@ -1013,6 +1013,7 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
     if (proj.slug === 'developer-sale') ['Design decisions', 'Creating, joining and managing sales', 'How a sale shows to buyers'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'app-reviews-revamp') ['Design decisions', 'The new review modal'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'app-collections-internal-manager') ['Design decisions', 'What was missing', 'Creating a collection', 'Managing a collection', 'Next steps'].forEach(t => subsectionTitles.add(t));
+    if (proj.slug === 'payouts-page') ['How developers got their data', 'What developers asked for', 'Design decisions', 'Transactions and exports', 'Empty states', 'Challenges', 'Next steps'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'ai-credits-wallet') {
       subsectionTitles.add('Where users see their credits');
       subsectionTitles.add('Behind the scenes');
@@ -1022,6 +1023,8 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
         ? `<h3${id || ''} class="proj-h3"><span class="proj-h3-title">${title.trim()}</span></h3>` : m);
   }
   if (proj.slug === 'app-reviews-revamp' && contentHtml) contentHtml = contentHtml.replace('>The new review modal<', '>The new review&nbsp;modal<');
+  if (proj.slug === 'payouts-page' && contentHtml) contentHtml = contentHtml.replace('col-layout col-2 proj-shot"', 'col-layout col-2 proj-shot proj-shot-half"');
+  if (proj.slug === 'payouts-page' && contentHtml) contentHtml = contentHtml.replace('>Starting from the account managers<', '>Starting from the account&nbsp;managers<').replace('>An earnings dashboard<', '>An earnings&nbsp;dashboard<').replace(/ account managers\./g, ' account&nbsp;managers.');
   if (proj.slug === 'app-collections-internal-manager' && contentHtml) contentHtml = contentHtml.replace('>Only one team could manage collections<', '>Only one team could manage&nbsp;collections<');
 
   if (proj.slug === 'ai-credits-wallet' && contentHtml) {
