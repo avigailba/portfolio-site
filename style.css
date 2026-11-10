@@ -43,8 +43,6 @@ button { font-family: inherit; }
 }
 body.proj-page #site-header {
   border-bottom: none;
-  padding-left: 48px;
-  padding-right: 48px;
 }
 /* The project-page top bar stays intact while the title and contents rail animate. */
 body.proj-page #site-header.scrolled .mob-logo-role { max-height: 18px; opacity: 1; }
