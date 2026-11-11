@@ -1861,3 +1861,8 @@ body.scrolled .title-block { pointer-events: none; }
   .proj-content[data-project="payouts-page"] .col-layout.proj-shot-half > .col:first-child { grid-column: 7 / span 6; grid-row: 1; }
   .proj-content[data-project="payouts-page"] .col-layout.proj-shot-half > .col:last-child { grid-column: 1 / span 6; grid-row: 1; }
 }
+
+/* Submit & Publish Widget: the two "Where it is today" screens (not her design) are shown smaller, a third of the width each */
+@media (min-width: 769px) {
+  .proj-content[data-project="submit-publish-widget"] > .col-layout.col-2:last-of-type { max-width: calc(66.667% - 10.67px); }
+}
