@@ -313,6 +313,14 @@ nav .nav-email:focus-visible { outline: 2px solid #0a0a0a; outline-offset: 3px; 
   text-wrap: pretty;
 }
 
+/* Featured rows with a cover: image on the right, tags under the subtitle */
+.row-cover-img {
+  width: 340px; height: 158px; flex: none; object-fit: cover;
+  border-radius: 6px; border: 0.5px solid #ebebeb; margin-left: 8px;
+}
+.row-cover .rmain .cat-tags { margin-top: 12px; }
+.row-cover .rmain .cat-tag { display: inline-block; }
+
 /* Category accent pairs */
 .row[data-cat~="developer"]    { --accent: #2b6cff; --accent-2: #0ea5e9; }
 .row[data-cat~="monetisation"] { --accent: #0aa17a; --accent-2: #00c896; }
@@ -1250,6 +1258,11 @@ body.scrolled .proj-side-nav .proj-nav-btn { opacity: 0; pointer-events: none; }
   .row-year { display: none; }
   .row-arr { display: none; }
   .cat-tag { display: none; }
+  .row-cover { flex-wrap: wrap; }
+  .row-cover .num { display: none; }
+  .row-cover .row-cover-img { order: -1; width: 100%; height: auto; aspect-ratio: 800 / 371; margin: 0 0 14px; }
+  .row-cover .rmain { flex: 1; min-width: 0; }
+  .row-cover .rmain .cat-tags { display: none; }
   .feat-tag { display: none; }
   .mob-row-foot { display: flex; margin-top: 0; align-self: center; flex-shrink: 0; }
   .mob-view-sm { color: #2b6cff; }

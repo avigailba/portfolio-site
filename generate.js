@@ -591,14 +591,17 @@ function indexPage(projects, tagline, homepageBlocks = [], aboutBlocks = []) {
     const summary = proj?.subtitle || proj?.summary || '';
     const featured = meta?.featured || false;
     const featCls = featured ? ' row-feat' : '';
+    const hasCover = featured && fs.existsSync(path.join('covers', `${slug}.jpg`));
+    const tagsHtml = badges.length ? `<span class="cat-tags">${badges.map(label => `<span class="cat-tag">${label}</span>`).join('')}</span>` : '';
     return `<div class="row-wrap${featCls}" data-cat="${cats}">
-  <a href="projects/${slug}.html" class="row${featCls}" data-cat="${cats}">
+  <a href="projects/${slug}.html" class="row${featCls}${hasCover ? ' row-cover' : ''}" data-cat="${cats}">
     <span class="num">${String(i + 1).padStart(2, '0')}</span>
     <div class="rmain">
       <span class="row-title">${title}</span>
       ${summary ? `<span class="rsub">${summary}</span>` : ''}
+      ${hasCover ? tagsHtml : ''}
     </div>
-    ${badges.length ? `<span class="cat-tags">${badges.map(label => `<span class="cat-tag">${label}</span>`).join('')}</span>` : ''}
+    ${hasCover ? `<img class="row-cover-img" src="images/cover-${slug}.jpg" alt="" width="340" height="158" loading="lazy">` : tagsHtml}
     <span class="row-arr"><span class="link-label">View</span> →</span>
     <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm"><span class="link-label">View</span> →</span></div>
   </a>
@@ -1767,6 +1770,7 @@ async function build() {
   fs.mkdirSync(IMAGES, { recursive: true });
   fs.copyFileSync('style.css', path.join(DIST, 'style.css'));
   fs.copyFileSync('script.js', path.join(DIST, 'script.js'));
+  if (fs.existsSync('covers')) fs.readdirSync('covers').forEach(f => fs.copyFileSync(path.join('covers', f), path.join(IMAGES, `cover-${f}`)));
   ['favicon-32x32.png','favicon-16x16.png','apple-touch-icon.png'].forEach(f => {
     if (fs.existsSync(f)) fs.copyFileSync(f, path.join(DIST, f));
   });
