@@ -66,16 +66,16 @@ const stats = { pages: 0, images: 0, errors: [] };
 const PROJECT_META = {
   'app-installation-page-for-developers': { title: 'Installations Page',      subtitle: 'Designed and shipped installation analytics that gave developers site-level visibility into how their apps were used', cats: 'developer cms',         display: 'Developer tools', year: 2025, featured: true },
   'internal-app-review-system':          { title: 'App Review Platform',   subtitle: 'Replaced a spreadsheet-based review process with a structured tool', cats: 'internal cms',       display: 'Internal tools',  year: 2022, featured: true },
-  'ai-credits-wallet':                    { title: 'AI Credits Wallet',        subtitle: 'Transparent AI usage billing across Wix\'s developer platform', cats: 'monetisation',          display: 'Monetisation',    year: 2026, featured: true },
-  'developer-sale':                      { title: 'Developer Sale',           subtitle: 'A monetisation campaign tool for app developers',                cats: 'developer monetisation cms', display: 'Monetisation', year: 2024, featured: false },
+  'ai-credits-wallet':                    { title: 'AI Credits Wallet',        subtitle: 'Transparent AI usage billing across Wix\'s developer platform', cats: 'monetisation',          display: 'Monetization',    year: 2026, featured: true },
+  'developer-sale':                      { title: 'Developer Sale',           subtitle: 'A monetization campaign tool for app developers',                cats: 'developer monetisation cms', display: 'Monetization', year: 2024, featured: false },
   'app-reviews-revamp':                  { title: 'AI Review Reporting',           cats: 'developer',          display: 'Developer tools', year: 2024, featured: false },
   'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'internal cms',           display: 'Internal tools',  year: 2024, featured: false },
-  'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',       display: 'Monetisation',    year: 2023, featured: false },
-  'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',           display: 'Monetisation',    year: 2023, featured: false },
-  'app-pricing-page-projects':           { title: 'App Pricing Page Projects',    cats: 'developer monetisation', display: 'Monetisation',    year: 2023, featured: false },
+  'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',       display: 'Monetization',    year: 2023, featured: false },
+  'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',           display: 'Monetization',    year: 2023, featured: false },
+  'app-pricing-page-projects':           { title: 'App Pricing Page Projects',    cats: 'developer monetisation', display: 'Monetization',    year: 2023, featured: false },
   'submit-publish-widget':               { title: 'Submit & Publish Widget',      cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
   'api-keys-page':                       { title: 'API Keys Page',                cats: 'developer cms',          display: 'Developer tools', year: 2022, featured: false },
-  'app-coupons':                         { title: 'App Coupons',                  cats: 'monetisation cms',       display: 'Monetisation',    year: 2021, featured: false },
+  'app-coupons':                         { title: 'App Coupons',                  cats: 'monetisation cms',       display: 'Monetization',    year: 2021, featured: false },
   'development-site-creation':           { title: 'Development Site Creation',    cats: 'developer',              display: 'Developer tools', year: 2021, featured: false },
 };
 
@@ -422,7 +422,7 @@ function ftr(prefix = '') {
     <div class="ft-main">
       <h2 class="ft-big">Avigail Bahat</h2>
       <p class="ft-sum">Senior Product Designer designing developer platforms, monetization, and AI products. I'm hands-on with code through AI tools and work closely with product and engineering.</p>
-      <ul class="ft-tags" aria-label="Areas of focus"><li>Developer tools</li><li>AI products</li><li>Complex systems</li><li>B2B SaaS</li><li>Platform design</li><li>Marketplace</li><li>Design systems</li><li>Developer experience</li><li>Monetisation</li><li>Internal tools</li></ul>
+      <ul class="ft-tags" aria-label="Areas of focus"><li>Developer tools</li><li>AI products</li><li>Complex systems</li><li>B2B SaaS</li><li>Platform design</li><li>Marketplace</li><li>Design systems</li><li>Developer experience</li><li>Monetization</li><li>Internal tools</li></ul>
       <a class="ft-link ft-more" href="${prefix}about.html"><span>Read more</span> →</a>
     </div>
     <div class="ft-facts">
@@ -449,12 +449,25 @@ function wrap(prefix, title, body, extraScript = '', extraHead = '', bodyClass =
   const analyticsScript = process.env.VERCEL === '1'
     ? '\n<script defer src="/_vercel/insights/script.js"></script>'
     : '';
+  // Link previews (LinkedIn, Slack, search): description from the project subtitle, image from the page's first screen
+  const subM = body.match(/<p class="proj-subtitle[^"]*">([\s\S]*?)<\/p>/);
+  const metaDesc = escapeAttr(subM
+    ? subM[1].replace(/<[^>]+>/g, '').replace(/&#39;|&rsquo;/g, "'").replace(/&amp;/g, '&').trim()
+    : 'Avigail Bahat, Senior Product Designer with 10+ years at Wix, designing developer platforms, monetization experiences and AI products.');
+  const imgM = prefix ? body.match(/<img[^>]+src="\.\.\/(images\/[^"]+)"/) : null;
+  const metaImg = imgM ? `\n  <meta property="og:image" content="https://www.avigailba.com/${imgM[1]}">` : '';
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
+  <meta name="description" content="${metaDesc}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Avigail Bahat">
+  <meta property="og:title" content="${escapeAttr(title)}">
+  <meta property="og:description" content="${metaDesc}">${metaImg}
+  <meta name="twitter:card" content="${imgM ? 'summary_large_image' : 'summary'}">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap">
   <link rel="icon" type="image/png" sizes="32x32" href="${prefix}favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="${prefix}favicon-16x16.png">
@@ -572,7 +585,7 @@ function indexPage(projects, tagline, homepageBlocks = [], aboutBlocks = []) {
     const proj = bySlug[slug];
     const title   = proj?.title   || meta?.title   || slug;
     const cats    = meta?.cats    || '';
-    const catLabels = { developer: 'Developer tools', monetisation: 'Monetisation', internal: 'Internal tools', cms: 'CMS' };
+    const catLabels = { developer: 'Developer tools', monetisation: 'Monetization', internal: 'Internal tools', cms: 'CMS' };
     const badges = cats.split(/\s+/).filter(Boolean).map(cat => catLabels[cat] || cat);
     const year    = meta?.year    || proj?.year    || '';
     const summary = proj?.subtitle || proj?.summary || '';
@@ -600,7 +613,7 @@ function indexPage(projects, tagline, homepageBlocks = [], aboutBlocks = []) {
         <div class="filters">
           <button class="filter-btn active" data-filter="all">All projects</button>
           <button class="filter-btn" data-filter="developer">Developer tools</button>
-          <button class="filter-btn" data-filter="monetisation">Monetisation</button>
+          <button class="filter-btn" data-filter="monetisation">Monetization</button>
           <button class="filter-btn" data-filter="internal">Internal tools</button>
           <button class="filter-btn" data-filter="cms">CMS</button>
         </div>
@@ -609,7 +622,7 @@ function indexPage(projects, tagline, homepageBlocks = [], aboutBlocks = []) {
           <div class="mob-filter-drop" id="mob-filter-drop">
             <button class="mob-filter-opt active" data-filter="all">All projects</button>
             <button class="mob-filter-opt" data-filter="developer">Developer tools</button>
-            <button class="mob-filter-opt" data-filter="monetisation">Monetisation</button>
+            <button class="mob-filter-opt" data-filter="monetisation">Monetization</button>
             <button class="mob-filter-opt" data-filter="internal">Internal tools</button>
             <button class="mob-filter-opt" data-filter="cms">CMS</button>
           </div>
@@ -1034,7 +1047,7 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
 
   const title = titleCase(proj.title || meta.title || 'Project');
   const year  = meta.year  || proj.year;
-  const CAT_LABELS = { developer: 'Developer tools', monetisation: 'Monetisation', cms: 'CMS', internal: 'Internal tools' };
+  const CAT_LABELS = { developer: 'Developer tools', monetisation: 'Monetization', cms: 'CMS', internal: 'Internal tools' };
   const catHtml = (meta.cats || '').split(' ').filter(Boolean)
     .map(c => `<span class="pm">${CAT_LABELS[c] || c}</span>`).join('<span class="psep">·</span>')
     || `<span class="pm">${meta.display || 'Product design'}</span>`;
@@ -1230,6 +1243,8 @@ async function aboutPage(blocks) {
     'ai credits wallet': 'projects/ai-credits-wallet.html',
     'internal reviews system': 'projects/internal-app-review-system.html',
     'app installation data': 'projects/app-installation-page-for-developers.html',
+    'app review platform': 'projects/internal-app-review-system.html',
+    'installations page': 'projects/app-installation-page-for-developers.html',
   };
   const jobs = [];
   let achievementItems = [];
@@ -1518,7 +1533,7 @@ function designSystemPage(notionConnected) {
                     <span class="row-title">AI Credits Wallet</span>
                     <span class="rsub">One shared credits wallet for free and premium users, across Wix and Wixel.</span>
                   </div>
-                  <span class="cat-tags"><span class="cat-tag">Monetisation</span></span>
+                  <span class="cat-tags"><span class="cat-tag">Monetization</span></span>
                   <span class="row-arr"><span class="link-label">View</span> →</span>
                 </div>
               </div>
@@ -1530,7 +1545,7 @@ function designSystemPage(notionConnected) {
             <div class="ds-comp-demo" style="display:flex;gap:16px;align-items:center;">
               <button class="filter-btn active">All projects</button>
               <button class="filter-btn">Developer tools</button>
-              <button class="filter-btn">Monetisation</button>
+              <button class="filter-btn">Monetization</button>
             </div>
           </div>
 
