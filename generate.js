@@ -890,7 +890,7 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
       contentHtml = contentHtml.replace(/<div class="proj-results"><div class="pr-lead"><p class="pr-headline">([\s\S]*?)<\/p><\/div><div class="pr-rows">(<div class="pr-row"><p class="pr-label">[^<]*<\/p><p class="pr-rtext">[\s\S]*?<\/p>)/,
         '<div class="proj-results"><div class="pr-rows">$2<p class="pr-rtext pr-after">$1</p>');
       contentHtml = buildDeliveryColumns(contentHtml, true, false, true);
-    } else if (['app-reviews-revamp', 'app-collections-internal-manager', 'payouts-page', 'refund-flow', 'submit-publish-widget'].includes(proj.slug)) {
+    } else if (['app-reviews-revamp', 'app-collections-internal-manager', 'payouts-page', 'refund-flow', 'submit-publish-widget', 'api-keys-page', 'app-coupons'].includes(proj.slug)) {
       // Plain bullets everywhere (no builders). Problem: title and text in the left half, the two old screens side by side in the
       // right half, level with the first paragraph (the title is written INSIDE the first Notion column).
       if (proj.slug === 'app-reviews-revamp') contentHtml = contentHtml.replace(/<div class="col-layout col-2"><div class="col">(<h2[^>]*>[\s\S]*?<\/h2>\n?)([\s\S]*?)<\/div><div class="col">(<figure[\s\S]*?<\/figure>\s*<figure[\s\S]*?<\/figure>)\s*<\/div><\/div>/,
@@ -1028,6 +1028,8 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
     const subsectionTitles = new Set(['Design principles']);
     if (proj.slug === 'developer-sale') ['Design decisions', 'Creating, joining and managing sales', 'How a sale shows to buyers'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'app-reviews-revamp') ['Design decisions', 'The new review modal'].forEach(t => subsectionTitles.add(t));
+    if (proj.slug === 'api-keys-page') ['Design decisions', 'Generation flow', 'Management'].forEach(t => subsectionTitles.add(t));
+    if (proj.slug === 'app-coupons') ['Design decisions', 'Empty and inactive states'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'submit-publish-widget') ['Early wireframes'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'app-collections-internal-manager') ['Design decisions', 'What was missing', 'Creating a collection', 'Managing a collection', 'Next steps'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'payouts-page') ['How developers got their data', 'What developers asked for', 'Design decisions', 'Transactions and exports', 'Empty states', 'Challenges', 'Next steps'].forEach(t => subsectionTitles.add(t));
