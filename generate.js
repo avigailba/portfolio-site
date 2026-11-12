@@ -899,7 +899,7 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
           return `<div class="col-layout col-2 proj-half proj-quarters"><div class="col proj-left">${h2}<div class="proj-body">${body}</div></div><div class="col proj-right"><div class="proj-pair"><div>${a}</div><div>${b}</div></div></div></div>`;
         });
       // Approach and Solution: the screen takes the first 2/3, the title and text sit in the last third (title written inside that column)
-      contentHtml = contentHtml.replace(/<div class="col-layout col-2">(<div class="col"><figure[\s\S]*?<\/figure>\s*<\/div><div class="col"><h2)/g,
+      contentHtml = contentHtml.replace(/<div class="col-layout col-2">(<div class="col"><figure(?:(?!<div class="col">)[\s\S])*?<\/figure>\s*<\/div><div class="col"><h2)/g,
         '<div class="col-layout col-2 proj-shot">$1');
       if (proj.slug === 'app-collections-internal-manager') {
         // Problem and Approach: their two screens sit side by side in the 2/3 column
@@ -1028,8 +1028,8 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
     const subsectionTitles = new Set(['Design principles']);
     if (proj.slug === 'developer-sale') ['Design decisions', 'Creating, joining and managing sales', 'How a sale shows to buyers'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'app-reviews-revamp') ['Design decisions', 'The new review modal'].forEach(t => subsectionTitles.add(t));
-    if (proj.slug === 'api-keys-page') ['Design decisions', 'Generation flow', 'Management'].forEach(t => subsectionTitles.add(t));
-    if (proj.slug === 'app-coupons') ['Design decisions', 'Empty and inactive states'].forEach(t => subsectionTitles.add(t));
+    if (proj.slug === 'api-keys-page') ['Design decisions', 'Early wireframes', 'Generation flow', 'Management'].forEach(t => subsectionTitles.add(t));
+    if (proj.slug === 'app-coupons') ['Design decisions', 'Early wireframes', 'Creating and managing', 'Deactivating a coupon'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'submit-publish-widget') ['Early wireframes'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'app-collections-internal-manager') ['Design decisions', 'What was missing', 'Creating a collection', 'Managing a collection', 'Next steps'].forEach(t => subsectionTitles.add(t));
     if (proj.slug === 'payouts-page') ['How developers got their data', 'What developers asked for', 'Design decisions', 'Transactions and exports', 'Empty states', 'Challenges', 'Next steps'].forEach(t => subsectionTitles.add(t));
