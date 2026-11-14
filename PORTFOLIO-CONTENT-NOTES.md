@@ -1,7 +1,7 @@
 # Portfolio content notes (read this first in any content session)
 
 Working memory for improving the portfolio copy. Update it at the end of every portfolio work session: add decisions, change a project's status, never delete history.
-Last updated: 2026-11-09 (Refund Flow rebuilt, local only; Payouts Page rebuilt and pushed 2026-11-09; Collections Manager rebuilt, local only; subtitle and tag change on AI Review Reporting, local only; App Reviews Revamp became AI Review Reporting: fifth redesigned page, Notion applied, PUSHED and live; new rule: section title inside its column; lessons in 'Learned on AI Review Reporting')
+Last updated: 2026-11-14 (Installations: animated hero on desktop, still image kept for phones and as fallback; project pages fade in; see "Animated hero" under Installations). Before that, 2026-11-09 (Refund Flow rebuilt, local only; Payouts Page rebuilt and pushed 2026-11-09; Collections Manager rebuilt, local only; subtitle and tag change on AI Review Reporting, local only; App Reviews Revamp became AI Review Reporting: fifth redesigned page, Notion applied, PUSHED and live; new rule: section title inside its column; lessons in 'Learned on AI Review Reporting')
 
 > **START HERE for any new page: the section "RECIPE FOR A NEW AGENT" right below, then "PROJECT PAGE SYSTEM" (called DECK-STYLE PAGE SYSTEM before 2026-11-04).** It overrides older parts of this file (the "Standard page structure" table, the goal-first numbered list rule, the Bottom line, Inter as body font, presentation decks). Older sections are kept as history.
 
@@ -637,6 +637,19 @@ Restructured to the standard. Current structure, in order:
 - Decided 2026-10-18: no "bigger effort / account level management" context sentence on the page (she said no).
 - Dashboard images in Sites List.pptx.pdf (competitor and custom dashboards, Shopify partners stores list, a third-party admin table, a support chat panel, the early Wix User List mock): they show real customer names, emails and shop URLs and company brands. Not for the public site unless cropped or redrawn.
 - Open: nothing else. Homepage card subtitle matches the Notion subtitle.
+
+#### Animated hero (built 2026-11-14)
+On desktop the Installations hero is an animated rebuild of the App Installations page instead of the still image. Built from her Figma file "App installations page for developers" (key pOPwB8aFxZHg7NvbvLKd9R, page "PH1 flows" 932:38387; export modal 1124:131789; filter bar 92:65983).
+- **Files:** `installs-hero/` at the repo root (`installs-hero.js` builds the page and runs the loop, `installs-hero.css`, star icons and the avatar). `generate.js` copies the folder to `dist/installs-hero/` and, for this slug only, puts the mount `<div class="ih proj-hero" data-installs-hero>` plus its css and script before the Notion hero figure, which gets the class `proj-hero-still`.
+- **Fallback:** the Notion hero image stays in the page. It shows on phones (768px and below), when the visitor has reduced motion on, or if the script fails. The animation is only built on desktop. Notion was not changed.
+- **Size:** same frame as the still hero (2000:820), window inset 5.75% at the sides and 12.56% at the top, bottom cropped. The app is drawn at its Figma size (1405 x 880) and scaled.
+- **Loop (about 50s):** hover the General Electric row (actions appear) > copy email (tooltip, "Email copied." toast) > search "Lou" (results update once the word is typed) > Customize columns: tick Location, drag it next to Site URL > Filter: App plan > Silver (Filtered by bar, chip, Clear All) > Download CSV (export modal, Filtered, Save, toast) > Clear All > untick Location. It ends on the default view so the restart has no jump. It pauses when off screen.
+- **Her decisions:** no caption chips or step dots; table changes swap instantly with no animation, like the real Wix Patterns table (she shared the Patterns table story); no blue highlight on added columns; the review action is a plain blue icon, no circle; Wix Madefor fonts inside the mockup only (the site still loads only Jakarta and Roboto); plain light backdrop, no side glows; window corners 6px; the loop ends with the user clearing the filter and removing the column they added; the avatar is cropped from the old hero image.
+- **Invented, flag if she wants them changed:** toast "CSV file downloaded.", the search word "Lou", three extra rows (Northwind Studio, Bloom & Co, Atlas Fitness, example.com emails), Location values.
+- **Pitfalls:** site rules for `.proj-content img` and `.proj-content p` leak into the mockup (borders around the stars, grey sidebar text); `installs-hero.css` overrides them. The hidden side panels must have no shadow or it bleeds into the window. The generator puts a script tag between the mount and the still figure, so the hide rule uses `~`, not `+`. The browser pane in the desktop app stops drawing frames when hidden, so judge motion in her own Chrome.
+
+### Shared: project page entrance (2026-11-14)
+Every project page now fades in over 0.45s (`.proj-main`, opacity only so sticky and fixed parts keep working; off with reduced motion). In `style.css`, so it applies to all project pages.
 
 ### Developer Sale (slug developer-sale, Notion 17d35a9ccf7a80c69ceafb3f7973485a): PUSHED 2026-11-04 (commit 85aad2a, deploy queued when pushed)
 Restructured to the deck-style order, built from Notion like the three featured pages. No deck exists for this project, so the section titles are plain descriptions I wrote (confirm). BACKUPS at the Notion workspace root: "BACKUP Developer Sale 2026-11-04 (before restructure)" and "... (before go-live)"; the uncropped lifecycle map and the three single-flow crops are only in the backups.

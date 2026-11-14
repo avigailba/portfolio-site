@@ -28,6 +28,7 @@ function assetVersion(file) {
 
 const STYLE_VERSION = assetVersion('style.css');
 const SCRIPT_VERSION = assetVersion('script.js');
+const INSTALLS_HERO_VERSION = crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname, 'installs-hero/installs-hero.js'))).update(fs.readFileSync(path.join(__dirname, 'installs-hero/installs-hero.css'))).digest('hex').slice(0, 10);
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const ROOT_PAGE_ID      = '9e31791fdedf4048bb784d0cbae06e51';
@@ -937,6 +938,16 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
     if (figIdx !== -1 && (h2Idx === -1 || figIdx < h2Idx)) {
       contentHtml = contentHtml.slice(0, figIdx) + '<figure class="proj-img proj-hero">' + contentHtml.slice(figIdx + '<figure class="proj-img">'.length);
     }
+  }
+
+  // Installations: an animated rebuild of the page plays in the hero on desktop (installs-hero/).
+  // The Notion hero image stays right after it as the fallback: phones, reduced motion, or if the script fails.
+  if (contentHtml && proj.slug === 'app-installation-page-for-developers' && contentHtml.includes('<figure class="proj-img proj-hero">')) {
+    contentHtml = contentHtml.replace('<figure class="proj-img proj-hero">',
+      '<link rel="stylesheet" href="../installs-hero/installs-hero.css?v=' + INSTALLS_HERO_VERSION + '">' +
+      '<div class="ih proj-hero proj-hero-live" data-installs-hero role="img" aria-label="Animated demo of the App Installations page: hovering a row, copying an email, searching, adding a column, filtering, downloading a CSV and clearing the filter"></div>' +
+      '<script src="../installs-hero/installs-hero.js?v=' + INSTALLS_HERO_VERSION + '" defer></script>\n' +
+      '<figure class="proj-img proj-hero proj-hero-still">');
   }
 
 
@@ -1890,6 +1901,14 @@ async function build() {
   if (fs.existsSync(cvSrc)) {
     fs.copyFileSync(cvSrc, path.join(DIST, 'Avigail Bahat CV.pdf'));
     console.log('  ✓ Avigail Bahat CV.pdf');
+  }
+  // Installations hero animation files
+  const ihSrc = path.join(__dirname, 'installs-hero');
+  if (fs.existsSync(ihSrc)) {
+    const ihDst = path.join(DIST, 'installs-hero');
+    if (!fs.existsSync(ihDst)) fs.mkdirSync(ihDst, { recursive: true });
+    fs.readdirSync(ihSrc).forEach(f => fs.copyFileSync(path.join(ihSrc, f), path.join(ihDst, f)));
+    console.log('  ✓ installs-hero/');
   }
   const widgetAssetsSrc = path.join(__dirname, 'credits-widget-assets');
   if (fs.existsSync(widgetAssetsSrc)) {

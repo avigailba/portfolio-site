@@ -1866,3 +1866,8 @@ body.scrolled .title-block { pointer-events: none; }
 @media (min-width: 769px) {
   .proj-content[data-project="submit-publish-widget"] > .col-layout.col-2:last-of-type { max-width: calc(66.667% - 10.67px); }
 }
+
+/* Project page entrance: a short fade when a project page opens (opacity only, so sticky and fixed parts keep working) */
+@keyframes proj-page-in { from { opacity: 0; } to { opacity: 1; } }
+.proj-main { animation: proj-page-in 0.45s ease-out both; }
+@media (prefers-reduced-motion: reduce) { .proj-main { animation: none; } }
