@@ -28,6 +28,7 @@ function assetVersion(file) {
 
 const STYLE_VERSION = assetVersion('style.css');
 const SCRIPT_VERSION = assetVersion('script.js');
+const CREDITS_HERO_VERSION = crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname, 'credits-hero/credits-hero.js'))).update(fs.readFileSync(path.join(__dirname, 'credits-hero/credits-hero.css'))).digest('hex').slice(0, 10);
 const REVIEW_HERO_VERSION = crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname, 'review-hero/review-hero.js'))).update(fs.readFileSync(path.join(__dirname, 'review-hero/review-hero.css'))).digest('hex').slice(0, 10);
 const INSTALLS_HERO_VERSION = crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname, 'installs-hero/installs-hero.js'))).update(fs.readFileSync(path.join(__dirname, 'installs-hero/installs-hero.css'))).digest('hex').slice(0, 10);
 
@@ -948,6 +949,16 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
       '<link rel="stylesheet" href="../installs-hero/installs-hero.css?v=' + INSTALLS_HERO_VERSION + '">' +
       '<div class="ih proj-hero proj-hero-live" data-installs-hero role="img" aria-label="Animated demo of the App Installations page: hovering a row, copying an email, searching, adding a column, filtering, downloading a CSV and clearing the filter"></div>' +
       '<script src="../installs-hero/installs-hero.js?v=' + INSTALLS_HERO_VERSION + '" defer></script>\n' +
+      '<figure class="proj-img proj-hero proj-hero-still">');
+  }
+
+  // AI Credits Wallet: a tilted grid of wallet states drifts in the hero on desktop (credits-hero/).
+  // The Notion hero image stays right after it as the fallback: phones, reduced motion, or if the script fails.
+  if (contentHtml && proj.slug === 'ai-credits-wallet' && contentHtml.includes('<figure class="proj-img proj-hero">')) {
+    contentHtml = contentHtml.replace('<figure class="proj-img proj-hero">',
+      '<link rel="stylesheet" href="../credits-hero/credits-hero.css?v=' + CREDITS_HERO_VERSION + '">' +
+      '<div class="ch proj-hero proj-hero-live" data-credits-hero role="img" aria-label="A tilted grid of the AI credits wallet in Business Manager, Wixel desktop and Wixel mobile, across its states: free, paid, top-up, almost out, out of credits, loading error and no permission"></div>' +
+      '<script src="../credits-hero/credits-hero.js?v=' + CREDITS_HERO_VERSION + '" defer></script>\n' +
       '<figure class="proj-img proj-hero proj-hero-still">');
   }
 
@@ -1912,6 +1923,14 @@ async function build() {
   if (fs.existsSync(cvSrc)) {
     fs.copyFileSync(cvSrc, path.join(DIST, 'Avigail Bahat CV.pdf'));
     console.log('  ✓ Avigail Bahat CV.pdf');
+  }
+  // AI Credits Wallet hero animation files
+  const chSrc = path.join(__dirname, 'credits-hero');
+  if (fs.existsSync(chSrc)) {
+    const chDst = path.join(DIST, 'credits-hero');
+    if (!fs.existsSync(chDst)) fs.mkdirSync(chDst, { recursive: true });
+    fs.readdirSync(chSrc).forEach(f => fs.copyFileSync(path.join(chSrc, f), path.join(chDst, f)));
+    console.log('  ✓ credits-hero/');
   }
   // App Review Platform hero animation files
   const rhSrc = path.join(__dirname, 'review-hero');

@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Text:wght@400;500;600;700&display=swap');
+/* AI Credits hero: a tilted showcase grid of the wallet in Business Manager, Wixel desktop and Wixel mobile,
+   across its states (Figma "AI Credits Flows", page "Wallet component"). Built by credits-hero.js. */
+.ch {
+  position: relative;
+  aspect-ratio: 2000 / 837;
+  margin: 32px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f3f4fd 0%, #dde0e9 100%);
+}
+.ch-wallet { font-family: 'Wix Madefor Text', 'Roboto', sans-serif; color: #000624; -webkit-font-smoothing: antialiased; filter: drop-shadow(0 0 9px rgba(0, 6, 36, 0.1)) drop-shadow(0 6px 3px rgba(0, 6, 36, 0.05)); }
+.ch-wallet * { box-sizing: border-box; }
+.proj-content .ch img { border: 0; border-radius: 0; max-width: none; cursor: default; display: block; }
+
+.ch-ptr { display: flex; justify-content: flex-end; }
+.proj-content .ch .ch-ptr img { width: 36px; height: 6px; transform: scaleY(-1); }
+.ch-body { background: #fff; border-radius: 8px; padding: 10px 0 4px; overflow: hidden; }
+.ch-profile { display: flex; align-items: center; gap: 10px; height: 84px; padding: 12px 24px; }
+.proj-content .ch .ch-av { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
+.ch-name { font-weight: 700; font-size: 16px; line-height: 24px; }
+.ch-mail { font-size: 14px; line-height: 18px; }
+.ch-div { height: 1px; background: #dfe5eb; }
+
+/* The part that changes between states */
+.ch-content { position: relative; overflow: hidden; }
+.ch-inner { display: flex; flex-direction: column; gap: 18px; padding: 18px 24px; }
+.ch-row { display: flex; align-items: flex-start; gap: 8px; }
+.ch-row > div:first-child { flex: 1; min-width: 0; }
+.ch-t16 { font-weight: 700; font-size: 16px; line-height: 24px; }
+.ch-t14b { font-weight: 700; font-size: 14px; line-height: 18px; }
+.ch-t14 { font-size: 14px; line-height: 18px; color: #44485f; }
+.ch-amt16 { font-weight: 700; font-size: 16px; line-height: 24px; font-variant-numeric: tabular-nums; }
+.ch-amt14 { font-size: 14px; line-height: 18px; font-variant-numeric: tabular-nums; }
+.ch-free { display: flex; align-items: center; gap: 2px; font-weight: 700; font-size: 14px; line-height: 18px; }
+.proj-content .ch .ch-free img { width: 18px; height: 18px; }
+.ch-foot { display: flex; align-items: center; gap: 12px; }
+.ch-foot > div:first-child { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.ch-foot.is-paid { justify-content: space-between; }
+.ch-btn { height: 30px; padding: 0 18px; border-radius: 15px; background: #9a27d5; color: #fff; font-weight: 500; font-size: 14px; line-height: 18px; display: inline-flex; align-items: center; white-space: nowrap; flex: none; }
+.ch-link { font-size: 14px; line-height: 18px; text-decoration: underline; text-underline-offset: 2px; }
+.ch-warn { background: #fff0d1; border: 1px solid #ffd16e; border-radius: 6px; padding: 9px 12px; font-size: 14px; line-height: 18px; }
+
+.ch-settings { display: flex; align-items: center; padding: 18px 24px 18px 18px; }
+.proj-content .ch .ch-settings img { width: 24px; height: 24px; }
+.ch-settings span:nth-child(2) { flex: 1; padding: 0 6px; font-size: 16px; line-height: 24px; }
+.ch-logout { height: 30px; padding: 0 18px; border-radius: 15px; border: 1px solid #d6e6fe; color: #116dff; font-weight: 500; font-size: 14px; display: inline-flex; align-items: center; }
+
+/* The still image is the fallback: it shows unless the animation was built */
+.ch:not(.is-built) { display: none; }
+@media (max-width: 768px) { .ch { display: none; } }
+@media (min-width: 769px) { .proj-content .ch.is-built ~ .proj-hero-still { display: none !important; } }
+
+/* Tilted grid: columns drift up and down in turn. Each column is centred on the frame and holds its cards
+   three times; it drifts by exactly one set across the middle copy, so there are always cards above and below */
+.ch-grid { position: absolute; left: 50%; top: 50%; display: flex; gap: 32px; align-items: center; width: max-content; transform: translate(-50%, -50%) scale(var(--s, 0.6)) rotate(-14deg); }
+.ch-col { width: max-content; } /* hugs its cards, so every gap is the same 32px */
+.ch-col:nth-child(even) .ch-reel { animation-delay: calc(var(--d, 50s) * -0.45); }
+.ch-reel { display: flex; flex-direction: column; animation: ch-up var(--d, 50s) linear infinite; will-change: transform; }
+.ch-col.is-down .ch-reel { animation-name: ch-down; }
+.ch.is-paused .ch-reel { animation-play-state: paused; }
+@keyframes ch-up { from { transform: translateY(16.6667%); } to { transform: translateY(-16.6667%); } }
+@keyframes ch-down { from { transform: translateY(-16.6667%); } to { transform: translateY(16.6667%); } }
+.ch-cell { display: flex; justify-content: center; margin-bottom: 32px; }
+
+/* Products */
+.ch-wallet.is-bm { width: 315px; }
+.ch-wallet.is-wd { width: 312px; }
+.ch-wallet.is-wm { width: 351px; }
+.ch-wallet.is-wd, .ch-wallet.is-wm { color: #151414; filter: drop-shadow(0 12px 15px rgba(19, 23, 32, 0.1)); }
+.is-wd .ch-body, .is-wm .ch-body { border-radius: 12px; padding: 16px; }
+.is-wd .ch-inner, .is-wm .ch-inner { padding: 0; gap: 16px; }
+.is-wd .ch-t16, .is-wm .ch-t16, .is-wd .ch-amt16, .is-wm .ch-amt16, .is-wd .ch-t14b, .is-wm .ch-t14b { font-weight: 600; }
+.is-wd .ch-t14, .is-wm .ch-t14 { color: #383838; }
+.is-wd .ch-btn, .is-wm .ch-btn { background: #2f5dff; border-radius: 6px; font-size: 12px; line-height: 16px; font-weight: 600; padding: 0 16px; }
+.is-wd .ch-warn, .is-wm .ch-warn { background: #fef6ed; border-color: #fabd71; border-radius: 12px; font-size: 12px; line-height: 16px; padding: 8px 12px; }
+.is-wd .ch-link, .is-wm .ch-link { font-weight: 500; }
+.ch-handle { width: 36px; height: 4px; border-radius: 2px; background: #d9d9d9; margin: -6px auto 12px; }
+
+/* Edge cases: loading error and no permission */
+.ch-error { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.ch-refresh { display: inline-flex; align-items: center; gap: 6px; color: #116dff; font-size: 14px; line-height: 18px; }
+.is-wd .ch-refresh, .is-wm .ch-refresh { color: #2f5dff; font-weight: 500; gap: 4px; }

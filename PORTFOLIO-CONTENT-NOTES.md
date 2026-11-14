@@ -1,7 +1,7 @@
 # Portfolio content notes (read this first in any content session)
 
 Working memory for improving the portfolio copy. Update it at the end of every portfolio work session: add decisions, change a project's status, never delete history.
-Last updated: 2026-11-14 (Installations and App Review Platform: animated heroes on desktop, still images kept for phones and as fallback; project pages fade in; see "Animated hero" under each project). Before that, 2026-11-09 (Refund Flow rebuilt, local only; Payouts Page rebuilt and pushed 2026-11-09; Collections Manager rebuilt, local only; subtitle and tag change on AI Review Reporting, local only; App Reviews Revamp became AI Review Reporting: fifth redesigned page, Notion applied, PUSHED and live; new rule: section title inside its column; lessons in 'Learned on AI Review Reporting')
+Last updated: 2026-11-14 (Installations, App Review Platform and AI Credits Wallet: animated heroes on desktop, still images kept for phones and as fallback; project pages fade in; see "Animated hero" under each project). Before that, 2026-11-09 (Refund Flow rebuilt, local only; Payouts Page rebuilt and pushed 2026-11-09; Collections Manager rebuilt, local only; subtitle and tag change on AI Review Reporting, local only; App Reviews Revamp became AI Review Reporting: fifth redesigned page, Notion applied, PUSHED and live; new rule: section title inside its column; lessons in 'Learned on AI Review Reporting')
 
 > **START HERE for any new page: the section "RECIPE FOR A NEW AGENT" right below, then "PROJECT PAGE SYSTEM" (called DECK-STYLE PAGE SYSTEM before 2026-11-04).** It overrides older parts of this file (the "Standard page structure" table, the goal-first numbered list rule, the Bottom line, Inter as body font, presentation decks). Older sections are kept as history.
 
@@ -632,6 +632,15 @@ On desktop the App Review Platform hero is an animated rebuild of Cactus (the in
 - Pick one of "three products", "three surfaces", "three platforms" and use it everywhere.
 - Add a TL;DR. Search Drive for an interview deck first.
 - Caution: this page has a custom layout (credits widget iframe), so check it after the TL;DR is added.
+
+#### Animated hero (built 2026-11-14)
+On desktop the AI Credits hero is a tilted showcase grid of the wallet (after two Dribbble references she sent: cards in rotated columns bleeding off the edges, light backdrop). Same setup as the other two heroes: files in `credits-hero/` at the repo root, wired in `generate.js` for this slug only, the Notion hero image kept as `proj-hero-still` for phones, reduced motion and script errors. Notion was not changed. The credits widget iframe further down the page is untouched.
+- **Figma:** "AI Credits Flows" (key O5vXcqzBzVnhCMM1bPheeG, page "Wallet component" 1145:104700) for the normal states; "AI Credits Components" (key KGyJZziRfMEv9dYe4M3So3, page Components 0:1) for Error (1:2714, 1:2785), No permission (39:974, 39:1035) and the Warnings texts (0:2161). The "Can't load" frames on the Flows page show normal balances, not the error.
+- **Grid:** six columns rotated -14°, two per product: Wixel desktop (left), Business Manager (middle, her call), Wixel mobile (right). Each column holds its cards three times, is centred on the frame and drifts by exactly one set across the middle copy, so there is never blank space. Columns hug their cards: 32px gaps everywhere. Alternate columns drift up and down; each has its own slow speed (18, 14, 21, 16, 22, 15 wallet px per second, her preference over one shared speed). The drift pauses off screen.
+- **States:** Free 30 and 20 of 30 daily; Paid 2,000 monthly; Paid plus 500 top-up; Almost out (5 left, "almost out" means 5 per her); Out of credits free and paid; Loading error (with Refresh); No permission (line break before "this site"). Error and no permission exist in Figma for Business Manager and Wixel desktop only, so Wixel mobile columns use the out-of-credits states.
+- **Products:** Business Manager is the popover with Carol's profile, Account settings and purple pill buttons; Wixel desktop is a 12px-radius card with blue (#2f5dff) 6px-radius buttons and semibold titles; Wixel mobile is the bottom sheet with a grab handle.
+- **Tried and dropped:** one wallet morphing through states (smart-animate style), then a filmstrip that duplicated the card at each change. She preferred the grid.
+- **Pitfalls:** the site's `.proj-content p` and `img` rules leak into the cards, so the wallet uses divs and resets images. The browser pane in the desktop app does not run CSS animations while hidden: check drift coverage by pausing the animations at several points with `document.getAnimations()`, not by waiting.
 
 ### Installations (slug app-installation-page-for-developers, Notion 31135a9ccf7a80358e3cead5465c89f8): DEPLOYED 2026-10-13 (commits d9efad1 and 468739a)
 Restructured to the standard. Current structure, in order:
