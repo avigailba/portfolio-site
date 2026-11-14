@@ -298,6 +298,15 @@
       app.classList.toggle('has-modal', !!m);
       updateHover();
     }
+    // The Finish menu opens under its button, its pointer centred on the button
+    function openMenuUnder(btn) {
+      var menu = $('.rh-menu'), a = app.getBoundingClientRect(), k = a.width / 1280, r = btn.getBoundingClientRect();
+      var cx = (r.left + r.width / 2 - a.left) / k, bottom = (r.bottom - a.top) / k;
+      menu.style.right = 'auto';
+      menu.style.left = (cx - 175 / 2) + 'px';
+      menu.style.top = (bottom + 12) + 'px';
+      menu.classList.add('is-on');
+    }
     function sideStatus(mkt, s, rev) { $('.rh-smkt').innerHTML = market(mkt); $('.rh-sst').innerHTML = st(s); $('.rh-srev').textContent = rev; }
     function hoverRow() { updateHover(); }
     function tab(which) {
@@ -335,7 +344,12 @@
 
     async function loop() {
       view('apps');
-      setCur(1310, 432); // just off the right edge, level with Privy
+      // Start resting on Privy's row, where each round also ends (measured once the hero is shown)
+      cursor.style.visibility = 'hidden';
+      await sleep(30);
+      var sp = at($('[data-app="' + PRIVY + '"]'), 300);
+      setCur(sp.x - 3, sp.y - 2);
+      cursor.style.visibility = '';
       await sleep(1600);
       for (var k = 0; ; k++) {
         var ax = PRIVY;
@@ -422,7 +436,7 @@
 
         // 6. Finish > Save and close: back to Activity, nothing changes status, so the loop matches its start
         await press($('[data-k="finish"]'), 1.0);
-        $('.rh-menu').classList.add('is-on');
+        openMenuUnder($('[data-k="finish"]'));
         await sleep(500);
         var sc = $('[data-k="saveclose"]');
         await moveTo(sc, 0.6); await sleep(350); await click();

@@ -263,16 +263,21 @@
     var row4 = function () { return $('.ih-row[data-row="1"]'); };
 
     async function loop() {
-      setCur(1300, 920);
+      // Start resting on the demo row, where each round also ends (measured once the hero is shown)
+      cursor.style.visibility = 'hidden';
+      await sleep(30);
+      var hr = at(row4());
+      setCur(1000, hr.y);
       cursor.style.opacity = 1;
+      cursor.style.visibility = '';
+      hover(1);
       await sleep(900);
       for (;;) {
         reset();
-        // 1. Hover a row: actions appear
-        var hr = at(row4());
-        await move(1060, hr.y - 20, 1.2);
+        // 1. Hover a row: actions appear (the cursor is already resting on it)
+        hr = at(row4());
         hover(1);
-        await move(1000, hr.y, 0.5);
+        await move(1000, hr.y, 0.4);
         await sleep(1200);
 
         // 2. Copy the email: tooltip, click, toast
@@ -436,7 +441,10 @@
         await move(1376, 81, 0.8);
         await click();
         panel(null);
-        await move(1300, 920, 1.3);
+        // Back to rest on the demo row, ready for the next round
+        hr = at(row4());
+        await move(1000, hr.y, 1.3);
+        hover(1);
         await sleep(900);
       }
     }
