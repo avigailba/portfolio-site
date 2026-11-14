@@ -28,7 +28,8 @@ function assetVersion(file) {
 
 const STYLE_VERSION = assetVersion('style.css');
 const SCRIPT_VERSION = assetVersion('script.js');
-const CREDITS_HERO_VERSION = crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname, 'credits-hero/credits-hero.js'))).update(fs.readFileSync(path.join(__dirname, 'credits-hero/credits-hero.css'))).digest('hex').slice(0, 10);
+const HP_COVERS_VERSION = crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname, 'hp-covers/hp-covers.js'))).update(fs.readFileSync(path.join(__dirname, 'hp-covers/hp-covers.css'))).digest('hex').slice(0, 10);
+const CREDITS_HERO_VERSION =crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname, 'credits-hero/credits-hero.js'))).update(fs.readFileSync(path.join(__dirname, 'credits-hero/credits-hero.css'))).digest('hex').slice(0, 10);
 const REVIEW_HERO_VERSION = crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname, 'review-hero/review-hero.js'))).update(fs.readFileSync(path.join(__dirname, 'review-hero/review-hero.css'))).digest('hex').slice(0, 10);
 const INSTALLS_HERO_VERSION = crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname, 'installs-hero/installs-hero.js'))).update(fs.readFileSync(path.join(__dirname, 'installs-hero/installs-hero.css'))).digest('hex').slice(0, 10);
 
@@ -604,13 +605,15 @@ function indexPage(projects, tagline, homepageBlocks = [], aboutBlocks = []) {
       ${summary ? `<span class="rsub">${summary}</span>` : ''}
       ${hasCover ? tagsHtml : ''}
     </div>
-    ${hasCover ? `<img class="row-cover-img" src="images/cover-${slug}.jpg" alt="" width="340" height="158" loading="lazy">` : tagsHtml}
+    ${hasCover ? coverHtml(slug) : tagsHtml}
     <span class="row-arr"><span class="link-label">View</span> →</span>
     <div class="mob-row-foot"><span class="mob-view-btn mob-view-sm"><span class="link-label">View</span> →</span></div>
   </a>
 </div>`;
   }).join('\n  ');
 
+  const hpHead = '<link rel="stylesheet" href="credits-hero/credits-hero.css?v=' + CREDITS_HERO_VERSION + '"><link rel="stylesheet" href="hp-covers/hp-covers.css?v=' + HP_COVERS_VERSION + '">\n  ';
+  const hpScript = '<script src="credits-hero/credits-hero.js?v=' + CREDITS_HERO_VERSION + '" defer></script><script src="hp-covers/hp-covers.js?v=' + HP_COVERS_VERSION + '" defer></script>\n';
   return wrap('', 'Avigail Bahat | Senior Product Designer', `
   <main class="home-band">
     ${heroDrum(heroFromNotion(homepageBlocks), tagline)}
@@ -638,7 +641,20 @@ function indexPage(projects, tagline, homepageBlocks = [], aboutBlocks = []) {
         ${listHtml}
       </div>
     </div>
-  </main>`);
+  </main>`, hpScript, hpHead);
+}
+
+// Homepage cover on a featured row. At rest: the framed image. On hover (desktop): a tilted grid of the
+// project's screens drifts in its place (hp-covers/). Phones, reduced motion and script errors keep the image.
+const HP_COVER_MOUNTS = {
+  'app-installation-page-for-developers': '<div class="hg" data-hp-grid="installs" aria-hidden="true"></div>',
+  'internal-app-review-system': '<div class="hg" data-hp-grid="review" aria-hidden="true"></div>',
+  'ai-credits-wallet': '<div class="ch is-cover" data-credits-hero data-mode="cover" aria-hidden="true"></div>',
+};
+function coverHtml(slug) {
+  const img = `<img class="row-cover-img" src="images/cover-${slug}.jpg" alt="" width="340" height="158" loading="lazy">`;
+  const mount = HP_COVER_MOUNTS[slug];
+  return mount ? `<span class="hp-cover">${img}${mount}</span>` : img;
 }
 
 // Design principles as numbered cards (the layout from her Intuit deck).
@@ -1923,6 +1939,14 @@ async function build() {
   if (fs.existsSync(cvSrc)) {
     fs.copyFileSync(cvSrc, path.join(DIST, 'Avigail Bahat CV.pdf'));
     console.log('  ✓ Avigail Bahat CV.pdf');
+  }
+  // Homepage hover covers (card images and grid script)
+  const hpSrc = path.join(__dirname, 'hp-covers');
+  if (fs.existsSync(hpSrc)) {
+    const hpDst = path.join(DIST, 'hp-covers');
+    if (!fs.existsSync(hpDst)) fs.mkdirSync(hpDst, { recursive: true });
+    fs.readdirSync(hpSrc).forEach(f => fs.copyFileSync(path.join(hpSrc, f), path.join(hpDst, f)));
+    console.log('  ✓ hp-covers/');
   }
   // AI Credits Wallet hero animation files
   const chSrc = path.join(__dirname, 'credits-hero');

@@ -11,13 +11,13 @@
 }
 .ch-wallet { font-family: 'Wix Madefor Text', 'Roboto', sans-serif; color: #000624; -webkit-font-smoothing: antialiased; filter: drop-shadow(0 0 9px rgba(0, 6, 36, 0.1)) drop-shadow(0 6px 3px rgba(0, 6, 36, 0.05)); }
 .ch-wallet * { box-sizing: border-box; }
-.proj-content .ch img { border: 0; border-radius: 0; max-width: none; cursor: default; display: block; }
+.ch.ch img { border: 0; border-radius: 0; max-width: none; cursor: default; display: block; }
 
 .ch-ptr { display: flex; justify-content: flex-end; }
-.proj-content .ch .ch-ptr img { width: 36px; height: 6px; transform: scaleY(-1); }
+.ch.ch .ch-ptr img { width: 36px; height: 6px; transform: scaleY(-1); }
 .ch-body { background: #fff; border-radius: 8px; padding: 10px 0 4px; overflow: hidden; }
 .ch-profile { display: flex; align-items: center; gap: 10px; height: 84px; padding: 12px 24px; }
-.proj-content .ch .ch-av { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
+.ch.ch .ch-av { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
 .ch-name { font-weight: 700; font-size: 16px; line-height: 24px; }
 .ch-mail { font-size: 14px; line-height: 18px; }
 .ch-div { height: 1px; background: #dfe5eb; }
@@ -33,7 +33,7 @@
 .ch-amt16 { font-weight: 700; font-size: 16px; line-height: 24px; font-variant-numeric: tabular-nums; }
 .ch-amt14 { font-size: 14px; line-height: 18px; font-variant-numeric: tabular-nums; }
 .ch-free { display: flex; align-items: center; gap: 2px; font-weight: 700; font-size: 14px; line-height: 18px; }
-.proj-content .ch .ch-free img { width: 18px; height: 18px; }
+.ch.ch .ch-free img { width: 18px; height: 18px; }
 .ch-foot { display: flex; align-items: center; gap: 12px; }
 .ch-foot > div:first-child { flex: 1; display: flex; flex-direction: column; gap: 3px; }
 .ch-foot.is-paid { justify-content: space-between; }
@@ -42,7 +42,7 @@
 .ch-warn { background: #fff0d1; border: 1px solid #ffd16e; border-radius: 6px; padding: 9px 12px; font-size: 14px; line-height: 18px; }
 
 .ch-settings { display: flex; align-items: center; padding: 18px 24px 18px 18px; }
-.proj-content .ch .ch-settings img { width: 24px; height: 24px; }
+.ch.ch .ch-settings img { width: 24px; height: 24px; }
 .ch-settings span:nth-child(2) { flex: 1; padding: 0 6px; font-size: 16px; line-height: 24px; }
 .ch-logout { height: 30px; padding: 0 18px; border-radius: 15px; border: 1px solid #d6e6fe; color: #116dff; font-weight: 500; font-size: 14px; display: inline-flex; align-items: center; }
 
@@ -81,3 +81,6 @@
 .ch-error { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
 .ch-refresh { display: inline-flex; align-items: center; gap: 6px; color: #116dff; font-size: 14px; line-height: 18px; }
 .is-wd .ch-refresh, .is-wm .ch-refresh { color: #2f5dff; font-weight: 500; gap: 4px; }
+
+/* Cover mode: the homepage thumbnail, frameless (see hp-covers.css) */
+.ch.is-cover { position: absolute; inset: 0; aspect-ratio: auto; margin: 0; border-radius: 0; background: transparent; }

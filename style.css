@@ -326,6 +326,9 @@ nav .nav-email:focus-visible { outline: 2px solid #0a0a0a; outline-offset: 3px; 
 .row[data-cat~="monetisation"] { --accent: #0aa17a; --accent-2: #00c896; }
 .row[data-cat~="internal"]     { --accent: #8b5cf6; --accent-2: #ec4899; }
 .row[data-cat~="cms"]          { --accent: #f4660b; --accent-2: #ffb000; }
+/* Featured rows take their first category's colours (Installations blue, App Review purple), not the shared CMS orange */
+.row.row-feat[data-cat^="developer"] { --accent: #2b6cff; --accent-2: #0ea5e9; }
+.row.row-feat[data-cat^="internal"]  { --accent: #8b5cf6; --accent-2: #ec4899; }
 
 @keyframes grad-flow { to { background-position: 200% 0; } }
 
@@ -1840,7 +1843,7 @@ body.scrolled .title-block { pointer-events: none; }
 .hd-slot > .hd-w { grid-area: 1 / 1; transform-origin: 50% 50%; }
 .hd-slot { transition: opacity 0.25s ease; }
 .hd-slot > .hd-next { transform: translateY(150%); }
-.hd-measure { position: absolute; visibility: hidden; white-space: nowrap; font-weight: 600; pointer-events: none; }
+.hd-measure { position: absolute; left: 0; top: 0; visibility: hidden; white-space: nowrap; font-weight: 600; pointer-events: none; } /* pinned left, so it never widens the page */
 /* Tablet and phone: the sentence wraps like normal text and the bold phrases swap with a short fade (script.js) */
 @media (max-width: 900px) {
   /* min-height keeps the list below from jumping when a longer phrase wraps onto an extra line */

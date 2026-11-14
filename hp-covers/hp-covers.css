@@ -1,0 +1,32 @@
+/* Homepage covers on the featured rows (desktop).
+   At rest: the original cover image in its frame. On hover: the image fades out and a frameless, full-height
+   grid of the project's screens fades in and drifts. Phones keep the image only. */
+.row-cover { position: relative; }
+.hp-cover { flex: none; width: 340px; height: 158px; margin-left: 8px; }
+.hp-cover .row-cover-img { width: 100%; height: 100%; margin: 0; transition: opacity 0.3s ease; }
+
+/* The live layer sits on the row, border to border (left and width are set by hp-covers.js) */
+.hp-cover .hg, .hp-cover .ch.is-cover {
+  position: absolute; top: 0; bottom: 0; left: var(--l, auto); width: var(--w, 400px); height: auto; right: auto; /* --l and --w from hp-covers.js */
+  opacity: 0; transition: opacity 0.3s ease; pointer-events: none; overflow: hidden;
+}
+.row-cover:hover .hp-cover .is-built { opacity: 0.6; }
+.row-cover:hover .hp-cover:has(.is-built) .row-cover-img { opacity: 0; }
+
+/* Grid of cards (Installations, App Review) */
+.hg:not(.is-built) { display: none; }
+.hg-grid { position: absolute; left: 50%; top: 50%; display: flex; gap: 28px; align-items: center; width: max-content; transform: translate(-50%, -50%) scale(var(--s, 0.45)) rotate(-14deg); }
+.hg-col { width: max-content; display: flex; flex-direction: column; align-items: center; }
+.hg-reel { display: flex; flex-direction: column; align-items: center; animation: hg-up var(--d, 40s) linear infinite; will-change: transform; }
+.hg-col.is-down .hg-reel { animation-name: hg-down; }
+.hg-col:nth-child(even) .hg-reel { animation-delay: calc(var(--d, 40s) * -0.45); }
+.hg.is-paused .hg-reel { animation-play-state: paused; }
+@keyframes hg-up { from { transform: translateY(16.6667%); } to { transform: translateY(-16.6667%); } }
+@keyframes hg-down { from { transform: translateY(-16.6667%); } to { transform: translateY(16.6667%); } }
+.hg-cell { margin-bottom: 28px; }
+.hg-card { display: block; height: auto; max-width: none; border-radius: 8px; border: 0; box-shadow: 0 0 0 0.5px rgba(0, 6, 36, 0.08), 0 8px 20px -6px rgba(16, 28, 72, 0.22); }
+
+/* AI Credits uses the wallet grid from credits-hero in cover mode, without its own backdrop */
+.hp-cover .ch.is-cover { background: transparent; border-radius: 0; margin: 0; aspect-ratio: auto; }
+
+@media (max-width: 768px) { .hp-cover { display: contents; } .hp-cover .hg, .hp-cover .ch { display: none; } }

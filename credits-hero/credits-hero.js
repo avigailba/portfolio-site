@@ -81,10 +81,13 @@
   function init(root) {
     build(root);
     var grid = root.querySelector('.ch-grid');
+    // Cover mode (homepage thumbnail): zoomed in, drifts only while its row is hovered, a little faster
+    var cover = root.dataset.mode === 'cover';
     function scale() {
-      var w = root.clientWidth;
+      var w = root.clientWidth, h = root.clientHeight;
       if (!w) return;
-      grid.style.setProperty('--s', (w / 1500).toFixed(4));
+      // In cover mode the card size follows the row height, so a wider cover shows more cards
+      grid.style.setProperty('--s', (cover ? h / 355 : w / 1500).toFixed(4));
     }
     scale();
     if (window.ResizeObserver) new ResizeObserver(scale).observe(root); else window.addEventListener('resize', scale);
@@ -93,13 +96,21 @@
     function pace() {
       root.querySelectorAll('.ch-reel').forEach(function (reel, i) {
         var setH = reel.offsetHeight / 3;
-        if (setH) reel.parentNode.style.setProperty('--d', (setH / SPEEDS[i % SPEEDS.length]).toFixed(2) + 's');
+        if (setH) reel.parentNode.style.setProperty('--d', (setH / (SPEEDS[i % SPEEDS.length] * (cover ? 2.2 : 1))).toFixed(2) + 's');
       });
     }
     pace();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(pace);
-    // Pause the drift while off screen
-    if (window.IntersectionObserver) new IntersectionObserver(function (e) { root.classList.toggle('is-paused', !e[0].isIntersecting); }, { threshold: 0 }).observe(root);
+    if (cover) {
+      // Paused at rest; drifts while the row is hovered
+      root.classList.add('is-paused');
+      var hostRow = root.closest('.row') || root;
+      hostRow.addEventListener('mouseenter', function () { root.classList.remove('is-paused'); });
+      hostRow.addEventListener('mouseleave', function () { root.classList.add('is-paused'); });
+    } else if (window.IntersectionObserver) {
+      // Pause the drift while off screen
+      new IntersectionObserver(function (e) { root.classList.toggle('is-paused', !e[0].isIntersecting); }, { threshold: 0 }).observe(root);
+    }
   }
 
   // Desktop only, with motion allowed. Otherwise (phones, reduced motion, or a script error) the still hero image shows

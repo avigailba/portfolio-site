@@ -1,7 +1,7 @@
 # Portfolio content notes (read this first in any content session)
 
 Working memory for improving the portfolio copy. Update it at the end of every portfolio work session: add decisions, change a project's status, never delete history.
-Last updated: 2026-11-14 (Installations, App Review Platform and AI Credits Wallet: animated heroes on desktop, still images kept for phones and as fallback; project pages fade in; see "Animated hero" under each project). Before that, 2026-11-09 (Refund Flow rebuilt, local only; Payouts Page rebuilt and pushed 2026-11-09; Collections Manager rebuilt, local only; subtitle and tag change on AI Review Reporting, local only; App Reviews Revamp became AI Review Reporting: fifth redesigned page, Notion applied, PUSHED and live; new rule: section title inside its column; lessons in 'Learned on AI Review Reporting')
+Last updated: 2026-11-14 (homepage hover covers on the three featured rows, see "Shared: homepage hover covers"; Installations, App Review Platform and AI Credits Wallet: animated heroes on desktop, still images kept for phones and as fallback; project pages fade in; see "Animated hero" under each project). Before that, 2026-11-09 (Refund Flow rebuilt, local only; Payouts Page rebuilt and pushed 2026-11-09; Collections Manager rebuilt, local only; subtitle and tag change on AI Review Reporting, local only; App Reviews Revamp became AI Review Reporting: fifth redesigned page, Notion applied, PUSHED and live; new rule: section title inside its column; lessons in 'Learned on AI Review Reporting')
 
 > **START HERE for any new page: the section "RECIPE FOR A NEW AGENT" right below, then "PROJECT PAGE SYSTEM" (called DECK-STYLE PAGE SYSTEM before 2026-11-04).** It overrides older parts of this file (the "Standard page structure" table, the goal-first numbered list rule, the Bottom line, Inter as body font, presentation decks). Older sections are kept as history.
 
@@ -668,6 +668,15 @@ On desktop the Installations hero is an animated rebuild of the App Installation
 
 ### Shared: project page entrance (2026-11-14)
 Every project page now fades in over 0.45s (`.proj-main`, opacity only so sticky and fixed parts keep working; off with reduced motion). In `style.css`, so it applies to all project pages.
+
+### Shared: homepage hover covers (2026-11-14)
+The three featured rows on the homepage (Installations, App Review, AI Credits) show their original framed cover image at rest. On hover (desktop only) the image fades out and a frameless tilted grid of the project's screens fades in at 60% opacity and drifts; it stops when the mouse leaves.
+- **Files:** `hp-covers/` (script, CSS, card images cut from the Figma screens). AI Credits reuses `credits-hero.js` in cover mode (`data-mode="cover"`). Wired in `generate.js` (`HP_COVER_MOUNTS`, `coverHtml`), which also copies the folder to dist.
+- **Layout:** the grid fills the row's full height and the width between the text and "View →", never covering View. All three rows share the same box, starting after the longest text, so the grids line up. Cards follow the row height, so a wider window shows more cards, not bigger ones.
+- **Cards:** every card has one width; the tables (Installations table, App Review Report and Previous Activity) span three card widths in the middle column.
+- **Hover title colours:** featured rows take their first category's colours (Installations blue, App Review purple), not the shared CMS orange (`style.css`).
+- **Fallback:** phones, reduced motion and script errors keep only the image.
+- Also fixed: the homepage hero drum's hidden measuring word pushed the page wider than the window (sideways scrollbar); it is now pinned left.
 
 ### Developer Sale (slug developer-sale, Notion 17d35a9ccf7a80c69ceafb3f7973485a): PUSHED 2026-11-04 (commit 85aad2a, deploy queued when pushed)
 Restructured to the deck-style order, built from Notion like the three featured pages. No deck exists for this project, so the section titles are plain descriptions I wrote (confirm). BACKUPS at the Notion workspace root: "BACKUP Developer Sale 2026-11-04 (before restructure)" and "... (before go-live)"; the uncropped lifecycle map and the three single-flow crops are only in the backups.
