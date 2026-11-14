@@ -271,14 +271,14 @@
       cursor.style.opacity = 1;
       cursor.style.visibility = '';
       hover(1);
-      await sleep(900);
-      for (;;) {
+      await sleep(200); // start soon after the page opens
+      for (var round = 0; ; round++) {
         reset();
         // 1. Hover a row: actions appear (the cursor is already resting on it)
         hr = at(row4());
         hover(1);
         await move(1000, hr.y, 0.4);
-        await sleep(1200);
+        await sleep(round ? 1200 : 300);
 
         // 2. Copy the email: tooltip, click, toast
         var emailAct = row4().querySelector('[data-act="email"]');

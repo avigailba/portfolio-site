@@ -350,7 +350,7 @@
       var sp = at($('[data-app="' + PRIVY + '"]'), 300);
       setCur(sp.x - 3, sp.y - 2);
       cursor.style.visibility = '';
-      await sleep(1600);
+      await sleep(400); // start soon after the page opens
       for (var k = 0; ; k++) {
         var ax = PRIVY;
         resetAppViews(ax);
@@ -359,7 +359,7 @@
         var row = $('[data-app="' + ax + '"]');
         var rp = at(row.querySelector('.rh-appcell'), 10);
         await move(cur.x, rp.y - 2, 0.3, true);
-        await move(rp.x - 3, rp.y - 2, 1.2, true); await sleep(350);
+        await move(rp.x - 3, rp.y - 2, k ? 1.2 : 0.7, true); await sleep(k ? 350 : 200);
         await click();
         hoverRow(null); view('app');
         await sleep(2600);
