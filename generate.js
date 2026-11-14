@@ -28,6 +28,7 @@ function assetVersion(file) {
 
 const STYLE_VERSION = assetVersion('style.css');
 const SCRIPT_VERSION = assetVersion('script.js');
+const REVIEW_HERO_VERSION = crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname, 'review-hero/review-hero.js'))).update(fs.readFileSync(path.join(__dirname, 'review-hero/review-hero.css'))).digest('hex').slice(0, 10);
 const INSTALLS_HERO_VERSION = crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname, 'installs-hero/installs-hero.js'))).update(fs.readFileSync(path.join(__dirname, 'installs-hero/installs-hero.css'))).digest('hex').slice(0, 10);
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
@@ -947,6 +948,16 @@ function projectPage(proj, prevProj, nextProj, subtitleMap = {}) {
       '<link rel="stylesheet" href="../installs-hero/installs-hero.css?v=' + INSTALLS_HERO_VERSION + '">' +
       '<div class="ih proj-hero proj-hero-live" data-installs-hero role="img" aria-label="Animated demo of the App Installations page: hovering a row, copying an email, searching, adding a column, filtering, downloading a CSV and clearing the filter"></div>' +
       '<script src="../installs-hero/installs-hero.js?v=' + INSTALLS_HERO_VERSION + '" defer></script>\n' +
+      '<figure class="proj-img proj-hero proj-hero-still">');
+  }
+
+  // App Review Platform: an animated rebuild of Cactus plays in the hero on desktop (review-hero/).
+  // The Notion hero image stays right after it as the fallback: phones, reduced motion, or if the script fails.
+  if (contentHtml && proj.slug === 'internal-app-review-system' && contentHtml.includes('<figure class="proj-img proj-hero">')) {
+    contentHtml = contentHtml.replace('<figure class="proj-img proj-hero">',
+      '<link rel="stylesheet" href="../review-hero/review-hero.css?v=' + REVIEW_HERO_VERSION + '">' +
+      '<div class="rh proj-hero proj-hero-live" data-review-hero role="img" aria-label="Animated demo of Cactus, the app review tool: opening an app, adding a comment, adding a comment from the previous review, and saving the report"></div>' +
+      '<script src="../review-hero/review-hero.js?v=' + REVIEW_HERO_VERSION + '" defer></script>\n' +
       '<figure class="proj-img proj-hero proj-hero-still">');
   }
 
@@ -1901,6 +1912,14 @@ async function build() {
   if (fs.existsSync(cvSrc)) {
     fs.copyFileSync(cvSrc, path.join(DIST, 'Avigail Bahat CV.pdf'));
     console.log('  ✓ Avigail Bahat CV.pdf');
+  }
+  // App Review Platform hero animation files
+  const rhSrc = path.join(__dirname, 'review-hero');
+  if (fs.existsSync(rhSrc)) {
+    const rhDst = path.join(DIST, 'review-hero');
+    if (!fs.existsSync(rhDst)) fs.mkdirSync(rhDst, { recursive: true });
+    fs.readdirSync(rhSrc).forEach(f => fs.copyFileSync(path.join(rhSrc, f), path.join(rhDst, f)));
+    console.log('  ✓ review-hero/');
   }
   // Installations hero animation files
   const ihSrc = path.join(__dirname, 'installs-hero');
