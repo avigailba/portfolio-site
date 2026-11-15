@@ -19,7 +19,7 @@
     review: [
       ['rh-addcomment.jpg', 'rh-publish1.jpg', 'rh-addtoreport.jpg'],
       ['rh-finish.jpg', 'rh-publish3.jpg'],
-      [WIDE, 'rh-report.jpg', 'rh-previous.jpg'],
+      [WIDE, 'rh-apps.jpg', 'rh-log.jpg', 'rh-report.jpg', 'rh-previous.jpg'],
       ['rh-publish1.jpg', 'rh-addtoreport.jpg', 'rh-addcomment.jpg'],
       ['rh-publish3.jpg', 'rh-finish.jpg']
     ]
