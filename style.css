@@ -312,6 +312,8 @@ nav .nav-email:focus-visible { outline: 2px solid #0a0a0a; outline-offset: 3px; 
   max-width: 70ch;
   text-wrap: pretty;
 }
+/* Wide screens: featured subtitles stay on one line (narrower windows wrap so the text never runs under the image) */
+@media (min-width: 1280px) { .row-feat .rsub { max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } }
 
 /* Featured rows with a cover: image on the right, tags under the subtitle */
 .row-cover-img {
