@@ -74,7 +74,7 @@ const PROJECT_META = {
   'developer-sale':                      { title: 'Developer Sale',           subtitle: 'A monetization campaign tool for app developers',                cats: 'developer monetisation cms', display: 'Monetization', year: 2024, featured: false },
   'app-reviews-revamp':                  { title: 'AI Review Reporting',           cats: 'developer',          display: 'Developer tools', year: 2024, featured: false },
   'app-collections-internal-manager':    { title: 'App Collections Manager',      cats: 'internal cms',           display: 'Internal tools',  year: 2024, featured: false },
-  'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',       display: 'Monetization',    year: 2023, featured: false },
+  'payouts-page':                        { title: 'Payouts Page',                 cats: 'monetisation cms',       display: 'Monetization',    year: 2020, featured: false },
   'refund-flow':                         { title: 'Refund Flow',                  cats: 'monetisation',           display: 'Monetization',    year: 2023, featured: false },
   'app-pricing-page-projects':           { title: 'App Pricing Page Projects',    cats: 'developer monetisation', display: 'Monetization',    year: 2023, featured: false },
   'submit-publish-widget':               { title: 'Submit & Publish Widget',      cats: 'developer',              display: 'Developer tools', year: 2022, featured: false },
